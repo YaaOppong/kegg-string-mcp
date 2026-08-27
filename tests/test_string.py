@@ -78,3 +78,58 @@ def test_unreadable_upstream_response_is_a_note_not_an_exception(string):
     result = string.partners("katG")
     assert result.records == []
     assert "unreadable" in " ".join(result.notes)
+
+
+def test_locus_tag_query_is_not_flagged_as_a_synonym_match(string):
+    """STRING IDs are '{taxon}.{locus}', so querying by locus tag is exact even
+    though preferredName is the symbol. Warning on correct input teaches the
+    reader to ignore the warning."""
+    result = string.partners("Rv1908c")
+    assert not any("synonym matching" in n for n in result.notes)
+
+
+def test_symbol_query_is_not_flagged_either(string):
+    assert not any("synonym matching" in n for n in string.partners("katG").notes)
+
+
+def test_genuine_synonym_match_is_still_flagged(string):
+    """An input that matches neither the symbol nor the locus must still warn."""
+    result = string.partners("catalase-peroxidase")
+    assert any("synonym matching" in n for n in result.notes)
+
+
+def _json_http(payload):
+    """STRING serving a JSON *object* — its documented error shape — with HTTP 200."""
+    import json
+
+    from kegg_string_mcp.cache import CachedResponse
+
+    def get(url, params=None):
+        return CachedResponse(url=url, status=200, body=json.dumps(payload),
+                              fetched_at="2026-08-27T00:00:00+00:00", content_sha256="x",
+                              cached=False, request_url=url)
+
+    return get
+
+
+def test_json_error_object_from_resolve_is_a_note_not_a_keyerror(string):
+    """An error object decodes cleanly and is truthy, so hits[0] raised KeyError: 0."""
+    string.http.get = _json_http({"Error": "not found", "ErrorMessage": "no such identifier"})
+    result = string.partners("katG")
+    assert result.records == []
+    assert "resolution failure" in " ".join(result.notes)
+
+
+def test_json_error_object_from_partners_is_a_note_not_an_attributeerror(string):
+    """Iterating a dict yields its keys, so row.get(...) raised AttributeError."""
+    original = string.http.get
+
+    def get(url, params=None):
+        if "interaction_partners" in url:
+            return _json_http({"Error": "bad request"})(url, params)
+        return original(url, params)
+
+    string.http.get = get
+    result = string.partners("katG")
+    assert result.records == []
+    assert "unreadable or error response" in " ".join(result.notes)

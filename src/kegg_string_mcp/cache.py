@@ -31,12 +31,20 @@ def default_cache_dir() -> Path:
 
 @dataclass(frozen=True)
 class CachedResponse:
-    url: str
+    url: str                     # cache key: identity params stripped
     status: int
     body: str
     fetched_at: str
     content_sha256: str
-    cached: bool  # True if served from disk
+    cached: bool                 # True if served from disk
+    request_url: str = ""        # URL actually sent, identity params included
+
+    @property
+    def audit_url(self) -> str:
+        """What provenance should record. The cache key omits caller_identity, so
+        reporting it as the fetched URL would put a URL in the audit trail that was
+        never requested."""
+        return self.request_url or self.url
 
 
 class DiskCache:
@@ -70,14 +78,16 @@ class DiskCache:
                 fetched_at=payload["fetched_at"],
                 content_sha256=payload["content_sha256"],
                 cached=True,
+                # Entries written before this field existed fall back to the key.
+                request_url=payload.get("request_url", payload["url"]),
             )
         except (OSError, ValueError, KeyError, TypeError):
             return None
 
-    def put(self, url: str, status: int, body: str) -> CachedResponse:
+    def put(self, url: str, status: int, body: str, request_url: str | None = None) -> CachedResponse:
         response = CachedResponse(
             url=url, status=status, body=body, fetched_at=utcnow(),
-            content_sha256=sha256(body), cached=False,
+            content_sha256=sha256(body), cached=False, request_url=request_url or url,
         )
         path = self._path(url)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -90,7 +100,8 @@ class DiskCache:
             with os.fdopen(fd, "w", encoding="utf-8") as fh:
                 json.dump(
                     {"url": url, "status": status, "body": body,
-                     "fetched_at": response.fetched_at, "content_sha256": response.content_sha256},
+                     "fetched_at": response.fetched_at, "content_sha256": response.content_sha256,
+                     "request_url": response.request_url},
                     fh,
                 )
             os.replace(tmp_name, path)

@@ -53,16 +53,25 @@ class PoliteClient:
         self._sleep = sleep            # injectable so tests do not actually wait
         self._last_request: dict[str, float] = {}
         # MCP dispatches sync tool functions onto worker threads, so concurrent tool
-        # calls genuinely race here. Without the lock, two callers read the same
+        # calls genuinely race here. Without a lock, two callers read the same
         # `last`, sleep the same interval and fire together -- doubling the request
         # rate, which is precisely what this class exists to prevent.
-        self._lock = threading.Lock()
+        #
+        # One lock PER HOST: a single shared lock is held across the sleep, so a
+        # caller waiting on KEGG would also block an unrelated STRING call that had
+        # no reason to wait.
+        self._locks: dict[str, threading.Lock] = {}
+        self._locks_guard = threading.Lock()
+
+    def _host_lock(self, host: str) -> threading.Lock:
+        with self._locks_guard:
+            return self._locks.setdefault(host, threading.Lock())
 
     def _throttle(self, host: str) -> None:
         interval = MIN_INTERVAL.get(host, DEFAULT_MIN_INTERVAL)
         # Held across read, sleep and write: releasing before the sleep would let a
         # second thread through immediately.
-        with self._lock:
+        with self._host_lock(host):
             last = self._last_request.get(host)
             if last is not None:
                 wait = interval - (time.monotonic() - last)
@@ -119,6 +128,7 @@ class PoliteClient:
                 # otherwise read as a genuine "no results".
                 raise FetchError(request_url, response.status_code, response.text)
 
-            return self.cache.put(cache_key, response.status_code, response.text)
+            return self.cache.put(cache_key, response.status_code, response.text,
+                                  request_url=request_url)
 
         raise FetchError(request_url, 0, f"exhausted {MAX_ATTEMPTS} attempts: {last_error}")

@@ -115,3 +115,32 @@ def test_throttle_is_serialised_across_threads(tmp_path, monkeypatch):
     for t in threads:
         t.join()
     assert not overlaps, "two threads were inside the throttle window at once"
+
+
+def test_throttle_locks_are_per_host(tmp_path, monkeypatch):
+    """A single shared lock is held across the sleep, so a caller waiting on KEGG
+    would block an unrelated STRING call that had no reason to wait."""
+    import time
+
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: Resp())
+    c = PoliteClient(DiskCache(tmp_path), sleep=time.sleep)
+    assert c._host_lock("rest.kegg.jp") is not c._host_lock("string-db.org")
+    assert c._host_lock("rest.kegg.jp") is c._host_lock("rest.kegg.jp")
+
+
+def test_concurrent_same_host_calls_are_serialised(tmp_path, monkeypatch):
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: Resp())
+    order = []
+
+    def tracking_sleep(seconds):
+        order.append(("sleep", threading.get_ident()))
+
+    c = PoliteClient(DiskCache(tmp_path), sleep=tracking_sleep)
+    c._last_request["x.test"] = -1e9
+    threads = [threading.Thread(target=c.get, args=(f"https://x.test/{i}",)) for i in range(3)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    # Each thread had to take the same host lock; none skipped the throttle.
+    assert len({tid for _, tid in order}) == len(order)

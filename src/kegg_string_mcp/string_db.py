@@ -54,7 +54,7 @@ def caller_identity() -> str:
 
 
 def _trace(resp) -> RequestTrace:
-    return RequestTrace(url=resp.url, retrieved_at=resp.fetched_at, cached=resp.cached,
+    return RequestTrace(url=resp.audit_url, retrieved_at=resp.fetched_at, cached=resp.cached,
                         status=resp.status, content_sha256=resp.content_sha256)
 
 
@@ -73,8 +73,13 @@ class StringClient:
             hits = json.loads(resp.body) if resp.body.strip() else []
         except json.JSONDecodeError:
             # STRING occasionally serves an HTML maintenance page with HTTP 200.
-            # Letting that raise would surface as a hard tool error.
             hits = None
+        # STRING's documented error shape is a JSON *object*
+        # ({"Error": ..., "ErrorMessage": ...}), frequently with HTTP 200. That
+        # decodes cleanly and is truthy, so checking only for a decode failure
+        # left `hits[0]` raising KeyError straight out of the tool.
+        if not isinstance(hits, list):
+            return None, _trace(resp)
         return (hits[0] if hits else None), _trace(resp)
 
     def partners(
@@ -104,7 +109,14 @@ class StringClient:
         # picked is not literally what was asked for, rather than presenting a
         # best-guess match as if it were exact.
         preferred = hit.get("preferredName", "")
-        if preferred and preferred.upper() != gene.strip().upper() and gene.strip().upper() != string_id.upper():
+        # STRING protein IDs are "{taxon}.{locus}", so a locus-tag query is an exact
+        # match even though preferredName is the gene symbol. Comparing only against
+        # preferredName warned on correct input, which teaches the reader to ignore
+        # the warning entirely.
+        locus = string_id.split(".", 1)[-1]
+        asked = gene.strip().upper()
+        exact = asked in {preferred.upper(), locus.upper(), string_id.upper()}
+        if preferred and not exact:
             notes.append(f"STRING resolved '{gene}' to '{preferred}' ({string_id}) by its own "
                          f"synonym matching, not by exact match. Verify this is the intended protein.")
         try:
@@ -123,10 +135,15 @@ class StringClient:
         try:
             rows = json.loads(resp.body) if resp.body.strip() else []
         except json.JSONDecodeError:
+            rows = None
+        # Same reasoning as in resolve(): an error object decodes fine, and
+        # iterating it would yield dict *keys* -- strings -- so `row.get(...)`
+        # below would raise AttributeError out of the tool.
+        if not isinstance(rows, list):
             return ToolResult.build(
                 query, [], resolved={"string_id": string_id}, requests=traces,
-                notes=[f"STRING returned an unreadable (non-JSON) response for {string_id}; it may be "
-                       f"serving an error page. No partner data retrieved."],
+                notes=[f"STRING returned an unreadable or error response for {string_id} (expected a "
+                       f"JSON list of partners). No partner data retrieved."],
             )
         if not rows:
             notes.append(f"STRING returned no partners for {string_id} at required_score>={required_score}. "

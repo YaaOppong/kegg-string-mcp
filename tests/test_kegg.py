@@ -125,3 +125,43 @@ def test_invalid_organism_returns_a_note_not_an_exception(kegg, http):
     result = kegg.pathways("katG", "notanorg")
     assert result.records == []
     assert "may not be a valid KEGG organism code" in result.notes[0]
+
+
+def test_qualified_id_with_no_pathways_does_not_assert_the_gene_exists(kegg, http):
+    """KEGG answers /link identically (200, empty body) for an unknown gene, so
+    'the gene exists in KEGG' was a fabricated claim on this path. 'mtu:katG' is
+    the natural way to trigger it -- and it is not a valid KEGG gene ID."""
+    from kegg_string_mcp.cache import CachedResponse
+
+    original = http.get
+
+    def get(url, params=None):
+        if "/link/pathway/" in url:
+            return CachedResponse(url=url, status=200, body="", fetched_at="2026-08-27T00:00:00+00:00",
+                                  content_sha256="x", cached=False, request_url=url)
+        return original(url, params)
+
+    http.get = get
+    result = kegg.pathways("mtu:NOTAGENE", "mtu")
+    joined = " ".join(result.notes)
+    assert "does NOT confirm" in joined
+    assert "the gene exists in KEGG" not in joined.lower()
+
+
+def test_missing_names_are_noted_even_when_the_name_list_is_empty(kegg, http):
+    """The `and names` guard suppressed the note in exactly the case needing it:
+    a successful but empty /list/pathway response."""
+    from kegg_string_mcp.cache import CachedResponse
+
+    original = http.get
+
+    def get(url, params=None):
+        if "/list/pathway/" in url:
+            return CachedResponse(url=url, status=200, body="", fetched_at="2026-08-27T00:00:00+00:00",
+                                  content_sha256="x", cached=False, request_url=url)
+        return original(url, params)
+
+    http.get = get
+    result = kegg.pathways("katG", "mtu")
+    assert result.records, "pathway IDs should still be returned"
+    assert any("no name for" in n for n in result.notes), "silent (name unavailable) again"

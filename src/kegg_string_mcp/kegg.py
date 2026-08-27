@@ -37,7 +37,7 @@ _NON_GENE_PREFIXES = {"path", "map", "ko", "ec", "rn", "rc", "cpd", "gl", "dr", 
 
 
 def _trace(resp) -> RequestTrace:
-    return RequestTrace(url=resp.url, retrieved_at=resp.fetched_at, cached=resp.cached,
+    return RequestTrace(url=resp.audit_url, retrieved_at=resp.fetched_at, cached=resp.cached,
                         status=resp.status, content_sha256=resp.content_sha256)
 
 
@@ -56,6 +56,7 @@ class GeneIndex:
 
     entries: dict[str, str] = field(default_factory=dict)
     ambiguous: set[str] = field(default_factory=set)
+    locus_tags: set[str] = field(default_factory=set)
 
     def __contains__(self, key: str) -> bool:
         return key in self.entries
@@ -114,7 +115,11 @@ class KeggClient:
                 locus_tags.setdefault(_strip_prefix(row[0]).upper(), row[0])
 
         # Locus tags win: a real identifier must never lose to a symbol collision.
-        return GeneIndex(entries={**symbols, **locus_tags}, ambiguous=ambiguous), _trace(resp)
+        return (
+            GeneIndex(entries={**symbols, **locus_tags}, ambiguous=ambiguous,
+                      locus_tags=set(locus_tags)),
+            _trace(resp),
+        )
 
     def pathway_names(self, organism: str) -> tuple[dict[str, str], RequestTrace]:
         resp = self.http.get(f"{REST}/list/pathway/{organism}")
@@ -165,7 +170,10 @@ class KeggClient:
             key = gene.upper()
             kegg_id = index.get(key)
             matched_by = "locus_tag_or_symbol" if kegg_id else "none"
-            if kegg_id and key in index.ambiguous:
+            # A locus tag that happens to collide with an ambiguous symbol resolved
+            # unambiguously -- locus tags win the index, so do not warn about it.
+            matched_symbol = key not in index.locus_tags
+            if kegg_id and matched_symbol and key in index.ambiguous:
                 notes.append(
                     f"'{gene}' is not a unique symbol in organism '{organism}'; it matches more "
                     f"than one gene. Used {kegg_id}. Pass a locus tag to disambiguate."
@@ -193,8 +201,21 @@ class KeggClient:
         pathway_ids = [_strip_prefix(row[1]) for row in _rows(link.body) if len(row) >= 2]
         resolved = {"kegg_gene_id": kegg_id, "matched_by": matched_by}
         if not pathway_ids:
-            notes.append(f"KEGG returned no pathway assignments for {kegg_id}. The gene exists in "
-                         f"KEGG but is not mapped to any pathway in this organism.")
+            if matched_by == "kegg_id":
+                # This branch skips the gene index, so nothing has verified the ID.
+                # KEGG answers /link for an unknown gene with HTTP 200 and an empty
+                # body, which is indistinguishable from a real gene with no pathways
+                # -- so `mtu:NOTAGENE`, and the very natural `mtu:katG`, both drew a
+                # confident "the gene exists in KEGG" claim.
+                notes.append(
+                    f"KEGG returned no pathway assignments for '{kegg_id}'. This does NOT confirm "
+                    f"the identifier exists: KEGG answers identically for an unknown gene. Note "
+                    f"that '{organism}:SYMBOL' is not a valid KEGG gene ID -- pass a bare symbol, "
+                    f"or the locus tag form '{organism}:LOCUS'."
+                )
+            else:
+                notes.append(f"KEGG returned no pathway assignments for {kegg_id}. The gene exists "
+                             f"in KEGG but is not mapped to any pathway in this organism.")
             return ToolResult.build(query, [], resolved=resolved, requests=traces, notes=notes)
 
         # Names are a nicety; the IDs are the citable part. A failure here degrades
@@ -207,8 +228,11 @@ class KeggClient:
             notes.append(f"Could not fetch pathway names for '{organism}': HTTP {exc.status}. "
                          f"The pathway IDs below are still valid and citable.")
 
+        # No `and names` guard: an empty-but-successful /list/pathway response is
+        # precisely the case that needs the note, and guarding on `names` produced
+        # records reading "(name unavailable)" with an empty notes list.
         missing = [pid for pid in pathway_ids if pid not in names]
-        if missing and names:
+        if missing:
             notes.append(f"KEGG's pathway list for '{organism}' had no name for: "
                          f"{', '.join(missing)}. The IDs are still valid and citable.")
 
