@@ -1,0 +1,58 @@
+import json
+import time
+
+from kegg_string_mcp.cache import DiskCache
+from kegg_string_mcp.provenance import sha256
+
+URL = "https://rest.kegg.jp/link/pathway/mtu:Rv1908c"
+
+
+def test_roundtrip_preserves_body_and_hash(tmp_path):
+    cache = DiskCache(tmp_path)
+    written = cache.put(URL, 200, "mtu:Rv1908c\tpath:mtu00360\n")
+    read = cache.get(URL)
+    assert read.body == written.body
+    assert read.content_sha256 == sha256(written.body)
+
+
+def test_cache_hit_reports_the_original_fetch_time(tmp_path):
+    """A record served from disk must not claim it was retrieved just now --
+    that would be a false provenance claim on every cached result."""
+    cache = DiskCache(tmp_path)
+    written = cache.put(URL, 200, "body")
+    time.sleep(0.01)
+    read = cache.get(URL)
+    assert read.fetched_at == written.fetched_at
+    assert written.cached is False and read.cached is True
+
+
+def test_miss_returns_none(tmp_path):
+    assert DiskCache(tmp_path).get("https://example.org/never-fetched") is None
+
+
+def test_expired_entry_is_a_miss(tmp_path):
+    cache = DiskCache(tmp_path, ttl_seconds=0)
+    cache.put(URL, 200, "body")
+    time.sleep(0.01)
+    assert cache.get(URL) is None
+
+
+def test_ttl_none_never_expires(tmp_path):
+    cache = DiskCache(tmp_path, ttl_seconds=None)
+    cache.put(URL, 200, "body")
+    assert cache.get(URL) is not None
+
+
+def test_distinct_urls_do_not_collide(tmp_path):
+    cache = DiskCache(tmp_path)
+    cache.put(URL, 200, "first")
+    cache.put(URL + "?x=1", 200, "second")
+    assert cache.get(URL).body == "first"
+    assert cache.get(URL + "?x=1").body == "second"
+
+
+def test_partial_write_is_not_left_readable(tmp_path):
+    """Write-then-rename: a .tmp file must never be picked up as a cache entry."""
+    cache = DiskCache(tmp_path)
+    cache.put(URL, 200, json.dumps({"ok": True}))
+    assert not list(tmp_path.rglob("*.tmp"))

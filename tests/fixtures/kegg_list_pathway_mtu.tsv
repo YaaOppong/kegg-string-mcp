@@ -1,0 +1,143 @@
+mtu01100	Metabolic pathways - Mycobacterium tuberculosis H37Rv
+mtu01110	Biosynthesis of secondary metabolites - Mycobacterium tuberculosis H37Rv
+mtu01120	Microbial metabolism in diverse environments - Mycobacterium tuberculosis H37Rv
+mtu01200	Carbon metabolism - Mycobacterium tuberculosis H37Rv
+mtu01210	2-Oxocarboxylic acid metabolism - Mycobacterium tuberculosis H37Rv
+mtu01212	Fatty acid metabolism - Mycobacterium tuberculosis H37Rv
+mtu01230	Biosynthesis of amino acids - Mycobacterium tuberculosis H37Rv
+mtu01232	Nucleotide metabolism - Mycobacterium tuberculosis H37Rv
+mtu01250	Biosynthesis of nucleotide sugars - Mycobacterium tuberculosis H37Rv
+mtu01240	Biosynthesis of cofactors - Mycobacterium tuberculosis H37Rv
+mtu01220	Degradation of aromatic compounds - Mycobacterium tuberculosis H37Rv
+mtu01310	Nitrogen cycle - Mycobacterium tuberculosis H37Rv
+mtu01320	Sulfur cycle - Mycobacterium tuberculosis H37Rv
+mtu00010	Glycolysis / Gluconeogenesis - Mycobacterium tuberculosis H37Rv
+mtu00020	Citrate cycle (TCA cycle) - Mycobacterium tuberculosis H37Rv
+mtu00030	Pentose phosphate pathway - Mycobacterium tuberculosis H37Rv
+mtu00040	Pentose and glucuronate interconversions - Mycobacterium tuberculosis H37Rv
+mtu00051	Fructose and mannose metabolism - Mycobacterium tuberculosis H37Rv
+mtu00052	Galactose metabolism - Mycobacterium tuberculosis H37Rv
+mtu00053	Ascorbate and aldarate metabolism - Mycobacterium tuberculosis H37Rv
+mtu00500	Starch and sucrose metabolism - Mycobacterium tuberculosis H37Rv
+mtu00620	Pyruvate metabolism - Mycobacterium tuberculosis H37Rv
+mtu00630	Glyoxylate and dicarboxylate metabolism - Mycobacterium tuberculosis H37Rv
+mtu00640	Propanoate metabolism - Mycobacterium tuberculosis H37Rv
+mtu00650	Butanoate metabolism - Mycobacterium tuberculosis H37Rv
+mtu00660	C5-Branched dibasic acid metabolism - Mycobacterium tuberculosis H37Rv
+mtu00562	Inositol phosphate metabolism - Mycobacterium tuberculosis H37Rv
+mtu00190	Oxidative phosphorylation - Mycobacterium tuberculosis H37Rv
+mtu00710	Carbon fixation by Calvin cycle - Mycobacterium tuberculosis H37Rv
+mtu00720	Other carbon fixation pathways - Mycobacterium tuberculosis H37Rv
+mtu00680	Methane metabolism - Mycobacterium tuberculosis H37Rv
+mtu00910	Nitrogen metabolism - Mycobacterium tuberculosis H37Rv
+mtu00920	Sulfur metabolism - Mycobacterium tuberculosis H37Rv
+mtu00061	Fatty acid biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00071	Fatty acid degradation - Mycobacterium tuberculosis H37Rv
+mtu00073	Cutin, suberine and wax biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00074	Mycolic acid biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00100	Steroid biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00121	Secondary bile acid biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00561	Glycerolipid metabolism - Mycobacterium tuberculosis H37Rv
+mtu00564	Glycerophospholipid metabolism - Mycobacterium tuberculosis H37Rv
+mtu00565	Ether lipid metabolism - Mycobacterium tuberculosis H37Rv
+mtu00600	Sphingolipid metabolism - Mycobacterium tuberculosis H37Rv
+mtu00592	alpha-Linolenic acid metabolism - Mycobacterium tuberculosis H37Rv
+mtu01040	Biosynthesis of unsaturated fatty acids - Mycobacterium tuberculosis H37Rv
+mtu00230	Purine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00240	Pyrimidine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00250	Alanine, aspartate and glutamate metabolism - Mycobacterium tuberculosis H37Rv
+mtu00260	Glycine, serine and threonine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00270	Cysteine and methionine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00280	Valine, leucine and isoleucine degradation - Mycobacterium tuberculosis H37Rv
+mtu00290	Valine, leucine and isoleucine biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00300	Lysine biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00310	Lysine degradation - Mycobacterium tuberculosis H37Rv
+mtu00220	Arginine biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00330	Arginine and proline metabolism - Mycobacterium tuberculosis H37Rv
+mtu00340	Histidine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00350	Tyrosine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00360	Phenylalanine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00380	Tryptophan metabolism - Mycobacterium tuberculosis H37Rv
+mtu00400	Phenylalanine, tyrosine and tryptophan biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00410	beta-Alanine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00430	Taurine and hypotaurine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00450	Selenocompound metabolism - Mycobacterium tuberculosis H37Rv
+mtu00460	Cyanoamino acid metabolism - Mycobacterium tuberculosis H37Rv
+mtu00470	D-Amino acid metabolism - Mycobacterium tuberculosis H37Rv
+mtu00480	Glutathione metabolism - Mycobacterium tuberculosis H37Rv
+mtu00520	Amino sugar and nucleotide sugar metabolism - Mycobacterium tuberculosis H37Rv
+mtu00541	Biosynthesis of various nucleotide sugars - Mycobacterium tuberculosis H37Rv
+mtu00515	Mannose type O-glycan biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00514	Other types of O-glycan biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00542	O-Antigen repeat unit biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00550	Peptidoglycan biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00552	Teichoic acid biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00571	Lipoarabinomannan (LAM) biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00572	Arabinogalactan biosynthesis - Mycobacterium - Mycobacterium tuberculosis H37Rv
+mtu00543	Exopolysaccharide biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00730	Thiamine metabolism - Mycobacterium tuberculosis H37Rv
+mtu00740	Riboflavin metabolism - Mycobacterium tuberculosis H37Rv
+mtu00750	Vitamin B6 metabolism - Mycobacterium tuberculosis H37Rv
+mtu00760	Nicotinate and nicotinamide metabolism - Mycobacterium tuberculosis H37Rv
+mtu00770	Pantothenate and CoA biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00780	Biotin metabolism - Mycobacterium tuberculosis H37Rv
+mtu00785	Lipoic acid metabolism - Mycobacterium tuberculosis H37Rv
+mtu00790	Folate biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00670	One carbon pool by folate - Mycobacterium tuberculosis H37Rv
+mtu00860	Porphyrin metabolism - Mycobacterium tuberculosis H37Rv
+mtu00130	Ubiquinone and other terpenoid-quinone biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00900	Terpenoid backbone biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00906	Carotenoid biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00903	Limonene degradation - Mycobacterium tuberculosis H37Rv
+mtu00907	Pinene, camphor and geraniol degradation - Mycobacterium tuberculosis H37Rv
+mtu00523	Polyketide sugar unit biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu01053	Biosynthesis of siderophore group nonribosomal peptides - Mycobacterium tuberculosis H37Rv
+mtu00946	Degradation of flavonoids - Mycobacterium tuberculosis H37Rv
+mtu00311	Penicillin and cephalosporin biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00332	Carbapenem biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00261	Monobactam biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00521	Streptomycin biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00525	Acarbose and validamycin biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00401	Novobiocin biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu00999	Biosynthesis of various plant secondary metabolites - Mycobacterium tuberculosis H37Rv
+mtu00362	Benzoate degradation - Mycobacterium tuberculosis H37Rv
+mtu00627	Aminobenzoate degradation - Mycobacterium tuberculosis H37Rv
+mtu00364	Fluorobenzoate degradation - Mycobacterium tuberculosis H37Rv
+mtu00625	Chloroalkane and chloroalkene degradation - Mycobacterium tuberculosis H37Rv
+mtu00361	Chlorocyclohexane and chlorobenzene degradation - Mycobacterium tuberculosis H37Rv
+mtu00623	Toluene degradation - Mycobacterium tuberculosis H37Rv
+mtu00622	Xylene degradation - Mycobacterium tuberculosis H37Rv
+mtu00643	Styrene degradation - Mycobacterium tuberculosis H37Rv
+mtu00930	Caprolactam degradation - Mycobacterium tuberculosis H37Rv
+mtu00621	Dioxin degradation - Mycobacterium tuberculosis H37Rv
+mtu00626	Naphthalene degradation - Mycobacterium tuberculosis H37Rv
+mtu00984	Steroid degradation - Mycobacterium tuberculosis H37Rv
+mtu00983	Drug metabolism - other enzymes - Mycobacterium tuberculosis H37Rv
+mtu03020	RNA polymerase - Mycobacterium tuberculosis H37Rv
+mtu03010	Ribosome - Mycobacterium tuberculosis H37Rv
+mtu00970	Aminoacyl-tRNA biosynthesis - Mycobacterium tuberculosis H37Rv
+mtu03008	Ribosome biogenesis in eukaryotes - Mycobacterium tuberculosis H37Rv
+mtu03060	Protein export - Mycobacterium tuberculosis H37Rv
+mtu04141	Protein processing in endoplasmic reticulum - Mycobacterium tuberculosis H37Rv
+mtu04122	Sulfur relay system - Mycobacterium tuberculosis H37Rv
+mtu03050	Proteasome - Mycobacterium tuberculosis H37Rv
+mtu03018	RNA degradation - Mycobacterium tuberculosis H37Rv
+mtu03030	DNA replication - Mycobacterium tuberculosis H37Rv
+mtu03410	Base excision repair - Mycobacterium tuberculosis H37Rv
+mtu03420	Nucleotide excision repair - Mycobacterium tuberculosis H37Rv
+mtu03430	Mismatch repair - Mycobacterium tuberculosis H37Rv
+mtu03440	Homologous recombination - Mycobacterium tuberculosis H37Rv
+mtu03450	Non-homologous end-joining - Mycobacterium tuberculosis H37Rv
+mtu03250	Viral life cycle - HIV-1 - Mycobacterium tuberculosis H37Rv
+mtu02010	ABC transporters - Mycobacterium tuberculosis H37Rv
+mtu03070	Bacterial secretion system - Mycobacterium tuberculosis H37Rv
+mtu02020	Two-component system - Mycobacterium tuberculosis H37Rv
+mtu04146	Peroxisome - Mycobacterium tuberculosis H37Rv
+mtu04156	Integrated stress response (ISR) signaling pathway - Mycobacterium tuberculosis H37Rv
+mtu02024	Quorum sensing - Mycobacterium tuberculosis H37Rv
+mtu04981	Folate transport and metabolism - Mycobacterium tuberculosis H37Rv
+mtu04980	Cobalamin transport and metabolism - Mycobacterium tuberculosis H37Rv
+mtu05152	Tuberculosis - Mycobacterium tuberculosis H37Rv
+mtu01501	beta-Lactam resistance - Mycobacterium tuberculosis H37Rv
+mtu01502	Vancomycin resistance - Mycobacterium tuberculosis H37Rv
+mtu01503	Cationic antimicrobial peptide (CAMP) resistance - Mycobacterium tuberculosis H37Rv

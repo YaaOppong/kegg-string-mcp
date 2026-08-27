@@ -1,0 +1,403 @@
+mtu:Rv0001	CDS	1..1524	dnaA; chromosomal replication initiator protein DnaA
+mtu:Rv0002	CDS	2052..3260	dnaN; DNA polymerase III subunit beta
+mtu:Rv0003	CDS	3280..4437	recF; DNA replication/repair protein RecF
+mtu:Rv0004	CDS	4434..4997	hypothetical protein
+mtu:Rv0005	CDS	5240..7267	gyrB; DNA gyrase subunit B
+mtu:Rv0006	CDS	7302..9818	gyrA; DNA gyrase subunit A
+mtu:Rv0007	CDS	9914..10828	membrane protein
+mtu:Rvnt01	tRNA	10887..10960	ileT; tRNA-Ile
+mtu:Rvnt02	tRNA	11112..11184	alaT; tRNA-Ala
+mtu:Rv0008c	CDS	complement(11874..12311)	cell wall synthesis protein CwsA
+mtu:Rv0009	CDS	12468..13016	ppiA; iron-regulated peptidyl-prolyl cis-trans isomerase PpiA
+mtu:Rv0010c	CDS	complement(13133..13558)	membrane protein
+mtu:Rv0011c	CDS	complement(13714..13995)	cell division protein CrgA
+mtu:Rv0012	CDS	14089..14877	membrane protein
+mtu:Rv0013	CDS	14914..15612	trpG; anthranilate synthase component II
+mtu:Rv0014c	CDS	complement(15590..17470)	pknB; serine/threonine-protein kinase PknB
+mtu:Rv0015c	CDS	complement(17467..18762)	pknA; serine/threonine-protein kinase PknA
+mtu:Rv0016c	CDS	complement(18759..20234)	pbpA; penicillin-binding protein PbpA
+mtu:Rv0017c	CDS	complement(20231..21640)	rodA; cell division protein RodA
+mtu:Rv0018c	CDS	complement(21637..23181)	pstP; phosphoserine/threonine phosphatase PstP
+mtu:Rv0019c	CDS	complement(23270..23737)	fhaB; FHA domain-containing protein FhaB
+mtu:Rv0020c	CDS	complement(23861..25444)	fhaA; FHA domain-containing protein FhaA
+mtu:Rvnt03	tRNA	25644..25726	leuT; tRNA-Leu
+mtu:Rv0021c	CDS	complement(25913..26881)	hypothetical protein
+mtu:Rv0022c	CDS	complement(27023..27442)	whiB5; transcriptional regulator WhiB5
+mtu:Rv0023	CDS	27595..28365	transcriptional regulator
+mtu:Rv0024	CDS	28362..29207	NLP/P60 family protein
+mtu:Rv0025	CDS	29245..29607	hypothetical protein
+mtu:Rv0026	CDS	29722..31068	hypothetical protein
+mtu:Rv0027	CDS	31189..31506	hypothetical protein
+mtu:Rv0028	CDS	31514..31819	hypothetical protein
+mtu:Rv0029	CDS	32057..33154	hypothetical protein
+mtu:Rv0030	CDS	33224..33553	hypothetical protein
+mtu:Rv0032	CDS	34295..36610	bioF2; 8-amino-7-oxononanoate synthase
+mtu:Rv0033	CDS	36607..36870	acpA; acyl carrier protein AcpA
+mtu:Rv0034	CDS	36867..37262	hypothetical protein
+mtu:Rv0035	CDS	37259..38947	fadD34; fatty-acid--CoA ligase FadD34
+mtu:Rv0036c	CDS	complement(39056..39829)	hypothetical protein
+mtu:Rv0037c	CDS	complement(39877..41202)	MFS-type transporter
+mtu:Rv0038	CDS	41304..41912	hypothetical protein
+mtu:Rv0039c	CDS	complement(42004..42351)	transmembrane protein
+mtu:Rv0040c	CDS	complement(42433..43365)	mtc28; hypothetical protein
+mtu:Rv0041	CDS	43562..46471	leuS; leucine--tRNA ligase
+mtu:Rv0042c	CDS	complement(46581..47207)	transcriptional regulator
+mtu:Rv0043c	CDS	complement(47366..48100)	HTH-type transcriptional regulator
+mtu:Rv0044c	CDS	complement(48233..49027)	oxidoreductase
+mtu:Rv0045c	CDS	complement(49043..49939)	hydrolase
+mtu:Rv0046c	CDS	complement(50021..51124)	ino1; inositol-3-phosphate synthase
+mtu:Rv0047c	CDS	complement(51185..51727)	hypothetical protein
+mtu:Rv0048c	CDS	complement(51828..52697)	membrane protein
+mtu:Rv0049	CDS	52831..53244	hypothetical protein
+mtu:Rv0050	CDS	53663..55699	ponA1; bifunctional penicillin-insensitive transglycosylase/penicillin-sensitive transpeptidase
+mtu:Rv0051	CDS	55696..57378	transmembrane protein
+mtu:Rv0052	CDS	57410..57973	hypothetical protein
+mtu:Rv0053	CDS	58192..58482	rpsF; 30S ribosomal protein S6
+mtu:Rv0054	CDS	58586..59080	ssb; single-strand DNA-binding protein
+mtu:Rv0055	CDS	59122..59376	rpsR1; 30S ribosomal protein S18
+mtu:Rv0056	CDS	59409..59867	rplI; 50S ribosomal protein L9
+mtu:Rv0057	CDS	59896..60417	hypothetical protein
+mtu:Rv0058	CDS	60396..63020	dnaB; replicative DNA helicase
+mtu:Rv0059	CDS	63200..63892	hypothetical protein
+mtu:Rv0060	CDS	63909..64967	hypothetical protein
+mtu:Rv0061c	CDS	complement(65012..65350)	hypothetical protein
+mtu:Rv0062	CDS	65552..66694	celA1; cellulase CelA
+mtu:Rv0063	CDS	66923..68362	oxidoreductase
+mtu:Rv0063a	CDS	68418..68579	hypothetical protein
+mtu:Rv0064	CDS	68620..71559	transmembrane protein
+mtu:Rv0064A	CDS	71589..71828	vapB1; antitoxin VapB1
+mtu:Rv0065	CDS	71821..72222	vapC1; ribonuclease VapC1
+mtu:Rv0066c	CDS	complement(72274..74511)	icd2; isocitrate dehydrogenase
+mtu:Rv0067c	CDS	complement(74629..75198)	transcriptional regulator
+mtu:Rv0068	CDS	75301..76212	oxidoreductase
+mtu:Rv0069c	CDS	complement(76237..77622)	sdaA; L-serine dehydratase
+mtu:Rv0070c	CDS	complement(77619..78896)	glyA2; serine hydroxymethyltransferase
+mtu:Rv0071	CDS	79486..80193	maturase
+mtu:Rv0072	CDS	80624..81673	glutamine ABC transporter permease
+mtu:Rv0073	CDS	81676..82668	glutamine ABC transporter ATP-binding protein
+mtu:Rv0074	CDS	82748..83983	hypothetical protein
+mtu:Rv0075	CDS	83996..85168	aminotransferase
+mtu:Rv0076c	CDS	complement(85183..85572)	membrane protein
+mtu:Rv0077c	CDS	complement(85636..86466)	oxidoreductase
+mtu:Rv0078	CDS	86528..87133	transcriptional regulator
+mtu:Rv0078A	CDS	complement(87208..87801)	hypothetical protein
+mtu:Rv0078B	CDS	complement(87798..88004)	hypothetical protein
+mtu:Rv0079	CDS	88204..89025	hypothetical protein
+mtu:Rv0080	CDS	89022..89480	hypothetical protein
+mtu:Rv0081	CDS	89575..89919	HTH-type transcriptional regulator
+mtu:Rv0082	CDS	89924..90403	oxidoreductase
+mtu:Rv0083	CDS	90400..92322	oxidoreductase
+mtu:Rv0084	CDS	92328..93278	hycD; formate hydrogenlyase HycD
+mtu:Rv0085	CDS	93289..93951	hycP; hydrogenase HycP
+mtu:Rv0086	CDS	93951..95417	hycQ; hydrogenase HycQ
+mtu:Rv0087	CDS	95414..96892	hycE; formate hydrogenase HycE
+mtu:Rv0088	CDS	96927..97601	polyketide cyclase/dehydrase
+mtu:Rv0089	CDS	97758..98351	methyltransferase
+mtu:Rv0090	CDS	98480..99250	membrane protein
+mtu:Rv0091	CDS	99684..100451	mtn; 5'-methylthioadenosine/S-adenosylhomocysteine nucleosidase
+mtu:Rv0092	CDS	100583..102868	ctpA; cation transporter ATPase A
+mtu:Rv0093c	CDS	complement(102815..103663)	membrane protein
+mtu:Rv0094c	CDS	complement(103710..104663)	hypothetical protein
+mtu:Rv0095c	CDS	complement(104805..105215)	hypothetical protein
+mtu:Rv0096	CDS	105324..106715	PPE1; PPE family protein PPE1
+mtu:Rv0097	CDS	106734..107603	oxidoreductase
+mtu:Rv0098	CDS	107600..108151	fcoT; fatty acyl CoA thioesterase FcoT
+mtu:Rv0099	CDS	108156..109778	fadD10; fatty-acid--CoA ligase FadD10
+mtu:Rv0100	CDS	109783..110019	hypothetical protein
+mtu:Rv0101	CDS	110001..117539	nrp; peptide synthetase Nrp
+mtu:Rv0102	CDS	117714..119699	integral membrane protein
+mtu:Rv0103c	CDS	complement(119915..122173)	ctpB; cation-transporter P-type ATPase B
+mtu:Rv0104	CDS	122317..123831	hypothetical protein
+mtu:Rv0105c	CDS	complement(123980..124264)	rpmB1; 50S ribosomal protein L28
+mtu:Rv0106	CDS	124374..125570	hypothetical protein
+mtu:Rv0107c	CDS	complement(125643..130541)	ctpI; cation-transporter ATPase I
+mtu:Rv0108c	CDS	complement(130895..131104)	hypothetical protein
+mtu:Rv0109	CDS	131382..132872	PE_PGRS1; PE-PGRS family protein PE_PGRS1
+mtu:Rv0110	CDS	133020..133769	integral membrane protein
+mtu:Rv0111	CDS	133950..136007	acyltransferase
+mtu:Rv0112	CDS	136289..137245	gca; GDP-mannose 4,6-dehydratase
+mtu:Rv0113	CDS	137319..137909	gmhA; phosphoheptose isomerase
+mtu:Rv0114	CDS	137941..138513	gmhB; D-glycero-alpha-D-manno-heptose-1,7-bisphosphate 7-phosphatase
+mtu:Rv0115	CDS	138513..139673	hddA; D-alpha-D-heptose-7-phosphate kinase HddA
+mtu:Rv0115a	CDS	139956..140144	hypothetical protein
+mtu:Rv0116c	CDS	complement(140267..141022)	ldtA; L,D-transpeptidase LdtA
+mtu:Rv0117	CDS	141200..142144	oxyS; oxidative stress response regulatory protein OxyS
+mtu:Rv0118c	CDS	complement(142128..143876)	oxcA; oxalyl-CoA decarboxylase OxcA
+mtu:Rv0119	CDS	144049..145626	fadD7; fatty-acid--CoA ligase FadD7
+mtu:Rv0120c	CDS	complement(145627..147771)	fusA2; elongation factor G
+mtu:Rv0121c	CDS	complement(147908..148342)	hypothetical protein
+mtu:Rv0122	CDS	148491..148859	hypothetical protein
+mtu:Rv0123	CDS	148856..149224	hypothetical protein
+mtu:Rv0124	CDS	149533..150996	PE_PGRS2; PE-PGRS family protein PE_PGRS2
+mtu:Rv0125	CDS	151148..152215	pepA; serine protease PepA
+mtu:Rv0126	CDS	152324..154129	treS; trehalose synthase/amylase TreS
+mtu:Rv0127	CDS	154232..155599	mak; maltokinase
+mtu:Rv0128	CDS	155667..156446	transmembrane protein
+mtu:Rv0129c	CDS	complement(156578..157600)	fbpC; diacylglycerol acyltransferase/mycolyltransferase Ag85C
+mtu:Rv0130	CDS	157847..158302	htdZ; 3-hydroxyl-thioester dehydratase
+mtu:Rv0131c	CDS	complement(158315..159658)	fadE1; acyl-CoA dehydrogenase FadE1
+mtu:Rv0132c	CDS	complement(159700..160782)	fgd2; F420-dependent glucose-6-phosphate dehydrogenase
+mtu:Rv0133	CDS	160869..161474	GCN5-like N-acetyltransferase
+mtu:Rv0134	CDS	161771..162673	ephF; epoxide hydrolase EphF
+mtu:Rv0135c	CDS	complement(162644..163249)	transcriptional regulator
+mtu:Rv0136	CDS	163366..164691	cyp138; cytochrome P450 Cyp138
+mtu:Rv0137c	CDS	complement(164712..165260)	msrA; peptide methionine sulfoxide reductase MsrA
+mtu:Rv0138	CDS	165323..165826	hypothetical protein
+mtu:Rv0139	CDS	165827..166849	oxidoreductase
+mtu:Rv0140	CDS	166910..167290	hypothetical protein
+mtu:Rv0141c	CDS	complement(167271..167681)	hypothetical protein
+mtu:Rv0142	CDS	167711..168637	hypothetical protein
+mtu:Rv0143c	CDS	complement(168704..170182)	transmembrane protein
+mtu:Rv0144	CDS	170284..171126	transcriptional regulator
+mtu:Rv0145	CDS	171215..172168	S-adenosylmethionine-dependent methyltransferase
+mtu:Rv0146	CDS	172211..173143	S-adenosylmethionine-dependent methyltransferase
+mtu:Rv0147	CDS	173238..174758	aldehyde dehydrogenase
+mtu:Rv0148	CDS	174833..175693	short-chain type dehydrogenase/reductase
+mtu:Rv0149	CDS	175700..176668	quinone oxidoreductase
+mtu:Rv0150c	CDS	complement(176665..176952)	hypothetical protein
+mtu:Rv0151c	CDS	complement(177543..179309)	PE1; PE family protein PE1
+mtu:Rv0152c	CDS	complement(179319..180896)	PE2; PE family protein PE2
+mtu:Rv0153c	CDS	complement(181155..181985)	ptbB; phosphotyrosine protein phosphatase
+mtu:Rv0154c	CDS	complement(181987..183198)	fadE2; acyl-CoA dehydrogenase FadE2
+mtu:Rv0155	CDS	183622..184722	pntAa; NAD(P) transhydrogenase subunit alpha PntAa
+mtu:Rv0156	CDS	184723..185055	pntAb; NAD(P) transhydrogenase subunit alpha PntAb
+mtu:Rv0157	CDS	185052..186479	pntB; NAD(P) transhydrogenase subunit beta PntB
+mtu:Rv0157A	CDS	complement(186495..186623)	hypothetical protein
+mtu:Rv0158	CDS	186785..187429	transcriptional regulator
+mtu:Rv0159c	CDS	complement(187433..188839)	PE3; PE family protein PE3
+mtu:Rv0160c	CDS	complement(188931..190439)	PE4; PE family protein PE4
+mtu:Rv0161	CDS	190607..191956	oxidoreductase
+mtu:Rv0162c	CDS	complement(191984..193135)	adhE1; zinc-type alcohol dehydrogenase subunit E
+mtu:Rv0163	CDS	193117..193572	hypothetical protein
+mtu:Rv0164	CDS	193626..194111	TB18.5; hypothetical protein
+mtu:Rv0165c	CDS	complement(194144..194815)	mce1R; transcriptional regulator Mce1R
+mtu:Rv0166	CDS	194993..196657	fadD5; fatty-acid--CoA ligase FadD5
+mtu:Rv0167	CDS	196861..197658	yrbE1A; membrane protein
+mtu:Rv0168	CDS	197660..198529	yrbE1B; membrane protein
+mtu:Rv0169	CDS	198534..199898	mce1A; Mce family protein Mce1A
+mtu:Rv0170	CDS	199895..200935	mce1B; Mce family protein Mce1B
+mtu:Rv0171	CDS	200932..202479	mce1C; Mce family protein Mce1C
+mtu:Rv0172	CDS	202476..204068	mce1D; Mce family protein Mce1D
+mtu:Rv0173	CDS	204065..205237	lprK; Mce family lipoprotein LprK
+mtu:Rv0174	CDS	205231..206778	mce1F; Mce family protein Mce1F
+mtu:Rv0175	CDS	206814..207455	Mce associated membrane protein
+mtu:Rv0176	CDS	207452..208420	Mce associated transmembrane protein
+mtu:Rv0177	CDS	208417..208971	Mce associated protein
+mtu:Rv0178	CDS	208938..209672	Mce associated membrane protein
+mtu:Rv0179c	CDS	complement(209703..210812)	lprO; lipoprotein LprO
+mtu:Rv0180c	CDS	complement(210892..212250)	transmembrane protein
+mtu:Rv0181c	CDS	complement(212277..213011)	hypothetical protein
+mtu:Rv0182c	CDS	complement(213028..214140)	sigG; ECF RNA polymerase sigma factor SigG
+mtu:Rv0183	CDS	214088..214927	lysophospholipase
+mtu:Rv0184	CDS	214969..215718	hypothetical protein
+mtu:Rv0185	CDS	215715..216224	hypothetical protein
+mtu:Rv0186	CDS	216269..218344	bglS; beta-glucosidase BglS
+mtu:Rv0186A	CDS	complement(218390..218551)	mymT; metallothionein
+mtu:Rv0187	CDS	218705..219367	O-methyltransferase
+mtu:Rv0188	CDS	219486..219917	transmembrane protein
+mtu:Rv0189c	CDS	complement(219996..221723)	ilvD; dihydroxy-acid dehydratase
+mtu:Rv0190	CDS	221871..222161	hypothetical protein
+mtu:Rv0191	CDS	222289..223530	MFS-type transporter
+mtu:Rv0192	CDS	223564..224664	hypothetical protein
+mtu:Rv0193c	CDS	complement(224724..226571)	hypothetical protein
+mtu:Rv0194	CDS	226878..230462	multidrug ABC transporter ATPase/permease
+mtu:Rv0195	CDS	230899..231534	two component transcriptional regulator
+mtu:Rv0196	CDS	231647..232231	HTH-type transcriptional regulator
+mtu:Rv0197	CDS	232231..234519	oxidoreductase
+mtu:Rv0198c	CDS	complement(234516..236507)	zmp1; zinc metalloprotease
+mtu:Rv0199	CDS	236550..237209	membrane protein
+mtu:Rv0200	CDS	237206..237895	transmembrane protein
+mtu:Rv0201c	CDS	complement(237892..238395)	hypothetical protein
+mtu:Rv0202c	CDS	complement(238392..241292)	mmpL11; transmembrane transport protein MmpL11
+mtu:Rv0203	CDS	241514..241924	hypothetical protein
+mtu:Rv0204c	CDS	complement(241976..243214)	transmembrane protein
+mtu:Rv0205	CDS	243384..244487	transmembrane protein
+mtu:Rv0206c	CDS	complement(244484..247318)	mmpL3; transmembrane transport protein MmpL3
+mtu:Rv0207c	CDS	complement(247384..248112)	hypothetical protein
+mtu:Rv0208c	CDS	complement(248115..248906)	tRNA (guanine-N(7)-)-methyltransferase
+mtu:Rv0209	CDS	249038..250123	hypothetical protein
+mtu:Rv0210	CDS	250120..251598	hypothetical protein
+mtu:Rv0211	CDS	251782..253602	pckA; phosphoenolpyruvate carboxykinase
+mtu:Rv0212c	CDS	complement(253669..254640)	nadR; transcriptional regulator NadR
+mtu:Rv0213c	CDS	complement(254637..255950)	methyltransferase
+mtu:Rv0214	CDS	256064..257677	fadD4; fatty-acid--CoA ligase FadD4
+mtu:Rv0215c	gene	complement(257719..258856)	pseudogene
+mtu:Rv0216	CDS	258913..259926	hydratase
+mtu:Rv0217c	CDS	complement(259923..260831)	lipW; esterase LipW
+mtu:Rv0218	CDS	260924..262252	transmembrane protein
+mtu:Rv0219	CDS	262254..262802	transmembrane protein
+mtu:Rv0220	CDS	262812..264023	lipC; esterase LipC
+mtu:Rv0221	CDS	264067..265476	diacyglycerol O-acyltransferase
+mtu:Rv0222	CDS	265507..266295	echA1; enoyl-CoA hydratase EchA1
+mtu:Rv0223c	CDS	complement(266301..267764)	aldehyde dehydrogenase
+mtu:Rv0224c	CDS	complement(267863..268627)	methyltransferase
+mtu:Rv0225	CDS	268663..269817	hypothetical protein
+mtu:Rv0226c	CDS	complement(269834..271564)	transmembrane protein
+mtu:Rv0227c	CDS	complement(271574..272839)	membrane protein
+mtu:Rv0228	CDS	273055..274278	acyltransferase
+mtu:Rv0229c	CDS	complement(274306..274719)	hypothetical protein
+mtu:Rv0230c	CDS	complement(274983..275963)	php; phosphotriesterase
+mtu:Rv0231	CDS	276058..277764	fadE4; acyl-CoA dehydrogenase FadE4
+mtu:Rv0232	CDS	277899..278588	transcriptional regulator
+mtu:Rv0233	CDS	278585..279529	nrdB; ribonucleoside-diphosphate reductase subunit beta NrdB
+mtu:Rv0234c	CDS	complement(279605..281140)	gabD1; succinate-semialdehyde dehydrogenase
+mtu:Rv0235c	CDS	complement(281166..282614)	transmembrane protein
+mtu:Rv0236c	CDS	complement(282649..286851)	aftD; alpha-(1->3)-arabinofuranosyltransferase
+mtu:Rv0236A	CDS	complement(286898..287071)	hypothetical protein
+mtu:Rv0237	CDS	287186..288352	lpqI; lipoprotein LpqI
+mtu:Rv0238	CDS	288428..289042	transcriptional regulator
+mtu:Rv0239	CDS	289104..289337	vapB24; antitoxin VapB24
+mtu:Rv0240	CDS	289345..289782	vapC24; ribonuclease VapC24
+mtu:Rv0241c	CDS	complement(289812..290654)	htdX; 3-hydroxyacyl-thioester dehydratase HtdX
+mtu:Rv0242c	CDS	complement(290665..292029)	fabG4; 3-oxoacyl-ACP reductase FabG
+mtu:Rv0243	CDS	292171..293493	fadA2; acetyl-CoA acetyltransferase FadA
+mtu:RVnc0008	ncRNA	293604..293705	F6; Putative small regulatory RNA
+mtu:Rv0244c	CDS	complement(293798..295633)	fadE5; acyl-CoA dehydrogenase FadE5
+mtu:Rv0245	CDS	296005..296493	oxidoreductase
+mtu:Rv0246	CDS	296809..298119	integral membrane protein
+mtu:Rv0247c	CDS	complement(298116..298862)	succinate dehydrogenase iron-sulfur subunit
+mtu:Rv0248c	CDS	complement(298863..300803)	succinate dehydrogenase flavoprotein subunit
+mtu:Rv0249c	CDS	complement(300834..301655)	succinate dehydrogenase membrane anchor subunit
+mtu:Rv0250c	CDS	complement(301735..302028)	hypothetical protein
+mtu:Rv0251c	CDS	complement(302173..302652)	hsp; heat shock protein
+mtu:Rv0252	CDS	302866..305427	nirB; nitrite reductase large subunit NirB
+mtu:Rv0253	CDS	305453..305809	nirD; nitrite reductase small subunit NirD
+mtu:Rv0254c	CDS	complement(305825..306349)	cobU; bifunctional cobinamide kinase/cobinamide phosphate guanylyltransferase
+mtu:Rv0255c	CDS	complement(306374..307858)	cobQ1; cobyric acid synthase
+mtu:Rv0256c	CDS	complement(307877..309547)	PPE2; PPE family protein PPE2
+mtu:Rv0257	CDS	309699..310073	hypothetical protein
+mtu:Rv0258c	CDS	complement(310294..310749)	hypothetical protein
+mtu:Rv0259c	CDS	complement(310774..311517)	hypothetical protein
+mtu:Rv0260c	CDS	complement(311514..312659)	transcriptional regulator
+mtu:Rv0261c	CDS	complement(312759..314168)	narK3; nitrate/nitrite transporter
+mtu:Rv0262c	CDS	complement(314309..314854)	aac; aminoglycoside 2'-N-acetyltransferase
+mtu:Rv0263c	CDS	complement(314864..315766)	hypothetical protein
+mtu:Rv0264c	CDS	complement(315783..316415)	hypothetical protein
+mtu:Rv0265c	CDS	complement(316511..317503)	fecB2; iron ABC transporter substrate-binding lipoprotein
+mtu:Rv0266c	CDS	complement(317525..321154)	oplA; 5-oxoprolinase OplA
+mtu:Rv0267	CDS	321331..322722	narU; nitrite extrusion protein NarU
+mtu:Rv0268c	CDS	complement(322764..323273)	hypothetical protein
+mtu:Rv0269c	CDS	complement(323338..324531)	hypothetical protein
+mtu:Rv0270	CDS	324567..326249	fadD2; fatty-acid--CoA ligase FadD2
+mtu:Rv0271c	CDS	complement(326266..328461)	fadE6; acyl-CoA dehydrogenase FadE6
+mtu:Rv0272c	CDS	complement(328575..329708)	hypothetical protein
+mtu:Rv0273c	CDS	complement(329705..330325)	transcriptional regulator
+mtu:Rv0274	CDS	330422..331003	hypothetical protein
+mtu:Rv0275c	CDS	complement(330933..331658)	transcriptional regulator
+mtu:Rv0276	CDS	331748..332668	hypothetical protein
+mtu:Rv0277c	CDS	complement(332708..333136)	vapC25; ribonuclease VapC25
+mtu:Rv0277A	gene	complement(333160..333417)	vapB25; pseudogene
+mtu:Rv0278c	CDS	complement(333437..336310)	PE-PGRS family protein PE_PGRS3
+mtu:Rv0279c	CDS	complement(336560..339073)	PE_PGRS4; PE-PGRS family protein PE_PGRS4
+mtu:Rv0280	CDS	339364..340974	PPE3; PPE family protein PPE3
+mtu:Rv0281	CDS	340998..341906	S-adenosylmethionine-dependent methyltransferase
+mtu:Rv0282	CDS	342130..344025	eccA3; ESX-3 secretion system protein EccA
+mtu:Rv0283	CDS	344022..345638	eccB3; ESX-3 secretion system protein EccB3
+mtu:Rv0284	CDS	345635..349627	eccC3; ESX-3 secretion system protein EccC3
+mtu:Rv0285	CDS	349624..349932	PE5; PE family protein PE5
+mtu:Rv0286	CDS	349935..351476	PPE4; PPE family protein PPE4
+mtu:Rv0287	CDS	351525..351818	esxG; ESAT-6 like protein EsxG
+mtu:Rv0288	CDS	351848..352138	esxH; ESAT-6-like protein EsxH
+mtu:Rv0289	CDS	352149..353036	espG3; ESX-3 secretion-associated protein EspG3
+mtu:Rv0290	CDS	353083..354501	eccD3; ESX-3 secretion system protein EccD
+mtu:Rv0291	CDS	354498..355883	mycP3; membrane-anchored mycosin MycP
+mtu:Rv0292	CDS	355880..356875	eccE3; ESX-3 secretion system protein EccE
+mtu:Rv0293c	CDS	complement(356862..358064)	hypothetical protein
+mtu:Rv0294	CDS	358171..358956	tam; trans-aconitate methyltransferase
+mtu:Rv0295c	CDS	complement(358945..359748)	hypothetical protein
+mtu:Rv0296c	CDS	complement(359758..361155)	atsG; sulfatase
+mtu:Rv0297	CDS	361334..363109	PE_PGRS5; PE-PGRS family protein PE_PGRS5
+mtu:Rv0298	CDS	363252..363479	antitoxin
+mtu:Rv0299	CDS	363476..363778	toxin
+mtu:Rv0300	CDS	363826..364047	vapB2; antitoxin VapB2
+mtu:Rv0301	CDS	364044..364469	vapC2; ribonuclease VapC2
+mtu:Rv0302	CDS	364605..365237	transcriptional regulator
+mtu:Rv0303	CDS	365234..366142	dehydrogenase/reductase
+mtu:Rv0304c	CDS	complement(366150..372764)	PPE5; PPE family protein PPE5
+mtu:Rv0305c	CDS	complement(372820..375711)	PPE6; PPE family protein PPE6
+mtu:Rv0306	CDS	375914..376585	oxidoreductase
+mtu:Rv0307c	CDS	complement(376573..377055)	hypothetical protein
+mtu:Rv0308	CDS	377113..377829	integral membrane protein
+mtu:Rv0309	CDS	377931..378587	hypothetical protein
+mtu:Rv0310c	CDS	complement(378657..379148)	hypothetical protein
+mtu:Rv0311	CDS	379172..380401	hypothetical protein
+mtu:Rv0312	CDS	380556..382418	hypothetical protein
+mtu:Rv0313	CDS	382490..382876	hypothetical protein
+mtu:Rv0314c	CDS	complement(382879..383541)	membrane protein
+mtu:Rv0315	CDS	383602..384486	beta-1,3-glucanase
+mtu:Rv0316	CDS	384535..385149	muconolactone isomerase
+mtu:Rv0317c	CDS	complement(385173..385943)	glpQ2; glycerophosphoryl diester phosphodiesterase GlpQ
+mtu:Rvnt04	tRNA	complement(386204..386274)	glyU; tRNA-Gly
+mtu:Rv0318c	CDS	complement(386305..387099)	integral membrane protein
+mtu:Rv0319	CDS	387148..387816	pcp; pyrrolidone-carboxylate peptidase
+mtu:Rv0320	CDS	387888..388550	hypothetical protein
+mtu:Rv0321	CDS	388582..389154	dcd; deoxycytidine triphosphate deaminase
+mtu:Rv0322	CDS	389260..390591	udgA; UDP-glucose 6-dehydrogenase UdgA
+mtu:Rv0323c	CDS	complement(390580..391251)	hypothetical protein
+mtu:Rv0324	CDS	391352..392032	transcriptional regulator
+mtu:Rv0325	CDS	392039..392263	hypothetical protein
+mtu:Rv0326	CDS	392273..392728	hypothetical protein
+mtu:Rv0327c	CDS	complement(392696..394045)	cyp135A1; cytochrome P450 Cyp135A1
+mtu:Rv0328	CDS	394111..394713	transcriptional regulator
+mtu:Rv0329c	CDS	complement(394694..395320)	hypothetical protein
+mtu:Rv0330c	CDS	complement(395347..396087)	hypothetical protein
+mtu:Rv0331	CDS	396201..397367	dehydrogenase/reductase
+mtu:Rv0332	CDS	397442..398227	hypothetical protein
+mtu:Rv0333	CDS	398254..398628	hypothetical protein
+mtu:Rv0334	CDS	398658..399524	rmlA; glucose-1-phosphate thymidylyltransferase
+mtu:Rv0335c	CDS	complement(399535..400050)	PE6; PE family protein PE6
+mtu:Rv0336	CDS	400192..401703	hypothetical protein
+mtu:Rv0337c	CDS	complement(401873..403162)	aspC; aspartate aminotransferase
+mtu:Rv0338c	CDS	complement(403193..405841)	iron-sulfur-binding reductase
+mtu:Rv0339c	CDS	complement(405950..408448)	transcriptional regulator
+mtu:Rv0340	CDS	408634..409173	hypothetical protein
+mtu:Rv0341	CDS	409362..410801	iniB; isoniazid inducible protein IniB
+mtu:Rv0342	CDS	410838..412760	iniA; isoniazid inductible protein IniA
+mtu:Rv0343	CDS	412757..414238	iniC; iIsoniazid inductible protein IniC
+mtu:Rv0344c	CDS	complement(414381..414941)	lpqJ; lipoprotein LpqJ
+mtu:Rv0345	CDS	415050..415460	hypothetical protein
+mtu:Rv0346c	CDS	complement(415502..416965)	ansP2; L-asparagine permease
+mtu:Rv0347	CDS	417304..418290	membrane protein
+mtu:Rv0348	CDS	418293..418946	transcriptional regulator
+mtu:Rv0349	CDS	418949..419608	hypothetical protein
+mtu:Rv0350	CDS	419835..421712	dnaK; chaperone protein DnaK
+mtu:Rv0351	CDS	421709..422416	grpE; stress response protein GrpE
+mtu:Rv0352	CDS	422452..423639	dnaJ1; chaperone protein DnaJ
+mtu:Rv0353	CDS	423639..424019	hspR; heat shock protein transcriptional repressor HspR
+mtu:Rv0354c	CDS	complement(424269..424694)	PPE7; PPE family protein PPE7
+mtu:Rv0355c	CDS	complement(424777..434679)	PPE8; PPE family protein PPE8
+mtu:Rv0356c	CDS	complement(434830..435474)	hypothetical protein
+mtu:Rv0357c	CDS	complement(435471..436769)	purA; adenylosuccinate synthetase
+mtu:Rv0358	CDS	436860..437507	hypothetical protein
+mtu:Rv0359	CDS	437518..438297	zinc metalloprotease
+mtu:Rv0360c	CDS	complement(438302..438739)	hypothetical protein
+mtu:Rv0361	CDS	438822..439649	membrane protein
+mtu:Rv0362	CDS	439871..441253	mgtE; Mg2+ transport transmembrane protein MgtE
+mtu:Rv0363c	CDS	complement(441265..442299)	fba; fructose-bisphosphate aldolase
+mtu:Rv0364	CDS	442395..443078	transmembrane protein
+mtu:Rv0365c	CDS	complement(443067..444197)	hypothetical protein
+mtu:Rv0366c	CDS	complement(444222..444815)	hypothetical protein
+mtu:Rv0367c	CDS	complement(444844..445233)	hypothetical protein
+mtu:Rv0368c	CDS	complement(445314..446525)	hypothetical protein
+mtu:Rv0369c	CDS	complement(446531..447046)	membrane oxidoreductase
+mtu:Rv0370c	CDS	complement(447147..448043)	oxidoreductase
+mtu:Rv0371c	CDS	complement(448040..448633)	hypothetical protein
+mtu:Rv0372c	CDS	complement(448630..449385)	hypothetical protein
+mtu:Rv0373c	CDS	complement(449404..451803)	carbon monoxyde dehydrogenase large subunit
+mtu:Rv0374c	CDS	complement(451800..452279)	carbon monoxyde dehydrogenase small subunit
+mtu:Rv0375c	CDS	complement(452294..453154)	carbon monoxyde dehydrogenase medium subunit
+mtu:Rv0376c	CDS	complement(453230..454372)	hypothetical protein
+mtu:Rv0377	CDS	454421..455386	HTH-type transcriptional regulator
+mtu:Rv0378	CDS	455637..455858	hypothetical protein
+mtu:Rv0379	CDS	455977..456192	secE2; protein translocase subunit SecE
+mtu:Rv0380c	CDS	complement(456268..456819)	RNA methyltransferase
+mtu:Rv0381c	CDS	complement(456915..457823)	hypothetical protein
+mtu:Rv0382c	CDS	complement(457841..458380)	pyrE; orotate phosphoribosyltransferase
+mtu:Rv0383c	CDS	complement(458461..459315)	hypothetical protein
+mtu:Rv0384c	CDS	complement(459456..462002)	clpB; chaperone protein ClpB
+mtu:Rv0385	CDS	462135..463307	monooxygenase
+mtu:Rv0386	CDS	463411..466668	transcriptional regulator
+mtu:Rv0387c	gene	complement(466672..468001)	pseudogene
+mtu:Rv0667	CDS	759807..763325	rpoB; DNA-directed RNA polymerase subunit beta
+mtu:Rv1484	CDS	1674202..1675011	inhA; NADH-dependent enoyl-[ACP] reductase
+mtu:Rv1908c	CDS	complement(2153889..2156111)	katG; catalase-peroxidase
