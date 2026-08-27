@@ -32,3 +32,49 @@ def test_notes_name_the_textmining_only_partners(string):
 def test_partner_urls_resolve_to_string_network_pages(string):
     for record in string.partners("katG").records:
         assert record.url == f"https://string-db.org/network/{record.record_id}"
+
+
+def test_partners_with_no_textmining_are_not_called_textmining_driven(string, monkeypatch):
+    """A partner whose support is spread across several sub-medium channels with
+    tscore 0 was being named in the 'supported essentially only by textmining' note
+    -- asserting literature support the data does not show."""
+    import json
+
+    rows = [{
+        "stringId_A": "83332.Rv1908c", "stringId_B": "83332.Rv9999", "preferredName_A": "katG",
+        "preferredName_B": "spreadEvidence", "ncbiTaxonId": 83332, "score": 0.72,
+        "nscore": 0.25, "fscore": 0, "pscore": 0, "ascore": 0.3, "escore": 0.35,
+        "dscore": 0, "tscore": 0.0,
+    }]
+    original = string.http.get
+
+    def fake(url, params=None):
+        resp = original(url, params)
+        if "interaction_partners" in url:
+            return type(resp)(url=resp.url, status=200, body=json.dumps(rows),
+                              fetched_at=resp.fetched_at, content_sha256=resp.content_sha256,
+                              cached=False)
+        return resp
+
+    string.http.get = fake
+    result = string.partners("katG")
+    record = result.records[0]
+    assert record.detail["textmining_score"] == 0.0
+    assert record.detail["evidence_beyond_textmining"] is False  # no channel reaches 0.4
+    assert not any("spreadEvidence" in n for n in result.notes), \
+        "a partner with tscore 0 must never be named as textmining-supported"
+
+
+def test_unreadable_upstream_response_is_a_note_not_an_exception(string):
+    """STRING serving an HTML error page with HTTP 200 raised JSONDecodeError."""
+    original_url = "https://string-db.org/api/json/get_string_ids"
+
+    def html(url, params=None):
+        from kegg_string_mcp.cache import CachedResponse
+        return CachedResponse(url=url, status=200, body="<html>maintenance</html>",
+                              fetched_at="2026-08-27T00:00:00+00:00", content_sha256="x", cached=False)
+
+    string.http.get = html
+    result = string.partners("katG")
+    assert result.records == []
+    assert "unreadable" in " ".join(result.notes)

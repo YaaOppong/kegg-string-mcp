@@ -56,3 +56,37 @@ def test_partial_write_is_not_left_readable(tmp_path):
     cache = DiskCache(tmp_path)
     cache.put(URL, 200, json.dumps({"ok": True}))
     assert not list(tmp_path.rglob("*.tmp"))
+
+
+def test_corrupt_entry_is_a_miss_not_an_exception(tmp_path):
+    """One corrupt file used to make every call for that URL raise for the whole
+    30-day TTL, with no recovery short of deleting the cache by hand."""
+    cache = DiskCache(tmp_path)
+    cache.put(URL, 200, "body")
+    entry = next(tmp_path.rglob("*.json"))
+    entry.write_text("{ truncated json")
+    assert cache.get(URL) is None
+
+
+def test_entry_missing_a_required_key_is_a_miss(tmp_path):
+    cache = DiskCache(tmp_path)
+    cache.put(URL, 200, "body")
+    entry = next(tmp_path.rglob("*.json"))
+    entry.write_text(json.dumps({"url": URL, "status": 200}))
+    assert cache.get(URL) is None
+
+
+def test_concurrent_writers_do_not_corrupt_an_entry(tmp_path):
+    """A fixed '.tmp' filename let two writers interleave into the same file and
+    rename spliced JSON into place as a valid-looking entry."""
+    import threading
+
+    cache = DiskCache(tmp_path)
+    bodies = [f"payload-{i}" * 500 for i in range(8)]
+    threads = [threading.Thread(target=cache.put, args=(URL, 200, b)) for b in bodies]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join()
+    result = cache.get(URL)
+    assert result is not None and result.body in bodies

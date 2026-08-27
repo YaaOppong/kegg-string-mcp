@@ -103,9 +103,17 @@ Wire into an MCP client:
 
 ## Tests
 
-25 tests, no network access. Fixtures are verbatim KEGG and STRING responses captured
-2026-08-27, so parsers are tested against the formats the services actually return —
-which is how the four-column `/list/{organism}` layout was caught.
+47 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
+HTTP client that replays saved responses from `tests/fixtures/`, so the suite runs in
+under two seconds, gives the same answer every time, works offline and in CI, and does
+not hammer a free academic service. A red test means this code broke, not that an
+upstream service was down.
+
+The fixtures are *captured*, not hand-written: verbatim KEGG and STRING output pulled
+from the live endpoints on 2026-08-27. That is how the four-column `/list/{organism}`
+layout was caught — an invented fixture would have encoded the wrong assumption and
+passed. The trade-off is that fixtures cannot detect an upstream format *change*; that
+needs an occasional live check.
 
 ```bash
 pytest -q
@@ -125,6 +133,3 @@ Phase 1 of a larger project. Next: an agent loop that uses these tools to annota
 genes, an append-only store written by the pipeline rather than the model, and a
 validation layer that checks every citation in a generated summary against the
 `record_ids` actually retrieved.
-
-Deliberately out of scope: literature RAG. No PubMed, no embeddings, no document
-ingestion. This is structured, tool-based retrieval.

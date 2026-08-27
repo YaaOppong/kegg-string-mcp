@@ -44,3 +44,84 @@ def test_kegg_id_input_skips_the_gene_index(kegg, http):
     """Passing a full KEGG ID should not trigger the 4000-line gene list fetch."""
     kegg.pathways("mtu:Rv1908c", "mtu")
     assert not any(url.endswith("/list/mtu") for url in http.calls)
+
+
+def test_qualified_kegg_id_overrides_the_organism_argument(kegg, http):
+    """A fully-qualified ID carries its own organism. Ignoring it looked up pathway
+    names in the wrong organism, producing correct IDs with no names and no note."""
+    result = kegg.pathways("mtu:Rv1908c", organism="hsa")
+    assert result.query["organism_used"] == "mtu"
+    assert any("organism='hsa' was requested" in n for n in result.notes)
+    # Names resolve because the name lookup followed the identifier, not the argument.
+    assert all(r.name != "(name unavailable)" for r in result.records)
+    assert any("/list/pathway/mtu" in url for url in http.calls)
+
+
+def test_unnamed_pathways_are_never_silent(kegg):
+    """If a name genuinely cannot be resolved, say so rather than emitting
+    '(name unavailable)' with no explanation."""
+    result = kegg.pathways("katG", "mtu")
+    unnamed = [r.record_id for r in result.records if r.name == "(name unavailable)"]
+    assert not unnamed or any("no name for" in n for n in result.notes)
+
+
+def test_product_names_are_not_indexed_as_gene_symbols(kegg):
+    """KEGG writes 'symbolA, symbolB; product name'. With no ';' there is no symbol
+    field -- the cell is only a product name. Indexing it anyway made `toxin`,
+    `hydrolase` and `pseudogene` resolve to arbitrary genes as exact matches."""
+    index, _ = kegg.gene_index("mtu")
+    for bogus in ("TOXIN", "ANTITOXIN", "HYDROLASE", "PSEUDOGENE", "HYPOTHETICAL PROTEIN"):
+        assert bogus not in index, f"{bogus!r} should not be a symbol key"
+
+
+def test_comma_in_a_product_name_does_not_create_fragment_keys(kegg):
+    """'beta-1,3-glucanase' must not become the keys 'BETA-1' and '3-GLUCANASE'."""
+    index, _ = kegg.gene_index("mtu")
+    assert "BETA-1" not in index and "3-GLUCANASE" not in index
+
+
+def test_bogus_symbol_is_reported_as_unresolved(kegg):
+    result = kegg.pathways("toxin", "mtu")
+    assert result.records == [] and result.resolved["matched_by"] == "none"
+    assert "did not match" in result.notes[0]
+
+
+def test_real_symbols_still_resolve(kegg):
+    """The fix must not throw away genuine symbols along with the bogus ones."""
+    index, _ = kegg.gene_index("mtu")
+    assert index["KATG"] == "mtu:Rv1908c"
+    assert index["DNAA"] == "mtu:Rv0001"
+
+
+def test_locus_tag_is_never_shadowed_by_a_symbol(kegg):
+    index, _ = kegg.gene_index("mtu")
+    for locus in ("RV0001", "RV1908C", "RV0315"):
+        assert index[locus].upper().endswith(locus)
+
+
+def test_mixed_case_kegg_id_resolves(kegg):
+    """'MTU:Rv1908c' is a valid identifier; it used to be reported as no match."""
+    result = kegg.pathways("MTU:Rv1908c", "mtu")
+    assert result.resolved["kegg_gene_id"] == "mtu:Rv1908c"
+    assert result.record_ids
+
+
+def test_pathway_identifier_is_rejected_not_treated_as_an_organism(kegg):
+    """'path:mtu00360' matched the organism-code pattern and set organism='path'."""
+    result = kegg.pathways("path:mtu00360", "mtu")
+    assert result.records == [] and result.resolved["matched_by"] == "none"
+    assert "not a gene" in result.notes[0]
+
+
+def test_invalid_organism_returns_a_note_not_an_exception(kegg, http):
+    """A bad organism code raised FetchError out of the tool."""
+    import pytest
+    from kegg_string_mcp.http import FetchError
+
+    def boom(url, params=None):
+        raise FetchError(url, 400, "")
+
+    http.get = boom
+    result = kegg.pathways("katG", "notanorg")
+    assert result.records == []
+    assert "may not be a valid KEGG organism code" in result.notes[0]

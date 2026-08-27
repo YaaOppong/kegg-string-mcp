@@ -69,7 +69,12 @@ class StringClient:
             {"identifiers": gene, "species": species, "limit": 1, "echo_query": 1,
              "caller_identity": caller_identity()},
         )
-        hits = json.loads(resp.body) if resp.body.strip() else []
+        try:
+            hits = json.loads(resp.body) if resp.body.strip() else []
+        except json.JSONDecodeError:
+            # STRING occasionally serves an HTML maintenance page with HTTP 200.
+            # Letting that raise would surface as a hard tool error.
+            hits = None
         return (hits[0] if hits else None), _trace(resp)
 
     def partners(
@@ -86,14 +91,22 @@ class StringClient:
             return ToolResult.build(query, [], notes=[f"STRING identifier lookup failed: HTTP {exc.status}."])
         traces.append(trace)
 
-        if not hit:
+        if hit is None:
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none"}, requests=traces,
-                notes=[f"'{gene}' did not resolve to a STRING protein in species {species}. No partners "
-                       f"were looked up. This is a resolution failure, not evidence of no partners."],
+                notes=[f"'{gene}' did not resolve to a STRING protein in species {species} (or STRING "
+                       f"returned an unreadable response). No partners were looked up. This is a "
+                       f"resolution failure, not evidence of no partners."],
             )
 
         string_id = hit.get("stringId", "")
+        # STRING resolves fuzzily and synonym-matches. Say so when the protein it
+        # picked is not literally what was asked for, rather than presenting a
+        # best-guess match as if it were exact.
+        preferred = hit.get("preferredName", "")
+        if preferred and preferred.upper() != gene.strip().upper() and gene.strip().upper() != string_id.upper():
+            notes.append(f"STRING resolved '{gene}' to '{preferred}' ({string_id}) by its own "
+                         f"synonym matching, not by exact match. Verify this is the intended protein.")
         try:
             resp = self.http.get(
                 f"{API}/json/interaction_partners",
@@ -107,7 +120,14 @@ class StringClient:
             )
         traces.append(_trace(resp))
 
-        rows = json.loads(resp.body) if resp.body.strip() else []
+        try:
+            rows = json.loads(resp.body) if resp.body.strip() else []
+        except json.JSONDecodeError:
+            return ToolResult.build(
+                query, [], resolved={"string_id": string_id}, requests=traces,
+                notes=[f"STRING returned an unreadable (non-JSON) response for {string_id}; it may be "
+                       f"serving an error page. No partner data retrieved."],
+            )
         if not rows:
             notes.append(f"STRING returned no partners for {string_id} at required_score>={required_score}. "
                          f"Lowering the threshold may return partners; this is not evidence of isolation.")
@@ -138,7 +158,16 @@ class StringClient:
                 )
             )
 
-        textmining_only = [r.name for r in records if not r.detail["evidence_beyond_textmining"]]
+        # Only name a partner as textmining-driven when textmining ACTUALLY carries it.
+        # Testing `not evidence_beyond_textmining` alone also caught partners whose
+        # tscore is 0 and whose support is spread across several sub-medium channels --
+        # asserting literature support that the data does not show, which is exactly
+        # the fabrication this module exists to prevent.
+        textmining_only = [
+            r.name for r in records
+            if r.detail["textmining_score"] >= MEDIUM_CONFIDENCE
+            and r.detail["max_non_textmining_score"] < MEDIUM_CONFIDENCE
+        ]
         notes.append(
             "STRING's combined_score includes the textmining channel (literature co-mention). "
             f"evidence_beyond_textmining is True only when some other channel reaches "
