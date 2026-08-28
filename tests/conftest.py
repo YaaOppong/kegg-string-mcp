@@ -1,8 +1,13 @@
-"""Fixtures replay real KEGG and STRING responses captured 2026-08-27.
+"""Fixtures replay real KEGG, STRING and PubMed responses captured 2026-08-27/28.
 
 Tests never hit the network. The fixtures are verbatim API output, so the parsers
 are tested against the formats the services actually return -- which is how the
-four-column `/list/{org}` layout was caught.
+four-column `/list/{org}` layout was caught, and how the PubMed reference-list
+DOIs were caught (one fixture article carries 35 ArticleIdList elements, of which
+exactly one is its own).
+
+The two efetch fixtures are the real responses for exactly the PMIDs their
+paired esearch returned, so the search -> fetch path replays end to end.
 """
 
 from __future__ import annotations
@@ -14,17 +19,22 @@ import pytest
 from kegg_string_mcp.cache import CachedResponse
 from kegg_string_mcp.kegg import KeggClient
 from kegg_string_mcp.provenance import sha256
+from kegg_string_mcp.pubmed import PubMedClient
 from kegg_string_mcp.string_db import StringClient
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
-# Longest match wins, so /list/pathway/ is not shadowed by /list/.
+# Longest match wins, so /list/pathway/ is not shadowed by /list/, and the
+# single-PMID efetch is not shadowed by the multi-PMID one.
 ROUTES = [
     ("rest.kegg.jp/list/pathway/mtu", "kegg_list_pathway_mtu.tsv"),
     ("rest.kegg.jp/link/pathway/mtu:Rv1908c", "kegg_link_pathway_Rv1908c.tsv"),
     ("rest.kegg.jp/list/mtu", "kegg_list_mtu_subset.tsv"),
     ("string-db.org/api/json/get_string_ids", "string_get_string_ids_katG.json"),
     ("string-db.org/api/json/interaction_partners", "string_interaction_partners_Rv1908c.json"),
+    ("esearch.fcgi", "pubmed_esearch_katG_mtb.json"),
+    ("efetch.fcgi", "pubmed_efetch_katG_mtb.xml"),
+    ("id=8950806&retmode", "pubmed_efetch_no_abstract.xml"),
 ]
 
 
@@ -63,3 +73,12 @@ def kegg(http: FixtureHttp) -> KeggClient:
 @pytest.fixture
 def string(http: FixtureHttp) -> StringClient:
     return StringClient(http)
+
+
+@pytest.fixture
+def pubmed(http: FixtureHttp, monkeypatch) -> PubMedClient:
+    # A developer's real NCBI_EMAIL/NCBI_API_KEY would otherwise leak into the
+    # fixture URLs and change which route matches.
+    for variable in ("NCBI_EMAIL", "NCBI_API_KEY", "NCBI_TOOL"):
+        monkeypatch.delenv(variable, raising=False)
+    return PubMedClient(http)

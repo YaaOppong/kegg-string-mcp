@@ -67,6 +67,26 @@ TOOL_SCHEMAS = [
             "required": ["gene"],
         },
     },
+    {
+        "name": "pubmed_abstracts",
+        "description": (
+            "PubMed abstracts for a gene, via NCBI E-utilities. Use this LAST and only when the "
+            "structured tools leave a question open -- it is the weakest and noisiest channel. "
+            "Unlike KEGG and STRING this is relevance-ranked text search, NOT identifier "
+            "resolution: matching a query string is not the same as being about the gene, and "
+            "there is no 'did not resolve' signal. Each record carries the exact retrieved text; "
+            "any claim you draw from an abstract must quote a verbatim span of it."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "gene": {"type": "string"},
+                "organism": {"type": "string", "default": "Mycobacterium tuberculosis"},
+                "limit": {"type": "integer", "default": 10},
+            },
+            "required": ["gene"],
+        },
+    },
 ]
 
 

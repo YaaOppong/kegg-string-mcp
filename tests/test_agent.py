@@ -136,3 +136,76 @@ def test_no_evidence_is_an_explicit_verdict_not_silence():
 
 def test_all_pairs_covers_every_combination():
     assert len(all_pairs(["a", "b", "c"], {}, {}, {}, 4008)) == 3
+
+
+# --- quote validation -------------------------------------------------------
+
+ABSTRACT = {
+    "record_id": "10609885", "type": "article", "name": "AhpC and KatG",
+    "detail": {"quotable_text": "All the isoniazid-resistant, AhpC-overexpressing strains\n"
+                                "were also deficient in activity of the mycobacterial\n"
+                                "catalase-peroxidase KatG."},
+}
+
+
+def test_verbatim_quote_is_verified():
+    from kegg_string_mcp.agent.validate import validate
+
+    text = 'PMID:10609885 "were also deficient in activity of the mycobacterial catalase-peroxidase KatG"'
+    report = validate(text, {"10609885"}, records={"10609885": ABSTRACT})
+    assert [q.status for q in report.quotes] == ["verified"]
+    assert report.passed
+
+
+def test_fabricated_quote_on_a_real_pmid_is_caught():
+    """The failure set membership cannot see: a genuinely retrieved PMID carrying
+    words that are not in it."""
+    from kegg_string_mcp.agent.validate import validate
+
+    text = 'PMID:10609885 "KatG binds directly to AhpC in a stable complex"'
+    report = validate(text, {"10609885"}, records={"10609885": ABSTRACT})
+    assert [q.status for q in report.quotes] == ["not_in_source"]
+    assert not report.passed
+
+
+def test_quote_survives_line_breaks_and_recapitalisation():
+    """The stored text is flattened from XML; a model legitimately recapitalises a
+    span at the start of a sentence. Neither is a fabrication."""
+    from kegg_string_mcp.agent.validate import validate
+
+    text = 'PMID:10609885 "Were also deficient in activity of the mycobacterial catalase-peroxidase"'
+    report = validate(text, {"10609885"}, records={"10609885": ABSTRACT})
+    assert [q.status for q in report.quotes] == ["verified"]
+
+
+def test_quote_is_read_in_either_written_order():
+    from kegg_string_mcp.agent.validate import extract_quotes
+
+    after = extract_quotes('PMID:10609885 "were also deficient in activity"')
+    before = extract_quotes('"were also deficient in activity" (PMID:10609885)')
+    assert after == before == [("10609885", "were also deficient in activity")]
+
+
+def test_quote_against_a_record_with_no_text_is_not_silently_passed():
+    from kegg_string_mcp.agent.validate import validate
+
+    empty = {"record_id": "999", "detail": {"quotable_text": ""}}
+    report = validate('PMID:999 "some claimed finding here"', {"999"}, records={"999": empty})
+    assert [q.status for q in report.quotes] == ["no_source_text"]
+    assert not report.passed
+
+
+def test_bare_numbers_are_not_treated_as_pmid_citations():
+    """A bare 8-digit number could be a coordinate or a score. Only PMID: form
+    counts, or ordinary prose would be flagged as unsupported."""
+    from kegg_string_mcp.agent.validate import extract_citations
+
+    assert extract_citations("the region spans 1673400 to 12345678 bases") == []
+    assert extract_citations("see PMID:12345678") == ["12345678"]
+
+
+def test_short_quoted_fragments_are_ignored():
+    """A three-character 'quote' would pass containment against almost anything."""
+    from kegg_string_mcp.agent.validate import extract_quotes
+
+    assert extract_quotes('PMID:10609885 "KatG"') == []

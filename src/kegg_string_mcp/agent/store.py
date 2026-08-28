@@ -95,6 +95,13 @@ class RunStore:
     def per_target(self) -> dict[str, set[str]]:
         return {k: set(v) for k, v in self._per_target.items()}
 
+    @property
+    def records(self) -> dict[str, dict[str, Any]]:
+        """Every record the tools returned, keyed by ID. Quote validation needs the
+        stored `quotable_text`, so it must read the pipeline's copy -- never the
+        model's account of what it was shown."""
+        return dict(self._records)
+
     def record(self, record_id: str) -> dict[str, Any] | None:
         return self._records.get(record_id)
 

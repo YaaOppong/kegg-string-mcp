@@ -41,6 +41,10 @@ def main(argv: list[str] | None = None) -> int:
         for citation in payload["validation"]["citations"]:
             if citation["status"] != "verified":
                 print(f"  {citation['status'].upper():13} {citation['identifier']}  {citation['detail']}")
+        for quote in payload["validation"].get("quotes", []):
+            if quote["status"] != "verified":
+                print(f"  {quote['status'].upper():13} PMID:{quote['record_id']}  "
+                      f"{quote['detail']}\n                  quoted: {quote['quote'][:90]!r}")
         print(f"\nrun store: {payload['store']}")
 
     return 0 if payload["validation"]["passed"] else 1

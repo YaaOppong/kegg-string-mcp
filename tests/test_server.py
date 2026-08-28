@@ -7,8 +7,8 @@ def _tools():
     return {t.name: t for t in asyncio.run(mcp.list_tools())}
 
 
-def test_both_tools_are_registered():
-    assert set(_tools()) == {"kegg_pathways", "string_partners"}
+def test_all_tools_are_registered():
+    assert set(_tools()) == {"kegg_pathways", "string_partners", "pubmed_abstracts"}
 
 
 def test_tools_declare_read_only():
@@ -26,6 +26,9 @@ def test_defaults_target_mtb_h37rv():
     props = _tools()["string_partners"].input_schema["properties"]
     assert props["species"]["default"] == 83332
     assert _tools()["kegg_pathways"].input_schema["properties"]["organism"]["default"] == "mtu"
+    assert _tools()["pubmed_abstracts"].input_schema["properties"]["organism"]["default"] == (
+        "Mycobacterium tuberculosis"
+    )
 
 
 def test_descriptions_warn_the_model_about_textmining():
@@ -36,3 +39,17 @@ def test_descriptions_warn_the_model_about_textmining():
 
 def test_descriptions_distinguish_no_data_from_no_match():
     assert "resolve" in _tools()["kegg_pathways"].description.lower()
+
+
+def test_pubmed_description_warns_that_a_hit_is_not_a_resolved_identifier():
+    """The weakness of this tool relative to the other two is the thing the model
+    most needs to know, so it belongs in the description it always reads."""
+    description = _tools()["pubmed_abstracts"].description
+    assert "not identifier resolution" in description.lower()
+
+
+def test_pubmed_description_tells_the_model_to_quote_verbatim():
+    """Span grounding only works if the model knows a paraphrase will fail it."""
+    description = _tools()["pubmed_abstracts"].description
+    assert "quotable_text" in description
+    assert "verbatim" in description.lower()

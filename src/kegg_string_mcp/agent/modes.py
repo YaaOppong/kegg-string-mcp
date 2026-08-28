@@ -31,8 +31,23 @@ Rules, in order of importance:
    essentially by literature co-mention alone; say so rather than presenting it
    as independent experimental support.
 
+5. Literature and STRING's textmining channel are ONE evidence class, not two.
+   STRING's textmining score is derived from co-mention in papers, so an abstract
+   about the same pair is very likely the source of that score rather than
+   independent corroboration. Never present them as two lines of evidence. If an
+   interaction has `evidence_beyond_textmining: false` and you also found papers
+   discussing it, that is still one line of evidence: literature.
+6. Any claim you draw from an abstract must quote a verbatim span of that
+   abstract, written as: PMID:12345678 "exact words from the abstract". Quotes
+   are checked programmatically against the retrieved text. Paraphrase freely in
+   your own analysis, but a claim attributed to a paper needs its words.
+7. PubMed search is relevance-ranked, not identifier resolution. An article
+   matching your query string is not necessarily about your gene. Read the title
+   and abstract before citing it.
+
 Call tools as many times as you need and no more. Stop when further calls would
-not change the annotation."""
+not change the annotation. Literature is the expensive, noisy channel -- reach
+for it when the structured tools leave a real question open, not by default."""
 
 SINGLE_GENE = _SHARED + """
 

@@ -23,6 +23,7 @@ from kegg_string_mcp.agent.validate import validate
 from kegg_string_mcp.cache import DiskCache
 from kegg_string_mcp.http import PoliteClient
 from kegg_string_mcp.kegg import KeggClient
+from kegg_string_mcp.pubmed import PubMedClient
 from kegg_string_mcp.string_db import StringClient
 
 
@@ -33,12 +34,15 @@ class Tools:
         self.http = http or PoliteClient(DiskCache())
         self.kegg = KeggClient(self.http)
         self.string = StringClient(self.http)
+        self.pubmed = PubMedClient(self.http)
 
     def __call__(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         if name == "kegg_pathways":
             return self.kegg.pathways(**arguments).model_dump()
         if name == "string_partners":
             return self.string.partners(**arguments).model_dump()
+        if name == "pubmed_abstracts":
+            return self.pubmed.abstracts(**arguments).model_dump()
         return {"records": [], "record_ids": [], "notes": [f"unknown tool '{name}'"]}
 
 
@@ -52,7 +56,8 @@ def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("runs"),
             f"notable interaction partners, citing record IDs from the tool results.")
     result = run_loop("single", task, tools, store, client=client)
 
-    report = validate(result.text, store.citable_ids, store.per_target, gene.strip().upper())
+    report = validate(result.text, store.citable_ids, store.per_target, gene.strip().upper(),
+                      records=store.records)
     payload = {"mode": "single", "gene": gene, "organism": organism,
                "summary": result.text, "turns": result.turns,
                "stop_reason": result.stop_reason, "validation": report.to_dict()}
@@ -109,7 +114,7 @@ def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Pat
             f"Interpret these relationships. Do not contradict the deterministic verdicts.")
     result = run_loop("epistasis", task, tools, store, client=client)
 
-    report = validate(result.text, store.citable_ids)
+    report = validate(result.text, store.citable_ids, records=store.records)
     payload = {"mode": "epistasis", "genes": genes, "organism": organism,
                "summary": result.text, "turns": result.turns,
                "stop_reason": result.stop_reason,

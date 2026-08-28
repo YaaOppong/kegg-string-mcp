@@ -171,6 +171,52 @@ def test_cache_hit_does_not_replay_another_callers_identity(tmp_path, monkeypatc
     assert "caller_identity" not in replay.audit_url
 
 
+def test_api_key_is_scrubbed_from_the_audit_url_on_a_live_fetch(tmp_path, monkeypatch):
+    """caller_identity may appear in a live fetch's audit URL -- it is the caller's
+    own name for their own request. An api_key may not: audit URLs travel into
+    ToolResult.requests and from there into the run store on disk."""
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: Resp())
+    c, _ = client(tmp_path)
+    live = c.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+                 {"term": "katG", "api_key": "s3cret", "email": "me@example.com"})
+    assert not live.cached
+    assert "s3cret" not in live.audit_url
+    assert "api_key=REDACTED" in live.audit_url
+
+
+def test_api_key_is_still_sent_upstream(tmp_path, monkeypatch):
+    """Redaction is for the record, not for the request -- scrubbing the wire call
+    would silently drop the caller to the unauthenticated rate limit."""
+    calls = []
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: (calls.append(url), Resp())[1])
+    c, _ = client(tmp_path)
+    c.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+          {"term": "katG", "api_key": "s3cret"})
+    assert "api_key=s3cret" in calls[0]
+
+
+def test_api_key_is_never_written_to_disk(tmp_path, monkeypatch):
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: Resp())
+    c, _ = client(tmp_path)
+    c.get("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+          {"term": "katG", "api_key": "s3cret", "email": "me@example.com"})
+    on_disk = "".join(p.read_text() for p in tmp_path.rglob("*.json"))
+    assert "s3cret" not in on_disk and "me@example.com" not in on_disk
+
+
+def test_ncbi_identity_params_do_not_split_the_cache(tmp_path, monkeypatch):
+    """Two developers sharing a cache directory, or one who sets NCBI_EMAIL later,
+    must not each refetch the whole corpus at 3 req/s."""
+    calls = []
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: (calls.append(url), Resp())[1])
+    c, _ = client(tmp_path)
+    base = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+    c.get(base, {"term": "katG", "tool": "kegg-string-mcp", "email": "a@example.com"})
+    c.get(base, {"term": "katG", "tool": "kegg-string-mcp", "email": "b@example.com",
+                 "api_key": "s3cret"})
+    assert len(calls) == 1, "second call should have hit the cache"
+
+
 def test_caller_identity_is_never_written_to_disk(tmp_path, monkeypatch):
     monkeypatch.setattr(httpx, "get", lambda url, **kw: Resp())
     c, _ = client(tmp_path)

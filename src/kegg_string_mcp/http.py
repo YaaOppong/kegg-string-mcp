@@ -28,6 +28,10 @@ USER_AGENT = os.environ.get("KEGG_STRING_MCP_USER_AGENT", "kegg-string-mcp/0.1 (
 MIN_INTERVAL = {
     "rest.kegg.jp": 0.34,      # ~3 req/s
     "string-db.org": 1.05,     # STRING asks for ~1 req/s
+    # NCBI caps unauthenticated callers at 3 req/s and blocks over it. An API key
+    # raises that to 10 req/s, but the floor stays put: the extra rate is worth
+    # far less than never being the client that gets the user's IP banned.
+    "eutils.ncbi.nlm.nih.gov": 0.35,
 }
 DEFAULT_MIN_INTERVAL = 1.0
 RETRY_STATUSES = {429, 500, 502, 503, 504}
@@ -37,7 +41,17 @@ MAX_RETRY_AFTER = 60.0
 # Params that identify the caller rather than the resource. They belong in the
 # request but not in the cache key -- otherwise changing STRING_CALLER_IDENTITY
 # silently invalidates the entire STRING cache and forces a refetch at 1 req/s.
-IDENTITY_PARAMS = {"caller_identity"}
+# NCBI's tool/email/api_key are the same shape of thing: who is asking, not what
+# is being asked for.
+IDENTITY_PARAMS = {"caller_identity", "tool", "email", "api_key"}
+
+# Credentials. Stripped from the cache key like every identity param, but ALSO
+# redacted from the audit URL, which the others are not: a live fetch records the
+# URL actually sent, and that URL travels into ToolResult.requests and from there
+# into the run store on disk. An api_key is the one identity param that must not
+# be written down anywhere, so it is scrubbed before provenance ever sees it.
+SECRET_PARAMS = {"api_key"}
+REDACTED = "REDACTED"
 
 
 class FetchError(RuntimeError):
@@ -80,20 +94,27 @@ class PoliteClient:
             self._last_request[host] = time.monotonic()
 
     @staticmethod
-    def _urls(url: str, params: dict[str, object] | None) -> tuple[str, str]:
-        """Return (request_url, cache_key). Params are sorted so the key is stable
-        regardless of the order the caller happened to build the dict in."""
+    def _urls(url: str, params: dict[str, object] | None) -> tuple[str, str, str]:
+        """Return (request_url, cache_key, audit_url). Params are sorted so the key
+        is stable regardless of the order the caller happened to build the dict in.
+
+        `request_url` is what goes on the wire; `audit_url` is the same thing with
+        credentials scrubbed, and is the only one of the two that is allowed to be
+        recorded as provenance.
+        """
         if not params:
-            return url, url
+            return url, url, url
         items = sorted((k, str(v)) for k, v in params.items() if v is not None)
         request_url = f"{url}?{urlencode(items)}"
         keyed = [(k, v) for k, v in items if k not in IDENTITY_PARAMS]
         cache_key = f"{url}?{urlencode(keyed)}" if keyed else url
-        return request_url, cache_key
+        scrubbed = [(k, REDACTED if k in SECRET_PARAMS else v) for k, v in items]
+        audit_url = f"{url}?{urlencode(scrubbed)}"
+        return request_url, cache_key, audit_url
 
     def get(self, url: str, params: dict[str, object] | None = None) -> CachedResponse:
         """Fetch, or replay from cache."""
-        request_url, cache_key = self._urls(url, params)
+        request_url, cache_key, audit_url = self._urls(url, params)
 
         hit = self.cache.get(cache_key)
         if hit is not None:
@@ -128,7 +149,9 @@ class PoliteClient:
                 # otherwise read as a genuine "no results".
                 raise FetchError(request_url, response.status_code, response.text)
 
+            # audit_url, not request_url: CachedResponse.request_url exists solely to
+            # be reported as provenance, so a credential must never reach it.
             return self.cache.put(cache_key, response.status_code, response.text,
-                                  request_url=request_url)
+                                  request_url=audit_url)
 
         raise FetchError(request_url, 0, f"exhausted {MAX_ATTEMPTS} attempts: {last_error}")
