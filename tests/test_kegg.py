@@ -116,7 +116,6 @@ def test_pathway_identifier_is_rejected_not_treated_as_an_organism(kegg):
 def test_valid_shaped_but_unknown_organism_returns_a_note_not_an_exception(kegg, http):
     """'zzz' passes the format check but does not exist in KEGG, so this still
     exercises the FetchError path that used to raise out of the tool."""
-    import pytest
     from kegg_string_mcp.http import FetchError
 
     def boom(url, params=None):

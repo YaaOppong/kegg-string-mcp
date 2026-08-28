@@ -473,7 +473,7 @@ def test_mentions_merge_across_calls_for_the_same_paper(tmp_path):
     """The same PMID returned for two genes kept only the last record, losing the
     first gene's mention -- the field a downstream corpus filters on."""
     store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
-    paper = lambda gene: {  # noqa: E731
+    paper = lambda gene: {
         "resolved": {}, "record_ids": ["999"],
         "records": [{"record_id": "999", "type": "article", "name": "p", "url": "u",
                      "detail": {"mentions": [gene], "quotable_text": "t", "doi": "",

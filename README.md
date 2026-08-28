@@ -1,5 +1,7 @@
 # kegg-string-mcp
 
+[![CI](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml)
+
 An [MCP](https://modelcontextprotocol.io) server exposing **KEGG**, **STRING** and
 **PubMed** as model-callable tools for gene annotation. Every record returned carries a
 stable ID and a resolvable URL, so a downstream agent's citations can be checked
@@ -151,8 +153,12 @@ pytest
 ## Running the MCP server
 
 ```bash
-kegg-string-mcp          # stdio transport
+kegg-string-mcp                  # stdio transport
+docker run -i --rm ghcr-or-local-image   # or in a container
 ```
+
+The container image is built and handshake-tested on every push; see
+[.github/workflows/ci.yml](.github/workflows/ci.yml).
 
 Wire into an MCP client:
 

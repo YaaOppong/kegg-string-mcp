@@ -80,5 +80,5 @@ class ToolResult(BaseModel):
     requests: list[RequestTrace] = Field(default_factory=list)
 
     @classmethod
-    def build(cls, query: dict[str, Any], records: list[Record], **kw: Any) -> "ToolResult":
+    def build(cls, query: dict[str, Any], records: list[Record], **kw: Any) -> ToolResult:
         return cls(query=query, records=records, record_ids=[r.record_id for r in records], **kw)

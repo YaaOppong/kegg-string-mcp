@@ -67,7 +67,6 @@ def test_partners_with_no_textmining_are_not_called_textmining_driven(string, mo
 
 def test_unreadable_upstream_response_is_a_note_not_an_exception(string):
     """STRING serving an HTML error page with HTTP 200 raised JSONDecodeError."""
-    original_url = "https://string-db.org/api/json/get_string_ids"
 
     def html(url, params=None):
         from kegg_string_mcp.cache import CachedResponse

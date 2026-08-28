@@ -195,31 +195,31 @@ class UniProtClient:
         if problems:
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none"},
-                notes=[f"Invalid argument(s), so no lookup was performed: {'; '.join(problems)}. "
-                       f"An empty result here does NOT mean the protein is unannotated."],
+                notes=[(f"Invalid argument(s), so no lookup was performed: {'; '.join(problems)}. "
+                       f"An empty result here does NOT mean the protein is unannotated.")],
             )
 
         try:
             entries, release, trace = self.search(gene, organism_id, limit)
         except FetchError as exc:
             return ToolResult.build(query, [], resolved={"matched_by": "none"},
-                                    notes=[f"UniProt search failed: HTTP {exc.status}. "
-                                           f"No records were retrieved."])
+                                    notes=[(f"UniProt search failed: HTTP {exc.status}. "
+                                           f"No records were retrieved.")])
         traces = [trace]
 
         resolved_base = {"matched_by": "none", "uniprot_release": release}
         if entries is None:
             return ToolResult.build(
                 query, [], resolved=resolved_base, requests=traces,
-                notes=["UniProt returned an unreadable response (expected a JSON object with a "
+                notes=[("UniProt returned an unreadable response (expected a JSON object with a "
                        "results list). No records were retrieved. This is a retrieval failure, "
-                       "not evidence that the protein is unannotated."])
+                       "not evidence that the protein is unannotated.")])
         if not entries:
             return ToolResult.build(
                 query, [], resolved=resolved_base, requests=traces,
-                notes=[f"UniProt returned no entry for gene '{gene}' in organism {organism_id}. "
+                notes=[(f"UniProt returned no entry for gene '{gene}' in organism {organism_id}. "
                        f"Try a locus tag (e.g. Rv1908c) or a different symbol; this is a "
-                       f"resolution failure, not evidence that the protein is unannotated."])
+                       f"resolution failure, not evidence that the protein is unannotated.")])
 
         records = [r for r in (self._record(e, (trace.retrieved_at, trace.cached))
                                for e in entries) if r is not None]

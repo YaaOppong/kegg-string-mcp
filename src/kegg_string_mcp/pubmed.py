@@ -289,8 +289,8 @@ class PubMedClient:
         if problems:
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none"},
-                notes=[f"Invalid argument(s), so no search was performed: {'; '.join(problems)}. "
-                       f"An empty result here does NOT mean there is no literature on this gene."],
+                notes=[(f"Invalid argument(s), so no search was performed: {'; '.join(problems)}. "
+                       f"An empty result here does NOT mean there is no literature on this gene.")],
             )
 
         # Phrase-quoted so a multi-word organism stays one concept and a gene symbol
@@ -316,18 +316,18 @@ class PubMedClient:
             detail = f" NCBI reported: {meta['error']}." if meta.get("error") else ""
             return ToolResult.build(
                 query, [], resolved=resolved, requests=traces,
-                notes=[f"PubMed esearch returned an unreadable or error response for {term!r}.{detail} "
+                notes=[(f"PubMed esearch returned an unreadable or error response for {term!r}.{detail} "
                        f"No articles were retrieved. This is a retrieval failure, not evidence that "
-                       f"no literature exists."],
+                       f"no literature exists.")],
             )
 
         total = meta.get("total")
         if not pmids:
             return ToolResult.build(
                 query, [], resolved=resolved, requests=traces,
-                notes=[f"PubMed returned no articles for {term!r}. Try a different gene name or drop "
+                notes=[(f"PubMed returned no articles for {term!r}. Try a different gene name or drop "
                        f"the organism term; this is a search miss, not evidence that the gene is "
-                       f"unstudied.", SEARCH_CAVEAT],
+                       f"unstudied."), SEARCH_CAVEAT],
             )
 
         try:
@@ -335,19 +335,19 @@ class PubMedClient:
         except FetchError as exc:
             return ToolResult.build(
                 query, [], resolved=resolved, requests=traces,
-                notes=[f"PubMed esearch found {len(pmids)} article(s) but efetch failed: HTTP "
+                notes=[(f"PubMed esearch found {len(pmids)} article(s) but efetch failed: HTTP "
                        f"{exc.status}, so none of their content was retrieved. The PMIDs are listed "
                        f"here for reference and are NOT citable from this result: "
-                       f"{', '.join(pmids)}."],
+                       f"{', '.join(pmids)}.")],
             )
         traces.append(fetch_trace)
 
         if records is None:
             return ToolResult.build(
                 query, [], resolved=resolved, requests=traces,
-                notes=[f"PubMed efetch returned a response that could not be parsed as PubMed XML, so "
+                notes=[(f"PubMed efetch returned a response that could not be parsed as PubMed XML, so "
                        f"no article content was retrieved. The PMIDs are listed here for reference and "
-                       f"are NOT citable from this result: {', '.join(pmids)}."],
+                       f"are NOT citable from this result: {', '.join(pmids)}.")],
             )
 
         notes = [SEARCH_CAVEAT, TEXTMINING_CAVEAT]

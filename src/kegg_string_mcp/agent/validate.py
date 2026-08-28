@@ -45,12 +45,19 @@ CITATION_PATTERNS = [
 # enough that matching it means something; a three-character "quote" would pass
 # containment against almost any abstract.
 MIN_QUOTE_CHARS = 12
+# Built by concatenation rather than %-format or f-string: the pattern contains
+# {n,} quantifiers, so brace-based formatting would need every brace doubled.
+_QUOTE_CHARS = r"\"\u201c\u201d"
+_SPAN = r"([^" + _QUOTE_CHARS + r"]{" + str(MIN_QUOTE_CHARS) + r",})"
+_OPEN = r"[\"\u201c]"
+_CLOSE = r"[\"\u201d]"
+
 QUOTE_THEN_PMID = re.compile(
-    r"[\"\u201c]([^\"\u201c\u201d]{%d,})[\"\u201d]\s*[\(\[]?\s*PMID:?\s*(\d{1,8})" % MIN_QUOTE_CHARS,
+    _OPEN + _SPAN + _CLOSE + r"\s*[\(\[]?\s*PMID:?\s*(\d{1,8})",
     re.IGNORECASE,
 )
 PMID_THEN_QUOTE = re.compile(
-    r"PMID:?\s*(\d{1,8})[^\"\u201c]{0,60}?[\"\u201c]([^\"\u201c\u201d]{%d,})[\"\u201d]" % MIN_QUOTE_CHARS,
+    r"PMID:?\s*(\d{1,8})[^" + _QUOTE_CHARS + r"]{0,60}?" + _OPEN + _SPAN + _CLOSE,
     re.IGNORECASE,
 )
 

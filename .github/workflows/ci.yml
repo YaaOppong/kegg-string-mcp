@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+# The test suite never touches the network, so CI needs no secrets and cannot
+# fail because an upstream service is down. Fixtures replay real KEGG, STRING,
+# PubMed and UniProt responses captured from the live APIs.
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Verifies the requires-python = ">=3.10" claim in pyproject.toml, which
+        # was previously asserted but never tested.
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e ".[dev]"
+      - name: Run tests
+        run: pytest -q
+      - name: Prove the suite is hermetic
+        # The suite is meant never to touch the network. Re-run it with all HTTP
+        # traffic pointed at a dead port: a test that quietly grew a real request
+        # fails here rather than becoming flaky months later.
+        run: pytest -q
+        env:
+          HTTP_PROXY: http://127.0.0.1:9
+          HTTPS_PROXY: http://127.0.0.1:9
+          ALL_PROXY: http://127.0.0.1:9
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ruff
+      - run: ruff check .
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t kegg-string-mcp:ci .
+      - name: Server speaks MCP over stdio
+        # A Dockerfile that is never built rots; one built but never run can still
+        # ship broken. This drives a real initialize / tools-list handshake against
+        # the container. Piping the requests in with printf does not work: stdin
+        # closes before the server answers the second request.
+        run: python3 .github/scripts/mcp_smoke.py kegg-string-mcp:ci

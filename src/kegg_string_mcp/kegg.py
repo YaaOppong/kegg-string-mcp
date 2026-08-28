@@ -156,8 +156,8 @@ class KeggClient:
         if not _ORGANISM.match(organism):
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none"},
-                notes=[f"'{organism}' is not a valid KEGG organism code (3-4 lowercase letters, "
-                       f"e.g. 'mtu' for M. tuberculosis H37Rv). No lookup was performed."],
+                notes=[(f"'{organism}' is not a valid KEGG organism code (3-4 lowercase letters, "
+                       f"e.g. 'mtu' for M. tuberculosis H37Rv). No lookup was performed.")],
             )
 
         if not gene:
@@ -170,9 +170,9 @@ class KeggClient:
         if prefix in _NON_GENE_PREFIXES:
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none"},
-                notes=[f"'{gene}' is a KEGG '{prefix}:' identifier, which namespaces "
+                notes=[(f"'{gene}' is a KEGG '{prefix}:' identifier, which namespaces "
                        f"{'pathways' if prefix in {'path', 'map'} else 'a non-gene entity'}, "
-                       f"not a gene. This tool takes a gene ID, locus tag, or symbol."],
+                       f"not a gene. This tool takes a gene ID, locus tag, or symbol.")],
             )
 
         if _KEGG_ID.match(gene):
@@ -196,9 +196,9 @@ class KeggClient:
             except FetchError as exc:
                 return ToolResult.build(
                     query, [], resolved={"matched_by": "none"},
-                    notes=[f"Could not fetch the gene list for organism '{organism}': HTTP "
+                    notes=[(f"Could not fetch the gene list for organism '{organism}': HTTP "
                            f"{exc.status}. '{organism}' may not be a valid KEGG organism code. "
-                           f"No lookup was performed."],
+                           f"No lookup was performed.")],
                 )
             traces.append(trace)
             key = gene.upper()
@@ -231,9 +231,9 @@ class KeggClient:
         if not kegg_id:
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none"}, requests=traces,
-                notes=[f"'{gene}' did not match any locus tag or gene symbol in KEGG organism "
+                notes=[(f"'{gene}' did not match any locus tag or gene symbol in KEGG organism "
                        f"'{organism}'. No pathways were looked up. This is a resolution failure, "
-                       f"not evidence that the gene has no pathways."],
+                       f"not evidence that the gene has no pathways.")],
             )
 
         try:
@@ -241,8 +241,8 @@ class KeggClient:
         except FetchError as exc:
             return ToolResult.build(
                 query, [], resolved={"kegg_gene_id": kegg_id, "matched_by": matched_by},
-                requests=traces, notes=notes + [f"KEGG /link failed: HTTP {exc.status}. "
-                                                f"No pathway data retrieved."],
+                requests=traces, notes=notes + [(f"KEGG /link failed: HTTP {exc.status}. "
+                                                f"No pathway data retrieved.")],
             )
         traces.append(_trace(link))
 
