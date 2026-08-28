@@ -1,0 +1,107 @@
+"""Append-only run store. Written by the pipeline, never by the model.
+
+Everything the tools returned is appended here *before* the model is shown it, so
+the store is the ground truth a citation is checked against. The model cannot
+write to it, which is what makes validation meaningful: if the store said it, a
+tool returned it.
+
+JSONL, append-only, one file per run. No updates, no deletes -- a claim about
+what the model was given must not be rewritable after the fact.
+"""
+
+from __future__ import annotations
+
+import json
+from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Iterator
+
+
+def _now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+@dataclass
+class RunStore:
+    path: Path
+    run_id: str
+    _citable: set[str] = field(default_factory=set)
+    _records: dict[str, dict[str, Any]] = field(default_factory=dict)
+    _per_target: dict[str, set[str]] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+
+    def _append(self, kind: str, payload: dict[str, Any]) -> None:
+        with self.path.open("a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"run_id": self.run_id, "at": _now(), "kind": kind, **payload}) + "\n")
+
+    # -- writes -------------------------------------------------------------
+
+    def tool_result(self, tool: str, arguments: dict[str, Any], result: dict[str, Any]) -> None:
+        """Record a tool call and everything it returned. This is what defines the
+        citable set: an ID is citable if and only if a tool actually returned it."""
+        # Track which IDs came back for WHICH gene. A global membership check
+        # cannot catch a citation that is real but attached to the wrong gene,
+        # which is the more plausible-looking error.
+        target = str(arguments.get("gene", "")).strip().upper()
+
+        # The resolved identifiers are part of what the tool returned, even though
+        # they are not "records": kegg_gene_id and string_id name the very gene
+        # being annotated. Omitting them made the validator flag a model for citing
+        # the subject of its own query -- a false positive on correct behaviour,
+        # which is the one failure a validator must never have.
+        for key in ("kegg_gene_id", "string_id"):
+            resolved_id = result.get("resolved", {}).get(key)
+            if resolved_id:
+                self._citable.add(resolved_id)
+                self._records.setdefault(resolved_id, {
+                    "record_id": resolved_id, "type": "resolved_subject",
+                    "name": result.get("resolved", {}).get("preferred_name", ""),
+                })
+                if target:
+                    self._per_target.setdefault(target, set()).add(resolved_id)
+
+        for record in result.get("records", []):
+            rid = record.get("record_id")
+            if rid:
+                self._citable.add(rid)
+                self._records[rid] = record
+                if target:
+                    self._per_target.setdefault(target, set()).add(rid)
+        self._append("tool_result", {"tool": tool, "arguments": arguments, "result": result})
+
+    def derived(self, label: str, payload: dict[str, Any]) -> None:
+        """Deterministic pipeline computation (set intersections, pathway sizes).
+        Recorded separately from tool results so an auditor can tell which numbers
+        came from an upstream API and which this code computed."""
+        self._append("derived", {"label": label, "payload": payload})
+
+    def decision(self, payload: dict[str, Any]) -> None:
+        """One turn of the agent loop: what the model chose to do, and why it stopped."""
+        self._append("decision", payload)
+
+    def output(self, payload: dict[str, Any]) -> None:
+        self._append("output", payload)
+
+    # -- reads --------------------------------------------------------------
+
+    @property
+    def citable_ids(self) -> set[str]:
+        return set(self._citable)
+
+    @property
+    def per_target(self) -> dict[str, set[str]]:
+        return {k: set(v) for k, v in self._per_target.items()}
+
+    def record(self, record_id: str) -> dict[str, Any] | None:
+        return self._records.get(record_id)
+
+    def replay(self) -> Iterator[dict[str, Any]]:
+        if not self.path.exists():
+            return iter(())
+        with self.path.open(encoding="utf-8") as fh:
+            for line in fh:
+                if line.strip():
+                    yield json.loads(line)

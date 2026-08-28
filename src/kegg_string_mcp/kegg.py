@@ -319,3 +319,19 @@ class KeggClient:
             for pid in pathway_ids
         ]
         return ToolResult.build(query, records, resolved=resolved, requests=traces, notes=notes)
+
+    def pathway_sizes(self, organism: str) -> tuple[dict[str, int], RequestTrace]:
+        """Gene count per pathway, from one cached request.
+
+        Essential for interpreting *shared* pathways. In M. tuberculosis,
+        `mtu01100` ("Metabolic pathways") holds 698 of ~4000 genes, so two genes
+        sharing it says almost nothing; `mtu00983` holds 11, and sharing that is a
+        real signal. Reporting "these genes share a pathway" without the size is
+        the pathway-shaped version of the hub-gene trap.
+        """
+        resp = self.http.get(f"{REST}/link/pathway/{organism}")
+        sizes: dict[str, int] = {}
+        for row in _rows(resp.body):
+            if len(row) >= 2:
+                sizes[_strip_prefix(row[1])] = sizes.get(_strip_prefix(row[1]), 0) + 1
+        return sizes, _trace(resp)
