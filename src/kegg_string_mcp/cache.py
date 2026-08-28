@@ -49,7 +49,13 @@ class CachedResponse:
         to this caller a URL they never sent -- and hand another person's
         identity string to the model.
         """
-        return self.request_url if not self.cached else self.url
+        if self.cached:
+            return self.url
+        # `or self.url` matters: a CachedResponse built directly (tests, or any
+        # caller not going through PoliteClient) has no request_url, and returning
+        # it bare put an EMPTY url in every provenance trace -- silently removing
+        # the one field a human uses to check a citation.
+        return self.request_url or self.url
 
 
 class DiskCache:

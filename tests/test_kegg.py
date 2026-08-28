@@ -113,8 +113,9 @@ def test_pathway_identifier_is_rejected_not_treated_as_an_organism(kegg):
     assert "not a gene" in result.notes[0]
 
 
-def test_invalid_organism_returns_a_note_not_an_exception(kegg, http):
-    """A bad organism code raised FetchError out of the tool."""
+def test_valid_shaped_but_unknown_organism_returns_a_note_not_an_exception(kegg, http):
+    """'zzz' passes the format check but does not exist in KEGG, so this still
+    exercises the FetchError path that used to raise out of the tool."""
     import pytest
     from kegg_string_mcp.http import FetchError
 
@@ -122,7 +123,7 @@ def test_invalid_organism_returns_a_note_not_an_exception(kegg, http):
         raise FetchError(url, 400, "")
 
     http.get = boom
-    result = kegg.pathways("katG", "notanorg")
+    result = kegg.pathways("katG", "zzz")
     assert result.records == []
     assert "may not be a valid KEGG organism code" in result.notes[0]
 
@@ -215,3 +216,28 @@ def test_locus_tag_and_symbol_matches_are_distinguishable(kegg):
     which interpretation was used when the two could disagree."""
     assert kegg.pathways("Rv1908c", "mtu").resolved["matched_by"] == "locus_tag"
     assert kegg.pathways("katG", "mtu").resolved["matched_by"] == "symbol"
+
+
+def test_every_request_trace_carries_a_resolvable_url(kegg):
+    """audit_url returned '' when request_url was unset, emptying every trace."""
+    result = kegg.pathways("katG", "mtu")
+    assert result.requests
+    for trace in result.requests:
+        assert trace.url.startswith("http"), f"empty/invalid provenance URL: {trace.url!r}"
+        assert trace.content_sha256 and trace.retrieved_at
+
+
+def test_invalid_organism_code_is_rejected_before_any_request(kegg, http):
+    """The organism goes into a URL path. '../../etc' normalises to rest.kegg.jp/etc,
+    so the tool would issue a request the caller never intended."""
+    for bad in ("../../etc", "", "TOOLONG", "MTU", "mt u"):
+        result = kegg.pathways("katG", bad)
+        assert result.records == [], bad
+        assert "not a valid KEGG organism code" in result.notes[0], bad
+    assert http.calls == [], "no request should be made for an invalid organism"
+
+
+def test_empty_gene_is_rejected_before_any_request(kegg, http):
+    result = kegg.pathways("   ", "mtu")
+    assert result.records == [] and "No gene identifier" in result.notes[0]
+    assert http.calls == []

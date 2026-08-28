@@ -48,6 +48,12 @@ TEXTMINING = "tscore"
 # plainly is not.
 MEDIUM_CONFIDENCE = 0.4
 
+# STRING's confidence scores are 0-1000. Out-of-range values are not rejected by
+# the API -- required_score=99999 simply returns zero partners, which this tool
+# would otherwise report as a genuine empty result rather than a bad argument.
+MIN_SCORE, MAX_SCORE = 0, 1000
+MAX_LIMIT = 1000
+
 
 def caller_identity() -> str:
     return os.environ.get("STRING_CALLER_IDENTITY", "kegg-string-mcp")
@@ -92,6 +98,23 @@ class StringClient:
                                  "required_score": required_score}
         traces: list[RequestTrace] = []
         notes: list[str] = []
+
+        problems = []
+        if not gene.strip():
+            problems.append("no gene identifier was supplied")
+        if not MIN_SCORE <= required_score <= MAX_SCORE:
+            problems.append(f"required_score={required_score} is outside STRING's range "
+                            f"{MIN_SCORE}-{MAX_SCORE} (700 = high confidence)")
+        if not 1 <= limit <= MAX_LIMIT:
+            problems.append(f"limit={limit} is outside 1-{MAX_LIMIT}")
+        if species <= 0:
+            problems.append(f"species={species} is not a valid NCBI taxon ID")
+        if problems:
+            return ToolResult.build(
+                query, [], resolved={"matched_by": "none"},
+                notes=[f"Invalid argument(s), so no lookup was performed: {'; '.join(problems)}. "
+                       f"An empty result here does NOT mean the gene has no partners."],
+            )
 
         try:
             hit, trace = self.resolve(gene, species)

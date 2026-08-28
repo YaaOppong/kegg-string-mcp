@@ -90,3 +90,27 @@ def test_concurrent_writers_do_not_corrupt_an_entry(tmp_path):
         t.join()
     result = cache.get(URL)
     assert result is not None and result.body in bodies
+
+
+def test_audit_url_falls_back_to_the_key_when_request_url_is_unset(tmp_path):
+    from kegg_string_mcp.cache import CachedResponse
+
+    direct = CachedResponse(url=URL, status=200, body="b", fetched_at="t",
+                            content_sha256="h", cached=False)
+    assert direct.audit_url == URL, "a live response must never report an empty URL"
+
+
+def test_audit_url_prefers_the_request_url_on_a_live_fetch(tmp_path):
+    from kegg_string_mcp.cache import CachedResponse
+
+    live = CachedResponse(url=URL, status=200, body="b", fetched_at="t", content_sha256="h",
+                          cached=False, request_url=URL + "?caller_identity=alice")
+    assert "alice" in live.audit_url
+
+
+def test_audit_url_uses_the_key_on_a_cache_hit(tmp_path):
+    from kegg_string_mcp.cache import CachedResponse
+
+    hit = CachedResponse(url=URL, status=200, body="b", fetched_at="t", content_sha256="h",
+                         cached=True, request_url=URL + "?caller_identity=alice")
+    assert hit.audit_url == URL and "alice" not in hit.audit_url

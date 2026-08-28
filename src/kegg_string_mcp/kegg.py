@@ -35,6 +35,12 @@ _KEGG_ID = re.compile(r"^[A-Za-z]{3,4}:\S+$")
 # gene. Without this, `path:mtu00360` parses as organism "path".
 _NON_GENE_PREFIXES = {"path", "map", "ko", "ec", "rn", "rc", "cpd", "gl", "dr", "ds", "br", "kot"}
 
+# KEGG organism codes are 3-4 lowercase letters. The value goes into a URL *path*,
+# and a model can pass anything: unvalidated, "../../etc" normalises to
+# rest.kegg.jp/etc, so the tool issues a request the caller never intended and
+# reports the resulting 404 as if it described the gene.
+_ORGANISM = re.compile(r"^[a-z]{3,4}$")
+
 
 def _trace(resp) -> RequestTrace:
     return RequestTrace(url=resp.audit_url, retrieved_at=resp.fetched_at, cached=resp.cached,
@@ -131,6 +137,19 @@ class KeggClient:
         traces: list[RequestTrace] = []
         notes: list[str] = []
         gene = gene.strip()
+
+        if not _ORGANISM.match(organism):
+            return ToolResult.build(
+                query, [], resolved={"matched_by": "none"},
+                notes=[f"'{organism}' is not a valid KEGG organism code (3-4 lowercase letters, "
+                       f"e.g. 'mtu' for M. tuberculosis H37Rv). No lookup was performed."],
+            )
+
+        if not gene:
+            return ToolResult.build(
+                query, [], resolved={"matched_by": "none"},
+                notes=["No gene identifier was supplied. No lookup was performed."],
+            )
 
         prefix = gene.split(":", 1)[0].lower() if ":" in gene else ""
         if prefix in _NON_GENE_PREFIXES:

@@ -164,3 +164,29 @@ def test_synonym_warning_survives_a_later_error_response(string):
     notes = " ".join(string.partners("catalase-peroxidase").notes)
     assert "synonym matching" in notes
     assert "unreadable or error response" in notes
+
+
+def test_every_request_trace_carries_a_resolvable_url(string):
+    result = string.partners("katG")
+    assert result.requests
+    for trace in result.requests:
+        assert trace.url.startswith("http"), f"empty/invalid provenance URL: {trace.url!r}"
+        assert trace.content_sha256 and trace.retrieved_at
+
+
+def test_out_of_range_arguments_are_rejected_not_silently_empty(string):
+    """STRING accepts required_score=99999 and returns zero partners, which would
+    otherwise be reported as a genuine 'no partners' result."""
+    for kwargs in ({"required_score": 99999}, {"required_score": -5},
+                   {"limit": 0}, {"limit": -5}, {"species": -1}):
+        result = string.partners("katG", **kwargs)
+        assert result.records == [], kwargs
+        joined = " ".join(result.notes)
+        assert "Invalid argument" in joined, kwargs
+        assert "does NOT mean the gene has no partners" in joined, kwargs
+
+
+def test_valid_boundary_arguments_are_accepted(string):
+    assert string.partners("katG", required_score=0).records
+    assert string.partners("katG", required_score=1000).records
+    assert string.partners("katG", limit=1).records
