@@ -339,3 +339,63 @@ def test_nearest_span_is_empty_when_there_is_no_source():
     from kegg_string_mcp.agent.validate import nearest_span
 
     assert nearest_span("anything", "") == (0.0, "")
+
+
+# --- regressions from probing the agent layer -------------------------------
+
+def _partners(n, prefix):
+    return [{"record_id": f"83332.{prefix}{i}", "name": f"{prefix}{i}", "detail": {}} for i in range(n)]
+
+
+def test_truncated_partner_lists_are_flagged_not_reported_as_degree():
+    """`limit` caps retrieval, so counting retrieved partners made a hub with 500
+    indistinguishable from a gene with exactly 20 -- disabling the hub check the
+    field exists for."""
+    from kegg_string_mcp.agent.evidence import pair_evidence
+
+    ev = pair_evidence("hub", "small", pathways={}, pathway_sizes={}, genome_size=4008,
+                       partners={"hub": _partners(20, "X"), "small": _partners(3, "Y")},
+                       partner_limit=20)
+    assert ev.truncated == ["hub"]
+    assert ev.partners_retrieved == {"hub": 20, "small": 3}
+
+
+def test_shared_partners_verdict_is_caveated_when_degree_is_unknown():
+    from kegg_string_mcp.agent.evidence import pair_evidence
+
+    shared = _partners(20, "S")
+    ev = pair_evidence("a", "b", pathways={}, pathway_sizes={}, genome_size=4008,
+                       partners={"a": shared, "b": list(shared)}, partner_limit=20)
+    assert "true network degree is unknown" in ev.verdict
+    assert "cannot be distinguished" in ev.verdict
+
+
+def test_untruncated_lists_get_no_spurious_caveat():
+    from kegg_string_mcp.agent.evidence import pair_evidence
+
+    shared = _partners(3, "S")
+    ev = pair_evidence("a", "b", pathways={}, pathway_sizes={}, genome_size=4008,
+                       partners={"a": shared, "b": list(shared)}, partner_limit=20)
+    assert ev.truncated == [] and "degree is unknown" not in ev.verdict
+
+
+def test_empty_summary_does_not_pass_validation():
+    """A run that produced nothing had zero citations, so every check trivially
+    passed and a silent failure was reported as a success."""
+    from kegg_string_mcp.agent.validate import validate
+
+    report = validate("", citable_ids={"mtu00360"}, records={})
+    assert not report.passed
+    assert "nothing could be validated" in report.summary_line()
+
+
+def test_whitespace_only_summary_does_not_pass_either():
+    from kegg_string_mcp.agent.validate import validate
+
+    assert not validate("   \n  ", citable_ids=set(), records={}).passed
+
+
+def test_a_real_summary_still_passes():
+    from kegg_string_mcp.agent.validate import validate
+
+    assert validate("katG is in mtu00360.", citable_ids={"mtu00360"}, records={}).passed

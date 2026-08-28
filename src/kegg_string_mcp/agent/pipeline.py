@@ -65,6 +65,9 @@ def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("runs"),
     return _finish(store, payload)
 
 
+PARTNER_LIMIT = 20
+
+
 def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Path("runs"),
                        tools: Tools | None = None, client: Any | None = None) -> dict[str, Any]:
     """Pre-compute every pairwise relationship, then let the model interpret it.
@@ -83,8 +86,9 @@ def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Pat
         store.tool_result("kegg_pathways", {"gene": gene, "organism": organism}, kegg_result)
         pathways[gene] = kegg_result.get("records", [])
 
-        string_result = tools("string_partners", {"gene": gene})
-        store.tool_result("string_partners", {"gene": gene}, string_result)
+        string_args = {"gene": gene, "limit": PARTNER_LIMIT}
+        string_result = tools("string_partners", string_args)
+        store.tool_result("string_partners", string_args, string_result)
         partners[gene] = string_result.get("records", [])
 
     sizes, _ = tools.kegg.pathway_sizes(organism)
@@ -92,13 +96,15 @@ def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Pat
     store.derived("pathway_sizes", {"organism": organism, "n_pathways": len(sizes),
                                     "genome_size": genome_size})
 
-    pairs = all_pairs(genes, pathways, partners, sizes, genome_size)
+    pairs = all_pairs(genes, pathways, partners, sizes, genome_size, PARTNER_LIMIT)
     store.derived("pair_evidence", {"pairs": [p.to_dict() for p in pairs]})
 
     table = "\n\n".join(
         f"PAIR {p.gene_a} / {p.gene_b}\n"
         f"  deterministic verdict: {p.verdict}\n"
-        f"  degrees: {p.degrees}\n"
+        f"  partners retrieved: {p.partners_retrieved}"
+        + (f" (LIMIT REACHED for {', '.join(p.truncated)}; true degree unknown)"
+           if p.truncated else "") + "\n"
         f"  direct interaction: {p.direct_interaction}\n"
         f"  shared pathways: " + (", ".join(
             f"{sp.pathway_id} '{sp.name}' [{sp.specificity}, {sp.size} genes]"

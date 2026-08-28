@@ -122,6 +122,7 @@ class Citation:
 
 @dataclass
 class ValidationReport:
+    produced_output: bool = True
     citations: list[Citation] = field(default_factory=list)
     quotes: list[QuoteCheck] = field(default_factory=list)
     uncited_records: list[str] = field(default_factory=list)
@@ -140,9 +141,15 @@ class ValidationReport:
 
     @property
     def passed(self) -> bool:
-        return not self.unsupported and not self.cross_target and not self.bad_quotes
+        # An empty summary has nothing to contradict, so every check trivially
+        # passed -- and a run that produced nothing was reported as a success.
+        # Absence of failure is not success.
+        return (self.produced_output and not self.unsupported
+                and not self.cross_target and not self.bad_quotes)
 
     def summary_line(self) -> str:
+        if not self.produced_output:
+            return "no summary was produced, so nothing could be validated"
         verified = sum(1 for c in self.citations if c.status == "verified")
         line = (f"{verified}/{len(self.citations)} citations verified, "
                 f"{len(self.unsupported)} unsupported, {len(self.cross_target)} cross-target")
@@ -259,7 +266,7 @@ def validate(
     cross-target check: an ID that exists in the run but was never returned for
     the gene the sentence is about.
     """
-    report = ValidationReport()
+    report = ValidationReport(produced_output=bool((text or "").strip()))
     cited = extract_citations(text)
 
     for identifier in cited:

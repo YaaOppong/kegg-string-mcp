@@ -55,7 +55,11 @@ class PairEvidence:
     direct_interaction: DirectInteraction | None = None
     shared_pathways: list[SharedPathway] = field(default_factory=list)
     shared_partners: list[dict[str, Any]] = field(default_factory=list)
-    degrees: dict[str, int] = field(default_factory=dict)
+    # NOT network degree: the number of partners RETRIEVED, which `limit` caps.
+    # Reporting it as degree made a hub with 500 partners indistinguishable from a
+    # gene with exactly 20 -- disabling the very hub check it exists for.
+    partners_retrieved: dict[str, int] = field(default_factory=dict)
+    truncated: list[str] = field(default_factory=list)   # genes whose list hit the limit
     verdict: str = ""
 
     def to_dict(self) -> dict[str, Any]:
@@ -82,13 +86,17 @@ def pair_evidence(
     partners: dict[str, list[dict[str, Any]]],
     pathway_sizes: dict[str, int],
     genome_size: int,
+    partner_limit: int | None = None,
 ) -> PairEvidence:
     """Assemble everything known about ONE pair. Pure function of tool output."""
     ev = PairEvidence(gene_a=gene_a, gene_b=gene_b)
 
     a_partners = partners.get(gene_a, [])
     b_partners = partners.get(gene_b, [])
-    ev.degrees = {gene_a: len(a_partners), gene_b: len(b_partners)}
+    ev.partners_retrieved = {gene_a: len(a_partners), gene_b: len(b_partners)}
+    if partner_limit:
+        ev.truncated = [g for g, p in ((gene_a, a_partners), (gene_b, b_partners))
+                        if len(p) >= partner_limit]
 
     # Direct interaction: is B in A's partner list (or vice versa)?
     for record in a_partners + b_partners:
@@ -141,8 +149,15 @@ def _verdict(ev: PairEvidence) -> str:
         names = ", ".join(f"{p.pathway_id} ({p.size} genes)" for p in specific)
         return f"No direct interaction. Share specific pathway(s): {names}."
     if ev.shared_partners:
+        caveat = ""
+        if ev.truncated:
+            # Without a true degree there is no base rate to compare against, and
+            # shared partners between two hubs is exactly that: a base rate.
+            caveat = (f" Partner lists for {', '.join(ev.truncated)} hit the retrieval limit, so "
+                      f"true network degree is unknown and this overlap cannot be distinguished "
+                      f"from what any two well-connected proteins would share.")
         return (f"No direct interaction and no specific shared pathway, but "
-                f"{len(ev.shared_partners)} shared network partner(s).")
+                f"{len(ev.shared_partners)} shared network partner(s).{caveat}")
     if broad_only:
         return ("No direct interaction. Shared pathways are broad container categories "
                 "only, which is not evidence of a mechanistic link.")
@@ -155,8 +170,9 @@ def all_pairs(
     partners: dict[str, list[dict[str, Any]]],
     pathway_sizes: dict[str, int],
     genome_size: int,
+    partner_limit: int | None = None,
 ) -> list[PairEvidence]:
     return [
-        pair_evidence(a, b, pathways, partners, pathway_sizes, genome_size)
+        pair_evidence(a, b, pathways, partners, pathway_sizes, genome_size, partner_limit)
         for a, b in combinations(genes, 2)
     ]
