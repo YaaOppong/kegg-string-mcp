@@ -521,3 +521,29 @@ def test_literature_is_attributed_by_what_the_paper_mentions(tmp_path):
                        "records": [{"record_id": "1", "type": "article", "name": "p", "url": "u",
                                     "detail": {"mentions": ["katG", "ahpC"], "quotable_text": "t"}}]})
     assert "1" in store.per_target["KATG"] and "1" in store.per_target["AHPC"]
+
+
+def test_uniprot_is_dispatchable_and_argument_checked():
+    """The fourth tool goes through the same untrusted-input guard as the others."""
+    from kegg_string_mcp.agent.pipeline import TOOL_PARAMS, _coerce
+
+    assert "uniprot_protein" in TOOL_PARAMS
+    clean, problems = _coerce("uniprot_protein", {"gene": "gyrA", "limit": "2"})
+    assert clean == {"gene": "gyrA", "limit": 2} and not problems
+
+    _, bad = _coerce("uniprot_protein", {"gene": "gyrA", "organism": "mtu"})
+    assert bad and "not a parameter of uniprot_protein" in bad[0]
+
+
+def test_agent_and_server_expose_the_same_four_tools():
+    """The two surfaces are defined separately, so a tool added to one and not the
+    other would silently leave the agent unable to call it."""
+    import asyncio
+
+    from kegg_string_mcp.agent.loop import TOOL_SCHEMAS
+    from kegg_string_mcp.server import mcp
+
+    server = {t.name for t in asyncio.run(mcp.list_tools())}
+    agent = {t["name"] for t in TOOL_SCHEMAS}
+    assert server == agent == {"kegg_pathways", "string_partners",
+                               "pubmed_abstracts", "uniprot_protein"}

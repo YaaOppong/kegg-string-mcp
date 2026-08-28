@@ -26,6 +26,7 @@ from kegg_string_mcp.http import FetchError, PoliteClient
 from kegg_string_mcp.kegg import KeggClient
 from kegg_string_mcp.pubmed import PubMedClient
 from kegg_string_mcp.string_db import StringClient
+from kegg_string_mcp.uniprot import UniProtClient
 
 
 # Model-supplied arguments are untrusted input. Splatting them into typed clients
@@ -36,6 +37,7 @@ TOOL_PARAMS: dict[str, dict[str, type]] = {
     "kegg_pathways": {"gene": str, "organism": str},
     "string_partners": {"gene": str, "species": int, "limit": int, "required_score": int},
     "pubmed_abstracts": {"gene": str, "organism": str, "limit": int},
+    "uniprot_protein": {"gene": str, "organism_id": int, "limit": int},
 }
 
 
@@ -63,6 +65,7 @@ class Tools:
         self.kegg = KeggClient(self.http)
         self.string = StringClient(self.http)
         self.pubmed = PubMedClient(self.http)
+        self.uniprot = UniProtClient(self.http)
 
     def __call__(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         if name not in TOOL_PARAMS:
@@ -76,7 +79,8 @@ class Tools:
                               f"there is no data."]}
         method = {"kegg_pathways": self.kegg.pathways,
                   "string_partners": self.string.partners,
-                  "pubmed_abstracts": self.pubmed.abstracts}[name]
+                  "pubmed_abstracts": self.pubmed.abstracts,
+                  "uniprot_protein": self.uniprot.protein}[name]
         return method(**clean).model_dump()
 
 

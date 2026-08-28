@@ -17,7 +17,7 @@ import json
 import os
 import tempfile
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from kegg_string_mcp.provenance import sha256, utcnow
@@ -43,6 +43,10 @@ class CachedResponse:
     content_sha256: str
     cached: bool                 # True if served from disk
     request_url: str = ""        # URL actually sent, identity params included
+    # A small whitelist of response headers worth keeping as provenance. UniProt
+    # reports which release answered (x-uniprot-release), which is the same kind
+    # of fact as a KEGG release date and belongs in the record, not lost on the wire.
+    headers: dict = field(default_factory=dict)
 
     @property
     def audit_url(self) -> str:
@@ -94,14 +98,17 @@ class DiskCache:
                 fetched_at=payload["fetched_at"],
                 content_sha256=payload["content_sha256"],
                 cached=True,
+                headers=payload.get("headers", {}),
             )
         except (OSError, ValueError, KeyError, TypeError):
             return None
 
-    def put(self, url: str, status: int, body: str, request_url: str | None = None) -> CachedResponse:
+    def put(self, url: str, status: int, body: str, request_url: str | None = None,
+            headers: dict | None = None) -> CachedResponse:
         response = CachedResponse(
             url=url, status=status, body=body, fetched_at=utcnow(),
             content_sha256=sha256(body), cached=False, request_url=request_url or url,
+            headers=dict(headers or {}),
         )
         path = self._path(url)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -118,7 +125,8 @@ class DiskCache:
                      # caller_identity, which must not be written to a shared cache
                      # directory nor replayed to a later, different caller.
                      "fetched_at": response.fetched_at,
-                     "content_sha256": response.content_sha256},
+                     "content_sha256": response.content_sha256,
+                     "headers": response.headers},
                     fh,
                 )
             os.replace(tmp_name, path)

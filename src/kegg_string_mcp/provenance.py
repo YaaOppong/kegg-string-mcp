@@ -18,7 +18,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-Source = Literal["kegg", "string", "pubmed"]
+Source = Literal["kegg", "string", "pubmed", "uniprot"]
 
 
 def sha256(data: str | bytes) -> str:

@@ -32,6 +32,8 @@ MIN_INTERVAL = {
     # raises that to 10 req/s, but the floor stays put: the extra rate is worth
     # far less than never being the client that gets the user's IP banned.
     "eutils.ncbi.nlm.nih.gov": 0.35,
+    # UniProt does not publish a hard rate limit; this is deliberately polite.
+    "rest.uniprot.org": 0.4,
 }
 DEFAULT_MIN_INTERVAL = 1.0
 RETRY_STATUSES = {429, 500, 502, 503, 504}
@@ -51,6 +53,10 @@ IDENTITY_PARAMS = {"caller_identity", "tool", "email", "api_key"}
 # into the run store on disk. An api_key is the one identity param that must not
 # be written down anywhere, so it is scrubbed before provenance ever sees it.
 SECRET_PARAMS = {"api_key"}
+
+# Response headers kept as provenance. Deliberately a whitelist: response headers
+# can carry cookies and tokens, and everything here lands in the run store on disk.
+CAPTURED_HEADERS = {"x-uniprot-release", "x-uniprot-release-date"}
 REDACTED = "REDACTED"
 
 
@@ -153,7 +159,8 @@ class PoliteClient:
 
             # audit_url, not request_url: CachedResponse.request_url exists solely to
             # be reported as provenance, so a credential must never reach it.
+            kept = {k: v for k, v in response.headers.items() if k.lower() in CAPTURED_HEADERS}
             return self.cache.put(cache_key, response.status_code, response.text,
-                                  request_url=audit_url)
+                                  request_url=audit_url, headers=kept)
 
         raise FetchError(audit_url, 0, f"exhausted {MAX_ATTEMPTS} attempts: {last_error}")

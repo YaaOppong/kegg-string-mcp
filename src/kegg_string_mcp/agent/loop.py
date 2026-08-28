@@ -87,6 +87,29 @@ TOOL_SCHEMAS = [
             "required": ["gene"],
         },
     },
+    {
+        "name": "uniprot_protein",
+        "description": (
+            "Curated protein annotation from UniProt: function, catalytic activity, subunit "
+            "structure, PDB cross-references. Reach for this when KEGG has no pathway -- KEGG "
+            "assigns one to only 29% of M. tuberculosis genes, so 'no KEGG pathway' is usually "
+            "an annotation gap, not a fact about the protein. Each function statement carries "
+            "an evidence tier: 'experimental' means measured on this protein, with the "
+            "supporting PMIDs listed; 'sequence_similarity', 'sequence_model', 'automatic' and "
+            "'imported' are INFERRED from a rule or a homologue and are not evidence about this "
+            "gene. Function text is prose, so quote a verbatim span of quotable_text for any "
+            "claim drawn from it."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "gene": {"type": "string"},
+                "organism_id": {"type": "integer", "default": 83332},
+                "limit": {"type": "integer", "default": 3},
+            },
+            "required": ["gene"],
+        },
+    },
 ]
 
 
