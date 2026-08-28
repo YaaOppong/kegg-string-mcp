@@ -21,6 +21,7 @@ Two failure classes are distinguished, because they mean different things:
 
 from __future__ import annotations
 
+import difflib
 import re
 from dataclasses import dataclass, field
 from typing import Any
@@ -93,12 +94,23 @@ def quote_in_source(quote: str, source: str) -> bool:
     return True
 
 
+# Above this similarity, a failed quote is near-certainly a quoting artefact --
+# a dropped word, altered punctuation, a British/American spelling -- rather than
+# an invented claim. It does NOT change the verdict: the check stays deterministic
+# and binary, and a model must never be able to argue its way past it. It ranks
+# failures so a human looks at the fabrications first.
+LIKELY_ARTEFACT = 0.90
+
+
 @dataclass
 class QuoteCheck:
     record_id: str
     quote: str
     status: str        # "verified" | "not_in_source" | "no_source_text"
     detail: str = ""
+    similarity: float | None = None     # best match found in the source, 0-1
+    closest_span: str = ""              # the passage it most resembles
+    triage: str = ""                    # "likely_quoting_artefact" | "likely_fabricated"
 
 
 @dataclass
@@ -175,6 +187,32 @@ def extract_quotes(text: str) -> list[tuple[str, str]]:
     return pairs
 
 
+def nearest_span(quote: str, source: str) -> tuple[float, str]:
+    """Best-matching window in the source, and how close it is.
+
+    Purely diagnostic. Adjudicating a failed quote otherwise means reading the
+    abstract by hand, and both false positives this validator has produced would
+    have been obvious in one line of output: a 0.98 match differing only in a
+    trailing full stop is a quoting artefact, and a 0.31 match is a fabrication.
+    """
+    needle, haystack = normalise(quote), normalise(source)
+    if not needle or not haystack:
+        return 0.0, ""
+    window = len(needle)
+    best_ratio, best_span = 0.0, ""
+    # Step by a fraction of the window so a match straddling a boundary is still
+    # found, without comparing every offset in a long abstract.
+    step = max(1, window // 4)
+    for start in range(0, max(1, len(haystack) - window + 1) + step, step):
+        candidate = haystack[start:start + window]
+        if not candidate:
+            break
+        ratio = difflib.SequenceMatcher(None, needle, candidate).ratio()
+        if ratio > best_ratio:
+            best_ratio, best_span = ratio, candidate
+    return round(best_ratio, 3), best_span
+
+
 def check_quotes(text: str, records: dict[str, dict[str, Any]]) -> list[QuoteCheck]:
     """Verify each quoted span really appears in the record it is attributed to.
 
@@ -197,8 +235,14 @@ def check_quotes(text: str, records: dict[str, dict[str, Any]]) -> list[QuoteChe
         elif quote_in_source(quote, source):
             checks.append(QuoteCheck(record_id, quote, "verified"))
         else:
-            checks.append(QuoteCheck(record_id, quote, "not_in_source",
-                                     "this span does not appear in the retrieved title or abstract"))
+            ratio, span = nearest_span(quote, source)
+            artefact = ratio >= LIKELY_ARTEFACT
+            checks.append(QuoteCheck(
+                record_id, quote, "not_in_source",
+                "this span does not appear in the retrieved title or abstract",
+                similarity=ratio, closest_span=span,
+                triage="likely_quoting_artefact" if artefact else "likely_fabricated",
+            ))
     return checks
 
 

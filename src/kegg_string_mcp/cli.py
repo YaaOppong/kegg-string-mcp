@@ -43,8 +43,11 @@ def main(argv: list[str] | None = None) -> int:
                 print(f"  {citation['status'].upper():13} {citation['identifier']}  {citation['detail']}")
         for quote in payload["validation"].get("quotes", []):
             if quote["status"] != "verified":
-                print(f"  {quote['status'].upper():13} PMID:{quote['record_id']}  "
-                      f"{quote['detail']}\n                  quoted: {quote['quote'][:90]!r}")
+                triage = f" [{quote['triage']}, similarity {quote['similarity']}]" if quote.get("triage") else ""
+                print(f"  {quote['status'].upper():13} PMID:{quote['record_id']}{triage}")
+                print(f"                  quoted:  {quote['quote'][:88]!r}")
+                if quote.get("closest_span"):
+                    print(f"                  closest: {quote['closest_span'][:88]!r}")
         print(f"\nrun store: {payload['store']}")
 
     return 0 if payload["validation"]["passed"] else 1

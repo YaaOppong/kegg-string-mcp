@@ -292,3 +292,50 @@ def test_fabricated_quote_still_fails_after_the_punctuation_fix():
 
     source = "KatG is a catalase-peroxidase required for isoniazid activation."
     assert not quote_in_source("KatG binds directly to AhpC in a stable complex.", source)
+
+
+# --- failure triage ---------------------------------------------------------
+
+SOURCE = {"detail": {"quotable_text":
+          "There was also a significant inverse association between katG315 mutations and "
+          "mutations in ahpC or inhA and between mutations in kasA and mutations in ahpC."}}
+
+
+def test_quoting_artefact_and_fabrication_are_separated_by_similarity():
+    """Ranks failures for human attention. Deliberately does NOT change the verdict:
+    a model must never be able to argue its way past a deterministic check."""
+    from kegg_string_mcp.agent.validate import check_quotes
+
+    artefact = check_quotes(
+        'PMID:1 "a significant inverse assoc between katG315 mutations and mutations in ahpC or inhA"',
+        {"1": SOURCE})[0]
+    fabricated = check_quotes(
+        'PMID:1 "KatG binds directly to AhpC forming a stable heterodimeric complex"',
+        {"1": SOURCE})[0]
+
+    assert artefact.triage == "likely_quoting_artefact" and artefact.similarity >= 0.9
+    assert fabricated.triage == "likely_fabricated" and fabricated.similarity < 0.6
+    # Both remain failures. Triage informs; it does not absolve.
+    assert artefact.status == fabricated.status == "not_in_source"
+
+
+def test_triage_reports_the_closest_span_so_a_human_can_adjudicate():
+    from kegg_string_mcp.agent.validate import check_quotes
+
+    check = check_quotes('PMID:1 "a significant inverse assoc between katG315 mutations"',
+                         {"1": SOURCE})[0]
+    assert "inverse association between katg315" in check.closest_span
+
+
+def test_a_near_miss_still_fails_validation_overall():
+    from kegg_string_mcp.agent.validate import validate
+
+    report = validate('PMID:1 "a significant inverse assoc between katG315 mutations"',
+                      {"1"}, records={"1": SOURCE})
+    assert not report.passed, "a high-similarity near miss must not silently pass"
+
+
+def test_nearest_span_is_empty_when_there_is_no_source():
+    from kegg_string_mcp.agent.validate import nearest_span
+
+    assert nearest_span("anything", "") == (0.0, "")
