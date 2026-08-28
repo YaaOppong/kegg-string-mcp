@@ -2,6 +2,7 @@
 
     gar single katG
     gar epistasis katG furA ahpC
+    gar eval
 """
 
 from __future__ import annotations
@@ -16,12 +17,21 @@ from kegg_string_mcp.agent import annotate_epistasis, annotate_gene
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="gar", description=__doc__)
-    parser.add_argument("mode", choices=["single", "epistasis"])
-    parser.add_argument("genes", nargs="+")
+    parser.add_argument("mode", choices=["single", "epistasis", "eval"])
+    parser.add_argument("genes", nargs="*")
     parser.add_argument("--organism", default="mtu")
     parser.add_argument("--runs", type=Path, default=Path("runs"))
     parser.add_argument("--json", action="store_true", help="emit the full payload")
     args = parser.parse_args(argv)
+
+    if args.mode == "eval":
+        from kegg_string_mcp.evaluate import evaluate, render, write
+
+        report = evaluate(runs=args.runs / "eval")
+        print(render(report))
+        path = write(report, args.runs / "eval" / "report.json")
+        print(f"\nreport: {path}")
+        return 0
 
     if args.mode == "single":
         if len(args.genes) != 1:

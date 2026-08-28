@@ -496,3 +496,28 @@ def test_invalid_organism_is_rejected_by_the_direct_call_sites(kegg=None):
     for method in (client.gene_index, client.pathway_sizes):
         with pytest.raises(ValueError, match="not a valid KEGG organism code"):
             method("../../info/mtu")
+
+
+def test_free_text_literature_queries_do_not_fail_cross_target(tmp_path):
+    """pubmed_abstracts takes free text by design, so keying the target on the raw
+    argument flagged every PMID from a multi-word query as cross-target."""
+    from kegg_string_mcp.agent.validate import validate
+
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("pubmed_abstracts",
+                      {"gene": "furA katG regulation oxidative stress"},
+                      {"resolved": {}, "record_ids": ["27328747"],
+                       "records": [{"record_id": "27328747", "type": "article", "name": "p",
+                                    "url": "u", "detail": {"mentions": ["furA"],
+                                                           "quotable_text": "furA text"}}]})
+    report = validate("See PMID:27328747.", store.citable_ids, store.per_target, "FURA")
+    assert report.passed, report.summary_line()
+
+
+def test_literature_is_attributed_by_what_the_paper_mentions(tmp_path):
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("pubmed_abstracts", {"gene": "oxidative stress"},
+                      {"resolved": {}, "record_ids": ["1"],
+                       "records": [{"record_id": "1", "type": "article", "name": "p", "url": "u",
+                                    "detail": {"mentions": ["katG", "ahpC"], "quotable_text": "t"}}]})
+    assert "1" in store.per_target["KATG"] and "1" in store.per_target["AHPC"]

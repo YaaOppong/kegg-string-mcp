@@ -50,7 +50,13 @@ class RunStore:
         # same gene -- katG, Rv1908c, mtu:Rv1908c. Keying only on the literal
         # argument made every ID from such a call report as cross_target, failing
         # a correctly-cited run.
-        aliases = {str(arguments.get("gene", "")).strip().upper()}
+        query_gene = str(arguments.get("gene", "")).strip()
+        aliases = {query_gene.upper()}
+        # PubMed takes free text by design ("furA katG regulation oxidative
+        # stress"), so the raw argument is a search phrase, not a gene. Keying on
+        # it alone flagged every PMID from a multi-word literature query as
+        # cross-target -- a false positive on the tool working as intended.
+        aliases.update(token.upper() for token in query_gene.split() if len(token) > 2)
         resolved = result.get("resolved", {})
         for key in ("kegg_gene_id", "string_id", "preferred_name"):
             value = str(resolved.get(key) or "").strip()
@@ -95,6 +101,10 @@ class RunStore:
                 merged.update(record.get("detail", {}).get("mentions", []))
                 if merged:
                     existing.setdefault("detail", {})["mentions"] = sorted(merged)
+            # A literature record knows which genes it actually names; that is a
+            # better attribution than the query that happened to find it.
+            for gene in record.get("detail", {}).get("mentions", []):
+                self._per_target.setdefault(str(gene).strip().upper(), set()).add(rid)
             for alias in aliases:
                 self._per_target.setdefault(alias, set()).add(rid)
         self._append("tool_result", {"tool": tool, "arguments": arguments, "result": result})

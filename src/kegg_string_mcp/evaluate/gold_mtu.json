@@ -1,0 +1,96 @@
+{
+  "organism": "mtu",
+  "reference": "KEGG /link/pathway/mtu",
+  "retrieved_on": "2026-08-28",
+  "coverage": {
+    "genes_total": 4008,
+    "genes_with_any_pathway": 1171,
+    "note": "Only 29% of mtu genes carry any KEGG pathway assignment. Recall is therefore measured against a reference that is silent for most of the genome, which is the point of the negative controls."
+  },
+  "genes": [
+    {
+      "kegg_gene_id": "mtu:Rv1908c",
+      "symbol": "katG",
+      "pathways": [
+        "mtu00360",
+        "mtu00380",
+        "mtu00983",
+        "mtu01100",
+        "mtu01110"
+      ]
+    },
+    {
+      "kegg_gene_id": "mtu:Rv1484",
+      "symbol": "inhA",
+      "pathways": [
+        "mtu00074",
+        "mtu01100",
+        "mtu01110"
+      ]
+    },
+    {
+      "kegg_gene_id": "mtu:Rv0667",
+      "symbol": "rpoB",
+      "pathways": [
+        "mtu03020"
+      ]
+    },
+    {
+      "kegg_gene_id": "mtu:Rv3795",
+      "symbol": "embB",
+      "pathways": [
+        "mtu00572"
+      ]
+    },
+    {
+      "kegg_gene_id": "mtu:Rv2043c",
+      "symbol": "pncA",
+      "pathways": [
+        "mtu00760",
+        "mtu01100",
+        "mtu01240"
+      ]
+    },
+    {
+      "kegg_gene_id": "mtu:Rv1483",
+      "symbol": "fabG1",
+      "pathways": [
+        "mtu00074",
+        "mtu01100",
+        "mtu01110"
+      ]
+    },
+    {
+      "kegg_gene_id": "mtu:Rv0006",
+      "symbol": "gyrA",
+      "pathways": []
+    },
+    {
+      "kegg_gene_id": "mtu:Rv0005",
+      "symbol": "gyrB",
+      "pathways": []
+    },
+    {
+      "kegg_gene_id": "mtu:Rv2428",
+      "symbol": "ahpC",
+      "pathways": []
+    },
+    {
+      "kegg_gene_id": "mtu:Rv1909c",
+      "symbol": "furA",
+      "pathways": []
+    },
+    {
+      "kegg_gene_id": "mtu:Rv0014c",
+      "symbol": "pknB",
+      "pathways": []
+    },
+    {
+      "kegg_gene_id": "mtu:Rv3846",
+      "symbol": "sodA",
+      "pathways": [
+        "mtu04146"
+      ]
+    }
+  ]
+}

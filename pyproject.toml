@@ -21,6 +21,9 @@ gar = "kegg_string_mcp.cli:main"
 [tool.hatch.build.targets.wheel]
 packages = ["src/kegg_string_mcp"]
 
+[tool.hatch.build.targets.wheel.force-include]
+"src/kegg_string_mcp/evaluate/gold_mtu.json" = "kegg_string_mcp/evaluate/gold_mtu.json"
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
