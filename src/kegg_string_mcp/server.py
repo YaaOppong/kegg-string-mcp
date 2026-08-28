@@ -43,7 +43,11 @@ mcp = MCPServer(
         "may mean the identifier failed to resolve rather than that no data exists. When a claim "
         "rests on a PubMed article, quote a verbatim span of that record's `quotable_text` and "
         "attach it to the PMID -- quotes are checked against the retrieved text, so a paraphrase "
-        "or a remembered fact will not pass even under a correct PMID."
+        "or a remembered fact will not pass even under a correct PMID. "
+        "RESEARCH USE ONLY: this server is not a clinical decision support system and must "
+        "not be used to guide patient care. It returns drug-resistance-associated genes; "
+        "resistance interpretation for clinical purposes requires validated methods and "
+        "expert review."
     ),
 )
 

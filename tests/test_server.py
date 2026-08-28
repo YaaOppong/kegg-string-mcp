@@ -53,3 +53,10 @@ def test_pubmed_description_tells_the_model_to_quote_verbatim():
     description = _tools()["pubmed_abstracts"].description
     assert "quotable_text" in description
     assert "verbatim" in description.lower()
+
+
+def test_server_instructions_state_research_use_only():
+    """The scope boundary should reach any model that connects, not just a human
+    reading the README."""
+    assert "RESEARCH USE ONLY" in (mcp.instructions or "")
+    assert "not a clinical decision support system" in (mcp.instructions or "")

@@ -9,6 +9,15 @@ Defaults target *Mycobacterium tuberculosis* H37Rv (KEGG `mtu`, NCBI taxon `8333
 but every tool takes the organism as a parameter and works for any species the
 underlying service covers.
 
+> **Research use only.** This is a research tool. It is not a clinical decision
+> support system, is not validated for diagnostic, prognostic or treatment decisions,
+> and must not be used to guide patient care. It annotates genes including the drug
+> resistance loci `katG`, `inhA`, `rpoB`, `pncA` and `embB`; resistance interpretation
+> for clinical purposes requires validated methods and expert review. Outputs are
+> generated in part by a language model and require verification against the cited
+> primary sources. Provided under the MIT licence, without warranty — see
+> [LICENSE](LICENSE).
+
 ## Tools
 
 | Tool | Parameters | Returns |
