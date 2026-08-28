@@ -69,7 +69,13 @@ class PairEvidence:
 def classify_pathway(size: int, genome_size: int) -> tuple[str, str]:
     """Judge whether sharing this pathway means anything. Returned as data so the
     reasoning is in the record, not only in a prompt the model may ignore."""
-    if genome_size and size / genome_size >= BROAD_PATHWAY_FRACTION:
+    if not genome_size:
+        # Without a denominator the broad/specific judgement cannot be made, and
+        # falling through silently labelled mtu01100 (698 genes) "moderate" --
+        # reopening the exact base-rate trap this function exists to close.
+        return "unknown", (f"{size} genes, but the genome size could not be determined, so whether "
+                           f"this is a container category is unknown. Treat co-membership with caution.")
+    if size / genome_size >= BROAD_PATHWAY_FRACTION:
         return "broad", (
             f"{size} genes ({size / genome_size:.0%} of annotated genes) -- a container "
             f"category. Co-membership here is a base rate, not evidence of a link."

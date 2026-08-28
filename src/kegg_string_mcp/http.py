@@ -147,11 +147,13 @@ class PoliteClient:
                 # Covers 4xx, 5xx, and any 3xx that could not be followed. An
                 # unfollowable redirect has an empty body, which downstream would
                 # otherwise read as a genuine "no results".
-                raise FetchError(request_url, response.status_code, response.text)
+                # audit_url, not request_url: FetchError's message is printed on an
+                # uncaught traceback, and request_url still carries the api_key.
+                raise FetchError(audit_url, response.status_code, response.text)
 
             # audit_url, not request_url: CachedResponse.request_url exists solely to
             # be reported as provenance, so a credential must never reach it.
             return self.cache.put(cache_key, response.status_code, response.text,
                                   request_url=audit_url)
 
-        raise FetchError(request_url, 0, f"exhausted {MAX_ATTEMPTS} attempts: {last_error}")
+        raise FetchError(audit_url, 0, f"exhausted {MAX_ATTEMPTS} attempts: {last_error}")

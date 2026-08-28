@@ -78,6 +78,16 @@ class KeggClient:
     def __init__(self, http: PoliteClient):
         self.http = http
 
+    @staticmethod
+    def _require_organism(organism: str) -> str:
+        """`organism` goes into a URL PATH. pathways() guards this, but the agent
+        pipeline calls gene_index and pathway_sizes directly and bypassed it."""
+        organism = (organism or "").strip().lower()
+        if not _ORGANISM.match(organism):
+            raise ValueError(f"{organism!r} is not a valid KEGG organism code "
+                             f"(3-4 lowercase letters, e.g. 'mtu')")
+        return organism
+
     def gene_index(self, organism: str) -> tuple[GeneIndex, RequestTrace]:
         """Build symbol/locus-tag -> KEGG gene ID for one organism.
 
@@ -96,6 +106,7 @@ class KeggClient:
         present, and index locus tags in a second pass so a real identifier can
         never be shadowed by a symbol from an earlier row.
         """
+        organism = self._require_organism(organism)
         resp = self.http.get(f"{REST}/list/{organism}")
         rows = _rows(resp.body)
 
@@ -329,6 +340,7 @@ class KeggClient:
         real signal. Reporting "these genes share a pathway" without the size is
         the pathway-shaped version of the hub-gene trap.
         """
+        organism = self._require_organism(organism)
         resp = self.http.get(f"{REST}/link/pathway/{organism}")
         sizes: dict[str, int] = {}
         for row in _rows(resp.body):

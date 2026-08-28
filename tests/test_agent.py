@@ -399,3 +399,100 @@ def test_a_real_summary_still_passes():
     from kegg_string_mcp.agent.validate import validate
 
     assert validate("katG is in mtu00360.", citable_ids={"mtu00360"}, records={}).passed
+
+
+# --- regressions from the fifth review pass ---------------------------------
+
+def test_consecutive_quotes_are_not_cross_attributed():
+    """Two quotes in a row, each closing with its own citation, is the natural way
+    to write this. The leading-citation pattern reached across the sentence
+    boundary and bound the second quote to the first PMID as well."""
+    from kegg_string_mcp.agent.validate import extract_quotes
+
+    pairs = extract_quotes('a "encodes catalase-peroxidase" (PMID: 111). '
+                           'b "ahpC compensates for katG loss" (PMID: 222).')
+    assert pairs == [("111", "encodes catalase-peroxidase"),
+                     ("222", "ahpC compensates for katG loss")]
+
+
+def test_decimals_and_dois_are_not_read_as_string_ids():
+    """Epistasis mode is handed pathway sizes and asked to weigh base rates, so
+    percentages and fold-changes are routine prose. Each was being reported as an
+    unsupported citation and failing the run."""
+    from kegg_string_mcp.agent.validate import extract_citations
+
+    found = extract_citations("mtu01100 holds 698 of ~4000 genes (17.5%). "
+                              "doi 10.1038/nature12345, a 12.3-fold change, see 83332.Rv1908c")
+    assert found == ["mtu01100", "83332.Rv1908c"]
+
+
+def test_alias_spellings_of_the_same_gene_do_not_fail_cross_target(tmp_path):
+    """The tool schemas invite a different spelling, so a model annotating katG may
+    call string_partners(gene='Rv1908c'). Keying only on the literal argument made
+    every ID from that call report as cross_target."""
+    from kegg_string_mcp.agent.validate import validate
+
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("string_partners", {"gene": "Rv1908c"}, STRING_RESULT)
+    report = validate("katG partners with 83332.Rv1909c.", store.citable_ids,
+                      store.per_target, "KATG")
+    assert report.passed, report.summary_line()
+
+
+def test_unknown_parameter_returns_an_envelope_not_a_typeerror():
+    """Model-supplied arguments are untrusted input; a schema deviation used to
+    kill the run mid-flight instead of giving the model something to correct."""
+    from kegg_string_mcp.agent.pipeline import Tools
+
+    result = Tools.__call__(object.__new__(Tools), "string_partners",
+                            {"gene": "katG", "organism": "mtu"})
+    assert result["records"] == []
+    assert "not a parameter of string_partners" in " ".join(result["notes"])
+
+
+def test_string_typed_limit_is_coerced_not_crashed(monkeypatch):
+    from kegg_string_mcp.agent.pipeline import _coerce
+
+    clean, problems = _coerce("string_partners", {"gene": "katG", "limit": "20"})
+    assert clean == {"gene": "katG", "limit": 20} and not problems
+
+    _, bad = _coerce("string_partners", {"gene": "katG", "limit": "twenty"})
+    assert bad and "must be int" in bad[0]
+
+
+def test_unknown_genome_size_does_not_downgrade_a_container_pathway():
+    """Falling through a zero denominator labelled mtu01100 (698 genes) 'moderate',
+    reopening the base-rate trap the function exists to close."""
+    from kegg_string_mcp.agent.evidence import classify_pathway
+
+    label, note = classify_pathway(698, 0)
+    assert label == "unknown" and "could not be determined" in note
+
+
+def test_mentions_merge_across_calls_for_the_same_paper(tmp_path):
+    """The same PMID returned for two genes kept only the last record, losing the
+    first gene's mention -- the field a downstream corpus filters on."""
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    paper = lambda gene: {  # noqa: E731
+        "resolved": {}, "record_ids": ["999"],
+        "records": [{"record_id": "999", "type": "article", "name": "p", "url": "u",
+                     "detail": {"mentions": [gene], "quotable_text": "t", "doi": "",
+                                "pmcid": "", "in_pmc": False, "title": "p",
+                                "journal": "", "year": ""}}],
+    }
+    store.tool_result("pubmed_abstracts", {"gene": "katG"}, paper("katG"))
+    store.tool_result("pubmed_abstracts", {"gene": "ahpC"}, paper("ahpC"))
+    assert store.corpus_manifest()[0]["mentions"] == ["ahpC", "katG"]
+
+
+def test_invalid_organism_is_rejected_by_the_direct_call_sites(kegg=None):
+    """pathways() guarded this; gene_index and pathway_sizes are called directly by
+    the agent pipeline and bypassed it."""
+    import pytest
+
+    from kegg_string_mcp.kegg import KeggClient
+
+    client = KeggClient(http=None)
+    for method in (client.gene_index, client.pathway_sizes):
+        with pytest.raises(ValueError, match="not a valid KEGG organism code"):
+            method("../../info/mtu")

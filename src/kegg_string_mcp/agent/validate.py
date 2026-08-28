@@ -30,7 +30,11 @@ from typing import Any
 # STRING protein IDs: NCBI taxon + '.' + locus (83332.Rv1909c).
 CITATION_PATTERNS = [
     re.compile(r"\b[a-z]{3,4}\d{5}\b"),
-    re.compile(r"\b\d{2,7}\.[A-Za-z0-9_]+\b"),
+    # The locus half must contain a letter. Without that, "17.5%", "12.3-fold"
+    # and "10.1038/nature12345" all matched, and each was then reported as an
+    # unsupported citation -- failing a run for writing the ordinary numeric prose
+    # that epistasis mode explicitly asks for.
+    re.compile(r"\b\d{2,7}\.(?=[A-Za-z0-9_]*[A-Za-z])[A-Za-z0-9_]+\b"),
     # PMIDs only in explicit PMID: form. A bare 8-digit number is ambiguous --
     # it could be a coordinate, a score, a year range -- and treating every one
     # as a citation would flag ordinary prose as unsupported.
@@ -184,13 +188,23 @@ def extract_citations(text: str) -> list[str]:
 
 
 def extract_quotes(text: str) -> list[tuple[str, str]]:
-    """(record_id, quoted span) pairs, in either written order."""
+    """(record_id, quoted span) pairs, in either written order.
+
+    A span already claimed by a *trailing* citation is never re-attributed to a
+    different PMID. Two quotes in a row, each closing with its own citation, is
+    the natural way to write this -- and the leading-citation pattern would reach
+    forward across the sentence boundary and bind the second quote to the first
+    PMID as well, failing a correctly-cited summary.
+    """
     pairs: list[tuple[str, str]] = []
+    claimed: set[str] = set()
     for span, pmid in QUOTE_THEN_PMID.findall(text or ""):
         pairs.append((pmid, span))
+        claimed.add(span)
     for pmid, span in PMID_THEN_QUOTE.findall(text or ""):
-        if (pmid, span) not in pairs:
+        if span not in claimed and (pmid, span) not in pairs:
             pairs.append((pmid, span))
+            claimed.add(span)
     return pairs
 
 

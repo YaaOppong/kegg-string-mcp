@@ -45,7 +45,22 @@ class RunStore:
         # Track which IDs came back for WHICH gene. A global membership check
         # cannot catch a citation that is real but attached to the wrong gene,
         # which is the more plausible-looking error.
-        target = str(arguments.get("gene", "")).strip().upper()
+        # Alias the target. `claimed_target` is what the caller asked to annotate,
+        # but the model is invited to call tools with a different spelling of the
+        # same gene -- katG, Rv1908c, mtu:Rv1908c. Keying only on the literal
+        # argument made every ID from such a call report as cross_target, failing
+        # a correctly-cited run.
+        aliases = {str(arguments.get("gene", "")).strip().upper()}
+        resolved = result.get("resolved", {})
+        for key in ("kegg_gene_id", "string_id", "preferred_name"):
+            value = str(resolved.get(key) or "").strip()
+            if not value:
+                continue
+            aliases.add(value.upper())
+            for separator in (":", "."):
+                if separator in value:
+                    aliases.add(value.split(separator, 1)[1].upper())
+        aliases.discard("")
 
         # The resolved identifiers are part of what the tool returned, even though
         # they are not "records": kegg_gene_id and string_id name the very gene
@@ -53,23 +68,35 @@ class RunStore:
         # the subject of its own query -- a false positive on correct behaviour,
         # which is the one failure a validator must never have.
         for key in ("kegg_gene_id", "string_id"):
-            resolved_id = result.get("resolved", {}).get(key)
+            resolved_id = resolved.get(key)
             if resolved_id:
                 self._citable.add(resolved_id)
                 self._records.setdefault(resolved_id, {
                     "record_id": resolved_id, "type": "resolved_subject",
                     "name": result.get("resolved", {}).get("preferred_name", ""),
                 })
-                if target:
-                    self._per_target.setdefault(target, set()).add(resolved_id)
+                for alias in aliases:
+                    self._per_target.setdefault(alias, set()).add(resolved_id)
 
         for record in result.get("records", []):
             rid = record.get("record_id")
-            if rid:
-                self._citable.add(rid)
+            if not rid:
+                continue
+            self._citable.add(rid)
+            existing = self._records.get(rid)
+            if existing is None:
                 self._records[rid] = record
-                if target:
-                    self._per_target.setdefault(target, set()).add(rid)
+            else:
+                # Merge, do not overwrite. The same PMID returned for two genes was
+                # keeping only the last record -- and `mentions` with it -- so a paper
+                # discussing both genes was silently dropped from the first gene's
+                # corpus, which is the field a downstream pipeline filters on.
+                merged = set(existing.get("detail", {}).get("mentions", []))
+                merged.update(record.get("detail", {}).get("mentions", []))
+                if merged:
+                    existing.setdefault("detail", {})["mentions"] = sorted(merged)
+            for alias in aliases:
+                self._per_target.setdefault(alias, set()).add(rid)
         self._append("tool_result", {"tool": tool, "arguments": arguments, "result": result})
 
     def derived(self, label: str, payload: dict[str, Any]) -> None:
@@ -136,9 +163,7 @@ class RunStore:
                 "url": record.get("url", ""),
                 "mentions": [],
             })
-            for gene in detail.get("mentions", []):
-                if gene not in entry["mentions"]:
-                    entry["mentions"].append(gene)
+            entry["mentions"] = sorted(set(entry["mentions"]) | set(detail.get("mentions", [])))
         return [papers[k] for k in sorted(papers)]
 
     def replay(self) -> Iterator[dict[str, Any]]:

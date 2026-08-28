@@ -22,10 +22,37 @@ from kegg_string_mcp.agent.evidence import all_pairs
 from kegg_string_mcp.agent.loop import new_store, run_loop
 from kegg_string_mcp.agent.validate import validate
 from kegg_string_mcp.cache import DiskCache
-from kegg_string_mcp.http import PoliteClient
+from kegg_string_mcp.http import FetchError, PoliteClient
 from kegg_string_mcp.kegg import KeggClient
 from kegg_string_mcp.pubmed import PubMedClient
 from kegg_string_mcp.string_db import StringClient
+
+
+# Model-supplied arguments are untrusted input. Splatting them into typed clients
+# turned a schema deviation -- limit="20", or organism= passed to string_partners --
+# into a TypeError that killed the run mid-flight, instead of an error envelope the
+# model could correct from, which is this codebase's rule for bad arguments.
+TOOL_PARAMS: dict[str, dict[str, type]] = {
+    "kegg_pathways": {"gene": str, "organism": str},
+    "string_partners": {"gene": str, "species": int, "limit": int, "required_score": int},
+    "pubmed_abstracts": {"gene": str, "organism": str, "limit": int},
+}
+
+
+def _coerce(name: str, arguments: dict[str, Any]) -> tuple[dict[str, Any], list[str]]:
+    spec = TOOL_PARAMS[name]
+    clean: dict[str, Any] = {}
+    problems: list[str] = []
+    for key, value in arguments.items():
+        if key not in spec:
+            problems.append(f"'{key}' is not a parameter of {name} "
+                            f"(accepts: {', '.join(sorted(spec))})")
+            continue
+        try:
+            clean[key] = spec[key](value)
+        except (TypeError, ValueError):
+            problems.append(f"'{key}' must be {spec[key].__name__}, got {value!r}")
+    return clean, problems
 
 
 class Tools:
@@ -38,13 +65,19 @@ class Tools:
         self.pubmed = PubMedClient(self.http)
 
     def __call__(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
-        if name == "kegg_pathways":
-            return self.kegg.pathways(**arguments).model_dump()
-        if name == "string_partners":
-            return self.string.partners(**arguments).model_dump()
-        if name == "pubmed_abstracts":
-            return self.pubmed.abstracts(**arguments).model_dump()
-        return {"records": [], "record_ids": [], "notes": [f"unknown tool '{name}'"]}
+        if name not in TOOL_PARAMS:
+            return {"query": {"tool": name}, "records": [], "record_ids": [],
+                    "notes": [f"unknown tool '{name}'"]}
+        clean, problems = _coerce(name, arguments)
+        if problems:
+            return {"query": dict(arguments), "records": [], "record_ids": [],
+                    "notes": [f"Invalid argument(s), so no lookup was performed: "
+                              f"{'; '.join(problems)}. An empty result here does NOT mean "
+                              f"there is no data."]}
+        method = {"kegg_pathways": self.kegg.pathways,
+                  "string_partners": self.string.partners,
+                  "pubmed_abstracts": self.pubmed.abstracts}[name]
+        return method(**clean).model_dump()
 
 
 def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("runs"),
@@ -91,8 +124,17 @@ def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Pat
         store.tool_result("string_partners", string_args, string_result)
         partners[gene] = string_result.get("records", [])
 
-    sizes, _ = tools.kegg.pathway_sizes(organism)
-    genome_size = _annotated_gene_count(tools, organism)
+    # The only upstream calls in the pipeline that are not already fail-soft.
+    # One KEGG 5xx here discarded every per-gene fetch already made and crashed.
+    try:
+        sizes, _ = tools.kegg.pathway_sizes(organism)
+        genome_size = _annotated_gene_count(tools, organism)
+        size_note = ""
+    except (FetchError, ValueError) as exc:
+        sizes, genome_size = {}, 0
+        size_note = (f"Pathway sizes could not be fetched for '{organism}' ({exc}), so shared "
+                     f"pathways cannot be judged as specific or broad. A shared pathway below "
+                     f"may be a container category covering much of the genome.")
     store.derived("pathway_sizes", {"organism": organism, "n_pathways": len(sizes),
                                     "genome_size": genome_size})
 
@@ -113,6 +155,9 @@ def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Pat
             f"{sp['record_id']} ({sp['name']})" for sp in p.shared_partners) or "none")
         for p in pairs
     )
+
+    if size_note:
+        table = f"WARNING: {size_note}\n\n{table}"
 
     task = (f"Genes flagged as interacting by an upstream analysis: {', '.join(genes)} "
             f"(KEGG organism '{organism}').\n\n"

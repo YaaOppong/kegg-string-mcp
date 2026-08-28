@@ -141,6 +141,7 @@ def run_loop(
             result.text = "".join(b.text for b in response.content if getattr(b, "type", "") == "text")
             result.usage = {"input": response.usage.input_tokens,
                             "output": response.usage.output_tokens}
+            result.tool_calls = calls   # was set only on the max-turns path
             return result
 
         messages.append({"role": "assistant", "content": response.content})
