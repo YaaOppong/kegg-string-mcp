@@ -6,6 +6,7 @@ import httpx
 import pytest
 
 from kegg_string_mcp.cache import DiskCache
+import kegg_string_mcp.http as h
 from kegg_string_mcp.http import MAX_RETRY_AFTER, FetchError, PoliteClient
 
 
@@ -129,18 +130,50 @@ def test_throttle_locks_are_per_host(tmp_path, monkeypatch):
 
 
 def test_concurrent_same_host_calls_are_serialised(tmp_path, monkeypatch):
+    """Must distinguish locked from unlocked. Counting sleeps cannot: unlocked,
+    every thread also reads a stale timestamp and sleeps. What differs is whether
+    the sleeps overlap -- so measure elapsed time. Locked: N x interval.
+    Unlocked: ~1 x interval, because they all sleep at once.
+    """
+    import time
+
     monkeypatch.setattr(httpx, "get", lambda url, **kw: Resp())
-    order = []
+    monkeypatch.setitem(h.MIN_INTERVAL, "slow.test", 0.05)
 
-    def tracking_sleep(seconds):
-        order.append(("sleep", threading.get_ident()))
+    c = PoliteClient(DiskCache(tmp_path), sleep=time.sleep)
+    c._last_request["slow.test"] = time.monotonic()   # force every caller to wait
 
-    c = PoliteClient(DiskCache(tmp_path), sleep=tracking_sleep)
-    c._last_request["x.test"] = -1e9
-    threads = [threading.Thread(target=c.get, args=(f"https://x.test/{i}",)) for i in range(3)]
+    threads = [threading.Thread(target=c.get, args=(f"https://slow.test/{i}",)) for i in range(4)]
+    start_time = time.monotonic()
     for t in threads:
         t.start()
     for t in threads:
         t.join()
-    # Each thread had to take the same host lock; none skipped the throttle.
-    assert len({tid for _, tid in order}) == len(order)
+    elapsed = time.monotonic() - start_time
+
+    # 4 waiters at 0.05s each: ~0.20s serialised, ~0.05s if they overlap.
+    assert elapsed >= 0.15, f"throttle waits overlapped ({elapsed:.3f}s) -- lock not held across sleep"
+
+
+def test_cache_hit_does_not_replay_another_callers_identity(tmp_path, monkeypatch):
+    """The cache is shared. An entry written under caller_identity=alice must not
+    report alice's URL as bob's audit trail, nor hand alice's identity to a model."""
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: Resp())
+    c, _ = client(tmp_path)
+    base = "https://string-db.org/api/json/x"
+
+    live = c.get(base, {"identifiers": "katG", "caller_identity": "alice"})
+    assert "alice" in live.audit_url, "a live fetch should record the URL actually sent"
+
+    replay = c.get(base, {"identifiers": "katG", "caller_identity": "bob"})
+    assert replay.cached
+    assert "alice" not in replay.audit_url
+    assert "caller_identity" not in replay.audit_url
+
+
+def test_caller_identity_is_never_written_to_disk(tmp_path, monkeypatch):
+    monkeypatch.setattr(httpx, "get", lambda url, **kw: Resp())
+    c, _ = client(tmp_path)
+    c.get("https://string-db.org/api/json/x", {"q": "katG", "caller_identity": "alice@example.com"})
+    on_disk = "".join(p.read_text() for p in tmp_path.rglob("*.json"))
+    assert "alice@example.com" not in on_disk

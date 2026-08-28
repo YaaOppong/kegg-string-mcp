@@ -41,10 +41,15 @@ class CachedResponse:
 
     @property
     def audit_url(self) -> str:
-        """What provenance should record. The cache key omits caller_identity, so
-        reporting it as the fetched URL would put a URL in the audit trail that was
-        never requested."""
-        return self.request_url or self.url
+        """What provenance should record.
+
+        On a live fetch this is the URL actually sent. On a cache hit it is the
+        cache key: the entry may have been written by a different caller under a
+        different `caller_identity`, and replaying that identity would attribute
+        to this caller a URL they never sent -- and hand another person's
+        identity string to the model.
+        """
+        return self.request_url if not self.cached else self.url
 
 
 class DiskCache:
@@ -78,8 +83,6 @@ class DiskCache:
                 fetched_at=payload["fetched_at"],
                 content_sha256=payload["content_sha256"],
                 cached=True,
-                # Entries written before this field existed fall back to the key.
-                request_url=payload.get("request_url", payload["url"]),
             )
         except (OSError, ValueError, KeyError, TypeError):
             return None
@@ -100,8 +103,11 @@ class DiskCache:
             with os.fdopen(fd, "w", encoding="utf-8") as fh:
                 json.dump(
                     {"url": url, "status": status, "body": body,
-                     "fetched_at": response.fetched_at, "content_sha256": response.content_sha256,
-                     "request_url": response.request_url},
+                     # `request_url` is deliberately NOT persisted: it can contain a
+                     # caller_identity, which must not be written to a shared cache
+                     # directory nor replayed to a later, different caller.
+                     "fetched_at": response.fetched_at,
+                     "content_sha256": response.content_sha256},
                     fh,
                 )
             os.replace(tmp_name, path)

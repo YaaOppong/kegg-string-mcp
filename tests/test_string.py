@@ -133,3 +133,34 @@ def test_json_error_object_from_partners_is_a_note_not_an_attributeerror(string)
     result = string.partners("katG")
     assert result.records == []
     assert "unreadable or error response" in " ".join(result.notes)
+
+
+def test_json_list_of_non_objects_is_a_note_not_a_crash(string):
+    """isinstance(x, list) admits ["no such identifier"], and .get() then raises."""
+    original = string.http.get
+
+    def get(url, params=None):
+        if "interaction_partners" in url:
+            return _json_http(["no such identifier"])(url, params)
+        return original(url, params)
+
+    string.http.get = get
+    result = string.partners("katG")
+    assert result.records == []
+    assert "unreadable or error response" in " ".join(result.notes)
+
+
+def test_synonym_warning_survives_a_later_error_response(string):
+    """Building a fresh notes list discarded the warning that string_id is not
+    what the caller asked for."""
+    original = string.http.get
+
+    def get(url, params=None):
+        if "interaction_partners" in url:
+            return _json_http({"Error": "boom"})(url, params)
+        return original(url, params)
+
+    string.http.get = get
+    notes = " ".join(string.partners("catalase-peroxidase").notes)
+    assert "synonym matching" in notes
+    assert "unreadable or error response" in notes

@@ -24,7 +24,7 @@ deterministic: same input and same cache produce the same output.
 ```jsonc
 {
   "query":      { "gene": "katG", "organism": "mtu" },
-  "resolved":   { "kegg_gene_id": "mtu:Rv1908c", "matched_by": "locus_tag_or_symbol" },
+  "resolved":   { "kegg_gene_id": "mtu:Rv1908c", "matched_by": "symbol" },
   "records":    [ { "record_id": "mtu00360", "name": "…", "url": "…",
                     "retrieved_at": "…", "cached": true, "detail": { } } ],
   "record_ids": ["mtu00360", "mtu00380", "mtu00983", "mtu01100", "mtu01110"],
@@ -103,7 +103,7 @@ Wire into an MCP client:
 
 ## Tests
 
-56 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
+64 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
 HTTP client that replays saved responses from `tests/fixtures/`, so the suite runs in
 under two seconds, gives the same answer every time, works offline and in CI, and does
 not hammer a free academic service. A red test means this code broke, not that an

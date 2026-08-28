@@ -78,9 +78,12 @@ class StringClient:
         # ({"Error": ..., "ErrorMessage": ...}), frequently with HTTP 200. That
         # decodes cleanly and is truthy, so checking only for a decode failure
         # left `hits[0]` raising KeyError straight out of the tool.
-        if not isinstance(hits, list):
+        # Checking only the container is not enough: a 200 decoding to
+        # ["no such identifier"] passes an isinstance(list) test, and hit.get(...)
+        # below then raises AttributeError out of the tool.
+        if not isinstance(hits, list) or not hits or not isinstance(hits[0], dict):
             return None, _trace(resp)
-        return (hits[0] if hits else None), _trace(resp)
+        return hits[0], _trace(resp)
 
     def partners(
         self, gene: str, species: int = MTB_H37RV, limit: int = 20, required_score: int = 700
@@ -139,11 +142,14 @@ class StringClient:
         # Same reasoning as in resolve(): an error object decodes fine, and
         # iterating it would yield dict *keys* -- strings -- so `row.get(...)`
         # below would raise AttributeError out of the tool.
-        if not isinstance(rows, list):
+        if not isinstance(rows, list) or any(not isinstance(r, dict) for r in rows):
             return ToolResult.build(
                 query, [], resolved={"string_id": string_id}, requests=traces,
-                notes=[f"STRING returned an unreadable or error response for {string_id} (expected a "
-                       f"JSON list of partners). No partner data retrieved."],
+                # notes + [...] rather than a fresh list: dropping the accumulated
+                # notes would discard the synonym-match warning, so the caller would
+                # not learn that string_id is not what they asked for.
+                notes=notes + [f"STRING returned an unreadable or error response for {string_id} "
+                               f"(expected a JSON list of partner objects). No partner data retrieved."],
             )
         if not rows:
             notes.append(f"STRING returned no partners for {string_id} at required_score>={required_score}. "

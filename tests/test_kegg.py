@@ -127,27 +127,6 @@ def test_invalid_organism_returns_a_note_not_an_exception(kegg, http):
     assert "may not be a valid KEGG organism code" in result.notes[0]
 
 
-def test_qualified_id_with_no_pathways_does_not_assert_the_gene_exists(kegg, http):
-    """KEGG answers /link identically (200, empty body) for an unknown gene, so
-    'the gene exists in KEGG' was a fabricated claim on this path. 'mtu:katG' is
-    the natural way to trigger it -- and it is not a valid KEGG gene ID."""
-    from kegg_string_mcp.cache import CachedResponse
-
-    original = http.get
-
-    def get(url, params=None):
-        if "/link/pathway/" in url:
-            return CachedResponse(url=url, status=200, body="", fetched_at="2026-08-27T00:00:00+00:00",
-                                  content_sha256="x", cached=False, request_url=url)
-        return original(url, params)
-
-    http.get = get
-    result = kegg.pathways("mtu:NOTAGENE", "mtu")
-    joined = " ".join(result.notes)
-    assert "does NOT confirm" in joined
-    assert "the gene exists in KEGG" not in joined.lower()
-
-
 def test_missing_names_are_noted_even_when_the_name_list_is_empty(kegg, http):
     """The `and names` guard suppressed the note in exactly the case needing it:
     a successful but empty /list/pathway response."""
@@ -165,3 +144,74 @@ def test_missing_names_are_noted_even_when_the_name_list_is_empty(kegg, http):
     result = kegg.pathways("katG", "mtu")
     assert result.records, "pathway IDs should still be returned"
     assert any("no name for" in n for n in result.notes), "silent (name unavailable) again"
+
+
+def _empty_link(http):
+    """KEGG's response for a gene with no pathways AND for an unknown gene."""
+    from kegg_string_mcp.cache import CachedResponse
+
+    original = http.get
+
+    def get(url, params=None):
+        if "/link/pathway/" in url:
+            return CachedResponse(url=url, status=200, body="",
+                                  fetched_at="2026-08-28T00:00:00+00:00",
+                                  content_sha256="x", cached=False, request_url=url)
+        return original(url, params)
+
+    http.get = get
+
+
+def test_real_locus_tag_with_no_pathways_is_confirmed_to_exist(kegg, http):
+    """Rv0007 is a real gene that genuinely has no pathway assignments. Hedging
+    told the reader to 'pass the locus tag form' -- which is what they just did."""
+    _empty_link(http)
+    result = kegg.pathways("mtu:Rv0007", "mtu")
+    joined = " ".join(result.notes)
+    assert "The gene exists in KEGG" in joined
+    assert "not a valid KEGG gene ID" not in joined
+    assert result.resolved["matched_by"] == "kegg_id"
+
+
+def test_unknown_qualified_id_is_reported_as_a_resolution_failure(kegg, http):
+    _empty_link(http)
+    result = kegg.pathways("mtu:NOTAGENE", "mtu")
+    joined = " ".join(result.notes)
+    assert "was not found in KEGG organism" in joined
+    assert "resolution failure" in joined
+    assert result.resolved["matched_by"] == "none"
+
+
+def test_organism_qualified_symbol_gets_the_actionable_hint(kegg, http):
+    """'mtu:katG' is natural to type and is not a valid KEGG gene ID."""
+    _empty_link(http)
+    result = kegg.pathways("mtu:katG", "mtu")
+    assert "not a valid KEGG gene ID" in " ".join(result.notes)
+
+
+def test_no_name_claim_when_the_name_list_was_never_fetched(kegg, http):
+    """Removing the truthiness guard made the tool assert 'KEGG's pathway list had
+    no name for X' about a response it never received -- directly contradicting the
+    fetch-failure note above it."""
+    from kegg_string_mcp.http import FetchError
+
+    original = http.get
+
+    def get(url, params=None):
+        if "/list/pathway/" in url:
+            raise FetchError(url, 500, "")
+        return original(url, params)
+
+    http.get = get
+    result = kegg.pathways("katG", "mtu")
+    joined = " ".join(result.notes)
+    assert result.records, "pathway IDs should survive a name-lookup failure"
+    assert "Could not fetch pathway names" in joined
+    assert "had no name for" not in joined, "asserted a fact about an unreceived response"
+
+
+def test_locus_tag_and_symbol_matches_are_distinguishable(kegg):
+    """Collapsing both into 'locus_tag_or_symbol' left the caller unable to tell
+    which interpretation was used when the two could disagree."""
+    assert kegg.pathways("Rv1908c", "mtu").resolved["matched_by"] == "locus_tag"
+    assert kegg.pathways("katG", "mtu").resolved["matched_by"] == "symbol"
