@@ -16,6 +16,7 @@ The model never writes to the store and never does arithmetic over record IDs.
 
 from __future__ import annotations
 
+import inspect
 import json
 import uuid
 from collections.abc import Callable
@@ -31,87 +32,10 @@ from kegg_string_mcp.agent.store import RunStore
 MAX_TURNS = 12
 MAX_TOKENS = 16000
 
-TOOL_SCHEMAS = [
-    {
-        "name": "kegg_pathways",
-        "description": (
-            "KEGG pathways for one gene. Accepts a KEGG gene ID (mtu:Rv1908c), a locus tag "
-            "(Rv1908c), or a gene symbol (katG). Returns one record per pathway, with the KEGG "
-            "pathway ID as record_id. If records is empty, read notes: it distinguishes "
-            "'identifier did not resolve' from 'gene exists but maps to no pathway'."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "gene": {"type": "string"},
-                "organism": {"type": "string", "default": "mtu"},
-            },
-            "required": ["gene"],
-        },
-    },
-    {
-        "name": "string_partners",
-        "description": (
-            "STRING interaction partners for one gene, with the full per-channel score "
-            "breakdown. STRING's combined_score includes textmining, so check "
-            "evidence_beyond_textmining before calling an interaction experimentally supported. "
-            "An empty result at a high required_score is not evidence of isolation."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "gene": {"type": "string"},
-                "species": {"type": "integer", "default": 83332},
-                "limit": {"type": "integer", "default": 20},
-                "required_score": {"type": "integer", "default": 700},
-            },
-            "required": ["gene"],
-        },
-    },
-    {
-        "name": "pubmed_abstracts",
-        "description": (
-            "PubMed abstracts for a gene, via NCBI E-utilities. Use this LAST and only when the "
-            "structured tools leave a question open -- it is the weakest and noisiest channel. "
-            "Unlike KEGG and STRING this is relevance-ranked text search, NOT identifier "
-            "resolution: matching a query string is not the same as being about the gene, and "
-            "there is no 'did not resolve' signal. Each record carries the exact retrieved text; "
-            "any claim you draw from an abstract must quote a verbatim span of it."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "gene": {"type": "string"},
-                "organism": {"type": "string", "default": "Mycobacterium tuberculosis"},
-                "limit": {"type": "integer", "default": 10},
-            },
-            "required": ["gene"],
-        },
-    },
-    {
-        "name": "uniprot_protein",
-        "description": (
-            "Curated protein annotation from UniProt: function, catalytic activity, subunit "
-            "structure, PDB cross-references. Reach for this when KEGG has no pathway -- KEGG "
-            "assigns one to only 29% of M. tuberculosis genes, so 'no KEGG pathway' is usually "
-            "an annotation gap, not a fact about the protein. Each function statement carries "
-            "an evidence tier: 'experimental' means measured on this protein, with the "
-            "supporting PMIDs listed; 'sequence_similarity', 'sequence_model', 'automatic' and "
-            "'imported' are INFERRED from a rule or a homologue and are not evidence about this "
-            "gene. Function text is prose, so quote a verbatim span of quotable_text for any "
-            "claim drawn from it."
-        ),
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "gene": {"type": "string"},
-                "organism_id": {"type": "integer", "default": 83332},
-                "limit": {"type": "integer", "default": 3},
-            },
-            "required": ["gene"],
-        },
-    },
-]
+# Tool schemas are NOT defined here. They come from the MCP server -- over the wire
+# for McpTools, from its in-process registry for the direct dispatch -- so there is
+# one definition. The copies that used to live here drifted, and the agent ended up
+# running on shorter descriptions than an external MCP client received.
 
 
 @dataclass
@@ -123,18 +47,20 @@ class LoopResult:
     usage: dict[str, int] = field(default_factory=dict)
 
 
-def run_loop(
+async def run_loop(
     mode: str,
     task: str,
-    dispatch: Callable[[str, dict[str, Any]], dict[str, Any]],
+    dispatch: Callable[[str, dict[str, Any]], Any],
     store: RunStore,
+    tool_schemas: list[dict[str, Any]],
     client: Any | None = None,
     max_turns: int = MAX_TURNS,
 ) -> LoopResult:
     """Drive the model until it stops asking for tools.
 
-    `dispatch` runs a tool and returns its envelope; injecting it keeps this loop
-    testable without a network or an API key.
+    `dispatch` runs a tool and returns its envelope, and may be sync or async --
+    injecting it keeps this loop testable without a network, a subprocess or an
+    API key, while production passes an MCP-backed session.
     """
     client = client or anthropic.Anthropic()
     messages: list[dict[str, Any]] = [{"role": "user", "content": task}]
@@ -146,7 +72,7 @@ def run_loop(
             model=MODEL,
             max_tokens=MAX_TOKENS,
             system=prompt_for(mode),
-            tools=TOOL_SCHEMAS,
+            tools=tool_schemas,
             thinking={"type": "adaptive"},
             messages=messages,
         )
@@ -175,6 +101,8 @@ def run_loop(
         tool_results = []
         for block in requested:
             envelope = dispatch(block.name, dict(block.input))
+            if inspect.isawaitable(envelope):
+                envelope = await envelope
             store.tool_result(block.name, dict(block.input), envelope)
             calls.append({"turn": turn, "tool": block.name, "input": dict(block.input),
                           "n_records": len(envelope.get("records", []))})

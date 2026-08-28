@@ -11,9 +11,9 @@ from kegg_string_mcp.evaluate.gold import GoldSet, load
 from kegg_string_mcp.evaluate.score import EvalReport, score_gene
 
 
-def evaluate(gold: GoldSet | None = None, runs: Path = Path("runs/eval"),
-             tools: Tools | None = None, client: Any | None = None,
-             annotate=annotate_gene) -> EvalReport:
+async def evaluate(gold: GoldSet | None = None, runs: Path = Path("runs/eval"),
+                   tools: Any | None = None, client: Any | None = None,
+                   annotate=annotate_gene) -> EvalReport:
     gold = gold or load()
     report = EvalReport(organism=gold.organism, reference=gold.reference,
                         retrieved_on=gold.retrieved_on, coverage=gold.coverage)
@@ -21,7 +21,7 @@ def evaluate(gold: GoldSet | None = None, runs: Path = Path("runs/eval"),
 
     for entry in gold.genes:
         try:
-            payload = annotate(entry.query, gold.organism, runs, tools, client)
+            payload = await annotate(entry.query, gold.organism, runs, tools, client)
             score = score_gene(entry, payload.get("summary") or "",
                                payload.get("validation", {}), gold.organism)
         except Exception as exc:                      # noqa: BLE001
