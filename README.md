@@ -119,7 +119,11 @@ needs an occasional live check.
 pytest -q
 ```
 
-## Licensing
+## Licence
+
+This project is MIT licensed — see [LICENSE](LICENSE).
+
+### Upstream data
 
 This server queries public APIs on the caller's behalf and caches responses locally;
 it redistributes no third-party data. Terms remain the caller's responsibility:
