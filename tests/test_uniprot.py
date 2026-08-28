@@ -128,3 +128,49 @@ def test_unreadable_response_is_a_note_not_a_crash():
 
     result = UniProtClient(Html("x")).protein("katG")
     assert result.records == [] and "unreadable" in " ".join(result.notes)
+
+
+def test_unparseable_entries_are_not_a_silent_empty_success():
+    """Entries returned but none with a valid accession produced zero records and an
+    empty notes list -- indistinguishable from 'this protein is unannotated'."""
+    import json
+
+    class Malformed(FixtureHttp):
+        def get(self, url, params=None):
+            body = json.dumps({"results": [{"primaryAccession": "not-an-accession"}]})
+            return CachedResponse(url=url, status=200, body=body, fetched_at="t",
+                                  content_sha256="x", cached=False, request_url=url,
+                                  headers={"x-uniprot-release": "2026_02"})
+
+    result = UniProtClient(Malformed("x")).protein("katG")
+    assert result.records == []
+    joined = " ".join(result.notes)
+    assert "none could be parsed" in joined
+    assert "not evidence that the protein is unannotated" in joined
+    assert result.resolved["matched_by"] == "none"
+
+
+def test_multiple_matching_entries_are_disclosed():
+    """resolved.accession names only the first; reporting it as 'the' answer would
+    hide that a choice was made between paralogues."""
+    import json
+
+    body = json.loads((FIXTURES / "uniprot_search_Rv0006.json").read_text())
+    entry = body["results"][0]
+    second = dict(entry, primaryAccession="A0A123XYZ9")
+
+    class Two(FixtureHttp):
+        def get(self, url, params=None):
+            return CachedResponse(url=url, status=200,
+                                  body=json.dumps({"results": [entry, second]}),
+                                  fetched_at="t", content_sha256="x", cached=False,
+                                  request_url=url, headers={"x-uniprot-release": "2026_02"})
+
+    result = UniProtClient(Two("x")).protein("gyrA")
+    assert len(result.records) == 2
+    assert "2 UniProt entries matched" in " ".join(result.notes)
+
+
+def test_single_entry_gets_no_ambiguity_note():
+    result = client("uniprot_search_Rv1908c").protein("Rv1908c")
+    assert not any("entries matched" in n for n in result.notes)

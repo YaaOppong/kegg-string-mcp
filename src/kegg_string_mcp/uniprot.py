@@ -224,6 +224,26 @@ class UniProtClient:
         records = [r for r in (self._record(e, (trace.retrieved_at, trace.cached))
                                for e in entries) if r is not None]
         notes: list[str] = []
+
+        if not records:
+            # UniProt answered with entries but none of them parsed -- a malformed or
+            # changed payload. Returning an empty record list with no note would read
+            # exactly like "this protein is unannotated", which is the silence this
+            # codebase exists to avoid.
+            return ToolResult.build(
+                query, [], resolved=resolved_base, requests=traces,
+                notes=[(f"UniProt returned {len(entries)} entr(y/ies) for '{gene}' but none could "
+                        f"be parsed into a record (no valid accession). This is a parsing "
+                        f"failure, not evidence that the protein is unannotated.")])
+
+        distinct = sorted({r.record_id for r in records})
+        if len(distinct) > 1:
+            # Several proteins matched the gene name -- paralogues, or a symbol shared
+            # across entries. Reporting only the first accession as "the" answer would
+            # hide that a choice was made.
+            notes.append(f"{len(distinct)} UniProt entries matched gene '{gene}': "
+                         f"{', '.join(distinct)}. They are all returned; "
+                         f"resolved.accession names only the first.")
         if any(any(t in INFERRED_TIERS for f in r.detail["function_statements"] for t in f["tiers"])
                for r in records):
             notes.append(SIMILARITY_CAVEAT)
