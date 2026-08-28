@@ -105,6 +105,42 @@ class RunStore:
     def record(self, record_id: str) -> dict[str, Any] | None:
         return self._records.get(record_id)
 
+    def corpus_manifest(self) -> list[dict[str, Any]]:
+        """Papers this run found, deduped, for a downstream full-text pipeline.
+
+        `mentions` is the genes actually present in the retrieved title/abstract,
+        NOT the genes queried -- PubMed matches on metadata the model never sees,
+        so a paper can be returned for a gene it never names. Filtering a corpus
+        on the query term would quietly admit those.
+
+        `in_pmc` is the handle that matters for full text: a DOI resolves to the
+        publisher, usually paywalled and with terms forbidding bulk retrieval,
+        whereas a PMCID is the licit route. Presence in PMC is still not
+        sufficient -- the Open Access subset is a subset of PMC and per-article
+        licences vary within it, which the consumer must check.
+        """
+        papers: dict[str, dict[str, Any]] = {}
+        for record in self._records.values():
+            if record.get("type") != "article":
+                continue
+            detail = record.get("detail", {})
+            pmid = record["record_id"]
+            entry = papers.setdefault(pmid, {
+                "pmid": pmid,
+                "doi": detail.get("doi", ""),
+                "pmcid": detail.get("pmcid", ""),
+                "in_pmc": detail.get("in_pmc", False),
+                "title": detail.get("title", ""),
+                "journal": detail.get("journal", ""),
+                "year": detail.get("year", ""),
+                "url": record.get("url", ""),
+                "mentions": [],
+            })
+            for gene in detail.get("mentions", []):
+                if gene not in entry["mentions"]:
+                    entry["mentions"].append(gene)
+        return [papers[k] for k in sorted(papers)]
+
     def replay(self) -> Iterator[dict[str, Any]]:
         if not self.path.exists():
             return iter(())

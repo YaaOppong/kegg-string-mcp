@@ -61,6 +61,38 @@ def normalise(text: str) -> str:
     return re.sub(r"\s+", " ", text or "").strip().casefold()
 
 
+# Punctuation a quoter legitimately adds or drops at the edges of a span.
+_EDGE_PUNCT = " \t\n.,;:!?\"'\u201c\u201d\u2018\u2019()[]"
+_ELLIPSIS = re.compile(r"\s*(?:\.\.\.|\u2026)\s*")
+
+
+def _fragments(quote: str) -> list[str]:
+    """Split a quote on ellipses. A model eliding a passage writes "A ... B", and
+    requiring that to appear contiguously would fail an honest quotation."""
+    return [f for f in (part.strip(_EDGE_PUNCT) for part in _ELLIPSIS.split(quote)) if f]
+
+
+def quote_in_source(quote: str, source: str) -> bool:
+    """Containment, tolerant of the edits honest quoting actually involves.
+
+    Terminal punctuation is stripped: truncating mid-sentence and closing with a
+    full stop is normal quoting, not fabrication. Observed live -- a model quoted
+    "...mutations in ahpC or inhA." from a sentence that continues "and between
+    mutations in kasA", and strict containment called that a fabricated quote.
+
+    Fragments split on an ellipsis must each appear, and in order, so an elision
+    cannot silently join two unrelated passages.
+    """
+    haystack = normalise(source)
+    position = 0
+    for fragment in _fragments(quote):
+        found = haystack.find(normalise(fragment), position)
+        if found < 0:
+            return False
+        position = found + len(normalise(fragment))
+    return True
+
+
 @dataclass
 class QuoteCheck:
     record_id: str
@@ -162,7 +194,7 @@ def check_quotes(text: str, records: dict[str, dict[str, Any]]) -> list[QuoteChe
         if not source:
             checks.append(QuoteCheck(record_id, quote, "no_source_text",
                                      "no retrieved text for this record to check the quote against"))
-        elif normalise(quote) in normalise(source):
+        elif quote_in_source(quote, source):
             checks.append(QuoteCheck(record_id, quote, "verified"))
         else:
             checks.append(QuoteCheck(record_id, quote, "not_in_source",

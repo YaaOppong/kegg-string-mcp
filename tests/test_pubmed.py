@@ -342,3 +342,61 @@ def test_esearch_fetch_error_is_a_note_not_an_exception(pubmed):
     result = pubmed.abstracts("katG")
     assert result.records == []
     assert "HTTP 503" in " ".join(result.notes)
+
+
+def _TRACE():
+    from kegg_string_mcp.provenance import RequestTrace
+    return RequestTrace(url="https://eutils.ncbi.nlm.nih.gov/x", retrieved_at="2026-08-28T00:00:00+00:00",
+                        cached=False, status=200, content_sha256="x")
+
+
+def _article(pmid, text):
+    from kegg_string_mcp.provenance import Record
+    return Record(record_id=pmid, type="article", name=text[:40],
+                  url=f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/", source="pubmed",
+                  retrieved_at="2026-08-28T00:00:00+00:00", cached=False,
+                  detail={"title": text[:40], "abstract": text, "has_abstract": True,
+                          "abstract_sections": [], "quotable_text": text,
+                          "journal": "", "year": "", "doi": ""})
+
+
+def test_records_matching_only_on_metadata_are_named(monkeypatch):
+    """PubMed searches [All Fields] -- MeSH terms, keywords, substance lists -- so a
+    record can arrive with an abstract that never mentions the gene. Observed live:
+    a query for 'ahpC katG' returned a general thioredoxin review mentioning neither.
+    Its PMID is still citable, so the gap has to be stated."""
+    from kegg_string_mcp.provenance import Record
+    from kegg_string_mcp.pubmed import PubMedClient
+
+    client = PubMedClient(http=None)
+
+    def fake_search(term, limit):
+        return ["111", "222"], {"total": 2, "query_translation": term}, _TRACE()
+
+    def fake_fetch(pmids):
+        return [
+            _article("111", "KatG is a catalase-peroxidase in M. tuberculosis."),
+            _article("222", "The thioredoxin antioxidant system is a key defence."),
+        ], [], _TRACE()
+
+    monkeypatch.setattr(client, "search", fake_search)
+    monkeypatch.setattr(client, "fetch", fake_fetch)
+
+    result = client.abstracts("katG", limit=2)
+    joined = " ".join(result.notes)
+    assert "222" in joined and "do NOT mention" in joined
+    assert "nothing in them to quote" in joined
+    # The one that does mention it must not be named.
+    assert not any(n.startswith("PMID(s) 111") for n in result.notes)
+
+
+def test_all_records_mentioning_the_gene_produces_no_metadata_note(monkeypatch):
+    from kegg_string_mcp.pubmed import PubMedClient
+
+    client = PubMedClient(http=None)
+    monkeypatch.setattr(client, "search",
+                        lambda term, limit: (["111"], {"total": 1, "query_translation": term}, _TRACE()))
+    monkeypatch.setattr(client, "fetch",
+                        lambda pmids: ([_article("111", "KatG activates isoniazid.")], [], _TRACE()))
+    result = client.abstracts("katG", limit=1)
+    assert not any("do NOT mention" in n for n in result.notes)

@@ -209,3 +209,86 @@ def test_short_quoted_fragments_are_ignored():
     from kegg_string_mcp.agent.validate import extract_quotes
 
     assert extract_quotes('PMID:10609885 "KatG"') == []
+
+
+# --- corpus manifest --------------------------------------------------------
+
+PAPER = {
+    "resolved": {"term": '"katG"'},
+    "records": [
+        {"record_id": "34086544", "type": "article", "name": "Review",
+         "url": "https://pubmed.ncbi.nlm.nih.gov/34086544/",
+         "detail": {"doi": "10.1080/x", "pmcid": "PMC8812758", "in_pmc": True,
+                    "title": "Review", "journal": "J", "year": "2021",
+                    "mentions": ["katG"], "quotable_text": "katG stuff"}},
+        {"record_id": "23899494", "type": "article", "name": "Thioredoxin review",
+         "url": "https://pubmed.ncbi.nlm.nih.gov/23899494/",
+         "detail": {"doi": "10.1016/y", "pmcid": "", "in_pmc": False,
+                    "title": "Thioredoxin", "journal": "J", "year": "2013",
+                    "mentions": [], "quotable_text": "thioredoxin stuff"}},
+    ],
+    "record_ids": ["34086544", "23899494"],
+}
+
+
+def test_manifest_records_pmcid_not_just_doi(tmp_path):
+    """A DOI resolves to a paywalled publisher; a PMCID is the licit full-text route."""
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("pubmed_abstracts", {"gene": "katG"}, PAPER)
+    by_pmid = {p["pmid"]: p for p in store.corpus_manifest()}
+    assert by_pmid["34086544"]["pmcid"] == "PMC8812758" and by_pmid["34086544"]["in_pmc"]
+    assert by_pmid["23899494"]["pmcid"] == "" and not by_pmid["23899494"]["in_pmc"]
+
+
+def test_manifest_mentions_reflect_the_text_not_the_query(tmp_path):
+    """PubMed matches on metadata the model never sees, so a paper can come back
+    for a gene it never names. Filtering on the query term would admit those."""
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("pubmed_abstracts", {"gene": "katG"}, PAPER)
+    by_pmid = {p["pmid"]: p for p in store.corpus_manifest()}
+    assert by_pmid["34086544"]["mentions"] == ["katG"]
+    assert by_pmid["23899494"]["mentions"] == []
+
+
+def test_manifest_excludes_non_article_records(tmp_path):
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("kegg_pathways", {"gene": "katG"}, KEGG_RESULT)
+    assert store.corpus_manifest() == []
+
+
+def test_manifest_dedupes_papers_across_calls(tmp_path):
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("pubmed_abstracts", {"gene": "katG"}, PAPER)
+    store.tool_result("pubmed_abstracts", {"gene": "ahpC"}, PAPER)
+    assert len(store.corpus_manifest()) == 2
+
+
+def test_trailing_full_stop_does_not_fail_an_honest_quote():
+    """Observed live: a model quoted a span verbatim and closed it with a full stop
+    where the source sentence continues. Strict containment called that fabrication."""
+    from kegg_string_mcp.agent.validate import validate
+
+    source = {"detail": {"quotable_text":
+              "There was also a significant inverse association between katG315 mutations and "
+              "mutations in ahpC or inhA and between mutations in kasA and mutations in ahpC."}}
+    text = ('PMID:16870753 "a significant inverse association between katG315 mutations and '
+            'mutations in ahpC or inhA."')
+    report = validate(text, {"16870753"}, records={"16870753": source})
+    assert [q.status for q in report.quotes] == ["verified"]
+
+
+def test_elided_quote_is_checked_fragment_by_fragment_in_order():
+    from kegg_string_mcp.agent.validate import quote_in_source
+
+    source = "The first finding was clear. Much intervening text. The second finding was not."
+    assert quote_in_source("The first finding was clear ... The second finding was not", source)
+    # Out of order must still fail: an elision cannot reorder the source.
+    assert not quote_in_source("The second finding was not ... The first finding was clear", source)
+
+
+def test_fabricated_quote_still_fails_after_the_punctuation_fix():
+    """The tolerance must not swallow real fabrication."""
+    from kegg_string_mcp.agent.validate import quote_in_source
+
+    source = "KatG is a catalase-peroxidase required for isoniazid activation."
+    assert not quote_in_source("KatG binds directly to AhpC in a stable complex.", source)

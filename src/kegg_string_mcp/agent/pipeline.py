@@ -14,6 +14,7 @@ would validate against its own mistake.
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
@@ -61,8 +62,7 @@ def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("runs"),
     payload = {"mode": "single", "gene": gene, "organism": organism,
                "summary": result.text, "turns": result.turns,
                "stop_reason": result.stop_reason, "validation": report.to_dict()}
-    store.output(payload)
-    return payload | {"store": str(store.path)}
+    return _finish(store, payload)
 
 
 def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Path("runs"),
@@ -120,8 +120,28 @@ def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Pat
                "stop_reason": result.stop_reason,
                "pairs": [p.to_dict() for p in pairs],
                "validation": report.to_dict()}
+    return _finish(store, payload)
+
+
+def _write_manifest(store: RunStore) -> Path | None:
+    """Emit the corpus manifest beside the run store, for a downstream full-text
+    pipeline to consume. Written only when the run actually found papers."""
+    papers = store.corpus_manifest()
+    if not papers:
+        return None
+    path = store.path.with_suffix(".corpus.jsonl")
+    with path.open("w", encoding="utf-8") as fh:
+        for paper in papers:
+            fh.write(json.dumps(paper) + "\n")
+    return path
+
+
+def _finish(store: RunStore, payload: dict[str, Any]) -> dict[str, Any]:
+    manifest = _write_manifest(store)
+    payload = payload | {"corpus": [p for p in store.corpus_manifest()]}
     store.output(payload)
-    return payload | {"store": str(store.path)}
+    return payload | {"store": str(store.path),
+                      "corpus_manifest": str(manifest) if manifest else None}
 
 
 def _annotated_gene_count(tools: Tools, organism: str) -> int:

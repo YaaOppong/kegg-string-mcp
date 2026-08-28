@@ -64,6 +64,13 @@ MAX_LIMIT = 100
 _QUERY_SYNTAX = re.compile(r'["\[\]]')
 _PMID = re.compile(r"^\d+$")
 
+METADATA_MATCH_CAVEAT = (
+    "PubMed searched [All Fields], which spans MeSH terms, author keywords and substance "
+    "lists as well as the title and abstract -- and it does NOT search full text. So a "
+    "record can match without the gene appearing in the text retrieved here, and a paper "
+    "that discusses the gene only in its Results is not findable this way."
+)
+
 SEARCH_CAVEAT = (
     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These "
     "articles matched the query string; matching is not the same as being about this gene, "
@@ -223,11 +230,16 @@ class PubMedClient:
         # is saved only by document order (ArticleIdList precedes ReferenceList inside
         # PubmedData), and that accident runs out for an article with no DOI of its
         # own, where it would attribute a cited paper's DOI to this one.
-        doi = ""
+        # PMCID matters as much as the DOI for anything downstream: a DOI resolves
+        # to the publisher, which is usually paywalled and whose terms forbid bulk
+        # retrieval. A PMCID means the article is in PubMed Central, which is the
+        # licit route to full text. Same ArticleIdList, same scoping reasoning.
+        ids = {"doi": "", "pmc": ""}
         for identifier in article.findall("PubmedData/ArticleIdList/ArticleId"):
-            if identifier.get("IdType") == "doi":
-                doi = (identifier.text or "").strip()
-                break
+            id_type = identifier.get("IdType", "")
+            if id_type in ids and not ids[id_type]:
+                ids[id_type] = (identifier.text or "").strip()
+        doi, pmcid = ids["doi"], ids["pmc"]
 
         return Record(
             record_id=pmid,
@@ -249,6 +261,12 @@ class PubMedClient:
                 "journal": _text(entry.find("Journal/Title")),
                 "year": _year(entry.find("Journal/JournalIssue/PubDate")),
                 "doi": doi,
+                "pmcid": pmcid,
+                # Presence in PMC is necessary but NOT sufficient for full-text
+                # reuse: the PMC Open Access subset is a subset of PMC, and
+                # per-article licences vary within it. Checking that is the
+                # downstream consumer's job; recording the handle is this one's.
+                "in_pmc": bool(pmcid),
             },
         )
 
@@ -337,6 +355,28 @@ class PubMedClient:
             notes.insert(0, f"{total} articles matched this query; the {len(records)} most relevant "
                             f"were retrieved. A finding absent from these abstracts may still be "
                             f"reported in the {total - len(records)} not retrieved.")
+        # A record can match on metadata the model never sees -- MeSH terms,
+        # keywords, substance lists -- and arrive with an abstract that never
+        # mentions the gene. Observed: a query for "ahpC katG" returned a general
+        # thioredoxin review whose abstract contains neither symbol. Its PMID is
+        # still citable, so without this note a model could cite it for a claim
+        # about the gene with nothing to quote. Name them.
+        terms = [t for t in re.split(r"\s+", gene) if len(t) > 2]
+        # Which query terms are actually present in the retrieved text. Recorded
+        # per record so a downstream corpus can be filtered to papers that really
+        # discuss a gene, rather than ones that merely matched its metadata.
+        for record in records:
+            haystack = record.detail["quotable_text"].lower()
+            record.detail["mentions"] = [t for t in terms if t.lower() in haystack]
+        unquotable = [r.record_id for r in records if terms and not r.detail["mentions"]]
+        if unquotable:
+            notes.append(
+                f"PMID(s) {', '.join(unquotable)} matched the search but do NOT mention "
+                f"{' or '.join(terms)} anywhere in the retrieved title or abstract -- they matched "
+                f"on record metadata not shown here. There is nothing in them to quote for a claim "
+                f"about this gene. {METADATA_MATCH_CAVEAT}"
+            )
+
         # Named, not counted: a validator checking a quote against these records
         # needs to know which ones have no abstract to quote from.
         without = [r.record_id for r in records if not r.detail["has_abstract"]]
