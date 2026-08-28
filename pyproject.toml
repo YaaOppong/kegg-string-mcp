@@ -7,6 +7,7 @@ name = "kegg-string-mcp"
 version = "0.1.0"
 description = "MCP server exposing KEGG and STRING as model-callable tools, with provenance on every record"
 requires-python = ">=3.10"
+authors = [{name = "Yaa Oppong", email = "25320748+YaaOppong@users.noreply.github.com"}]
 license = "MIT"
 license-files = ["LICENSE"]
 dependencies = ["mcp>=2.0", "httpx>=0.27", "pydantic>=2.6", "anthropic>=1.0"]
