@@ -103,7 +103,7 @@ Wire into an MCP client:
 
 ## Tests
 
-73 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
+80 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
 HTTP client that replays saved responses from `tests/fixtures/`, so the suite runs in
 under two seconds, gives the same answer every time, works offline and in CI, and does
 not hammer a free academic service. A red test means this code broke, not that an

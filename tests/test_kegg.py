@@ -230,14 +230,92 @@ def test_every_request_trace_carries_a_resolvable_url(kegg):
 def test_invalid_organism_code_is_rejected_before_any_request(kegg, http):
     """The organism goes into a URL path. '../../etc' normalises to rest.kegg.jp/etc,
     so the tool would issue a request the caller never intended."""
-    for bad in ("../../etc", "", "TOOLONG", "MTU", "mt u"):
+    for bad in ("../../etc", "", "TOOLONG", "mt u", "m", "12345"):
         result = kegg.pathways("katG", bad)
         assert result.records == [], bad
         assert "not a valid KEGG organism code" in result.notes[0], bad
     assert http.calls == [], "no request should be made for an invalid organism"
 
 
+def test_organism_case_is_normalised_not_rejected(kegg):
+    """_KEGG_ID accepts mixed case by design; validating before normalising made
+    pathways("mtu:Rv1908c", "MTU") fail outright."""
+    assert kegg.pathways("katG", "MTU").record_ids
+    assert kegg.pathways("mtu:Rv1908c", "MTU").record_ids
+
+
 def test_empty_gene_is_rejected_before_any_request(kegg, http):
     result = kegg.pathways("   ", "mtu")
     assert result.records == [] and "No gene identifier" in result.notes[0]
     assert http.calls == []
+
+
+def _blank_gene_list(http):
+    """An empty-but-successful /list/{organism} — proxy truncation, maintenance 200."""
+    from kegg_string_mcp.cache import CachedResponse
+
+    original = http.get
+
+    def get(url, params=None):
+        if url.endswith("/list/mtu"):
+            return CachedResponse(url=url, status=200, body="", fetched_at="2026-08-28T00:00:00+00:00",
+                                  content_sha256="x", cached=False, request_url=url)
+        if "/link/pathway/" in url:
+            return CachedResponse(url=url, status=200, body="", fetched_at="2026-08-28T00:00:00+00:00",
+                                  content_sha256="x", cached=False, request_url=url)
+        return original(url, params)
+
+    http.get = get
+
+
+def test_empty_gene_list_is_not_treated_as_proof_a_gene_is_absent(kegg, http):
+    """The same fetched-vs-empty distinction as names_fetched. Getting it wrong
+    here declares a real gene nonexistent — and http.py caches the 200 for 30 days,
+    so the false claim repeats."""
+    _blank_gene_list(http)
+    result = kegg.pathways("mtu:Rv0007", "mtu")
+    joined = " ".join(result.notes)
+    assert "was not found in KEGG organism" not in joined
+    assert "could not be fetched to confirm" in joined
+
+
+def test_resolution_failure_does_not_advertise_a_gene_id(kegg, http):
+    """A citable-looking kegg_gene_id beside matched_by='none' invites a model to
+    cite the identifier we just said did not resolve."""
+    from kegg_string_mcp.cache import CachedResponse
+
+    original = http.get
+
+    def get(url, params=None):
+        if "/link/pathway/" in url:
+            return CachedResponse(url=url, status=200, body="", fetched_at="2026-08-28T00:00:00+00:00",
+                                  content_sha256="x", cached=False, request_url=url)
+        return original(url, params)
+
+    http.get = get
+    result = kegg.pathways("mtu:NOTAGENE", "mtu")
+    assert result.resolved == {"matched_by": "none"}
+    assert "kegg_gene_id" not in result.resolved
+
+
+def test_symbol_hint_only_appears_when_the_locus_is_actually_a_symbol(kegg, http):
+    """The `":" in kegg_id` guard was always true, so mtu:NOTAGENE was told
+    "that's a symbol, not a gene ID" — which is simply wrong."""
+    from kegg_string_mcp.cache import CachedResponse
+
+    original = http.get
+
+    def get(url, params=None):
+        if "/link/pathway/" in url:
+            return CachedResponse(url=url, status=200, body="", fetched_at="2026-08-28T00:00:00+00:00",
+                                  content_sha256="x", cached=False, request_url=url)
+        return original(url, params)
+
+    http.get = get
+    assert "not a valid KEGG gene ID" in " ".join(kegg.pathways("mtu:katG", "mtu").notes)
+    assert "not a valid KEGG gene ID" not in " ".join(kegg.pathways("mtu:NOTAGENE", "mtu").notes)
+
+
+def test_locus_tag_hit_is_not_flagged_ambiguous(kegg):
+    """An agent branching on query.ambiguous_symbol would hedge on an exact match."""
+    assert "ambiguous_symbol" not in kegg.pathways("Rv1908c", "mtu").query

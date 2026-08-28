@@ -154,7 +154,10 @@ class StringClient:
         except FetchError as exc:
             return ToolResult.build(
                 query, [], resolved={"string_id": string_id}, requests=traces,
-                notes=[f"STRING interaction_partners failed: HTTP {exc.status}."],
+                # notes + [...]: the sibling branch below was fixed for this and
+                # this one was left behind, so a caller learned a request failed
+                # without learning it was for a protein they never asked for.
+                notes=notes + [f"STRING interaction_partners failed: HTTP {exc.status}."],
             )
         traces.append(_trace(resp))
 

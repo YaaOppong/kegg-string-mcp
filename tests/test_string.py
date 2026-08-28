@@ -190,3 +190,20 @@ def test_valid_boundary_arguments_are_accepted(string):
     assert string.partners("katG", required_score=0).records
     assert string.partners("katG", required_score=1000).records
     assert string.partners("katG", limit=1).records
+
+
+def test_synonym_warning_survives_a_fetch_error_too(string):
+    """The JSON-error branch was fixed; the adjacent FetchError branch was not."""
+    from kegg_string_mcp.http import FetchError
+
+    original = string.http.get
+
+    def get(url, params=None):
+        if "interaction_partners" in url:
+            raise FetchError(url, 500, "")
+        return original(url, params)
+
+    string.http.get = get
+    notes = " ".join(string.partners("catalase-peroxidase").notes)
+    assert "synonym matching" in notes
+    assert "HTTP 500" in notes

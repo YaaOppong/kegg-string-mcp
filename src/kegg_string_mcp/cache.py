@@ -24,6 +24,11 @@ from kegg_string_mcp.provenance import sha256, utcnow
 
 DEFAULT_TTL_SECONDS = 30 * 24 * 3600  # KEGG and STRING release infrequently.
 
+# Bump to invalidate every existing entry. v2 retires entries written before
+# caller_identity stopped being persisted: no longer *writing* it does nothing
+# about the copies already on disk, which stay valid for the whole 30-day TTL.
+CACHE_FORMAT_VERSION = 2
+
 
 def default_cache_dir() -> Path:
     return Path(os.environ.get("KEGG_STRING_MCP_CACHE", Path.home() / ".cache" / "kegg-string-mcp"))
@@ -64,7 +69,7 @@ class DiskCache:
         self.ttl_seconds = ttl_seconds
 
     def _path(self, url: str) -> Path:
-        digest = sha256(url)
+        digest = sha256(f"v{CACHE_FORMAT_VERSION}|{url}")
         # Two-level fan-out keeps directory listings usable at tens of thousands of entries.
         return self.root / digest[:2] / f"{digest}.json"
 

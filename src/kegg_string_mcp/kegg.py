@@ -137,6 +137,10 @@ class KeggClient:
         traces: list[RequestTrace] = []
         notes: list[str] = []
         gene = gene.strip()
+        # _KEGG_ID deliberately accepts mixed case and line ~165 lowercases the
+        # organism from a qualified ID for that reason. Validating before
+        # normalising made pathways("mtu:Rv1908c", "MTU") fail outright.
+        organism = organism.strip().lower()
 
         if not _ORGANISM.match(organism):
             return ToolResult.build(
@@ -196,7 +200,6 @@ class KeggClient:
                 # matters when the two interpretations disagree.
                 matched_by = "locus_tag" if key in index.locus_tags else "symbol"
             if kegg_id and key in index.ambiguous:
-                query["ambiguous_symbol"] = True
                 if matched_by == "locus_tag":
                     # Resolved unambiguously (locus tags win the index), but the
                     # caller still deserves to know a second reading existed.
@@ -205,6 +208,10 @@ class KeggClient:
                         f"gene symbol in organism '{organism}'; the locus tag was used."
                     )
                 else:
+                    # Only a genuine symbol hit is ambiguous. Setting this for a
+                    # locus-tag hit made agents branching on the flag hedge on an
+                    # exact match.
+                    query["ambiguous_symbol"] = True
                     notes.append(
                         f"'{gene}' is not a unique symbol in organism '{organism}'; it matches more "
                         f"than one gene. Used {kegg_id}. Pass a locus tag to disambiguate."
@@ -237,14 +244,22 @@ class KeggClient:
                 # an unknown gene with HTTP 200 and an empty body -- indistinguishable
                 # from a real gene with no pathways. Rather than hedge in prose, spend
                 # one (cached) request and report which case it actually is.
+                index = None
                 try:
                     index, index_trace = self.gene_index(organism)
                     traces.append(index_trace)
-                    # Locus tags ONLY: the index also holds gene symbols, and the
-                    # locus part of a qualified KEGG ID must be a locus tag. Checking
-                    # the whole index reported 'mtu:katG' as existing because 'KATG'
-                    # is a symbol key -- the exact identifier this branch must reject.
-                    existence = _strip_prefix(kegg_id).upper() in index.locus_tags
+                    if not index.entries:
+                        # Empty-but-successful /list/{organism} -- proxy truncation,
+                        # a maintenance 200 -- is NOT proof the gene is absent, and
+                        # that 200 is cached for the full TTL so the false claim
+                        # would repeat. Same fetched-vs-empty distinction as
+                        # names_fetched below; getting it wrong here fabricates.
+                        existence = None
+                    else:
+                        # Locus tags ONLY: the index also holds gene symbols, and the
+                        # locus part of a qualified KEGG ID must be a locus tag.
+                        # Checking the whole index reported 'mtu:katG' as existing.
+                        existence = _strip_prefix(kegg_id).upper() in index.locus_tags
                 except FetchError:
                     existence = None
 
@@ -252,9 +267,19 @@ class KeggClient:
                 notes.append(f"KEGG returned no pathway assignments for {kegg_id}. The gene exists "
                              f"in KEGG but is not mapped to any pathway in this organism.")
             elif existence is False:
-                resolved["matched_by"] = "none"
+                # Drop kegg_gene_id: leaving a concrete, citable-looking ID beside
+                # matched_by="none" invites a model to cite the thing we just said
+                # did not resolve. The sibling failure return omits it too.
+                resolved = {"matched_by": "none"}
+                # The old `if ":" in kegg_id` guard was always true on this branch
+                # (it is reachable only via _KEGG_ID, which requires a colon), so the
+                # "that's a symbol, not a gene ID" advice was given even for
+                # mtu:NOTAGENE, where it is simply wrong. Test what it claims.
+                locus_key = _strip_prefix(kegg_id).upper()
+                looks_like_symbol = (index is not None and locus_key in index.entries
+                                     and locus_key not in index.locus_tags)
                 hint = (f" Note that '{organism}:SYMBOL' is not a valid KEGG gene ID -- pass a bare "
-                        f"symbol, or the locus tag form.") if ":" in kegg_id else ""
+                        f"symbol, or the locus tag form.") if looks_like_symbol else ""
                 notes.append(f"'{kegg_id}' was not found in KEGG organism '{organism}', so no "
                              f"pathways were looked up. This is a resolution failure, not evidence "
                              f"that the gene has no pathways.{hint}")

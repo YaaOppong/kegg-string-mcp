@@ -114,3 +114,16 @@ def test_audit_url_uses_the_key_on_a_cache_hit(tmp_path):
     hit = CachedResponse(url=URL, status=200, body="b", fetched_at="t", content_sha256="h",
                          cached=True, request_url=URL + "?caller_identity=alice")
     assert hit.audit_url == URL and "alice" not in hit.audit_url
+
+
+def test_bumping_the_format_version_invalidates_existing_entries(tmp_path, monkeypatch):
+    """Entries written before caller_identity stopped being persisted still hold it
+    on disk; no longer writing it does nothing about the copies already there."""
+    from kegg_string_mcp import cache as cache_mod
+
+    old = DiskCache(tmp_path)
+    old.put(URL, 200, "stale")
+    assert old.get(URL) is not None
+
+    monkeypatch.setattr(cache_mod, "CACHE_FORMAT_VERSION", cache_mod.CACHE_FORMAT_VERSION + 1)
+    assert DiskCache(tmp_path).get(URL) is None
