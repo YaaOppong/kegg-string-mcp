@@ -314,8 +314,3 @@ it redistributes no third-party data. Terms remain the caller's responsibility:
 ## Status
 
 MCP server, annotation pipeline and evaluation all working, on `main`.
-
-Deliberately out of scope: literature RAG. No embeddings, no vector store, no document
-ingestion. The literature payload for a gene is ~3,000 tokens, so there is nothing to
-retrieve *from* — this is structured, tool-based retrieval, and that is what it claims
-to be.
