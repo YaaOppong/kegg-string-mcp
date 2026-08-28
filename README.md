@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml)
 
-An [MCP](https://modelcontextprotocol.io) server exposing **KEGG**, **STRING** and
+An [MCP](https://modelcontextprotocol.io) server exposing **KEGG**, **STRING**, **UniProt** and
 **PubMed** as model-callable tools for gene annotation. Every record returned carries a
 stable ID and a resolvable URL, so a downstream agent's citations can be checked
 programmatically against what was actually retrieved.
