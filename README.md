@@ -212,10 +212,15 @@ inhA       pos  3         3         3     0       27/27     3/3
 rpoB       pos  1         1         1     0       25/25     3/3
 gyrA       neg  0         0         0     0       25/25     7/7
 
-Retrieval fidelity   recall 1.0   precision 1.0
-Abstention           1.0
+Retrieval fidelity   recall 1.0   precision 1.0        n=6 positives
+Abstention           1.0                                 n=2 negatives
 Citation integrity   citation precision 1.0   quote precision 1.0
 ```
+
+*These figures are from a partial run: 8 of the 12 gold-set genes completed before
+the run hit an API quota. The four that failed are recorded as errors and excluded
+from the metrics rather than scored as misses. Run `gar eval` to reproduce over the
+full set.*
 
 Scoring reuses the validator's own `cross_target` judgement rather than re-deriving
 intent from prose: a model annotating `furA` may legitimately look up its neighbour
