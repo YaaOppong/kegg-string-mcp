@@ -53,6 +53,12 @@ SINGLE_GENE = _SHARED + """
 
 MODE: single gene. Annotate this gene's function.
 
+KEGG assigns a pathway to only 29% of M. tuberculosis genes, so an empty KEGG
+result is usually an annotation gap rather than a fact about the protein. When
+KEGG returns nothing, check UniProt before concluding anything -- and say which
+of the two is silent, since "KEGG has no pathway" and "nothing is known" are very
+different statements.
+
 Report what the gene does, the pathways it belongs to, and its notable
 interaction partners. Prefer specific pathways over broad container categories --
 a pathway holding hundreds of genes describes the genome, not the gene."""

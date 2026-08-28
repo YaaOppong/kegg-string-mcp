@@ -20,13 +20,14 @@ from typing import Any
 
 from kegg_string_mcp.agent.evidence import all_pairs
 from kegg_string_mcp.agent.loop import new_store, run_loop
+from kegg_string_mcp.agent.store import RunStore
 from kegg_string_mcp.agent.validate import validate
 from kegg_string_mcp.cache import DiskCache
 from kegg_string_mcp.http import FetchError, PoliteClient
 from kegg_string_mcp.kegg import KeggClient
 from kegg_string_mcp.pubmed import PubMedClient
 from kegg_string_mcp.string_db import StringClient
-
+from kegg_string_mcp.uniprot import UniProtClient
 
 # Model-supplied arguments are untrusted input. Splatting them into typed clients
 # turned a schema deviation -- limit="20", or organism= passed to string_partners --
@@ -36,6 +37,7 @@ TOOL_PARAMS: dict[str, dict[str, type]] = {
     "kegg_pathways": {"gene": str, "organism": str},
     "string_partners": {"gene": str, "species": int, "limit": int, "required_score": int},
     "pubmed_abstracts": {"gene": str, "organism": str, "limit": int},
+    "uniprot_protein": {"gene": str, "organism_id": int, "limit": int},
 }
 
 
@@ -63,6 +65,7 @@ class Tools:
         self.kegg = KeggClient(self.http)
         self.string = StringClient(self.http)
         self.pubmed = PubMedClient(self.http)
+        self.uniprot = UniProtClient(self.http)
 
     def __call__(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         if name not in TOOL_PARAMS:
@@ -71,12 +74,13 @@ class Tools:
         clean, problems = _coerce(name, arguments)
         if problems:
             return {"query": dict(arguments), "records": [], "record_ids": [],
-                    "notes": [f"Invalid argument(s), so no lookup was performed: "
+                    "notes": [(f"Invalid argument(s), so no lookup was performed: "
                               f"{'; '.join(problems)}. An empty result here does NOT mean "
-                              f"there is no data."]}
+                              f"there is no data.")]}
         method = {"kegg_pathways": self.kegg.pathways,
                   "string_partners": self.string.partners,
-                  "pubmed_abstracts": self.pubmed.abstracts}[name]
+                  "pubmed_abstracts": self.pubmed.abstracts,
+                  "uniprot_protein": self.uniprot.protein}[name]
         return method(**clean).model_dump()
 
 
@@ -151,7 +155,7 @@ def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Pat
         f"  shared pathways: " + (", ".join(
             f"{sp.pathway_id} '{sp.name}' [{sp.specificity}, {sp.size} genes]"
             for sp in p.shared_pathways) or "none") + "\n"
-        f"  shared partners: " + (", ".join(
+        "  shared partners: " + (", ".join(
             f"{sp['record_id']} ({sp['name']})" for sp in p.shared_partners) or "none")
         for p in pairs
     )

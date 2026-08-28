@@ -18,7 +18,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-Source = Literal["kegg", "string", "pubmed"]
+Source = Literal["kegg", "string", "pubmed", "uniprot"]
 
 
 def sha256(data: str | bytes) -> str:
@@ -80,5 +80,5 @@ class ToolResult(BaseModel):
     requests: list[RequestTrace] = Field(default_factory=list)
 
     @classmethod
-    def build(cls, query: dict[str, Any], records: list[Record], **kw: Any) -> "ToolResult":
+    def build(cls, query: dict[str, Any], records: list[Record], **kw: Any) -> ToolResult:
         return cls(query=query, records=records, record_ids=[r.record_id for r in records], **kw)

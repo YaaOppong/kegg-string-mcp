@@ -28,31 +28,62 @@ from typing import Any
 
 # KEGG pathway IDs: 3-4 letter organism code + 5 digits (mtu00360).
 # STRING protein IDs: NCBI taxon + '.' + locus (83332.Rv1909c).
+# UniProt's own accession grammar. Precise rather than "an uppercase token", so
+# ordinary words and gene symbols in prose are not read as citations.
+UNIPROT_ACCESSION = r"[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2}"
+KEGG_PATHWAY = r"[a-z]{3,4}\d{5}"
+STRING_PROTEIN = r"\d{2,7}\.(?=[A-Za-z0-9_]*[A-Za-z])[A-Za-z0-9_]+"
+# PMIDs only in explicit PMID: form. A bare 8-digit number is ambiguous -- it
+# could be a coordinate, a score, a year range -- and treating every one as a
+# citation would flag ordinary prose as unsupported.
+PMID = r"PMID:?\s*\d{1,8}"
+
 CITATION_PATTERNS = [
-    re.compile(r"\b[a-z]{3,4}\d{5}\b"),
-    # The locus half must contain a letter. Without that, "17.5%", "12.3-fold"
-    # and "10.1038/nature12345" all matched, and each was then reported as an
-    # unsupported citation -- failing a run for writing the ordinary numeric prose
-    # that epistasis mode explicitly asks for.
-    re.compile(r"\b\d{2,7}\.(?=[A-Za-z0-9_]*[A-Za-z])[A-Za-z0-9_]+\b"),
-    # PMIDs only in explicit PMID: form. A bare 8-digit number is ambiguous --
-    # it could be a coordinate, a score, a year range -- and treating every one
-    # as a citation would flag ordinary prose as unsupported.
-    re.compile(r"\bPMID:?\s*(\d{1,8})\b", re.IGNORECASE),
+    re.compile(r"\b(?:" + KEGG_PATHWAY + r")\b"),
+    re.compile(r"\b(?:" + STRING_PROTEIN + r")\b"),
+    re.compile(r"\b(?:" + PMID + r")\b", re.IGNORECASE),
+    re.compile(r"\b(?:" + UNIPROT_ACCESSION + r")\b"),
 ]
 
-# A quoted span attributed to a PMID, in either order. The span must be long
+# Any identifier a quote may be attributed to. Adding a source means adding it
+# here as well as to CITATION_PATTERNS -- UniProt was added as a tool without
+# either, so accession citations were invisible and quotes attributed to an
+# accession were never checked at all.
+CITE_TOKEN = ("(?:" + PMID + "|" + KEGG_PATHWAY + "|" + STRING_PROTEIN
+              + "|" + UNIPROT_ACCESSION + ")")
+
+# A quoted span attributed to a record, in either order. The span must be long
 # enough that matching it means something; a three-character "quote" would pass
-# containment against almost any abstract.
+# containment against almost any source text.
 MIN_QUOTE_CHARS = 12
-QUOTE_THEN_PMID = re.compile(
-    r"[\"\u201c]([^\"\u201c\u201d]{%d,})[\"\u201d]\s*[\(\[]?\s*PMID:?\s*(\d{1,8})" % MIN_QUOTE_CHARS,
+
+# Built by concatenation rather than %-format or f-string: the pattern contains
+# {n,} quantifiers, so brace-based formatting would need every brace doubled.
+_QUOTE_CHARS = r"\"\u201c\u201d"
+_SPAN = r"([^" + _QUOTE_CHARS + r"]{" + str(MIN_QUOTE_CHARS) + r",})"
+_OPEN = r"[\"\u201c]"
+_CLOSE = r"[\"\u201d]"
+# The gap must exclude only OPENING quote characters. Excluding the closing curly
+# quote too (an accident of reusing _QUOTE_CHARS here) stopped this matching when
+# a closing curly quote sat between the citation and the next span.
+_GAP = r"[^\"\u201c]{0,60}?"
+
+QUOTE_THEN_CITE = re.compile(
+    _OPEN + _SPAN + _CLOSE + r"\s*[\(\[]?\s*(" + CITE_TOKEN + r")",
     re.IGNORECASE,
 )
-PMID_THEN_QUOTE = re.compile(
-    r"PMID:?\s*(\d{1,8})[^\"\u201c]{0,60}?[\"\u201c]([^\"\u201c\u201d]{%d,})[\"\u201d]" % MIN_QUOTE_CHARS,
+CITE_THEN_QUOTE = re.compile(
+    r"(" + CITE_TOKEN + r")" + _GAP + _OPEN + _SPAN + _CLOSE,
     re.IGNORECASE,
 )
+
+
+def as_record_id(token: str) -> str:
+    """Normalise a cited token to the form `record_id` uses (PMIDs are bare digits)."""
+    stripped = token.strip()
+    if stripped.upper().startswith("PMID"):
+        return stripped.split(":", 1)[-1].strip() if ":" in stripped else stripped[4:].strip()
+    return stripped
 
 
 def normalise(text: str) -> str:
@@ -181,8 +212,8 @@ def extract_citations(text: str) -> list[str]:
     found: list[str] = []
     for pattern in CITATION_PATTERNS:
         for match in pattern.findall(text or ""):
-            token = match if isinstance(match, str) else match[0]
-            if token not in found:
+            token = as_record_id(match if isinstance(match, str) else match[0])
+            if token and token not in found:
                 found.append(token)
     return found
 
@@ -198,12 +229,13 @@ def extract_quotes(text: str) -> list[tuple[str, str]]:
     """
     pairs: list[tuple[str, str]] = []
     claimed: set[str] = set()
-    for span, pmid in QUOTE_THEN_PMID.findall(text or ""):
-        pairs.append((pmid, span))
+    for span, token in QUOTE_THEN_CITE.findall(text or ""):
+        pairs.append((as_record_id(token), span))
         claimed.add(span)
-    for pmid, span in PMID_THEN_QUOTE.findall(text or ""):
-        if span not in claimed and (pmid, span) not in pairs:
-            pairs.append((pmid, span))
+    for token, span in CITE_THEN_QUOTE.findall(text or ""):
+        record_id = as_record_id(token)
+        if span not in claimed and (record_id, span) not in pairs:
+            pairs.append((record_id, span))
             claimed.add(span)
     return pairs
 

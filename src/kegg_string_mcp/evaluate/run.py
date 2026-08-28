@@ -40,9 +40,9 @@ def render(report: EvalReport) -> str:
     data = report.to_dict()
     lines = [
         f"Reference: {data['reference']} (retrieved {data['reference_retrieved_on']})",
-        f"KEGG assigns a pathway to {data['coverage']['genes_with_any_pathway']} of "
+        (f"KEGG assigns a pathway to {data['coverage']['genes_with_any_pathway']} of "
         f"{data['coverage']['genes_total']} {data['organism']} genes "
-        f"({data['coverage']['genes_with_any_pathway'] / data['coverage']['genes_total']:.0%}).",
+        f"({data['coverage']['genes_with_any_pathway'] / data['coverage']['genes_total']:.0%})."),
         "",
         f"{'gene':10} {'kind':4} {'expected':9} {'reported':9} {'hits':5} {'missed':7} {'cites':9} {'quotes':7}",
     ]
@@ -62,8 +62,8 @@ def render(report: EvalReport) -> str:
     lines += [
         "",
         "Retrieval fidelity (positive controls -- did it report what KEGG assigns?)",
-        f"  recall    {fidelity['recall']}   precision {fidelity['precision']}   "
-        f"n={fidelity['n_genes']}",
+        (f"  recall    {fidelity['recall']}   precision {fidelity['precision']}   "
+        f"n={fidelity['n_genes']}"),
         "",
         "Abstention (negative controls -- KEGG assigns nothing; correct answer is 'none')",
         f"  abstained {abstention['rate']}   n={abstention['n_genes']}"
@@ -71,8 +71,8 @@ def render(report: EvalReport) -> str:
            if abstention["fabricated_on"] else ""),
         "",
         "Citation integrity (exact, computed not judged)",
-        f"  citation precision {integrity['citation_precision']}   "
-        f"quote precision {integrity['quote_precision']}",
+        (f"  citation precision {integrity['citation_precision']}   "
+        f"quote precision {integrity['quote_precision']}"),
     ]
     if data["errors"]:
         lines += ["", "Errors:"] + [f"  {e['gene']}: {e['error']}" for e in data["errors"]]

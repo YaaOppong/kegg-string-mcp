@@ -31,6 +31,7 @@ from kegg_string_mcp.kegg import KeggClient
 from kegg_string_mcp.provenance import ToolResult
 from kegg_string_mcp.pubmed import DEFAULT_LIMIT, MTB_H37RV_NAME, PubMedClient
 from kegg_string_mcp.string_db import MTB_H37RV, StringClient
+from kegg_string_mcp.uniprot import UniProtClient
 
 mcp = MCPServer(
     name="kegg-string",
@@ -54,6 +55,7 @@ mcp = MCPServer(
 _http = PoliteClient(DiskCache())
 _kegg = KeggClient(_http)
 _string = StringClient(_http)
+_uniprot = UniProtClient(_http)
 _pubmed = PubMedClient(_http)
 
 READ_ONLY = ToolAnnotations(readOnlyHint=True, openWorldHint=True)
@@ -133,6 +135,33 @@ def pubmed_abstracts(
         limit: Maximum articles to return, 1-100, ranked by PubMed relevance.
     """
     return _pubmed.abstracts(gene=gene, organism=organism, limit=limit)
+
+
+
+
+@mcp.tool(
+    annotations=READ_ONLY,
+    description=(
+        "Curated protein annotation from UniProt: function, catalytic activity, subunit "
+        "structure, PDB cross-references. Use this when KEGG has no pathway for a gene -- KEGG "
+        "assigns one to only 29% of M. tuberculosis genes, so 'no KEGG pathway' is usually an "
+        "annotation gap rather than a fact about the protein. IMPORTANT: each function statement "
+        "carries an evidence tier. 'experimental' statements were measured on this protein and "
+        "list the PMIDs that support them; 'sequence_similarity', 'sequence_model', 'automatic' "
+        "and 'imported' statements are INFERRED from a rule or a homologue and are not evidence "
+        "about this gene. Function text is prose, so quote a verbatim span of quotable_text for "
+        "any claim you draw from it."
+    ),
+)
+def uniprot_protein(gene: str, organism_id: int = 83332, limit: int = 3) -> ToolResult:
+    """Curated protein annotation for one gene.
+
+    Args:
+        gene: Gene symbol or locus tag (e.g. katG, Rv1908c).
+        organism_id: NCBI taxon ID. Defaults to 83332 (M. tuberculosis H37Rv).
+        limit: Maximum UniProt entries to return.
+    """
+    return _uniprot.protein(gene=gene, organism_id=organism_id, limit=limit)
 
 
 def main() -> None:

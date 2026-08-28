@@ -365,7 +365,6 @@ def test_records_matching_only_on_metadata_are_named(monkeypatch):
     record can arrive with an abstract that never mentions the gene. Observed live:
     a query for 'ahpC katG' returned a general thioredoxin review mentioning neither.
     Its PMID is still citable, so the gap has to be stated."""
-    from kegg_string_mcp.provenance import Record
     from kegg_string_mcp.pubmed import PubMedClient
 
     client = PubMedClient(http=None)

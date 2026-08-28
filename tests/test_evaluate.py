@@ -1,5 +1,6 @@
 from kegg_string_mcp.evaluate.score import reported_pathways
 
+
 def test_context_pathways_are_not_counted_as_claims():
     """A model annotating furA may look up katG as context. Counting katG's
     pathways as furA claims scored a correct annotation as fabrication."""

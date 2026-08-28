@@ -18,9 +18,10 @@ from __future__ import annotations
 
 import json
 import uuid
+from collections.abc import Callable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 import anthropic
 
@@ -83,6 +84,29 @@ TOOL_SCHEMAS = [
                 "gene": {"type": "string"},
                 "organism": {"type": "string", "default": "Mycobacterium tuberculosis"},
                 "limit": {"type": "integer", "default": 10},
+            },
+            "required": ["gene"],
+        },
+    },
+    {
+        "name": "uniprot_protein",
+        "description": (
+            "Curated protein annotation from UniProt: function, catalytic activity, subunit "
+            "structure, PDB cross-references. Reach for this when KEGG has no pathway -- KEGG "
+            "assigns one to only 29% of M. tuberculosis genes, so 'no KEGG pathway' is usually "
+            "an annotation gap, not a fact about the protein. Each function statement carries "
+            "an evidence tier: 'experimental' means measured on this protein, with the "
+            "supporting PMIDs listed; 'sequence_similarity', 'sequence_model', 'automatic' and "
+            "'imported' are INFERRED from a rule or a homologue and are not evidence about this "
+            "gene. Function text is prose, so quote a verbatim span of quotable_text for any "
+            "claim drawn from it."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {
+                "gene": {"type": "string"},
+                "organism_id": {"type": "integer", "default": 83332},
+                "limit": {"type": "integer", "default": 3},
             },
             "required": ["gene"],
         },

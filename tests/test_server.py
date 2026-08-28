@@ -8,7 +8,7 @@ def _tools():
 
 
 def test_all_tools_are_registered():
-    assert set(_tools()) == {"kegg_pathways", "string_partners", "pubmed_abstracts"}
+    assert set(_tools()) == {"kegg_pathways", "string_partners", "pubmed_abstracts", "uniprot_protein"}
 
 
 def test_tools_declare_read_only():

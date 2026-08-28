@@ -112,8 +112,8 @@ class StringClient:
         if problems:
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none"},
-                notes=[f"Invalid argument(s), so no lookup was performed: {'; '.join(problems)}. "
-                       f"An empty result here does NOT mean the gene has no partners."],
+                notes=[(f"Invalid argument(s), so no lookup was performed: {'; '.join(problems)}. "
+                       f"An empty result here does NOT mean the gene has no partners.")],
             )
 
         try:
@@ -125,9 +125,9 @@ class StringClient:
         if hit is None:
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none"}, requests=traces,
-                notes=[f"'{gene}' did not resolve to a STRING protein in species {species} (or STRING "
+                notes=[(f"'{gene}' did not resolve to a STRING protein in species {species} (or STRING "
                        f"returned an unreadable response). No partners were looked up. This is a "
-                       f"resolution failure, not evidence of no partners."],
+                       f"resolution failure, not evidence of no partners.")],
             )
 
         string_id = hit.get("stringId", "")
@@ -174,8 +174,8 @@ class StringClient:
                 # notes + [...] rather than a fresh list: dropping the accumulated
                 # notes would discard the synonym-match warning, so the caller would
                 # not learn that string_id is not what they asked for.
-                notes=notes + [f"STRING returned an unreadable or error response for {string_id} "
-                               f"(expected a JSON list of partner objects). No partner data retrieved."],
+                notes=notes + [(f"STRING returned an unreadable or error response for {string_id} "
+                               f"(expected a JSON list of partner objects). No partner data retrieved.")],
             )
         if not rows:
             notes.append(f"STRING returned no partners for {string_id} at required_score>={required_score}. "

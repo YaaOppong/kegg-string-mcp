@@ -5,8 +5,8 @@ import threading
 import httpx
 import pytest
 
-from kegg_string_mcp.cache import DiskCache
 import kegg_string_mcp.http as h
+from kegg_string_mcp.cache import DiskCache
 from kegg_string_mcp.http import MAX_RETRY_AFTER, FetchError, PoliteClient
 
 

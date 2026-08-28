@@ -1,6 +1,8 @@
 # kegg-string-mcp
 
-An [MCP](https://modelcontextprotocol.io) server exposing **KEGG**, **STRING** and
+[![CI](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml)
+
+An [MCP](https://modelcontextprotocol.io) server exposing **KEGG**, **STRING**, **UniProt** and
 **PubMed** as model-callable tools for gene annotation. Every record returned carries a
 stable ID and a resolvable URL, so a downstream agent's citations can be checked
 programmatically against what was actually retrieved.
@@ -25,8 +27,9 @@ underlying service covers.
 | `kegg_pathways` | `gene` (KEGG ID, locus tag, or symbol)<br>`organism` = `mtu` | One record per KEGG pathway: `record_id` (e.g. `mtu00360`), name, `https://www.kegg.jp/entry/…` URL |
 | `string_partners` | `gene`<br>`species` = `83332`<br>`limit` = `20`<br>`required_score` = `700` | One record per interaction partner: `record_id` (e.g. `83332.Rv1909c`), preferred name, combined score, full per-channel breakdown, `https://string-db.org/network/…` URL |
 | `pubmed_abstracts` | `gene`<br>`organism` = `Mycobacterium tuberculosis`<br>`limit` = `10` | One record per article: `record_id` (PMID, e.g. `35038342`), title, abstract, `quotable_text`, journal, year, DOI, `https://pubmed.ncbi.nlm.nih.gov/…` URL |
+| `uniprot_protein` | `gene`<br>`organism_id` = `83332`<br>`limit` = `3` | One record per UniProt entry: `record_id` (accession, e.g. `P9WG47`), protein name, function statements tiered by evidence code with supporting PMIDs, catalytic activity, PDB cross-refs, `quotable_text`, `https://www.uniprot.org/uniprotkb/…` URL |
 
-All three are annotated `readOnlyHint`, expose structured output schemas, and are
+All four are annotated `readOnlyHint`, expose structured output schemas, and are
 deterministic: same input and same cache produce the same output.
 
 ### Result envelope
@@ -150,8 +153,12 @@ pytest
 ## Running the MCP server
 
 ```bash
-kegg-string-mcp          # stdio transport
+kegg-string-mcp                  # stdio transport
+docker run -i --rm ghcr-or-local-image   # or in a container
 ```
+
+The container image is built and handshake-tested on every push; see
+[.github/workflows/ci.yml](.github/workflows/ci.yml).
 
 Wire into an MCP client:
 
@@ -181,7 +188,7 @@ Wire into an MCP client:
 
 ## Tests
 
-173 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
+205 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
 HTTP client that replays saved responses from `tests/fixtures/`, so the suite runs in
 under four seconds, gives the same answer every time, works offline and in CI, and does
 not hammer a free academic service. A red test means this code broke, not that an
