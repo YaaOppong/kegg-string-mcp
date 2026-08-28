@@ -47,7 +47,11 @@ FIELDS = ("accession,id,protein_name,gene_names,organism_name,cc_function,"
 
 # UniProt's query grammar. A value containing these would change what is asked
 # rather than what is asked about -- the same reasoning as pubmed._QUERY_SYNTAX.
-_QUERY_SYNTAX = re.compile(r'[:()\[\]"\s]')
+# UniProt queries are Lucene. Blocking only quotes and brackets left the
+# wildcards and operators through: gene="kat*" silently becomes a prefix search
+# returning katG, katE and friends, and gene="-katG" is a negation -- both change
+# what is asked rather than what is asked about, which this check exists to stop.
+_QUERY_SYNTAX = re.compile(r'[:()\[\]{}"\\*?~^\s]|^-')
 _ACCESSION = re.compile(r"^[A-Z0-9]{6,10}$")
 
 # ECO code -> how the statement is known. The tier is what matters downstream;

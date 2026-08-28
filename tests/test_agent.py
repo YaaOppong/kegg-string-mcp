@@ -547,3 +547,68 @@ def test_agent_and_server_expose_the_same_four_tools():
     agent = {t["name"] for t in TOOL_SCHEMAS}
     assert server == agent == {"kegg_pathways", "string_partners",
                                "pubmed_abstracts", "uniprot_protein"}
+
+
+# --- regressions from the develop review ------------------------------------
+
+def test_uniprot_accessions_are_recognised_as_citations():
+    """UniProt was added as a fourth tool without teaching the validator about it,
+    so a fabricated accession was not flagged -- it was not even seen."""
+    from kegg_string_mcp.agent.validate import extract_citations
+
+    found = extract_citations("P9WIE5 and A0A123XYZ9 alongside mtu00360, 83332.Rv1909c, PMID:123456")
+    assert set(found) == {"P9WIE5", "A0A123XYZ9", "mtu00360", "83332.Rv1909c", "123456"}
+
+
+def test_ordinary_prose_is_not_read_as_an_accession():
+    from kegg_string_mcp.agent.validate import extract_citations
+
+    assert extract_citations("KatG and AhpC bind DNA and RNA in vitro.") == []
+
+
+def test_fabricated_quote_on_a_uniprot_record_is_caught():
+    """The docstring claimed the span validator applied unchanged. It did not apply
+    at all: a wholly invented quote on a real accession returned passed=True."""
+    from kegg_string_mcp.agent.validate import validate
+
+    report = validate('P9WIE5 "a wholly invented finding about this protein"', {"P9WIE5"},
+                      records={"P9WIE5": {"detail": {"quotable_text": "nothing like that"}}})
+    assert [q.status for q in report.quotes] == ["not_in_source"]
+    assert not report.passed
+
+
+def test_verbatim_quote_on_a_uniprot_record_passes():
+    from kegg_string_mcp.agent.validate import validate
+
+    source = {"detail": {"quotable_text": "Bifunctional enzyme with both catalase and "
+                                          "broad-spectrum peroxidase activity."}}
+    report = validate('P9WIE5 "Bifunctional enzyme with both catalase"', {"P9WIE5"},
+                      records={"P9WIE5": source})
+    assert [q.status for q in report.quotes] == ["verified"] and report.passed
+
+
+def test_closing_curly_quote_does_not_block_the_next_attribution():
+    """A lint-only refactor reused the quote-character class for the gap, silently
+    narrowing it so a quote after a closing curly quote was never checked."""
+    from kegg_string_mcp.agent.validate import extract_quotes
+
+    pairs = extract_quotes('“essential (PMID: 12345678)” and '
+                           '“it also binds NADH in vitro”.')
+    assert ("12345678", "it also binds NADH in vitro") in pairs
+
+
+def test_pmids_from_a_uniprot_statement_are_citable(tmp_path):
+    """UniProt advertises the PMIDs evidencing a function statement, so citing one
+    is correct and traceable -- it was being scored as a hallucination."""
+    from kegg_string_mcp.agent.validate import validate
+
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("uniprot_protein", {"gene": "katG"}, {
+        "resolved": {"accession": "P9WIE5"}, "record_ids": ["P9WIE5"],
+        "records": [{"record_id": "P9WIE5", "type": "protein", "name": "Catalase", "url": "u",
+                     "detail": {"quotable_text": "t", "function_statements": [
+                         {"text": "t", "supporting_pmids": ["18178143"], "experimental": True,
+                          "tiers": ["experimental"], "evidence_codes": ["ECO:0000269"]}]}}],
+    })
+    assert "18178143" in store.citable_ids
+    assert validate("See PMID:18178143.", store.citable_ids, store.per_target, "KATG").passed

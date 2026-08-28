@@ -106,6 +106,14 @@ class RunStore:
             # better attribution than the query that happened to find it.
             for gene in record.get("detail", {}).get("mentions", []):
                 self._per_target.setdefault(str(gene).strip().upper(), set()).add(rid)
+            # A UniProt function statement names the PMIDs that evidence it, and the
+            # tool description advertises them. Without this, a model citing one --
+            # a correct, traceable citation -- was scored as a hallucination.
+            for statement in record.get("detail", {}).get("function_statements", []):
+                for pmid in statement.get("supporting_pmids", []):
+                    self._citable.add(str(pmid))
+                    for alias in aliases:
+                        self._per_target.setdefault(alias, set()).add(str(pmid))
             for alias in aliases:
                 self._per_target.setdefault(alias, set()).add(rid)
         self._append("tool_result", {"tool": tool, "arguments": arguments, "result": result})
