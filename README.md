@@ -117,6 +117,113 @@ in textmining, so a PubMed abstract about the same pair may be the very source o
 score. Citing both is one line of evidence counted twice, and every `pubmed_abstracts`
 result says so.
 
+## Annotation pipeline
+
+On top of the MCP tools sits an agent loop with two modes, a validator, and an
+evaluation harness.
+
+```bash
+gar single katG                  # annotate one gene's function
+gar epistasis katG furA ahpC     # look for mechanistic links between genes
+gar eval                         # score the pipeline against a gold set
+```
+
+The organising principle is **deterministic where you can be, model where you must
+be**. The pipeline fetches, computes and validates; the model chooses what to look
+up and interprets what came back. It never writes to the store and never does
+arithmetic over record IDs.
+
+**Epistasis mode** computes every pairwise relationship — direct interaction, shared
+pathways, shared network partners — before the model sees it. Shared pathways carry
+their size, because size decides whether sharing one means anything: `mtu01100`
+("Metabolic pathways") holds 698 of ~4,000 *M. tuberculosis* genes, so co-membership
+is a base rate; `mtu00983` holds 11, and co-membership is signal.
+
+### Run store
+
+One append-only JSONL file per run, written by the pipeline and never by the model:
+every tool call and its full result, every deterministic computation, and every turn
+of the agent loop — which tools were chosen, and why it stopped.
+
+```
+turn 1: stop=tool_use   tools=[kegg_pathways(katG), kegg_pathways(ahpC)]
+turn 2: stop=tool_use   tools=[string_partners(katG), string_partners(ahpC)]
+turn 3: stop=tool_use   tools=[pubmed_abstracts("ahpC katG")]
+turn 4: stop=end_turn
+```
+
+### Citation validation
+
+Every identifier in the summary is checked against what the tools actually returned,
+recorded in the store before the model saw it. Three failure classes, because they
+mean different things:
+
+- **unsupported** — a well-formed, authoritative-looking ID that no tool returned.
+- **cross-target** — an ID that *was* retrieved, but for a different gene than the
+  sentence attributes it to. Invisible to a global membership check.
+- **quote not in source** — a claim drawn from an abstract whose quoted span does not
+  appear in the retrieved text. Catches a real PMID carrying a fabricated finding.
+
+The check is set membership and string containment, deliberately not similarity
+scoring: a citation either names a record a tool returned or it does not.
+
+```
+NOT_IN_SOURCE  PMID:10609885  [likely_fabricated, similarity 0.38]
+               quoted:  'KatG binds directly to AhpC in a stable complex'
+               closest: 'katg is a catalase-peroxidase required for isoniazid activation'
+```
+
+Failed quotes report the closest matching span and a similarity score, which
+separates a quoting artefact (~0.93) from an invented claim (~0.38). That ranks
+failures for attention; it does not change the verdict. A model must not be able to
+argue its way past a deterministic check.
+
+### Corpus manifest
+
+Runs that find papers emit `<run>.corpus.jsonl` for a downstream full-text pipeline:
+
+```jsonc
+{"pmid": "16870753", "pmcid": "PMC1538650", "in_pmc": true,
+ "doi": "10.1128/AAC.00161-06", "mentions": ["katG", "ahpC"]}
+```
+
+`in_pmc` matters more than the DOI — a DOI resolves to a usually-paywalled publisher,
+while a PMCID is the licit route to full text. `mentions` records the genes actually
+present in the retrieved text, not the genes queried: PubMed searches `[All Fields]`,
+which spans MeSH terms the model never sees, so a paper can be returned for a gene it
+never names.
+
+## Evaluation
+
+**The reference is incomplete, and that is the point.** KEGG assigns a pathway to just
+**1,171 of 4,008** *M. tuberculosis* genes — 29%. `gyrA`, one of the most studied genes
+in TB, has none. So the gold set has two classes:
+
+- **positive controls** — KEGG assigns pathways. Measures whether the pipeline
+  faithfully reports what its tools returned.
+- **negative controls** — KEGG assigns none, so the correct answer is "nothing found".
+  Measures whether the pipeline abstains or invents. For this project, the more
+  important number.
+
+```
+gene       kind expected  reported  hits  missed  cites     quotes
+katG       pos  5         5         5     0       26/26     0/0
+inhA       pos  3         3         3     0       27/27     3/3
+rpoB       pos  1         1         1     0       25/25     3/3
+gyrA       neg  0         0         0     0       25/25     7/7
+
+Retrieval fidelity   recall 1.0   precision 1.0
+Abstention           1.0
+Citation integrity   citation precision 1.0   quote precision 1.0
+```
+
+Scoring reuses the validator's own `cross_target` judgement rather than re-deriving
+intent from prose: a model annotating `furA` may legitimately look up its neighbour
+`katG` and discuss katG's pathways as context, and counting those as claims about
+furA scored a correct annotation as a fabrication.
+
+Citation and quote precision are the numbers worth trusting — computed, not judged.
+
 ## Install
 
 ```bash
@@ -201,8 +308,9 @@ it redistributes no third-party data. Terms remain the caller's responsibility:
 
 ## Status
 
-Phase 1 of a larger project. Next: an agent loop that uses these tools to annotate
-genes, an append-only store written by the pipeline rather than the model, and a
-two-tier validation layer — every citation checked against the `record_ids` actually
-retrieved, and every claim drawn from an abstract checked against the `quotable_text`
-of the record it cites.
+MCP server, annotation pipeline and evaluation all working, on `main`.
+
+Deliberately out of scope: literature RAG. No embeddings, no vector store, no document
+ingestion. The literature payload for a gene is ~3,000 tokens, so there is nothing to
+retrieve *from* — this is structured, tool-based retrieval, and that is what it claims
+to be.
