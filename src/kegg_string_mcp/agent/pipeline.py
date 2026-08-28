@@ -14,6 +14,7 @@ would validate against its own mistake.
 
 from __future__ import annotations
 
+import inspect
 import json
 from pathlib import Path
 from typing import Any
@@ -57,8 +58,22 @@ def _coerce(name: str, arguments: dict[str, Any]) -> tuple[dict[str, Any], list[
     return clean, problems
 
 
+async def server_tool_schemas() -> list[dict[str, Any]]:
+    """Anthropic tool definitions from the MCP server's own registry.
+
+    The direct dispatch does not go over the wire, but it still takes its schemas
+    from the one place they are defined, so the two dispatch paths cannot present
+    the model with different descriptions.
+    """
+    from kegg_string_mcp.server import mcp
+
+    listed = await mcp.list_tools()
+    return [{"name": t.name, "description": t.description or "",
+             "input_schema": t.input_schema} for t in listed]
+
+
 class Tools:
-    """Dispatch table shared by the loop and by the pre-fetch step."""
+    """Direct in-process dispatch. Same call shape as McpTools, no subprocess."""
 
     def __init__(self, http: PoliteClient | None = None):
         self.http = http or PoliteClient(DiskCache())
@@ -84,15 +99,18 @@ class Tools:
         return method(**clean).model_dump()
 
 
-def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("runs"),
-                  tools: Tools | None = None, client: Any | None = None) -> dict[str, Any]:
+async def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("runs"),
+                        tools: Any | None = None, client: Any | None = None,
+                        tool_schemas: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     tools = tools or Tools()
+    schemas = tool_schemas or (tools.schemas() if hasattr(tools, "schemas")
+                               else await server_tool_schemas())
     store = new_store(runs, f"single-{gene}")
 
     task = (f"Annotate the gene '{gene}' in KEGG organism '{organism}' "
             f"(NCBI taxon 83332 for STRING). Describe its function, pathways and "
             f"notable interaction partners, citing record IDs from the tool results.")
-    result = run_loop("single", task, tools, store, client=client)
+    result = await run_loop("single", task, tools, store, schemas, client=client)
 
     report = validate(result.text, store.citable_ids, store.per_target, gene.strip().upper(),
                       records=store.records)
@@ -105,8 +123,15 @@ def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("runs"),
 PARTNER_LIMIT = 20
 
 
-def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Path("runs"),
-                       tools: Tools | None = None, client: Any | None = None) -> dict[str, Any]:
+async def _call(tools: Any, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+    """Invoke a dispatch that may be sync (direct) or async (MCP)."""
+    result = tools(name, arguments)
+    return await result if inspect.isawaitable(result) else result
+
+
+async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Path("runs"),
+                             tools: Any | None = None, client: Any | None = None,
+                             tool_schemas: list[dict[str, Any]] | None = None) -> dict[str, Any]:
     """Pre-compute every pairwise relationship, then let the model interpret it.
 
     The set intersections are done here rather than by the model: a model doing
@@ -114,25 +139,31 @@ def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Pat
     error will not be visible in the prose.
     """
     tools = tools or Tools()
+    schemas = tool_schemas or (tools.schemas() if hasattr(tools, "schemas")
+                               else await server_tool_schemas())
     store = new_store(runs, "epistasis")
 
     pathways: dict[str, list[dict[str, Any]]] = {}
     partners: dict[str, list[dict[str, Any]]] = {}
     for gene in genes:
-        kegg_result = tools("kegg_pathways", {"gene": gene, "organism": organism})
+        kegg_result = await _call(tools, "kegg_pathways", {"gene": gene, "organism": organism})
         store.tool_result("kegg_pathways", {"gene": gene, "organism": organism}, kegg_result)
         pathways[gene] = kegg_result.get("records", [])
 
         string_args = {"gene": gene, "limit": PARTNER_LIMIT}
-        string_result = tools("string_partners", string_args)
+        string_result = await _call(tools, "string_partners", string_args)
         store.tool_result("string_partners", string_args, string_result)
         partners[gene] = string_result.get("records", [])
 
+    # Pathway sizes and the genome denominator are pipeline-internal arithmetic,
+    # not model-facing tools, so they use a direct client regardless of how the
+    # model's tools are dispatched -- McpTools has no `.kegg` to reach into.
+    kegg = getattr(tools, "kegg", None) or KeggClient(PoliteClient(DiskCache()))
     # The only upstream calls in the pipeline that are not already fail-soft.
     # One KEGG 5xx here discarded every per-gene fetch already made and crashed.
     try:
-        sizes, _ = tools.kegg.pathway_sizes(organism)
-        genome_size = _annotated_gene_count(tools, organism)
+        sizes, _ = kegg.pathway_sizes(organism)
+        genome_size = _annotated_gene_count(kegg, organism)
         size_note = ""
     except (FetchError, ValueError) as exc:
         sizes, genome_size = {}, 0
@@ -167,7 +198,7 @@ def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Pat
             f"(KEGG organism '{organism}').\n\n"
             f"Pre-computed pairwise evidence:\n\n{table}\n\n"
             f"Interpret these relationships. Do not contradict the deterministic verdicts.")
-    result = run_loop("epistasis", task, tools, store, client=client)
+    result = await run_loop("epistasis", task, tools, store, schemas, client=client)
 
     report = validate(result.text, store.citable_ids, records=store.records)
     payload = {"mode": "epistasis", "genes": genes, "organism": organism,
@@ -199,7 +230,7 @@ def _finish(store: RunStore, payload: dict[str, Any]) -> dict[str, Any]:
                       "corpus_manifest": str(manifest) if manifest else None}
 
 
-def _annotated_gene_count(tools: Tools, organism: str) -> int:
+def _annotated_gene_count(kegg: KeggClient, organism: str) -> int:
     """Denominator for the 'is this pathway a container?' judgement."""
-    index, _ = tools.kegg.gene_index(organism)
+    index, _ = kegg.gene_index(organism)
     return len(index.locus_tags)

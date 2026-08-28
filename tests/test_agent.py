@@ -535,18 +535,39 @@ def test_uniprot_is_dispatchable_and_argument_checked():
     assert bad and "not a parameter of uniprot_protein" in bad[0]
 
 
-def test_agent_and_server_expose_the_same_four_tools():
-    """The two surfaces are defined separately, so a tool added to one and not the
-    other would silently leave the agent unable to call it."""
+def test_tool_schemas_come_from_the_server_not_a_copy():
+    """The agent used to hold its own copy of the schemas, and they drifted -- the
+    model driving the pipeline saw shorter descriptions than an external MCP client
+    did. There is now one definition, so the copies cannot diverge."""
     import asyncio
 
-    from kegg_string_mcp.agent.loop import TOOL_SCHEMAS
+    from kegg_string_mcp.agent import loop
+    from kegg_string_mcp.agent.pipeline import server_tool_schemas
     from kegg_string_mcp.server import mcp
 
-    server = {t.name for t in asyncio.run(mcp.list_tools())}
-    agent = {t["name"] for t in TOOL_SCHEMAS}
-    assert server == agent == {"kegg_pathways", "string_partners",
-                               "pubmed_abstracts", "uniprot_protein"}
+    assert not hasattr(loop, "TOOL_SCHEMAS"), "a second schema definition reappeared"
+
+    schemas = asyncio.run(server_tool_schemas())
+    served = {t.name: (t.description or "") for t in asyncio.run(mcp.list_tools())}
+    assert {s["name"] for s in schemas} == set(served)
+    for schema in schemas:
+        assert schema["description"] == served[schema["name"]]
+
+
+def test_dispatch_may_be_sync_or_async():
+    """The direct dispatch is sync and the MCP one is async; the loop must take both."""
+    import asyncio
+
+    from kegg_string_mcp.agent.pipeline import _call
+
+    def sync_tool(name, arguments):
+        return {"records": [], "record_ids": [], "notes": ["sync"]}
+
+    async def async_tool(name, arguments):
+        return {"records": [], "record_ids": [], "notes": ["async"]}
+
+    assert asyncio.run(_call(sync_tool, "x", {}))["notes"] == ["sync"]
+    assert asyncio.run(_call(async_tool, "x", {}))["notes"] == ["async"]
 
 
 # --- regressions from the develop review ------------------------------------
@@ -612,3 +633,95 @@ def test_pmids_from_a_uniprot_statement_are_citable(tmp_path):
     })
     assert "18178143" in store.citable_ids
     assert validate("See PMID:18178143.", store.citable_ids, store.per_target, "KATG").passed
+
+
+def _fake_tool(name: str = "kegg_pathways"):
+    """Stands in for an mcp.types.Tool as advertised by list_tools()."""
+    from types import SimpleNamespace
+
+    return SimpleNamespace(
+        name=name, description="d",
+        input_schema={"type": "object",
+                      "properties": {"gene": {"type": "string"},
+                                     "organism": {"type": "string"}},
+                      "required": ["gene"]},
+    )
+
+
+def test_mcp_dispatch_validates_against_the_servers_advertised_schema():
+    """MCP silently drops undeclared arguments, so a model asking for a parameter a
+    tool does not have got results as though the constraint applied. The direct
+    dispatch refuses that; both paths must behave the same."""
+    import asyncio
+
+    from kegg_string_mcp.agent.mcp_tools import McpTools
+
+    class Session:
+        called = False
+
+        async def call_tool(self, name, arguments):
+            Session.called = True
+
+    tools = McpTools(Session(), [_fake_tool()])
+    envelope = asyncio.run(tools("kegg_pathways", {"gene": "katG", "species": 83332}))
+    assert envelope["records"] == []
+    assert "'species' is not a parameter of kegg_pathways" in envelope["notes"][0]
+    assert not Session.called, "an invalid call must not reach the server"
+
+    typed = asyncio.run(tools("kegg_pathways", {"gene": 42}))
+    assert "must be a string" in typed["notes"][0]
+
+    missing = asyncio.run(tools("kegg_pathways", {"organism": "mtu"}))
+    assert "'gene' is required" in missing["notes"][0]
+
+
+def test_mcp_dispatch_surfaces_a_tool_error_as_an_envelope():
+    """A tool error is data the model can act on, not a crash -- same contract as
+    the direct dispatch, which returns an envelope for bad arguments."""
+    import asyncio
+
+    from kegg_string_mcp.agent.mcp_tools import McpTools
+
+    class Block:
+        type, text = "text", "boom"
+
+    class Result:
+        is_error, content, structured_content = True, [Block()], None
+
+    class Session:
+        async def call_tool(self, name, arguments):
+            return Result()
+
+    envelope = asyncio.run(McpTools(Session(), [_fake_tool()])("kegg_pathways", {"gene": "katG"}))
+    assert envelope["records"] == [] and "returned an error" in envelope["notes"][0]
+
+
+def test_mcp_dispatch_falls_back_to_text_when_structured_output_is_absent():
+    import asyncio
+    import json
+
+    from kegg_string_mcp.agent.mcp_tools import McpTools
+
+    class Block:
+        type = "text"
+        text = json.dumps({"records": [], "record_ids": ["mtu00360"], "notes": []})
+
+    class Result:
+        is_error, content, structured_content = False, [Block()], None
+
+    class Session:
+        async def call_tool(self, name, arguments):
+            return Result()
+
+    envelope = asyncio.run(McpTools(Session(), [_fake_tool()])("kegg_pathways", {"gene": "katG"}))
+    assert envelope["record_ids"] == ["mtu00360"]
+
+
+def test_child_env_forwards_credentials_but_not_the_whole_environment(monkeypatch):
+    from kegg_string_mcp.agent.mcp_tools import child_env
+
+    monkeypatch.setenv("NCBI_EMAIL", "you@example.org")
+    monkeypatch.setenv("SOME_UNRELATED_SECRET", "nope")
+    env = child_env()
+    assert env["NCBI_EMAIL"] == "you@example.org"
+    assert "SOME_UNRELATED_SECRET" not in env

@@ -62,6 +62,11 @@ gar epistasis katG furA ahpC     # look for mechanistic links between genes
 gar eval                         # score the pipeline against a gold set
 ```
 
+**The pipeline is a client of its own MCP server.** It spawns the server over stdio,
+takes its tool schemas from `list_tools()`, and invokes tools with `call_tool()` — so
+the schemas have exactly one definition and cannot drift from what an external MCP
+client sees. (`gar --direct` dispatches in-process instead, for debugging.)
+
 The pipeline fetches, computes and validates; the model chooses what to look up and
 interprets what came back. It never writes to the store and never does arithmetic over
 record IDs. In epistasis mode every pairwise relationship is computed *before* the model
@@ -188,7 +193,7 @@ Wire into an MCP client:
 
 ## Tests
 
-205 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
+210 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
 HTTP client that replays saved responses from `tests/fixtures/`, so the suite runs in
 under four seconds, gives the same answer every time, works offline and in CI, and does
 not hammer a free academic service. A red test means this code broke, not that an
