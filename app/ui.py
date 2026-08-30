@@ -22,15 +22,15 @@ from app.replay import (
 REPO = "https://github.com/YaaOppong/kegg-string-mcp"
 
 INTRO = f"""
-# Does the annotation actually say what its sources say?
+# Does the annotation say what its sources say?
 
 This annotates *Mycobacterium tuberculosis* genes. It hands a language model a set of
 lookup tools — KEGG for pathways, STRING for protein interactions, PubMed for
 literature — lets it decide which to call and when it has enough, then writes up what
 it found.
 
-The interesting part is the last step. **Every identifier in the write-up is checked
-against what the tools actually returned.** Not by another model judging it, but by
+Then the last step. **Every identifier in the write-up is checked against what the
+tools returned.** Not by another model judging it, but by
 looking: was this exact record retrieved, for this exact gene, and where text is
 quoted, do those words really appear in the source? A model can produce a fluent,
 plausible, correctly-formatted citation for something it was never shown. This catches
@@ -54,7 +54,7 @@ on a real run. Details in section 3.
 CLEAN = """<div style="border-left:5px solid #1e8e3e;background:#e9f7ef;padding:1rem 1.25rem;
 border-radius:6px">
 <strong>✅ On this run, every citation checked out.</strong><br/>
-Each identifier in the write-up names a record a tool actually returned for this gene,
+Each identifier in the write-up names a record a tool returned for this gene,
 and every quoted span appears verbatim in its source. Try one of the genes marked
 ⚠️ to see the checking catch something.
 </div>"""

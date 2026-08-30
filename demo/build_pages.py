@@ -43,8 +43,9 @@ REWRITES = (
     ("from kegg_string_mcp.agent.store import RunStore", "from store import RunStore"),
     ("from kegg_string_mcp.agent.validate import ValidationReport, validate",
      "from validate import ValidationReport, validate"),
+    # Absolute, so nothing depends on the interpreter's working directory.
     ('RUNS_DIR = Path(__file__).resolve().parent.parent / "demo" / "runs"',
-     'RUNS_DIR = Path("runs")'),
+     'RUNS_DIR = Path("/demo/runs")'),
 )
 
 
@@ -85,7 +86,7 @@ TEMPLATE = r"""<!doctype html>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gene annotation with checked citations</title>
-<meta name="description" content="Watch a language model annotate a tuberculosis gene, then watch every citation it wrote get checked against what the tools actually returned." />
+<meta name="description" content="Watch a language model annotate a tuberculosis gene, then watch every citation it wrote get checked against what the tools returned." />
 <style>
  :root { --fail:#b3261e; --fail-bg:#fdecea; --ok:#1e8e3e; --ok-bg:#e9f7ef; --line:#d8dce2; }
  * { box-sizing: border-box; }
@@ -114,15 +115,15 @@ TEMPLATE = r"""<!doctype html>
 </head>
 <body>
 <main>
-<h1>Does the annotation actually say what its sources say?</h1>
+<h1>Does the annotation say what its sources say?</h1>
 
 <p class="lede">This annotates <em>Mycobacterium tuberculosis</em> genes. It hands a
 language model a set of lookup tools &mdash; KEGG for pathways, STRING for protein
 interactions, PubMed for literature &mdash; lets it decide which to call and when it has
 enough, then writes up what it found.</p>
 
-<p class="lede">The interesting part is the last step. <strong>Every identifier in the
-write-up is checked against what the tools actually returned.</strong> Not by another
+<p class="lede">Then the last step. <strong>Every identifier in the write-up is checked
+against what the tools returned.</strong> Not by another
 model judging it, but by looking: was this exact record retrieved, for this exact gene,
 and where text is quoted, do those words really appear in the source? A model can produce
 a fluent, plausible, correctly-formatted citation for something it was never shown. This
@@ -205,29 +206,47 @@ things it was never shown for this gene &mdash; that is the failure this project
 to catch, and it is caught here on a real run. Details in section 3.`;
 
 const CLEAN_BANNER = `<strong>&#9989; On this run, every citation checked out.</strong>
-<br/>Each identifier in the write-up names a record a tool actually returned for this
+<br/>Each identifier in the write-up names a record a tool returned for this
 gene, and every quoted span appears verbatim in its source. Pick one of the genes marked
 &#9888;&#65039; to watch the checking catch something.`;
 
 async function main() {
-  const pyodide = await loadPyodide({ indexURL: "__PYODIDE__" });
-  // No micropip, no packages: every module here is standard library.
-  for (const [name, body] of Object.entries(FILES)) {
-    const slash = name.lastIndexOf("/");
-    if (slash > 0) pyodide.FS.mkdirTree(name.slice(0, slash));
-    pyodide.FS.writeFile(name, body);
-  }
-  pyodide.runPython("import sys; sys.path.insert(0, '')");
-  const api = pyodide.pyimport("browser_api");
+  const step = label => { window.__step = label; };
 
+  step("loading Pyodide");
+  const pyodide = await loadPyodide({ indexURL: "__PYODIDE__" });
+
+  // An absolute directory, not the cwd: Pyodide's working directory is not on
+  // sys.path, and a relative write lands somewhere the import machinery will not
+  // look. Bytes, not a JS string: Emscripten's FS.writeFile wants a Uint8Array,
+  // and handing it a string is silently wrong or throws depending on the build.
+  step("writing files into the virtual filesystem");
+  const encoder = new TextEncoder();
+  pyodide.FS.mkdirTree("/demo/runs");
+  for (const [name, body] of Object.entries(FILES)) {
+    pyodide.FS.writeFile("/demo/" + name, encoder.encode(body));
+  }
+
+  step("importing the checker");
+  // No micropip and no loadPackage: every module here is standard library.
+  // runPython only, deliberately: it is the most basic entry point in the JS API,
+  // so the page depends on as little of Pyodide's surface as possible.
+  pyodide.runPython("import sys; sys.path.insert(0, '/demo')\nimport browser_api");
+  const api = {
+    index: () => pyodide.runPython("import browser_api; browser_api.index()"),
+    run: name => pyodide.runPython(
+      `import browser_api; browser_api.run(${JSON.stringify(name)})`),
+  };
+
+  step("building the gene list");
   const picker = document.getElementById("gene");
   for (const entry of JSON.parse(api.index())) {
     const option = document.createElement("option");
     option.value = entry.id;
     // Mark failing runs in the picker itself: if someone has to select the right
     // gene to find the point, most will not.
-    option.textContent = (entry.fails ? "⚠️  " : "") + entry.label +
-                         (entry.fails ? "  — citation check FAILS" : "");
+    option.textContent = (entry.fails ? "\u26A0\uFE0F  " : "") + entry.label +
+                         (entry.fails ? "  \u2014 citation check FAILS" : "");
     picker.append(option);
   }
 
@@ -257,6 +276,7 @@ async function main() {
     }
   }
 
+  step("rendering the first run");
   picker.addEventListener("change", () => show(picker.value));
   show(picker.value);
   document.getElementById("boot").hidden = true;
@@ -264,9 +284,18 @@ async function main() {
 }
 
 main().catch(err => {
+  // esc(err) on an Error prints "[object Object]", which says nothing. Report the
+  // step that failed and the actual message, so a bug report is usable.
+  const detail = (err && (err.message || err.toString())) || String(err);
+  const where = window.__step ? `while ${window.__step}` : "during startup";
+  console.error(err);
   document.getElementById("boot").innerHTML =
-    "<strong>The demo failed to start.</strong> " + esc(err) +
-    ' &mdash; the same runs are in <a href="https://github.com/YaaOppong/kegg-string-mcp">the repository</a>.';
+    `<strong>The demo failed to start</strong> ${esc(where)}.` +
+    `<pre style="white-space:pre-wrap;background:#fdecea;padding:1rem;border-radius:6px">` +
+    `${esc(detail)}</pre>` +
+    `<p>Please <a href="https://github.com/YaaOppong/kegg-string-mcp/issues">open an issue</a> ` +
+    `with this message. The same runs are in ` +
+    `<a href="https://github.com/YaaOppong/kegg-string-mcp">the repository</a>.</p>`;
 });
 </script>
 </body>

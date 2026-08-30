@@ -6,7 +6,7 @@
 An [MCP](https://modelcontextprotocol.io) server exposing **KEGG**, **STRING**, **UniProt** and
 **PubMed** as model-callable tools for gene annotation. Every record returned carries a
 stable ID and a resolvable URL, so a downstream agent's citations can be checked
-programmatically against what was actually retrieved.
+programmatically against what was retrieved.
 
 **▶ [Try it in your browser](https://yaaoppong.github.io/kegg-string-mcp/)** — pick a
 gene, watch the model call tools, then watch its citations get checked. It opens on a run
@@ -119,7 +119,7 @@ turn 4: stop=end_turn
 
 ### Citation validation
 
-Every identifier in the summary is checked against what the tools actually returned,
+Every identifier in the summary is checked against what the tools returned,
 recorded before the model saw it. Three failure classes:
 
 - **unsupported** — an authoritative-looking ID that no tool returned.
@@ -142,7 +142,7 @@ either names a record a tool returned or it does not. See
 
 Runs that find papers emit `<run>.corpus.jsonl` for a downstream full-text pipeline.
 `in_pmc` matters more than the DOI — a DOI resolves to a usually-paywalled publisher,
-a PMCID is the licit route to full text. `mentions` records the genes actually present
+a PMCID is the licit route to full text. `mentions` records the genes present
 in the retrieved text, not the genes queried.
 
 ## Evaluation
