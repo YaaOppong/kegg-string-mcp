@@ -54,6 +54,19 @@ For PubMed records that check is necessary but not sufficient, so each article a
 carries `quotable_text`: the exact retrieved title-and-abstract string. See
 [Structured records and prose](#structured-records-and-prose) below.
 
+## Demo
+
+A zero-config replay viewer lives in [`app/`](app/): pick a gene, watch the tool calls,
+read the write-up, then watch every citation in it get checked. It replays runs
+committed in [`demo/runs/`](demo/runs/) — no API key, no install, no live calls — but
+re-runs the validator fresh, so it shows the current verdict rather than a stored one.
+
+It opens on a run where the checking **catches a real misattribution**: the model looked
+up `katG` as context while annotating `furA`, then reported katG's pathways as furA's. A
+demo where everything passes would prove nothing.
+
+Deploying it to a Hugging Face Space: [`app/README_SPACE.md`](app/README_SPACE.md).
+
 ## Annotation pipeline
 
 ```bash
@@ -193,7 +206,7 @@ Wire into an MCP client:
 
 ## Tests
 
-210 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
+247 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
 HTTP client that replays saved responses from `tests/fixtures/`, so the suite runs in
 under four seconds, gives the same answer every time, works offline and in CI, and does
 not hammer a free academic service. A red test means this code broke, not that an

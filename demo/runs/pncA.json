@@ -1,0 +1,928 @@
+{
+ "calls": [
+  {
+   "arguments": {
+    "gene": "pncA",
+    "organism": "mtu"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [],
+    "query": {
+     "gene": "pncA",
+     "organism": "mtu"
+    },
+    "record_ids": [
+     "mtu00760",
+     "mtu01100",
+     "mtu01240"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv2043c"
+      },
+      "name": "Nicotinate and nicotinamide metabolism - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00760",
+      "retrieved_at": "2026-08-28T10:28:02.711292+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00760"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv2043c"
+      },
+      "name": "Metabolic pathways - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01100",
+      "retrieved_at": "2026-08-28T10:28:02.711292+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01100"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv2043c"
+      },
+      "name": "Biosynthesis of cofactors - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01240",
+      "retrieved_at": "2026-08-28T10:28:02.711292+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01240"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": false,
+      "content_sha256": "96e05a2863e63e1b09c78bbb9f0d4f13d876b80039fd0939dde2b7f58e5dbcf7",
+      "retrieved_at": "2026-08-28T10:28:02.711292+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv2043c"
+     },
+     {
+      "cached": true,
+      "content_sha256": "fb3e52ff8b817798ee1b884c88affaf5a547b5e386c27d1afd61f0400867b648",
+      "retrieved_at": "2026-08-28T08:49:28.342942+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/pathway/mtu"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv2043c",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "pncA",
+    "required_score": 700,
+    "species": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: rpsL, inhA, rpoB, embB, katG, gyrA, gyrB, panD, rpsA, eis, tlyA, gid, embA."
+    ],
+    "query": {
+     "gene": "pncA",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv1330c",
+     "83332.Rv0573c",
+     "83332.Rv0682",
+     "83332.Rv1484",
+     "83332.Rv0667",
+     "83332.Rv3795",
+     "83332.Rv1908c",
+     "83332.Rv0006",
+     "83332.Rv0005",
+     "83332.Rv2042c",
+     "83332.Rv3601c",
+     "83332.Rv1630",
+     "83332.Rv3393",
+     "83332.Rv2416c",
+     "83332.Rv1151c",
+     "83332.Rv3307",
+     "83332.Rv1694",
+     "83332.Rv2044c",
+     "83332.Rv3919c",
+     "83332.Rv3794"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.107,
+        "cooccurrence": 0.654,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.567,
+        "neighborhood": 0.229
+       },
+       "combined_score": 0.994,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.584
+      },
+      "name": "pncB1",
+      "record_id": "83332.Rv1330c",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1330c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.104,
+        "cooccurrence": 0.572,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.41,
+        "neighborhood": 0.146
+       },
+       "combined_score": 0.987,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.475
+      },
+      "name": "pncB2",
+      "record_id": "83332.Rv0573c",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0573c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.141,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.97,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.141,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.965
+      },
+      "name": "rpsL",
+      "record_id": "83332.Rv0682",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0682"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.042,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.105
+       },
+       "combined_score": 0.967,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.105,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.965
+      },
+      "name": "inhA",
+      "record_id": "83332.Rv1484",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1484"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.965,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.0,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.965
+      },
+      "name": "rpoB",
+      "record_id": "83332.Rv0667",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0667"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.053
+       },
+       "combined_score": 0.965,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.053,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.965
+      },
+      "name": "embB",
+      "record_id": "83332.Rv3795",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3795"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.965,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.965
+      },
+      "name": "katG",
+      "record_id": "83332.Rv1908c",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1908c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.046,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.965,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.046,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.965
+      },
+      "name": "gyrA",
+      "record_id": "83332.Rv0006",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0006"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.046,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.056
+       },
+       "combined_score": 0.949,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.056,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.948
+      },
+      "name": "gyrB",
+      "record_id": "83332.Rv0005",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0005"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.089,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.882
+       },
+       "combined_score": 0.943,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.882,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.514
+      },
+      "name": "Rv2042c",
+      "record_id": "83332.Rv2042c",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2042c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.056,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.058
+       },
+       "combined_score": 0.936,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.058,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.934
+      },
+      "name": "panD",
+      "record_id": "83332.Rv3601c",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3601c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.043
+       },
+       "combined_score": 0.934,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.043,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.934
+      },
+      "name": "rpsA",
+      "record_id": "83332.Rv1630",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1630"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.162,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.041
+       },
+       "combined_score": 0.928,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.217
+      },
+      "name": "iunH",
+      "record_id": "83332.Rv3393",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3393"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.071
+       },
+       "combined_score": 0.928,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.071,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.925
+      },
+      "name": "eis",
+      "record_id": "83332.Rv2416c",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2416c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.064,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.153,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.927,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.163
+      },
+      "name": "cobB-2",
+      "record_id": "83332.Rv1151c",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1151c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.043,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.908,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.092
+      },
+      "name": "deoD",
+      "record_id": "83332.Rv3307",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3307"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.044,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.894,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.072,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.891
+      },
+      "name": "tlyA",
+      "record_id": "83332.Rv1694",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1694"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.044,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.69
+       },
+       "combined_score": 0.888,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.69,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.652
+      },
+      "name": "Rv2044c",
+      "record_id": "83332.Rv2044c",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2044c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.071
+       },
+       "combined_score": 0.868,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.071,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.864
+      },
+      "name": "gid",
+      "record_id": "83332.Rv3919c",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3919c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.053
+       },
+       "combined_score": 0.865,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.053,
+       "partner_of": "83332.Rv2043c",
+       "textmining_score": 0.864
+      },
+      "name": "embA",
+      "record_id": "83332.Rv3794",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3794"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "858244bd0791fc019a4f22d3eb4ac1bb5999dd91b5b9b82ae8f507686afe08c0",
+      "retrieved_at": "2026-08-28T10:28:02.965352+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?caller_identity=kegg-string-mcp&echo_query=1&identifiers=pncA&limit=1&species=83332"
+     },
+     {
+      "cached": false,
+      "content_sha256": "0f49b7ce4ea2969b9dfea6010bbdff8ba1c99991bf1a94fee95939b52a2c1500",
+      "retrieved_at": "2026-08-28T10:28:04.202243+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?caller_identity=kegg-string-mcp&identifiers=83332.Rv2043c&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "pncA",
+     "string_id": "83332.Rv2043c"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "pncA",
+    "limit": 6,
+    "organism": "Mycobacterium tuberculosis"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "434 articles matched this query; the 6 most relevant were retrieved. A finding absent from these abstracts may still be reported in the 428 not retrieved.",
+     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
+     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+    ],
+    "query": {
+     "gene": "pncA",
+     "limit": 6,
+     "organism": "Mycobacterium tuberculosis"
+    },
+    "record_ids": [
+     "36915970",
+     "38602399",
+     "35919400",
+     "36065280",
+     "35768376",
+     "33142220"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Tuberculosis (TB) is an ancient infectious disease. Before the availability of effective drug therapy, it had high morbidity and mortality. In the past 100 years, the discovery of revolutionary anti-TB drugs such as streptomycin, isoniazid, pyrazinamide, ethambutol and rifampicin, along with drug combination treatment, has greatly improved TB control globally. As anti-TB drugs were widely used, multidrug-resistant (MDR) and extensively drug-resistant (XDR) strains of Mycobacterium tuberculosis emerged due to acquired genetic mutations, and this now presents a major problem for effective treatment. Genes associated with drug resistance have been identified, including katG mutations in isoniazid resistance, rpoB mutations in rifampin resistance, pncA mutations in pyrazinamide resistance, and gyrA mutations in quinolone resistance. The major mechanisms of drug resistance include loss of enzyme activity in prodrug activation, drug target alteration, overexpression of drug target, and overexpression of the efflux pump. During the disease process, Mycobacterium tuberculosis may reside in different microenvironments where it is expose to acidic pH, low oxygen, reactive oxygen species and anti-TB drugs, which can facilitate the development of non-replicating persisters and promote bacterial survival. The mechanisms of persister formation may include toxin-antitoxin (TA) modules, DNA protection and repair, protein degradation such as trans-translation, efflux, and altered metabolism. In recent years, the use of new anti-TB drugs, repurposed drugs, and their drug combinations has greatly improved treatment outcomes in patients with both drug-susceptible TB and MDR/XDR-TB. The importance of developing more effective drugs targeting persisters of Mycobacterium tuberculosis is emphasized. In addition, host-directed therapeutics using both conventional drugs and herbal medicines for more effective TB treatment should also be explored. In this article, we review historical aspects of the research on anti-TB drugs and discuss the current understanding and treatments of drug resistant and persistent tuberculosis to inform future therapeutic development.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Tuberculosis (TB) is an ancient infectious disease. Before the availability of effective drug therapy, it had high morbidity and mortality. In the past 100 years, the discovery of revolutionary anti-TB drugs such as streptomycin, isoniazid, pyrazinamide, ethambutol and rifampicin, along with drug combination treatment, has greatly improved TB control globally. As anti-TB drugs were widely used, multidrug-resistant (MDR) and extensively drug-resistant (XDR) strains of Mycobacterium tuberculosis emerged due to acquired genetic mutations, and this now presents a major problem for effective treatment. Genes associated with drug resistance have been identified, including katG mutations in isoniazid resistance, rpoB mutations in rifampin resistance, pncA mutations in pyrazinamide resistance, and gyrA mutations in quinolone resistance. The major mechanisms of drug resistance include loss of enzyme activity in prodrug activation, drug target alteration, overexpression of drug target, and overexpression of the efflux pump. During the disease process, Mycobacterium tuberculosis may reside in different microenvironments where it is expose to acidic pH, low oxygen, reactive oxygen species and anti-TB drugs, which can facilitate the development of non-replicating persisters and promote bacterial survival. The mechanisms of persister formation may include toxin-antitoxin (TA) modules, DNA protection and repair, protein degradation such as trans-translation, efflux, and altered metabolism. In recent years, the use of new anti-TB drugs, repurposed drugs, and their drug combinations has greatly improved treatment outcomes in patients with both drug-susceptible TB and MDR/XDR-TB. The importance of developing more effective drugs targeting persisters of Mycobacterium tuberculosis is emphasized. In addition, host-directed therapeutics using both conventional drugs and herbal medicines for more effective TB treatment should also be explored. In this article, we review historical aspects of the research on anti-TB drugs and discuss the current understanding and treatments of drug resistant and persistent tuberculosis to inform future therapeutic development."
+        }
+       ],
+       "doi": "10.3724/zdxbyxb-2022-0454",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Zhejiang da xue xue bao. Yi xue ban = Journal of Zhejiang University. Medical sciences",
+       "mentions": [
+        "pncA"
+       ],
+       "pmcid": "PMC10262004",
+       "quotable_text": "The past, present and future of tuberculosis treatment.\n\nTuberculosis (TB) is an ancient infectious disease. Before the availability of effective drug therapy, it had high morbidity and mortality. In the past 100 years, the discovery of revolutionary anti-TB drugs such as streptomycin, isoniazid, pyrazinamide, ethambutol and rifampicin, along with drug combination treatment, has greatly improved TB control globally. As anti-TB drugs were widely used, multidrug-resistant (MDR) and extensively drug-resistant (XDR) strains of Mycobacterium tuberculosis emerged due to acquired genetic mutations, and this now presents a major problem for effective treatment. Genes associated with drug resistance have been identified, including katG mutations in isoniazid resistance, rpoB mutations in rifampin resistance, pncA mutations in pyrazinamide resistance, and gyrA mutations in quinolone resistance. The major mechanisms of drug resistance include loss of enzyme activity in prodrug activation, drug target alteration, overexpression of drug target, and overexpression of the efflux pump. During the disease process, Mycobacterium tuberculosis may reside in different microenvironments where it is expose to acidic pH, low oxygen, reactive oxygen species and anti-TB drugs, which can facilitate the development of non-replicating persisters and promote bacterial survival. The mechanisms of persister formation may include toxin-antitoxin (TA) modules, DNA protection and repair, protein degradation such as trans-translation, efflux, and altered metabolism. In recent years, the use of new anti-TB drugs, repurposed drugs, and their drug combinations has greatly improved treatment outcomes in patients with both drug-susceptible TB and MDR/XDR-TB. The importance of developing more effective drugs targeting persisters of Mycobacterium tuberculosis is emphasized. In addition, host-directed therapeutics using both conventional drugs and herbal medicines for more effective TB treatment should also be explored. In this article, we review historical aspects of the research on anti-TB drugs and discuss the current understanding and treatments of drug resistant and persistent tuberculosis to inform future therapeutic development.",
+       "title": "The past, present and future of tuberculosis treatment.",
+       "year": "2022"
+      },
+      "name": "The past, present and future of tuberculosis treatment.",
+      "record_id": "36915970",
+      "retrieved_at": "2026-08-28T10:28:12.122241+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36915970/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Targeted next-generation sequencing (tNGS) can be used to perform Mycobacterium tuberculosis (MTB) complex-specific amplification or target capture directly from sputum samples, yielding simultaneous coverage of many genes and DNA regions associated with antimicrobial resistance (AMR). Performance comparisons of tNGS and another molecular testing tool, Xpert MTB/rifampicin (RIF), have been empirical. Here, using a dilution series of a RIF-resistant clinical isolate of MTB, we found that tNGS had a slightly lower limit of bacterial detection (102 CFU/mL) compared with Xpert MTB/RIF (103 CFU/mL) in culture medium. However, the minimum detection limit of the rpoB S450L mutation in this isolate was significantly lower with tNGS (102 CFU/mL) than with Xpert MTB/RIF (106 CFU/mL). Sputum samples collected from 129 suspected pulmonary tuberculosis patients were also prospectively studied with the clinical diagnosis as a reference, revealing that the sensitivity of tNGS (48.6%) was higher than those of culture (46.8%), Xpert MTB/RIF (39.4%), and smear microscopy (34.9%) testing. Notably, AMR analysis of 56 MTB-positive samples as determined by tNGS revealed high mutation frequencies of 96.4%, 35.7%, 26.8%, and 19.6% in the following AMR-associated genes: rrs, rpoB, katG, and pncA, respectively. The findings of this study provide theoretical support for the differential clinical application of tNGS and Xpert MTB/RIF and suggest that tNGS has greater application value in tuberculosis drug resistance monitoring and prevention.IMPORTANCETargeted next-generation sequencing (tNGS) can be used to perform Mycobacterium tuberculosis (MTB) complex-specific amplification or target capture directly from sputum samples, yielding simultaneous coverage of genes and DNA regions associated with antimicrobial resistance (AMR). Performance comparisons of tNGS and Xpert MTB/rifampicin (RIF) have been empirical. The Xpert MTB/RIF assay is a commercial system that uses the nucleic acid amplification detection method for rapid (2 hours) diagnosis of tuberculosis (TB). The cost of the tNGS and Xpert MTB/RIF assays in this study was similar, at USD 98 and USD 70-104 per sample, respectively, but the time required for tNGS (3 days) was much longer than that required for the Xpert MTB/RIF assay. However, tNGS yielded more accurate results and a larger number of AMR-associated gene mutations, which compensated for the extra time and highlighted the greater application value of tNGS in TB drug resistance monitoring and prevention.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Targeted next-generation sequencing (tNGS) can be used to perform Mycobacterium tuberculosis (MTB) complex-specific amplification or target capture directly from sputum samples, yielding simultaneous coverage of many genes and DNA regions associated with antimicrobial resistance (AMR). Performance comparisons of tNGS and another molecular testing tool, Xpert MTB/rifampicin (RIF), have been empirical. Here, using a dilution series of a RIF-resistant clinical isolate of MTB, we found that tNGS had a slightly lower limit of bacterial detection (102 CFU/mL) compared with Xpert MTB/RIF (103 CFU/mL) in culture medium. However, the minimum detection limit of the rpoB S450L mutation in this isolate was significantly lower with tNGS (102 CFU/mL) than with Xpert MTB/RIF (106 CFU/mL). Sputum samples collected from 129 suspected pulmonary tuberculosis patients were also prospectively studied with the clinical diagnosis as a reference, revealing that the sensitivity of tNGS (48.6%) was higher than those of culture (46.8%), Xpert MTB/RIF (39.4%), and smear microscopy (34.9%) testing. Notably, AMR analysis of 56 MTB-positive samples as determined by tNGS revealed high mutation frequencies of 96.4%, 35.7%, 26.8%, and 19.6% in the following AMR-associated genes: rrs, rpoB, katG, and pncA, respectively. The findings of this study provide theoretical support for the differential clinical application of tNGS and Xpert MTB/RIF and suggest that tNGS has greater application value in tuberculosis drug resistance monitoring and prevention.IMPORTANCETargeted next-generation sequencing (tNGS) can be used to perform Mycobacterium tuberculosis (MTB) complex-specific amplification or target capture directly from sputum samples, yielding simultaneous coverage of genes and DNA regions associated with antimicrobial resistance (AMR). Performance comparisons of tNGS and Xpert MTB/rifampicin (RIF) have been empirical. The Xpert MTB/RIF assay is a commercial system that uses the nucleic acid amplification detection method for rapid (2 hours) diagnosis of tuberculosis (TB). The cost of the tNGS and Xpert MTB/RIF assays in this study was similar, at USD 98 and USD 70-104 per sample, respectively, but the time required for tNGS (3 days) was much longer than that required for the Xpert MTB/RIF assay. However, tNGS yielded more accurate results and a larger number of AMR-associated gene mutations, which compensated for the extra time and highlighted the greater application value of tNGS in TB drug resistance monitoring and prevention."
+        }
+       ],
+       "doi": "10.1128/spectrum.04098-23",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Microbiology spectrum",
+       "mentions": [
+        "pncA"
+       ],
+       "pmcid": "PMC11064545",
+       "quotable_text": "Comparison of targeted next-generation sequencing and the Xpert MTB/RIF assay for detection of Mycobacterium tuberculosis in clinical isolates and sputum specimens.\n\nTargeted next-generation sequencing (tNGS) can be used to perform Mycobacterium tuberculosis (MTB) complex-specific amplification or target capture directly from sputum samples, yielding simultaneous coverage of many genes and DNA regions associated with antimicrobial resistance (AMR). Performance comparisons of tNGS and another molecular testing tool, Xpert MTB/rifampicin (RIF), have been empirical. Here, using a dilution series of a RIF-resistant clinical isolate of MTB, we found that tNGS had a slightly lower limit of bacterial detection (102 CFU/mL) compared with Xpert MTB/RIF (103 CFU/mL) in culture medium. However, the minimum detection limit of the rpoB S450L mutation in this isolate was significantly lower with tNGS (102 CFU/mL) than with Xpert MTB/RIF (106 CFU/mL). Sputum samples collected from 129 suspected pulmonary tuberculosis patients were also prospectively studied with the clinical diagnosis as a reference, revealing that the sensitivity of tNGS (48.6%) was higher than those of culture (46.8%), Xpert MTB/RIF (39.4%), and smear microscopy (34.9%) testing. Notably, AMR analysis of 56 MTB-positive samples as determined by tNGS revealed high mutation frequencies of 96.4%, 35.7%, 26.8%, and 19.6% in the following AMR-associated genes: rrs, rpoB, katG, and pncA, respectively. The findings of this study provide theoretical support for the differential clinical application of tNGS and Xpert MTB/RIF and suggest that tNGS has greater application value in tuberculosis drug resistance monitoring and prevention.IMPORTANCETargeted next-generation sequencing (tNGS) can be used to perform Mycobacterium tuberculosis (MTB) complex-specific amplification or target capture directly from sputum samples, yielding simultaneous coverage of genes and DNA regions associated with antimicrobial resistance (AMR). Performance comparisons of tNGS and Xpert MTB/rifampicin (RIF) have been empirical. The Xpert MTB/RIF assay is a commercial system that uses the nucleic acid amplification detection method for rapid (2 hours) diagnosis of tuberculosis (TB). The cost of the tNGS and Xpert MTB/RIF assays in this study was similar, at USD 98 and USD 70-104 per sample, respectively, but the time required for tNGS (3 days) was much longer than that required for the Xpert MTB/RIF assay. However, tNGS yielded more accurate results and a larger number of AMR-associated gene mutations, which compensated for the extra time and highlighted the greater application value of tNGS in TB drug resistance monitoring and prevention.",
+       "title": "Comparison of targeted next-generation sequencing and the Xpert MTB/RIF assay for detection of Mycobacterium tuberculosis in clinical isolates and sputum specimens.",
+       "year": "2024"
+      },
+      "name": "Comparison of targeted next-generation sequencing and the Xpert MTB/RIF assay for detection of Mycobacterium tuberculosis in clinical isolates and sputum specimens.",
+      "record_id": "38602399",
+      "retrieved_at": "2026-08-28T10:28:12.122241+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38602399/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "BACKGROUND: The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission.\n\nMETHODS: We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed.\n\nRESULTS: In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains.\n\nCONCLUSIONS: Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman.",
+       "abstract_sections": [
+        {
+         "label": "BACKGROUND",
+         "text": "The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission."
+        },
+        {
+         "label": "METHODS",
+         "text": "We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed."
+        },
+        {
+         "label": "RESULTS",
+         "text": "In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains."
+        },
+        {
+         "label": "CONCLUSIONS",
+         "text": "Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman."
+        }
+       ],
+       "doi": "10.7717/peerj.13645",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "PeerJ",
+       "mentions": [
+        "pncA"
+       ],
+       "pmcid": "PMC9339217",
+       "quotable_text": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.\n\nBACKGROUND: The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission.\n\nMETHODS: We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed.\n\nRESULTS: In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains.\n\nCONCLUSIONS: Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman.",
+       "title": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.",
+       "year": "2022"
+      },
+      "name": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.",
+      "record_id": "35919400",
+      "retrieved_at": "2026-08-28T10:28:12.122241+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35919400/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "PURPOSE: Pyrazinamide (PZA) is a critical component of standardized chemotherapy for tuberculosis (TB) and is recommended for the treatment of multidrug-resistant (MDR) TB. We aimed to characterize mutations in pncA of M. tuberculosis and evaluate their diagnostic accuracy for PZA susceptibility in China. We also combined genotypic methods with phenotypic susceptibility testing and pyrazinamidase (PZAse) activity to confirm PZA-resistant M. tuberculosis isolates.\n\nRESULTS: An evaluation of 82 MDR M. tuberculosis strains revealed that 28.0% (23/82) were phenotypically resistant to 100 mg/L PZA and 15.9% (13/82) showed resistance to 300 mg/L PZA. Mutations in pncA were detected at 33 unique sites, and the majority were point mutations. No evident mutation hotspots or mutations affecting multiple amino acids were found, but the association between pncA mutations and PZA resistance was significant under 100 and 300 mg/L. The sensitivity of pncA mutation detection for predicting PZA susceptibility was 82.6% (19/23), and the specificity was 61.0% (36/59), based on 100 mg/L PZA, whereas the sensitivity was 84.6% (11/13) and the specificity was 55.1% (38/69), based on 300 mg/L PZA. All mutations identified in the highly PZA-resistant (300 mg/L) strains had an 80% loss relative to PZAse activity. No evident PZAse activity loss was observed in one synonymous mutation strain and the loss exceed 60% in all other strains.\n\nCONCLUSION: The association between pncA mutation and PZA resistance was significant. Relatively, the molecular method have shown better reliability than the phenotypic method for the detection of PZA resistance. This provides a theoretical basis for the clinical diagnosis of drug-resistant TB.",
+       "abstract_sections": [
+        {
+         "label": "PURPOSE",
+         "text": "Pyrazinamide (PZA) is a critical component of standardized chemotherapy for tuberculosis (TB) and is recommended for the treatment of multidrug-resistant (MDR) TB. We aimed to characterize mutations in pncA of M. tuberculosis and evaluate their diagnostic accuracy for PZA susceptibility in China. We also combined genotypic methods with phenotypic susceptibility testing and pyrazinamidase (PZAse) activity to confirm PZA-resistant M. tuberculosis isolates."
+        },
+        {
+         "label": "RESULTS",
+         "text": "An evaluation of 82 MDR M. tuberculosis strains revealed that 28.0% (23/82) were phenotypically resistant to 100 mg/L PZA and 15.9% (13/82) showed resistance to 300 mg/L PZA. Mutations in pncA were detected at 33 unique sites, and the majority were point mutations. No evident mutation hotspots or mutations affecting multiple amino acids were found, but the association between pncA mutations and PZA resistance was significant under 100 and 300 mg/L. The sensitivity of pncA mutation detection for predicting PZA susceptibility was 82.6% (19/23), and the specificity was 61.0% (36/59), based on 100 mg/L PZA, whereas the sensitivity was 84.6% (11/13) and the specificity was 55.1% (38/69), based on 300 mg/L PZA. All mutations identified in the highly PZA-resistant (300 mg/L) strains had an 80% loss relative to PZAse activity. No evident PZAse activity loss was observed in one synonymous mutation strain and the loss exceed 60% in all other strains."
+        },
+        {
+         "label": "CONCLUSION",
+         "text": "The association between pncA mutation and PZA resistance was significant. Relatively, the molecular method have shown better reliability than the phenotypic method for the detection of PZA resistance. This provides a theoretical basis for the clinical diagnosis of drug-resistant TB."
+        }
+       ],
+       "doi": "10.2147/IDR.S368444",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Infection and drug resistance",
+       "mentions": [
+        "pncA"
+       ],
+       "pmcid": "PMC9440668",
+       "quotable_text": "Pyrazinamide Resistance and pncA Mutation Profiles in Multidrug Resistant Mycobacterium Tuberculosis.\n\nPURPOSE: Pyrazinamide (PZA) is a critical component of standardized chemotherapy for tuberculosis (TB) and is recommended for the treatment of multidrug-resistant (MDR) TB. We aimed to characterize mutations in pncA of M. tuberculosis and evaluate their diagnostic accuracy for PZA susceptibility in China. We also combined genotypic methods with phenotypic susceptibility testing and pyrazinamidase (PZAse) activity to confirm PZA-resistant M. tuberculosis isolates.\n\nRESULTS: An evaluation of 82 MDR M. tuberculosis strains revealed that 28.0% (23/82) were phenotypically resistant to 100 mg/L PZA and 15.9% (13/82) showed resistance to 300 mg/L PZA. Mutations in pncA were detected at 33 unique sites, and the majority were point mutations. No evident mutation hotspots or mutations affecting multiple amino acids were found, but the association between pncA mutations and PZA resistance was significant under 100 and 300 mg/L. The sensitivity of pncA mutation detection for predicting PZA susceptibility was 82.6% (19/23), and the specificity was 61.0% (36/59), based on 100 mg/L PZA, whereas the sensitivity was 84.6% (11/13) and the specificity was 55.1% (38/69), based on 300 mg/L PZA. All mutations identified in the highly PZA-resistant (300 mg/L) strains had an 80% loss relative to PZAse activity. No evident PZAse activity loss was observed in one synonymous mutation strain and the loss exceed 60% in all other strains.\n\nCONCLUSION: The association between pncA mutation and PZA resistance was significant. Relatively, the molecular method have shown better reliability than the phenotypic method for the detection of PZA resistance. This provides a theoretical basis for the clinical diagnosis of drug-resistant TB.",
+       "title": "Pyrazinamide Resistance and pncA Mutation Profiles in Multidrug Resistant Mycobacterium Tuberculosis.",
+       "year": "2022"
+      },
+      "name": "Pyrazinamide Resistance and pncA Mutation Profiles in Multidrug Resistant Mycobacterium Tuberculosis.",
+      "record_id": "36065280",
+      "retrieved_at": "2026-08-28T10:28:12.122241+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36065280/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Objective: To provide a scientific reference for the prevention and treatment of pyrazinamide-resistant tuberculosis (PZA-R TB), we analyzed the prevalence and risk factors of pyrazinamide-resistant tuberculosis in Hunan province and described the genotyping and clustering characteristics of the pyrazinamide-resistant Mycobacterium tuberculosis (PZA-R MTB) isolates. Methods: The drug susceptibility test results of first-line anti-tuberculosis drugs including isoniazid (INH), rifampicin (RFP), streptomycin (SM), ethambutol (EMB) and pyrazinamide (PZA), and the characteristics of patients were collected from 3 862 tuberculosis patients in Hunan Chest Hospital (Institute of Tuberculosis Control and Prevention) from January 2016 to December 2018. The prevalence of PZA-R TB was calculated and risk factors were analyzed by univariate and multivariable logistic regression analysis. Two hundred and twelve Mycobacterium tuberculosis isolates selected from June 2017 to June 2018 were genotyped using the 24-loci MIRU-VNTR system. The genetic difference value (h), and the Hunter-Gaston index (HGI) were used to evaluate the resolution and variation for the 24 loci. MIRU-VNTR results were analyzed using BioNumerics 5.0 software to conduct cluster analysis. Clustered isolates were further analyzed by pncA gene sequencing. Results: The rate of PZA-R TB among tuberculosis patients and MDR patients was 14.7%(566/3 862) and 60.5%(511/844), respectively. Multivariable logistic regression analysis showed that patients who were INH mono-resistance and MDR had a higher risk of developing PZA resistance, compared with TB patients who were pan-sensitive to anti-TB drugs (INH, RFP, SM, and EMB). The adjusted OR value (95%CI) was 13.08(5.67-30.18), 298.41(164.88-540.08), respectively, and P values were all less than 0.01. Clustering analysis showed that 65 strains formed 19 clusters, the clustering rate was 30.7%(65/212). Of 19 clusters, eight clusters had at least two isolates with identical pncA mutation types within each cluster. In eight clusters, cluster 4, 6, 16 had four, three, and two patients who lived in the same county, respectively, thus providing probable epidemiological links for the recent transmission of PZA-R Mycobacterium tuberculosis. At least 47.6%(101/212) of PZA drug-resistant TB patients were suggestive of primary drug resistance caused by transmission. Conclusions: The prevalence of PZA-R TB was severe in Hunan province. PZA susceptibility testing should be performed for isolates resistant to any first-line anti-tuberculosis drugs, especially for MDR-MTB isolates. Nearly half of tuberculosis patients were suggestive of primary drug resistance caused by transmission. The prevention and treatment strategy of PZA-R TB should focus on the standardized treatment and management of patients as well as control of the source of infection.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Objective: To provide a scientific reference for the prevention and treatment of pyrazinamide-resistant tuberculosis (PZA-R TB), we analyzed the prevalence and risk factors of pyrazinamide-resistant tuberculosis in Hunan province and described the genotyping and clustering characteristics of the pyrazinamide-resistant Mycobacterium tuberculosis (PZA-R MTB) isolates. Methods: The drug susceptibility test results of first-line anti-tuberculosis drugs including isoniazid (INH), rifampicin (RFP), streptomycin (SM), ethambutol (EMB) and pyrazinamide (PZA), and the characteristics of patients were collected from 3 862 tuberculosis patients in Hunan Chest Hospital (Institute of Tuberculosis Control and Prevention) from January 2016 to December 2018. The prevalence of PZA-R TB was calculated and risk factors were analyzed by univariate and multivariable logistic regression analysis. Two hundred and twelve Mycobacterium tuberculosis isolates selected from June 2017 to June 2018 were genotyped using the 24-loci MIRU-VNTR system. The genetic difference value (h), and the Hunter-Gaston index (HGI) were used to evaluate the resolution and variation for the 24 loci. MIRU-VNTR results were analyzed using BioNumerics 5.0 software to conduct cluster analysis. Clustered isolates were further analyzed by pncA gene sequencing. Results: The rate of PZA-R TB among tuberculosis patients and MDR patients was 14.7%(566/3 862) and 60.5%(511/844), respectively. Multivariable logistic regression analysis showed that patients who were INH mono-resistance and MDR had a higher risk of developing PZA resistance, compared with TB patients who were pan-sensitive to anti-TB drugs (INH, RFP, SM, and EMB). The adjusted OR value (95%CI) was 13.08(5.67-30.18), 298.41(164.88-540.08), respectively, and P values were all less than 0.01. Clustering analysis showed that 65 strains formed 19 clusters, the clustering rate was 30.7%(65/212). Of 19 clusters, eight clusters had at least two isolates with identical pncA mutation types within each cluster. In eight clusters, cluster 4, 6, 16 had four, three, and two patients who lived in the same county, respectively, thus providing probable epidemiological links for the recent transmission of PZA-R Mycobacterium tuberculosis. At least 47.6%(101/212) of PZA drug-resistant TB patients were suggestive of primary drug resistance caused by transmission. Conclusions: The prevalence of PZA-R TB was severe in Hunan province. PZA susceptibility testing should be performed for isolates resistant to any first-line anti-tuberculosis drugs, especially for MDR-MTB isolates. Nearly half of tuberculosis patients were suggestive of primary drug resistance caused by transmission. The prevention and treatment strategy of PZA-R TB should focus on the standardized treatment and management of patients as well as control of the source of infection."
+        }
+       ],
+       "doi": "10.3760/cma.j.cn112147-20211219-00904",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "Zhonghua jie he he hu xi za zhi = Zhonghua jiehe he huxi zazhi = Chinese journal of tuberculosis and respiratory diseases",
+       "mentions": [
+        "pncA"
+       ],
+       "pmcid": "",
+       "quotable_text": "[Prevalence and transmission of pyrazinamide-resistant Mycobacterium tuberculosis in Hunan Province,China].\n\nObjective: To provide a scientific reference for the prevention and treatment of pyrazinamide-resistant tuberculosis (PZA-R TB), we analyzed the prevalence and risk factors of pyrazinamide-resistant tuberculosis in Hunan province and described the genotyping and clustering characteristics of the pyrazinamide-resistant Mycobacterium tuberculosis (PZA-R MTB) isolates. Methods: The drug susceptibility test results of first-line anti-tuberculosis drugs including isoniazid (INH), rifampicin (RFP), streptomycin (SM), ethambutol (EMB) and pyrazinamide (PZA), and the characteristics of patients were collected from 3 862 tuberculosis patients in Hunan Chest Hospital (Institute of Tuberculosis Control and Prevention) from January 2016 to December 2018. The prevalence of PZA-R TB was calculated and risk factors were analyzed by univariate and multivariable logistic regression analysis. Two hundred and twelve Mycobacterium tuberculosis isolates selected from June 2017 to June 2018 were genotyped using the 24-loci MIRU-VNTR system. The genetic difference value (h), and the Hunter-Gaston index (HGI) were used to evaluate the resolution and variation for the 24 loci. MIRU-VNTR results were analyzed using BioNumerics 5.0 software to conduct cluster analysis. Clustered isolates were further analyzed by pncA gene sequencing. Results: The rate of PZA-R TB among tuberculosis patients and MDR patients was 14.7%(566/3 862) and 60.5%(511/844), respectively. Multivariable logistic regression analysis showed that patients who were INH mono-resistance and MDR had a higher risk of developing PZA resistance, compared with TB patients who were pan-sensitive to anti-TB drugs (INH, RFP, SM, and EMB). The adjusted OR value (95%CI) was 13.08(5.67-30.18), 298.41(164.88-540.08), respectively, and P values were all less than 0.01. Clustering analysis showed that 65 strains formed 19 clusters, the clustering rate was 30.7%(65/212). Of 19 clusters, eight clusters had at least two isolates with identical pncA mutation types within each cluster. In eight clusters, cluster 4, 6, 16 had four, three, and two patients who lived in the same county, respectively, thus providing probable epidemiological links for the recent transmission of PZA-R Mycobacterium tuberculosis. At least 47.6%(101/212) of PZA drug-resistant TB patients were suggestive of primary drug resistance caused by transmission. Conclusions: The prevalence of PZA-R TB was severe in Hunan province. PZA susceptibility testing should be performed for isolates resistant to any first-line anti-tuberculosis drugs, especially for MDR-MTB isolates. Nearly half of tuberculosis patients were suggestive of primary drug resistance caused by transmission. The prevention and treatment strategy of PZA-R TB should focus on the standardized treatment and management of patients as well as control of the source of infection.",
+       "title": "[Prevalence and transmission of pyrazinamide-resistant Mycobacterium tuberculosis in Hunan Province,China].",
+       "year": "2022"
+      },
+      "name": "[Prevalence and transmission of pyrazinamide-resistant Mycobacterium tuberculosis in Hunan Province,China].",
+      "record_id": "35768376",
+      "retrieved_at": "2026-08-28T10:28:12.122241+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35768376/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Pyrazinamide (PZA) is an important anti-tuberculosis drug, which is active against semi-dormant bacilli and used as a component of first-line drugs and drug-resistant tuberculosis regimens. Mutations in pncA and its promoter region are main cause of PZA resistance. There are limited PZA susceptibility data as there is no routine drug susceptibility testing (DST) for PZA. This study was aimed to determine the proportion of PZA resistance among rifampicin-resistant tuberculosis patients and to identify mutations which are responsible for PZA resistance in pncA and its promoter region. Liquid-based DST was performed to detect PZA susceptibility on 192 culture positive rifampicin-resistant isolates collected from National Tuberculosis Reference Laboratory. Sequencing on pncA including its promoter region was performed and analysis was done on 157 isolates. Phenotypic PZA resistance was detected in 58.9% of isolates. Sixty-five different mutations were distributed in pncA or promoter region of 82 isolates. Sensitivity and specificity of pncA sequencing in detection of PZA resistance showed 89.8% and 95.6% respectively. High proportion of PZA resistance among rifampicin-resistant cases highlighted the need for effective treatment regimen development for PZA-resistant MDR-TB. It is also suggested that routine PZA susceptibility test should be incorporated to treatment monitoring regimen and National Drug Resistance surveys.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Pyrazinamide (PZA) is an important anti-tuberculosis drug, which is active against semi-dormant bacilli and used as a component of first-line drugs and drug-resistant tuberculosis regimens. Mutations in pncA and its promoter region are main cause of PZA resistance. There are limited PZA susceptibility data as there is no routine drug susceptibility testing (DST) for PZA. This study was aimed to determine the proportion of PZA resistance among rifampicin-resistant tuberculosis patients and to identify mutations which are responsible for PZA resistance in pncA and its promoter region. Liquid-based DST was performed to detect PZA susceptibility on 192 culture positive rifampicin-resistant isolates collected from National Tuberculosis Reference Laboratory. Sequencing on pncA including its promoter region was performed and analysis was done on 157 isolates. Phenotypic PZA resistance was detected in 58.9% of isolates. Sixty-five different mutations were distributed in pncA or promoter region of 82 isolates. Sensitivity and specificity of pncA sequencing in detection of PZA resistance showed 89.8% and 95.6% respectively. High proportion of PZA resistance among rifampicin-resistant cases highlighted the need for effective treatment regimen development for PZA-resistant MDR-TB. It is also suggested that routine PZA susceptibility test should be incorporated to treatment monitoring regimen and National Drug Resistance surveys."
+        }
+       ],
+       "doi": "10.1016/j.tube.2020.102013",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "Tuberculosis (Edinburgh, Scotland)",
+       "mentions": [
+        "pncA"
+       ],
+       "pmcid": "",
+       "quotable_text": "Pyrazinamide resistance and pncA mutations in drug resistant Mycobacterium tuberculosis clinical isolates from Myanmar.\n\nPyrazinamide (PZA) is an important anti-tuberculosis drug, which is active against semi-dormant bacilli and used as a component of first-line drugs and drug-resistant tuberculosis regimens. Mutations in pncA and its promoter region are main cause of PZA resistance. There are limited PZA susceptibility data as there is no routine drug susceptibility testing (DST) for PZA. This study was aimed to determine the proportion of PZA resistance among rifampicin-resistant tuberculosis patients and to identify mutations which are responsible for PZA resistance in pncA and its promoter region. Liquid-based DST was performed to detect PZA susceptibility on 192 culture positive rifampicin-resistant isolates collected from National Tuberculosis Reference Laboratory. Sequencing on pncA including its promoter region was performed and analysis was done on 157 isolates. Phenotypic PZA resistance was detected in 58.9% of isolates. Sixty-five different mutations were distributed in pncA or promoter region of 82 isolates. Sensitivity and specificity of pncA sequencing in detection of PZA resistance showed 89.8% and 95.6% respectively. High proportion of PZA resistance among rifampicin-resistant cases highlighted the need for effective treatment regimen development for PZA-resistant MDR-TB. It is also suggested that routine PZA susceptibility test should be incorporated to treatment monitoring regimen and National Drug Resistance surveys.",
+       "title": "Pyrazinamide resistance and pncA mutations in drug resistant Mycobacterium tuberculosis clinical isolates from Myanmar.",
+       "year": "2020"
+      },
+      "name": "Pyrazinamide resistance and pncA mutations in drug resistant Mycobacterium tuberculosis clinical isolates from Myanmar.",
+      "record_id": "33142220",
+      "retrieved_at": "2026-08-28T10:28:12.122241+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33142220/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "e6319c51f27604fa4a5f4a517b72ca3aa47ca0c6d0221f463f57ba1b3311568b",
+      "retrieved_at": "2026-08-28T10:28:11.492632+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=6&retmode=json&sort=relevance&term=%22pncA%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
+     },
+     {
+      "cached": false,
+      "content_sha256": "400be47176639e6a50754aca1f988c57554ff483051a45a804d021b7662c3f5f",
+      "retrieved_at": "2026-08-28T10:28:12.122241+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=36915970%2C38602399%2C35919400%2C36065280%2C35768376%2C33142220&retmode=xml&tool=kegg-string-mcp"
+     }
+    ],
+    "resolved": {
+     "matched_by": "pubmed_search",
+     "query_translation": "\"pncA\"[All Fields] AND \"Mycobacterium tuberculosis\"[All Fields]",
+     "term": "\"pncA\" AND \"Mycobacterium tuberculosis\""
+    }
+   },
+   "tool": "pubmed_abstracts"
+  }
+ ],
+ "id": "pncA",
+ "mode": "single",
+ "organism": "mtu",
+ "summary": "# pncA (Rv2043c) \u2014 *Mycobacterium tuberculosis* H37Rv\n\n**Identity.** The symbol `pncA` resolved in KEGG to `mtu:Rv2043c` (matched by symbol) and in STRING to `83332.Rv2043c` (preferred name `pncA`). Both structured sources resolved cleanly, so the annotations below are about the gene itself, not a failed lookup.\n\n## Function\n\npncA encodes pyrazinamidase/nicotinamidase (PZAse), the amidase that deamidates nicotinamide to nicotinic acid \u2014 the entry step of the NAD salvage route. This assignment is supported directly by its KEGG pathway placement (nicotinate/nicotinamide metabolism) and, independently of literature, by its STRING neighbourhood: its highest-confidence non-textmining partners are precisely the enzymes that consume or feed that pathway (see below).\n\nThe same enzyme converts the prodrug pyrazinamide to active pyrazinoic acid, which is why loss-of-function mutations here cause PZA resistance. This drug-activation role is a literature claim, and one paper measured the enzymology directly: PMID:36065280 *\"All mutations identified in the highly PZA-resistant (300 mg/L) strains had an 80% loss relative to PZAse activity\"*, and PMID:33142220 *\"Mutations in pncA and its promoter region are main cause of PZA resistance.\"* Note that pncA mutations are an imperfect predictor of phenotype \u2014 PMID:36065280 reports *\"the sensitivity of pncA mutation detection for predicting PZA susceptibility was 82.6% (19/23), and the specificity was 61.0% (36/59), based on 100 mg/L PZA\"*.\n\n## Pathways (KEGG)\n\n- **mtu00760 \u2014 Nicotinate and nicotinamide metabolism.** This is the informative assignment: a compact, mechanistically specific pathway matching the enzyme's substrate.\n- **mtu01240 \u2014 Biosynthesis of cofactors.** Consistent with NAD cofactor supply, but a broad container.\n- **mtu01100 \u2014 Metabolic pathways.** Genome-scale supermap; carries no gene-specific information.\n\n## Notable interaction partners (STRING, \u22650.700)\n\n**Functionally supported (evidence beyond textmining):**\n\n| Partner | STRING ID | Combined | Strongest non-TM channel |\n|---|---|---|---|\n| pncB1 | 83332.Rv1330c | 0.994 | database 0.900; also fusion 0.567, cooccurrence 0.654 |\n| pncB2 | 83332.Rv0573c | 0.987 | database 0.900; fusion 0.410 |\n| iunH | 83332.Rv3393 | 0.928 | database 0.900 |\n| cobB-2 | 83332.Rv1151c | 0.927 | database 0.900 (experimental only 0.153) |\n| deoD | 83332.Rv3307 | 0.908 | database 0.900 |\n| Rv2042c | 83332.Rv2042c | 0.943 | neighborhood 0.882 |\n| Rv2044c | 83332.Rv2044c | 0.888 | neighborhood 0.690 |\n\nThe pncB1/pncB2 links are the biologically meaningful ones: nicotinate phosphoribosyltransferases act on the product of the pncA reaction, so this is a curated pathway-adjacency (database channel), reinforced by genomic fusion and phylogenetic co-occurrence signal \u2014 not by direct physical-interaction experiments (experimental channel = 0.0 for both). iunH, deoD and cobB-2 are further curated pathway neighbours in nucleoside/NAD-related metabolism. Rv2042c and Rv2044c are supported chiefly by **genomic neighborhood**, i.e. they flank pncA on the chromosome; that is a locus-organisation observation, not evidence of a protein complex.\n\n**Textmining-only \u2014 treat as one line of evidence, literature:**\nrpsL (83332.Rv0682), inhA (83332.Rv1484), rpoB (83332.Rv0667), embB (83332.Rv3795), katG (83332.Rv1908c), gyrA (83332.Rv0006), gyrB (83332.Rv0005), panD (83332.Rv3601c), rpsA (83332.Rv1630), eis (83332.Rv2416c), tlyA (83332.Rv1694), gid (83332.Rv3919c), embA (83332.Rv3794).\n\nEvery one of these has `evidence_beyond_textmining: false` (max non-textmining channel \u2264 0.141, experimental = 0.0). They are not interaction partners in any functional sense; they are the standard first- and second-line **drug-resistance gene panel**, co-mentioned with pncA in resistance-surveillance papers. The abstracts I retrieved are very likely the source of those very scores, so they corroborate nothing extra \u2014 e.g. PMID:35919400 sequenced *\"nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA)\"* in one panel, and PMID:36915970 lists *\"katG mutations in isoniazid resistance, rpoB mutations in rifampin resistance, pncA mutations in pyrazinamide resistance, and gyrA mutations in quinolone resistance.\"* That is co-citation, not interaction.\n\nThe panD hit deserves a flag: panD is discussed in the literature in connection with pyrazinoic acid, but in this tool output the link is textmining-only (max non-textmining channel 0.058), and none of the retrieved abstracts address it. I therefore cannot support any mechanistic pncA\u2013panD relationship from the evidence in hand.\n\n## Summary\n\npncA is a nicotinamidase/pyrazinamidase acting at the first step of NAD salvage (mtu00760), positioned immediately upstream of the pncB1/pncB2 phosphoribosyltransferases. Its clinical prominence comes from a moonlighting activity \u2014 activation of pyrazinamide \u2014 which makes it the primary PZA-resistance locus. Its apparent \"interactions\" with the classical resistance genes are an artefact of literature co-mention and should not be read as functional coupling.",
+ "target": "pncA",
+ "turns": [
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "pncA",
+      "organism": "mtu"
+     },
+     "name": "kegg_pathways"
+    },
+    {
+     "input": {
+      "gene": "pncA",
+      "required_score": 700,
+      "species": 83332
+     },
+     "name": "string_partners"
+    }
+   ],
+   "turn": 1
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "pncA",
+      "limit": 6,
+      "organism": "Mycobacterium tuberculosis"
+     },
+     "name": "pubmed_abstracts"
+    }
+   ],
+   "turn": 2
+  },
+  {
+   "stop_reason": "end_turn",
+   "tools_requested": [],
+   "turn": 3
+  }
+ ]
+}

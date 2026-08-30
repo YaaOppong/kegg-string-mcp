@@ -1,0 +1,889 @@
+{
+ "calls": [
+  {
+   "arguments": {
+    "gene": "rpoB",
+    "organism": "mtu"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [],
+    "query": {
+     "gene": "rpoB",
+     "organism": "mtu"
+    },
+    "record_ids": [
+     "mtu03020"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv0667"
+      },
+      "name": "RNA polymerase - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu03020",
+      "retrieved_at": "2026-08-28T10:26:47.352250+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu03020"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": false,
+      "content_sha256": "826ed8c9641e6e6a65b341bd7e6e8fb82d7a1bea21f33c21142138a75b662ca1",
+      "retrieved_at": "2026-08-28T10:26:47.352250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0667"
+     },
+     {
+      "cached": true,
+      "content_sha256": "fb3e52ff8b817798ee1b884c88affaf5a547b5e386c27d1afd61f0400867b648",
+      "retrieved_at": "2026-08-28T08:49:28.342942+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/pathway/mtu"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv0667",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "rpoB",
+    "limit": 20,
+    "required_score": 700,
+    "species": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4)."
+    ],
+    "query": {
+     "gene": "rpoB",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv0735",
+     "83332.Rv0668",
+     "83332.Rv3457c",
+     "83332.Rv3583c",
+     "83332.Rv2703",
+     "83332.Rv1390",
+     "83332.Rv3223c",
+     "83332.Rv2710",
+     "83332.Rv0640",
+     "83332.Rv0701",
+     "83332.Rv0704",
+     "83332.Rv0682",
+     "83332.Rv0700",
+     "83332.Rv0719",
+     "83332.Rv0721",
+     "83332.Rv0705",
+     "83332.Rv0706",
+     "83332.Rv0702",
+     "83332.Rv0684",
+     "83332.Rv1630"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.999,
+        "fusion": 0.0,
+        "neighborhood": 0.043
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.999,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.127
+      },
+      "name": "sigL",
+      "record_id": "83332.Rv0735",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0735"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.961,
+        "cooccurrence": 0.767,
+        "database": 0.844,
+        "experimental": 0.999,
+        "fusion": 0.9,
+        "neighborhood": 0.817
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.999,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.958
+      },
+      "name": "rpoC",
+      "record_id": "83332.Rv0668",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0668"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.969,
+        "cooccurrence": 0.481,
+        "database": 0.844,
+        "experimental": 0.999,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.999,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.972
+      },
+      "name": "rpoA",
+      "record_id": "83332.Rv3457c",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3457c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.07,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.999,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.999,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.311
+      },
+      "name": "carD",
+      "record_id": "83332.Rv3583c",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3583c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.289,
+        "cooccurrence": 0.362,
+        "database": 0.0,
+        "experimental": 0.999,
+        "fusion": 0.0,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.999,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.513
+      },
+      "name": "sigA",
+      "record_id": "83332.Rv2703",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2703"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.654,
+        "cooccurrence": 0.0,
+        "database": 0.844,
+        "experimental": 0.999,
+        "fusion": 0.0,
+        "neighborhood": 0.099
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.999,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.85
+      },
+      "name": "rpoZ",
+      "record_id": "83332.Rv1390",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1390"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.055,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.999,
+        "fusion": 0.0,
+        "neighborhood": 0.043
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.999,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.092
+      },
+      "name": "sigH",
+      "record_id": "83332.Rv3223c",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3223c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.273,
+        "cooccurrence": 0.363,
+        "database": 0.0,
+        "experimental": 0.999,
+        "fusion": 0.0,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.999,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.374
+      },
+      "name": "sigB",
+      "record_id": "83332.Rv2710",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2710"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.918,
+        "cooccurrence": 0.621,
+        "database": 0.0,
+        "experimental": 0.908,
+        "fusion": 0.0,
+        "neighborhood": 0.151
+       },
+       "combined_score": 0.998,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.918,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.33
+      },
+      "name": "rplK",
+      "record_id": "83332.Rv0640",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0640"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.967,
+        "cooccurrence": 0.179,
+        "database": 0.0,
+        "experimental": 0.771,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.998,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.967,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.7
+      },
+      "name": "rplC",
+      "record_id": "83332.Rv0701",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0701"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.967,
+        "cooccurrence": 0.152,
+        "database": 0.0,
+        "experimental": 0.707,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.997,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.967,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.665
+      },
+      "name": "rplB",
+      "record_id": "83332.Rv0704",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0704"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.85,
+        "cooccurrence": 0.361,
+        "database": 0.0,
+        "experimental": 0.474,
+        "fusion": 0.0,
+        "neighborhood": 0.179
+       },
+       "combined_score": 0.997,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.85,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.947
+      },
+      "name": "rpsL",
+      "record_id": "83332.Rv0682",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0682"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.954,
+        "cooccurrence": 0.396,
+        "database": 0.0,
+        "experimental": 0.82,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.997,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.954,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.586
+      },
+      "name": "rpsJ",
+      "record_id": "83332.Rv0700",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0700"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.957,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.902,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.997,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.957,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.344
+      },
+      "name": "rplF",
+      "record_id": "83332.Rv0719",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0719"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.962,
+        "cooccurrence": 0.265,
+        "database": 0.0,
+        "experimental": 0.812,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.996,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.962,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.409
+      },
+      "name": "rpsE",
+      "record_id": "83332.Rv0721",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0721"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.957,
+        "cooccurrence": 0.15,
+        "database": 0.0,
+        "experimental": 0.79,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.995,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.957,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.471
+      },
+      "name": "rpsS",
+      "record_id": "83332.Rv0705",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0705"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.958,
+        "cooccurrence": 0.202,
+        "database": 0.0,
+        "experimental": 0.785,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.994,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.958,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.278
+      },
+      "name": "rplV",
+      "record_id": "83332.Rv0706",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0706"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.967,
+        "cooccurrence": 0.21,
+        "database": 0.0,
+        "experimental": 0.498,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.994,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.967,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.601
+      },
+      "name": "rplD",
+      "record_id": "83332.Rv0702",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0702"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.923,
+        "cooccurrence": 0.466,
+        "database": 0.0,
+        "experimental": 0.147,
+        "fusion": 0.0,
+        "neighborhood": 0.172
+       },
+       "combined_score": 0.992,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.923,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.783
+      },
+      "name": "fusA1",
+      "record_id": "83332.Rv0684",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0684"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.891,
+        "cooccurrence": 0.168,
+        "database": 0.0,
+        "experimental": 0.773,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.992,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.891,
+       "partner_of": "83332.Rv0667",
+       "textmining_score": 0.656
+      },
+      "name": "rpsA",
+      "record_id": "83332.Rv1630",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1630"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "cb16832bdea15b7d48dc0cfc78b5a20743e9c54b551f06b79fa6c5c287b21bdc",
+      "retrieved_at": "2026-08-28T10:26:47.625804+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?caller_identity=kegg-string-mcp&echo_query=1&identifiers=rpoB&limit=1&species=83332"
+     },
+     {
+      "cached": false,
+      "content_sha256": "ca6d188eeafa3a9c89419417169ac24efa3e1ac0608fd992b58dd998e7aba7e6",
+      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?caller_identity=kegg-string-mcp&identifiers=83332.Rv0667&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "rpoB",
+     "string_id": "83332.Rv0667"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "rpoB",
+    "limit": 5,
+    "organism": "Mycobacterium tuberculosis"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "1637 articles matched this query; the 5 most relevant were retrieved. A finding absent from these abstracts may still be reported in the 1632 not retrieved.",
+     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
+     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+    ],
+    "query": {
+     "gene": "rpoB",
+     "limit": 5,
+     "organism": "Mycobacterium tuberculosis"
+    },
+    "record_ids": [
+     "33846134",
+     "34675557",
+     "41599000",
+     "30793747",
+     "40887591"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Discordant results between genotypic drug susceptibility testing (gDST) and phenotypic DST (pDST) for Mycobacterium tuberculosis isolates with disputed (discordance between gDST and pDST results) mutations affect rifampin (RIF)-resistant (RR) and multidrug-resistant (MDR) tuberculosis (TB) treatments due to a lack of practical clinical guidelines. To investigate the role of disputed rpoB mutations in M. tuberculosis and TB treatment outcomes, initial isolates of 837 clinical RR- or MDR-TB cases confirmed during 2014 to 2018 were retested using agar-based RIF pDST and rpoB gene sequencing. MICs were determined for isolates with disputed rpoB mutations. Disputed rpoB mutations were identified in 77 (9.2%) M. tuberculosis isolates, including 50 (64.9%) and 14 (18.2%) phenotypically RIF- and rifabutin (RFB)-resistant isolates, respectively. The predominant single mutations were those encoding L533P (a change of L to P at position 533) (44.2%) and L511P (20.8%). Most of the isolates harboring mutations encoding L511P (87.5%), H526N (100%), D516Y (70.0%), and L533P (63.6%) had MICs of \u22641 mg/liter, whereas isolates harboring the mutation encoding H526L (75%) had a MIC of >1 mg/liter. Of the 63 cases with treatment outcomes available, 11 (17.5%) cases died, 1 (1.6%) case transferred out, and 51 (81%) cases had favorable outcomes, including 8 and 20 cases treated with standard-dose RIF- and RFB-containing regimens, respectively. Excluding cases that transferred out or received no or 1-day treatment, we observed statistically significant differences between the outcomes using active and inactive fluoroquinolones (FQs) (P = 0.008, odds ratio = 0.05 [95% confidence interval, 0.01 to 0.38]) in 57 cases (where active means a case susceptible to the drug and inactive means a case resistant to the drug or drug not used). We concluded that disputed rpoB mutations are not rare. Depending on the resources available, sequencing and/or MIC testing is recommended for better management of RR- and MDR-TB cases.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Discordant results between genotypic drug susceptibility testing (gDST) and phenotypic DST (pDST) for Mycobacterium tuberculosis isolates with disputed (discordance between gDST and pDST results) mutations affect rifampin (RIF)-resistant (RR) and multidrug-resistant (MDR) tuberculosis (TB) treatments due to a lack of practical clinical guidelines. To investigate the role of disputed rpoB mutations in M. tuberculosis and TB treatment outcomes, initial isolates of 837 clinical RR- or MDR-TB cases confirmed during 2014 to 2018 were retested using agar-based RIF pDST and rpoB gene sequencing. MICs were determined for isolates with disputed rpoB mutations. Disputed rpoB mutations were identified in 77 (9.2%) M. tuberculosis isolates, including 50 (64.9%) and 14 (18.2%) phenotypically RIF- and rifabutin (RFB)-resistant isolates, respectively. The predominant single mutations were those encoding L533P (a change of L to P at position 533) (44.2%) and L511P (20.8%). Most of the isolates harboring mutations encoding L511P (87.5%), H526N (100%), D516Y (70.0%), and L533P (63.6%) had MICs of \u22641 mg/liter, whereas isolates harboring the mutation encoding H526L (75%) had a MIC of >1 mg/liter. Of the 63 cases with treatment outcomes available, 11 (17.5%) cases died, 1 (1.6%) case transferred out, and 51 (81%) cases had favorable outcomes, including 8 and 20 cases treated with standard-dose RIF- and RFB-containing regimens, respectively. Excluding cases that transferred out or received no or 1-day treatment, we observed statistically significant differences between the outcomes using active and inactive fluoroquinolones (FQs) (P = 0.008, odds ratio = 0.05 [95% confidence interval, 0.01 to 0.38]) in 57 cases (where active means a case susceptible to the drug and inactive means a case resistant to the drug or drug not used). We concluded that disputed rpoB mutations are not rare. Depending on the resources available, sequencing and/or MIC testing is recommended for better management of RR- and MDR-TB cases."
+        }
+       ],
+       "doi": "10.1128/AAC.01573-20",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Antimicrobial agents and chemotherapy",
+       "mentions": [
+        "rpoB"
+       ],
+       "pmcid": "PMC8218645",
+       "quotable_text": "Disputed rpoB Mutations in Mycobacterium tuberculosis and Tuberculosis Treatment Outcomes.\n\nDiscordant results between genotypic drug susceptibility testing (gDST) and phenotypic DST (pDST) for Mycobacterium tuberculosis isolates with disputed (discordance between gDST and pDST results) mutations affect rifampin (RIF)-resistant (RR) and multidrug-resistant (MDR) tuberculosis (TB) treatments due to a lack of practical clinical guidelines. To investigate the role of disputed rpoB mutations in M. tuberculosis and TB treatment outcomes, initial isolates of 837 clinical RR- or MDR-TB cases confirmed during 2014 to 2018 were retested using agar-based RIF pDST and rpoB gene sequencing. MICs were determined for isolates with disputed rpoB mutations. Disputed rpoB mutations were identified in 77 (9.2%) M. tuberculosis isolates, including 50 (64.9%) and 14 (18.2%) phenotypically RIF- and rifabutin (RFB)-resistant isolates, respectively. The predominant single mutations were those encoding L533P (a change of L to P at position 533) (44.2%) and L511P (20.8%). Most of the isolates harboring mutations encoding L511P (87.5%), H526N (100%), D516Y (70.0%), and L533P (63.6%) had MICs of \u22641 mg/liter, whereas isolates harboring the mutation encoding H526L (75%) had a MIC of >1 mg/liter. Of the 63 cases with treatment outcomes available, 11 (17.5%) cases died, 1 (1.6%) case transferred out, and 51 (81%) cases had favorable outcomes, including 8 and 20 cases treated with standard-dose RIF- and RFB-containing regimens, respectively. Excluding cases that transferred out or received no or 1-day treatment, we observed statistically significant differences between the outcomes using active and inactive fluoroquinolones (FQs) (P = 0.008, odds ratio = 0.05 [95% confidence interval, 0.01 to 0.38]) in 57 cases (where active means a case susceptible to the drug and inactive means a case resistant to the drug or drug not used). We concluded that disputed rpoB mutations are not rare. Depending on the resources available, sequencing and/or MIC testing is recommended for better management of RR- and MDR-TB cases.",
+       "title": "Disputed rpoB Mutations in Mycobacterium tuberculosis and Tuberculosis Treatment Outcomes.",
+       "year": "2021"
+      },
+      "name": "Disputed rpoB Mutations in Mycobacterium tuberculosis and Tuberculosis Treatment Outcomes.",
+      "record_id": "33846134",
+      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33846134/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "OBJECTIVE: To investigate the mutations within the whole rpoB gene of Mycobacterium tuberculosis and analyze their effects on rifampin (RIF) resistance based on crystal structure.\n\nMETHODS: We sequenced the entire rpoB gene in 175 tuberculosis isolates and quantified their minimum inhibitory concentrations using microplate-based assays. Additionally, the structural interactions between wild-type/mutant RpoB and RIF were also analyzed.\n\nRESULTS: Results revealed that a total of 34 mutations distributed across 17 different sites within the whole rpoB gene were identified. Of the 34 mutations, 25 could alter the structural interaction between RpoB and RIF and contribute to RIF resistance. Statistical analysis showed that S450L, H445D, H445Y and H445R mutations were associated with high-level RIF resistance, while D435V was associated with moderate-level RIF resistance.\n\nCONCLUSION: Some mutations within the rpoB gene could affect the interaction between RpoB and RIF and thus are associated with RIF resistance. These findings could be helpful to design new antibiotics and develop novel diagnostic tools for drug resistance in TB.",
+       "abstract_sections": [
+        {
+         "label": "OBJECTIVE",
+         "text": "To investigate the mutations within the whole rpoB gene of Mycobacterium tuberculosis and analyze their effects on rifampin (RIF) resistance based on crystal structure."
+        },
+        {
+         "label": "METHODS",
+         "text": "We sequenced the entire rpoB gene in 175 tuberculosis isolates and quantified their minimum inhibitory concentrations using microplate-based assays. Additionally, the structural interactions between wild-type/mutant RpoB and RIF were also analyzed."
+        },
+        {
+         "label": "RESULTS",
+         "text": "Results revealed that a total of 34 mutations distributed across 17 different sites within the whole rpoB gene were identified. Of the 34 mutations, 25 could alter the structural interaction between RpoB and RIF and contribute to RIF resistance. Statistical analysis showed that S450L, H445D, H445Y and H445R mutations were associated with high-level RIF resistance, while D435V was associated with moderate-level RIF resistance."
+        },
+        {
+         "label": "CONCLUSION",
+         "text": "Some mutations within the rpoB gene could affect the interaction between RpoB and RIF and thus are associated with RIF resistance. These findings could be helpful to design new antibiotics and develop novel diagnostic tools for drug resistance in TB."
+        }
+       ],
+       "doi": "10.2147/IDR.S333433",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Infection and drug resistance",
+       "mentions": [
+        "rpoB"
+       ],
+       "pmcid": "PMC8502021",
+       "quotable_text": "rpoB Mutations and Effects on Rifampin Resistance in Mycobacterium tuberculosis.\n\nOBJECTIVE: To investigate the mutations within the whole rpoB gene of Mycobacterium tuberculosis and analyze their effects on rifampin (RIF) resistance based on crystal structure.\n\nMETHODS: We sequenced the entire rpoB gene in 175 tuberculosis isolates and quantified their minimum inhibitory concentrations using microplate-based assays. Additionally, the structural interactions between wild-type/mutant RpoB and RIF were also analyzed.\n\nRESULTS: Results revealed that a total of 34 mutations distributed across 17 different sites within the whole rpoB gene were identified. Of the 34 mutations, 25 could alter the structural interaction between RpoB and RIF and contribute to RIF resistance. Statistical analysis showed that S450L, H445D, H445Y and H445R mutations were associated with high-level RIF resistance, while D435V was associated with moderate-level RIF resistance.\n\nCONCLUSION: Some mutations within the rpoB gene could affect the interaction between RpoB and RIF and thus are associated with RIF resistance. These findings could be helpful to design new antibiotics and develop novel diagnostic tools for drug resistance in TB.",
+       "title": "rpoB Mutations and Effects on Rifampin Resistance in Mycobacterium tuberculosis.",
+       "year": "2021"
+      },
+      "name": "rpoB Mutations and Effects on Rifampin Resistance in Mycobacterium tuberculosis.",
+      "record_id": "34675557",
+      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34675557/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Rifampicin-resistant tuberculosis (RR-TB) remains a major threat to global TB control, primarily driven by mutations in the rpoB gene of Mycobacterium tuberculosis (Mtb). Most resistance-conferring mutations occur within the 81-base pair RIF resistance determining region (RRDR), particularly at codons S450L, H445Y/D, and D435V, which are strongly associated with high level resistance. However, increasing evidence of low-frequency and disputed variants both within and beyond the RRDR reveals a broader genetic spectrum that contributes to diagnostic uncertainty and variable phenotypic outcomes. This review summarizes current knowledge of high frequency, low frequency, and disputed rpoB mutations and their implications for molecular detection of RIF resistance. Structural analyses show that specific amino acid substitutions alter key hydrogen bonds or create steric hindrance in the RIF-binding pocket, leading to diverse resistance levels. Despite the success of molecular platforms such as Xpert MTB/RIF and line probe assays, their hotspot-based detection limits sensitivity to noncanonical variants. Lowering the minimum inhibitory concentration (MIC) breakpoint and integrating sequencing-based approaches, such as targeted and whole-genome sequencing, can enhance detection accuracy. A combined genomic and phenotypic framework will be essential to close existing diagnostic gaps and advance precision guided management of RIF-resistant and multidrug-resistant tuberculosis.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Rifampicin-resistant tuberculosis (RR-TB) remains a major threat to global TB control, primarily driven by mutations in the rpoB gene of Mycobacterium tuberculosis (Mtb). Most resistance-conferring mutations occur within the 81-base pair RIF resistance determining region (RRDR), particularly at codons S450L, H445Y/D, and D435V, which are strongly associated with high level resistance. However, increasing evidence of low-frequency and disputed variants both within and beyond the RRDR reveals a broader genetic spectrum that contributes to diagnostic uncertainty and variable phenotypic outcomes. This review summarizes current knowledge of high frequency, low frequency, and disputed rpoB mutations and their implications for molecular detection of RIF resistance. Structural analyses show that specific amino acid substitutions alter key hydrogen bonds or create steric hindrance in the RIF-binding pocket, leading to diverse resistance levels. Despite the success of molecular platforms such as Xpert MTB/RIF and line probe assays, their hotspot-based detection limits sensitivity to noncanonical variants. Lowering the minimum inhibitory concentration (MIC) breakpoint and integrating sequencing-based approaches, such as targeted and whole-genome sequencing, can enhance detection accuracy. A combined genomic and phenotypic framework will be essential to close existing diagnostic gaps and advance precision guided management of RIF-resistant and multidrug-resistant tuberculosis."
+        }
+       ],
+       "doi": "10.3390/pathogens15010016",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Pathogens (Basel, Switzerland)",
+       "mentions": [
+        "rpoB"
+       ],
+       "pmcid": "PMC12844990",
+       "quotable_text": "Beyond Hotspot Mutations: Diagnostic Relevance of High Frequency, Low Frequency, and Disputed rpoB Variants in Rifampicin-Resistant Mycobacterium tuberculosis.\n\nRifampicin-resistant tuberculosis (RR-TB) remains a major threat to global TB control, primarily driven by mutations in the rpoB gene of Mycobacterium tuberculosis (Mtb). Most resistance-conferring mutations occur within the 81-base pair RIF resistance determining region (RRDR), particularly at codons S450L, H445Y/D, and D435V, which are strongly associated with high level resistance. However, increasing evidence of low-frequency and disputed variants both within and beyond the RRDR reveals a broader genetic spectrum that contributes to diagnostic uncertainty and variable phenotypic outcomes. This review summarizes current knowledge of high frequency, low frequency, and disputed rpoB mutations and their implications for molecular detection of RIF resistance. Structural analyses show that specific amino acid substitutions alter key hydrogen bonds or create steric hindrance in the RIF-binding pocket, leading to diverse resistance levels. Despite the success of molecular platforms such as Xpert MTB/RIF and line probe assays, their hotspot-based detection limits sensitivity to noncanonical variants. Lowering the minimum inhibitory concentration (MIC) breakpoint and integrating sequencing-based approaches, such as targeted and whole-genome sequencing, can enhance detection accuracy. A combined genomic and phenotypic framework will be essential to close existing diagnostic gaps and advance precision guided management of RIF-resistant and multidrug-resistant tuberculosis.",
+       "title": "Beyond Hotspot Mutations: Diagnostic Relevance of High Frequency, Low Frequency, and Disputed rpoB Variants in Rifampicin-Resistant Mycobacterium tuberculosis.",
+       "year": "2025"
+      },
+      "name": "Beyond Hotspot Mutations: Diagnostic Relevance of High Frequency, Low Frequency, and Disputed rpoB Variants in Rifampicin-Resistant Mycobacterium tuberculosis.",
+      "record_id": "41599000",
+      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41599000/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "OBJECTIVES: Drug-resistant TB remains a public health challenge. Rifamycins are among the most potent anti-TB drugs. They are known to target the RpoB subunit of RNA polymerase; however, our understanding of how rifamycin resistance is genetically encoded remains incomplete. Here we investigated rpoB genetic diversity and cross-resistance between the two rifamycin drugs rifampicin and rifabutin.\n\nMETHODS: We performed WGS of 1003 Mycobacterium tuberculosis clinical isolates and determined MICs of both rifamycin agents on 7H10 agar using the indirect proportion method. We generated rpoB mutants in a laboratory strain and measured their antibiotic susceptibility using the alamarBlue reduction assay.\n\nRESULTS: Of the 1003 isolates, 766 were rifampicin resistant and 210 (27%) of these were rifabutin susceptible; 102/210 isolates had the rpoB mutation D435V (Escherichia coli D516V). Isolates with discordant resistance were 17.2 times more likely to harbour a D435V mutation than those resistant to both agents (OR 17.2, 95% CI 10.5-27.9, P value <10-40). Compared with WT, the D435V in vitro mutant had an increased IC50 of both rifamycins; however, in both cases to a lesser degree than the S450L (E. coli S531L) mutation.\n\nCONCLUSIONS: The observation that the rpoB D435V mutation produces an increase in the IC50 of both drugs contrasts with findings from previous smaller studies that suggested that isolates with the D435V mutation remain rifabutin susceptible despite being rifampicin resistant. Our finding thus suggests that the recommended critical testing concentration for rifabutin should be revised.",
+       "abstract_sections": [
+        {
+         "label": "OBJECTIVES",
+         "text": "Drug-resistant TB remains a public health challenge. Rifamycins are among the most potent anti-TB drugs. They are known to target the RpoB subunit of RNA polymerase; however, our understanding of how rifamycin resistance is genetically encoded remains incomplete. Here we investigated rpoB genetic diversity and cross-resistance between the two rifamycin drugs rifampicin and rifabutin."
+        },
+        {
+         "label": "METHODS",
+         "text": "We performed WGS of 1003 Mycobacterium tuberculosis clinical isolates and determined MICs of both rifamycin agents on 7H10 agar using the indirect proportion method. We generated rpoB mutants in a laboratory strain and measured their antibiotic susceptibility using the alamarBlue reduction assay."
+        },
+        {
+         "label": "RESULTS",
+         "text": "Of the 1003 isolates, 766 were rifampicin resistant and 210 (27%) of these were rifabutin susceptible; 102/210 isolates had the rpoB mutation D435V (Escherichia coli D516V). Isolates with discordant resistance were 17.2 times more likely to harbour a D435V mutation than those resistant to both agents (OR 17.2, 95% CI 10.5-27.9, P value <10-40). Compared with WT, the D435V in vitro mutant had an increased IC50 of both rifamycins; however, in both cases to a lesser degree than the S450L (E. coli S531L) mutation."
+        },
+        {
+         "label": "CONCLUSIONS",
+         "text": "The observation that the rpoB D435V mutation produces an increase in the IC50 of both drugs contrasts with findings from previous smaller studies that suggested that isolates with the D435V mutation remain rifabutin susceptible despite being rifampicin resistant. Our finding thus suggests that the recommended critical testing concentration for rifabutin should be revised."
+        }
+       ],
+       "doi": "10.1093/jac/dkz048",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "The Journal of antimicrobial chemotherapy",
+       "mentions": [
+        "rpoB"
+       ],
+       "pmcid": "PMC6524487",
+       "quotable_text": "Rifampicin and rifabutin resistance in 1003 Mycobacterium tuberculosis clinical isolates.\n\nOBJECTIVES: Drug-resistant TB remains a public health challenge. Rifamycins are among the most potent anti-TB drugs. They are known to target the RpoB subunit of RNA polymerase; however, our understanding of how rifamycin resistance is genetically encoded remains incomplete. Here we investigated rpoB genetic diversity and cross-resistance between the two rifamycin drugs rifampicin and rifabutin.\n\nMETHODS: We performed WGS of 1003 Mycobacterium tuberculosis clinical isolates and determined MICs of both rifamycin agents on 7H10 agar using the indirect proportion method. We generated rpoB mutants in a laboratory strain and measured their antibiotic susceptibility using the alamarBlue reduction assay.\n\nRESULTS: Of the 1003 isolates, 766 were rifampicin resistant and 210 (27%) of these were rifabutin susceptible; 102/210 isolates had the rpoB mutation D435V (Escherichia coli D516V). Isolates with discordant resistance were 17.2 times more likely to harbour a D435V mutation than those resistant to both agents (OR 17.2, 95% CI 10.5-27.9, P value <10-40). Compared with WT, the D435V in vitro mutant had an increased IC50 of both rifamycins; however, in both cases to a lesser degree than the S450L (E. coli S531L) mutation.\n\nCONCLUSIONS: The observation that the rpoB D435V mutation produces an increase in the IC50 of both drugs contrasts with findings from previous smaller studies that suggested that isolates with the D435V mutation remain rifabutin susceptible despite being rifampicin resistant. Our finding thus suggests that the recommended critical testing concentration for rifabutin should be revised.",
+       "title": "Rifampicin and rifabutin resistance in 1003 Mycobacterium tuberculosis clinical isolates.",
+       "year": "2019"
+      },
+      "name": "Rifampicin and rifabutin resistance in 1003 Mycobacterium tuberculosis clinical isolates.",
+      "record_id": "30793747",
+      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30793747/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "BACKGROUND: While several recent studies have documented the importance of efflux pumps as mediators of rifampin (RIF) resistance, it remains uncertain which efflux pumps play major roles in rifampin-resistant Mycobacterium tuberculosis strains harboring rpoB gene mutations.\n\nMETHODS: In this study, minimum inhibitory concentration (MIC) values for RIF were calculated and the expression of 13 efflux pump genes was evaluated across 35 clinical rifampicin-resistant M. tuberculosis isolates carrying the rpoB mutation before and after efflux pump inhibitor treatment.\n\nRESULTS: Rv0677c and Rv0191 were identified as the efflux pump genes that were most frequently overexpressed, and treatment with the inhibitor verapamil was sufficient to synergistically enhance the antibacterial effects of RIF and downregulate efflux pump gene expression. Greater numbers of overexpressed efflux pump genes were associated with a more significant decrease in the MIC value for RIF following verapamil treatment. Levels of RIF resistance for clinical isolates with the rpoB codon 445 mutation were also found to be significantly less susceptible to the effects of verapamil as compared to the resistance of strains with the codon 450 and 170 mutations.\n\nCONCLUSIONS: These results suggest that levels of RIF resistance in clinical RIF-resistant M. tuberculosis isolates are ultimately determined by a combination of efflux pump activity and rpoB gene mutations.",
+       "abstract_sections": [
+        {
+         "label": "BACKGROUND",
+         "text": "While several recent studies have documented the importance of efflux pumps as mediators of rifampin (RIF) resistance, it remains uncertain which efflux pumps play major roles in rifampin-resistant Mycobacterium tuberculosis strains harboring rpoB gene mutations."
+        },
+        {
+         "label": "METHODS",
+         "text": "In this study, minimum inhibitory concentration (MIC) values for RIF were calculated and the expression of 13 efflux pump genes was evaluated across 35 clinical rifampicin-resistant M. tuberculosis isolates carrying the rpoB mutation before and after efflux pump inhibitor treatment."
+        },
+        {
+         "label": "RESULTS",
+         "text": "Rv0677c and Rv0191 were identified as the efflux pump genes that were most frequently overexpressed, and treatment with the inhibitor verapamil was sufficient to synergistically enhance the antibacterial effects of RIF and downregulate efflux pump gene expression. Greater numbers of overexpressed efflux pump genes were associated with a more significant decrease in the MIC value for RIF following verapamil treatment. Levels of RIF resistance for clinical isolates with the rpoB codon 445 mutation were also found to be significantly less susceptible to the effects of verapamil as compared to the resistance of strains with the codon 450 and 170 mutations."
+        },
+        {
+         "label": "CONCLUSIONS",
+         "text": "These results suggest that levels of RIF resistance in clinical RIF-resistant M. tuberculosis isolates are ultimately determined by a combination of efflux pump activity and rpoB gene mutations."
+        }
+       ],
+       "doi": "10.1186/s12941-025-00816-5",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Annals of clinical microbiology and antimicrobials",
+       "mentions": [
+        "rpoB"
+       ],
+       "pmcid": "PMC12400691",
+       "quotable_text": "Efflux pumps positively contribute to rifampin resistance in rpoB mutant Mycobacterium tuberculosis.\n\nBACKGROUND: While several recent studies have documented the importance of efflux pumps as mediators of rifampin (RIF) resistance, it remains uncertain which efflux pumps play major roles in rifampin-resistant Mycobacterium tuberculosis strains harboring rpoB gene mutations.\n\nMETHODS: In this study, minimum inhibitory concentration (MIC) values for RIF were calculated and the expression of 13 efflux pump genes was evaluated across 35 clinical rifampicin-resistant M. tuberculosis isolates carrying the rpoB mutation before and after efflux pump inhibitor treatment.\n\nRESULTS: Rv0677c and Rv0191 were identified as the efflux pump genes that were most frequently overexpressed, and treatment with the inhibitor verapamil was sufficient to synergistically enhance the antibacterial effects of RIF and downregulate efflux pump gene expression. Greater numbers of overexpressed efflux pump genes were associated with a more significant decrease in the MIC value for RIF following verapamil treatment. Levels of RIF resistance for clinical isolates with the rpoB codon 445 mutation were also found to be significantly less susceptible to the effects of verapamil as compared to the resistance of strains with the codon 450 and 170 mutations.\n\nCONCLUSIONS: These results suggest that levels of RIF resistance in clinical RIF-resistant M. tuberculosis isolates are ultimately determined by a combination of efflux pump activity and rpoB gene mutations.",
+       "title": "Efflux pumps positively contribute to rifampin resistance in rpoB mutant Mycobacterium tuberculosis.",
+       "year": "2025"
+      },
+      "name": "Efflux pumps positively contribute to rifampin resistance in rpoB mutant Mycobacterium tuberculosis.",
+      "record_id": "40887591",
+      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40887591/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "b94b20c6acdfeba204a17ec220d26a58144207bfa695f19613bf90206b23674f",
+      "retrieved_at": "2026-08-28T10:26:55.436926+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=5&retmode=json&sort=relevance&term=%22rpoB%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
+     },
+     {
+      "cached": false,
+      "content_sha256": "c5a33796dd6824d087a8f715ea8978ffae54925466e778d30798e2b930d43240",
+      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=33846134%2C34675557%2C41599000%2C30793747%2C40887591&retmode=xml&tool=kegg-string-mcp"
+     }
+    ],
+    "resolved": {
+     "matched_by": "pubmed_search",
+     "query_translation": "\"rpoB\"[All Fields] AND \"Mycobacterium tuberculosis\"[All Fields]",
+     "term": "\"rpoB\" AND \"Mycobacterium tuberculosis\""
+    }
+   },
+   "tool": "pubmed_abstracts"
+  }
+ ],
+ "id": "rpoB",
+ "mode": "single",
+ "organism": "mtu",
+ "summary": "# rpoB \u2014 *Mycobacterium tuberculosis* H37Rv (mtu:Rv0667 / STRING 83332.Rv0667)\n\n## Identity and function\n\nKEGG resolved the symbol `rpoB` to **mtu:Rv0667** (matched by symbol). It encodes the **\u03b2 subunit of DNA-dependent RNA polymerase**, the catalytic core enzyme of bacterial transcription. The interaction profile below is exactly what a core RNAP subunit should look like, which independently corroborates that assignment.\n\n## Pathway membership\n\n- **mtu03020 \u2014 RNA polymerase** (KEGG, *M. tuberculosis* H37Rv)\n\nThis is the only pathway KEGG returned, and the `notes` field was empty \u2014 so this is a genuine, complete pathway assignment, not a resolution failure. It is also a usefully *specific* annotation: mtu03020 is a small pathway describing the polymerase itself rather than a broad container category.\n\n## Notable interaction partners (STRING, required_score \u2265 700)\n\nAll partners listed below have `evidence_beyond_textmining: true`, with the experimental or coexpression channel at or above the textmining score \u2014 so these are not literature co-mention artefacts.\n\n**Core RNA polymerase assembly** \u2014 the strongest and most mechanistically informative set:\n\n| Partner | Gene | Combined | Key non-textmining evidence |\n|---|---|---|---|\n| 83332.Rv0668 | rpoC (\u03b2\u2032) | 0.999 | experimental 0.999, fusion 0.900, neighborhood 0.817, coexpression 0.961 |\n| 83332.Rv3457c | rpoA (\u03b1) | 0.999 | experimental 0.999, coexpression 0.969, database 0.844 |\n| 83332.Rv1390 | rpoZ (\u03c9) | 0.999 | experimental 0.999, coexpression 0.654, database 0.844 |\n\nrpoC is the standout: it is the only partner with a non-zero **fusion** score (0.900) plus high **neighborhood** (0.817) and **cooccurrence** (0.767), the signature of an operonic, co-evolving pair \u2014 consistent with rpoB and rpoC forming the two halves of the catalytic cleft. Together rpoA, rpoB, rpoC and rpoZ constitute the complete \u03b1\u2082\u03b2\u03b2\u2032\u03c9 core enzyme.\n\n**Sigma factors** (promoter-specificity subunits that convert core enzyme to holoenzyme) \u2014 all at combined 0.999 on the strength of the experimental channel (0.999), with low textmining:\n\n- 83332.Rv2703 \u2014 **sigA**, the principal/housekeeping sigma factor (textmining only 0.513)\n- 83332.Rv2710 \u2014 **sigB** (textmining 0.374)\n- 83332.Rv3223c \u2014 **sigH** (textmining 0.092)\n- 83332.Rv0735 \u2014 **sigL** (textmining 0.127)\n\nThe sigH and sigL links are worth flagging: their textmining scores are near zero, so these are essentially *pure experimental* associations rather than literature-driven ones.\n\n**Transcription regulator:**\n\n- 83332.Rv3583c \u2014 **carD**, combined 0.999, experimental 0.999 with textmining only 0.311 and every other channel at or near zero. An RNAP-binding regulatory factor supported here by direct experimental evidence alone.\n\n**Translation machinery** (ribosomal proteins and elongation factor, combined 0.992\u20130.998): 83332.Rv0640 (rplK), 83332.Rv0701 (rplC), 83332.Rv0704 (rplB), 83332.Rv0702 (rplD), 83332.Rv0706 (rplV), 83332.Rv0719 (rplF), 83332.Rv0682 (rpsL), 83332.Rv0700 (rpsJ), 83332.Rv0721 (rpsE), 83332.Rv0705 (rpsS), 83332.Rv1630 (rpsA), 83332.Rv0684 (fusA1).\n\nThese are driven mainly by **coexpression** (0.85\u20130.97), not by experimental complex evidence \u2014 and several sit in the same genomic region as rpoB (Rv0640, Rv0682, Rv0684, Rv0700\u2013Rv0721), consistent with shared regulation across the ribosomal-protein/RNAP gene cluster rather than physical association with the \u03b2 subunit. I would read these as *functional/regulatory* coupling of transcription and translation capacity, not as binding partners.\n\n## Clinical relevance: rifampicin target\n\nKEGG and STRING say nothing about drug resistance, so this rests on literature alone (one evidence class). RpoB is the target of the rifamycins: PMID:30793747 \"They are known to target the RpoB subunit of RNA polymerase\". Resistance arises from point mutations in the gene \u2014 PMID:41599000 \"Rifampicin-resistant tuberculosis (RR-TB) remains a major threat to global TB control, primarily driven by mutations in the rpoB gene of Mycobacterium tuberculosis (Mtb)\", clustered in \"the 81-base pair RIF resistance determining region (RRDR), particularly at codons S450L, H445Y/D, and D435V, which are strongly associated with high level resistance.\"\n\nMechanistically these act on drug binding rather than on catalysis: PMID:34675557 \"Of the 34 mutations, 25 could alter the structural interaction between RpoB and RIF and contribute to RIF resistance\", with \"S450L, H445D, H445Y and H445R mutations were associated with high-level RIF resistance, while D435V was associated with moderate-level RIF resistance.\"\n\nTwo caveats the abstracts themselves raise. Genotype does not fully determine phenotype \u2014 PMID:33846134 \"Disputed rpoB mutations were identified in 77 (9.2%) M. tuberculosis isolates\" and the authors \"concluded that disputed rpoB mutations are not rare.\" And rpoB genotype is not the sole determinant of resistance level \u2014 PMID:40887591 \"levels of RIF resistance in clinical RIF-resistant M. tuberculosis isolates are ultimately determined by a combination of efflux pump activity and rpoB gene mutations.\"\n\n## Summary\n\nrpoB (Rv0667) is the RNA polymerase \u03b2 subunit, assigned by KEGG to the RNA polymerase pathway (mtu03020) and confirmed by experimentally-supported STRING links to the full core enzyme (rpoA, rpoC, rpoZ), to four sigma factors, and to the RNAP regulator carD. Its association with ribosomal proteins is coexpression-based and likely reflects co-regulation rather than physical interaction. Its status as the rifampicin target is documented only in the literature channel here, not in the structured sources.",
+ "target": "rpoB",
+ "turns": [
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "rpoB",
+      "organism": "mtu"
+     },
+     "name": "kegg_pathways"
+    },
+    {
+     "input": {
+      "gene": "rpoB",
+      "limit": 20,
+      "required_score": 700,
+      "species": 83332
+     },
+     "name": "string_partners"
+    }
+   ],
+   "turn": 1
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "rpoB",
+      "limit": 5,
+      "organism": "Mycobacterium tuberculosis"
+     },
+     "name": "pubmed_abstracts"
+    }
+   ],
+   "turn": 2
+  },
+  {
+   "stop_reason": "end_turn",
+   "tools_requested": [],
+   "turn": 3
+  }
+ ]
+}

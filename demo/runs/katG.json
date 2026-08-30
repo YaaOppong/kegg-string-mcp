@@ -1,0 +1,694 @@
+{
+ "calls": [
+  {
+   "arguments": {
+    "gene": "katG",
+    "organism": "mtu"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [],
+    "query": {
+     "gene": "katG",
+     "organism": "mtu"
+    },
+    "record_ids": [
+     "mtu00360",
+     "mtu00380",
+     "mtu00983",
+     "mtu01100",
+     "mtu01110"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Phenylalanine metabolism - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00360",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00360"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Tryptophan metabolism - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00380",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00380"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Drug metabolism - other enzymes - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00983",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00983"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Metabolic pathways - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01100",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01100"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Biosynthesis of secondary metabolites - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01110",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01110"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "84cbbd41122ec13d0ca6d80cc904bd151e174f3468aff057090dd165b2e6d590",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv1908c"
+     },
+     {
+      "cached": true,
+      "content_sha256": "fb3e52ff8b817798ee1b884c88affaf5a547b5e386c27d1afd61f0400867b648",
+      "retrieved_at": "2026-08-28T08:49:28.342942+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/pathway/mtu"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv1908c",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "katG",
+    "required_score": 700,
+    "species": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: ahpC, pncA, embB, ndh, kasA, rpoB, gyrA, inhA, gyrB, fabG1, embA, rpsL."
+    ],
+    "query": {
+     "gene": "katG",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv1909c",
+     "83332.Rv3846",
+     "83332.Rv2428",
+     "83332.Rv2043c",
+     "83332.Rv3795",
+     "83332.Rv1907c",
+     "83332.Rv0432",
+     "83332.Rv1854c",
+     "83332.Rv2245",
+     "83332.Rv0667",
+     "83332.Rv0006",
+     "83332.Rv1484",
+     "83332.Rv3566c",
+     "83332.Rv1600",
+     "83332.Rv0005",
+     "83332.Rv2231c",
+     "83332.Rv1483",
+     "83332.Rv3772",
+     "83332.Rv3794",
+     "83332.Rv0682"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.085,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.829
+       },
+       "combined_score": 0.979,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.829,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.878
+      },
+      "name": "furA",
+      "record_id": "83332.Rv1909c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1909c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.05,
+        "cooccurrence": 0.0,
+        "database": 0.5,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.063
+       },
+       "combined_score": 0.973,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.5,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.947
+      },
+      "name": "sodA",
+      "record_id": "83332.Rv3846",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3846"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.082,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.096
+       },
+       "combined_score": 0.968,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.096,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.965
+      },
+      "name": "ahpC",
+      "record_id": "83332.Rv2428",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2428"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.965,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.965
+      },
+      "name": "pncA",
+      "record_id": "83332.Rv2043c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2043c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.044,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.964,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.044,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.963
+      },
+      "name": "embB",
+      "record_id": "83332.Rv3795",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3795"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.731,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.805
+       },
+       "combined_score": 0.957,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.805,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.254
+      },
+      "name": "Rv1907c",
+      "record_id": "83332.Rv1907c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1907c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.5,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.936,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.5,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.877
+      },
+      "name": "sodC",
+      "record_id": "83332.Rv0432",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0432"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.933,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.932
+      },
+      "name": "ndh",
+      "record_id": "83332.Rv1854c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1854c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.042
+       },
+       "combined_score": 0.927,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.927
+      },
+      "name": "kasA",
+      "record_id": "83332.Rv2245",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2245"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.055,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.924,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.055,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.923
+      },
+      "name": "rpoB",
+      "record_id": "83332.Rv0667",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0667"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.059,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.918,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.059,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.917
+      },
+      "name": "gyrA",
+      "record_id": "83332.Rv0006",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0006"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.045,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.044
+       },
+       "combined_score": 0.916,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.045,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.915
+      },
+      "name": "inhA",
+      "record_id": "83332.Rv1484",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1484"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.912,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.151
+      },
+      "name": "nat",
+      "record_id": "83332.Rv3566c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3566c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.052,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.91,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.128
+      },
+      "name": "hisC1",
+      "record_id": "83332.Rv1600",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1600"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.907,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.906
+      },
+      "name": "gyrB",
+      "record_id": "83332.Rv0005",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0005"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.042,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.905,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.091
+      },
+      "name": "cobC",
+      "record_id": "83332.Rv2231c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2231c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.905,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.904
+      },
+      "name": "fabG1",
+      "record_id": "83332.Rv1483",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1483"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.905,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.091
+      },
+      "name": "hisC2",
+      "record_id": "83332.Rv3772",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3772"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.046,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.901,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.046,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.9
+      },
+      "name": "embA",
+      "record_id": "83332.Rv3794",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3794"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.895,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.895
+      },
+      "name": "rpsL",
+      "record_id": "83332.Rv0682",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0682"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "9e05298cff94066fcc37b9fe7732ea3e22e56a742b0fe0301a51e596924d0c9e",
+      "retrieved_at": "2026-08-28T08:49:28.614847+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=katG&limit=1&species=83332"
+     },
+     {
+      "cached": true,
+      "content_sha256": "b63e239a9155345352a48d523bbe1eeb7c01ae4ad748919af18edd5216f9bcde",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv1908c&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "katG",
+     "string_id": "83332.Rv1908c"
+    }
+   },
+   "tool": "string_partners"
+  }
+ ],
+ "id": "katG",
+ "mode": "single",
+ "organism": "mtu",
+ "summary": "## katG (Rv1908c) \u2014 *Mycobacterium tuberculosis* H37Rv\n\nBoth structured channels resolved the identifier cleanly: KEGG resolved `katG` by symbol to **mtu:Rv1908c**, and STRING resolved it to **83332.Rv1908c** (preferred name `katG`). No resolution failures or empty-record ambiguities in either result.\n\n### Function\n\nKEGG's pathway assignments are the informative evidence here. katG is placed in **mtu00360 (Phenylalanine metabolism)** and **mtu00380 (Tryptophan metabolism)** \u2014 the pathway memberships characteristic of a **catalase-peroxidase (heme-dependent peroxidase)**, which is how KEGG maps this enzyme class into aromatic amino acid catabolism. It is also placed in **mtu00983 (Drug metabolism \u2013 other enzymes)**, consistent with its second, clinically dominant role: enzymatic activation/conversion of a drug substrate rather than a housekeeping metabolic step.\n\nSo the annotation supported by the tools is: a peroxidatic enzyme with both an oxidative-stress-detoxification/peroxidase metabolic role and a drug-metabolizing role.\n\nThe remaining two KEGG hits, **mtu01100 (Metabolic pathways)** and **mtu01110 (Biosynthesis of secondary metabolites)**, are genome-scale container maps and say essentially nothing specific about this gene; I list them only for completeness.\n\n### Interaction partners\n\nI split these by evidence class, because most of the high-scoring STRING network around katG is literature co-mention.\n\n**Partners with support beyond textmining (the substantive ones):**\n\n- **83332.Rv1909c (furA)** \u2014 combined 0.979, with a strong **neighborhood score of 0.829**. furA is the immediately adjacent gene, and conserved genomic adjacency is genuine non-literature evidence. This is the single best-supported association in the network.\n- **83332.Rv1907c** \u2014 combined 0.957, neighborhood 0.805 **and coexpression 0.731**, with only weak textmining (0.254). This is the most \"honest\" partner in the set: it is essentially unstudied in the literature yet scores highly on two independent structural/expression channels. katG sits in a conserved, co-expressed locus with Rv1907c and furA.\n- **83332.Rv3846 (sodA)** and **83332.Rv0432 (sodC)** \u2014 combined 0.973 and 0.936, each carrying a **database score of 0.5** (curated pathway co-membership) alongside high textmining. Superoxide dismutases are functional companions of a catalase-peroxidase in reactive-oxygen detoxification; the database channel supports co-membership, not physical binding.\n- **83332.Rv3566c (nat)**, **83332.Rv1600 (hisC1)**, **83332.Rv3772 (hisC2)**, **83332.Rv2231c (cobC)** \u2014 all with **database score 0.9** and negligible textmining (0.09\u20130.15). These are curated pathway co-memberships, most plausibly reflecting shared KEGG metabolic maps rather than any direct interaction. Note that hisC1/hisC2/cobC are aminotransferases, which fits co-membership in the aromatic amino acid metabolism maps above.\n\n**Partners supported essentially by textmining alone** \u2014 the tool's own notes flag these: ahpC, pncA, embB, ndh, kasA, rpoB, gyrA, inhA, gyrB, fabG1, embA, rpsL, i.e. **83332.Rv2428, 83332.Rv2043c, 83332.Rv3795, 83332.Rv1854c, 83332.Rv2245, 83332.Rv0667, 83332.Rv0006, 83332.Rv1484, 83332.Rv3566c**\u2026 (correction: nat/Rv3566c belongs to the database-supported group above) \u2026**83332.Rv0005, 83332.Rv1483, 83332.Rv3794, 83332.Rv0682**.\n\nThese score 0.89\u20130.97 combined but have max non-textmining scores of 0.04\u20130.10. That pattern is diagnostic: this is the *M. tuberculosis* drug-resistance gene panel (rpoB, gyrA/gyrB, rpsL, embA/embB, pncA, inhA/fabG1/kasA, ndh), co-mentioned with katG in resistance-genotyping papers. These are **not** evidence of functional or physical interaction \u2014 they are evidence that katG is co-reported with other resistance determinants. I would not annotate any of them as a katG partner. ahpC (83332.Rv2428) is a plausible functional relative on peroxide-detoxification grounds, but STRING gives it *no* non-textmining support (max 0.096), so on this evidence it stands as co-mention only.\n\n### Summary\n\nkatG/Rv1908c is a catalase-peroxidase acting in peroxidase-linked aromatic amino acid metabolism (mtu00360, mtu00380) and in drug metabolism (mtu00983). Its only well-supported local associations are with its genomic neighbours **furA (83332.Rv1909c)** and **83332.Rv1907c**, plus curated co-membership with the superoxide dismutases **sodA (83332.Rv3846)** and **sodC (83332.Rv0432)**. Its large high-scoring resistance-gene neighbourhood in STRING is a literature artefact and should not be read as functional interaction. I did not query PubMed, as the structured channels left no question open that literature could settle without adding noise of exactly the kind already visible in the textmining channel.",
+ "target": "katG",
+ "turns": [
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "katG",
+      "organism": "mtu"
+     },
+     "name": "kegg_pathways"
+    },
+    {
+     "input": {
+      "gene": "katG",
+      "required_score": 700,
+      "species": 83332
+     },
+     "name": "string_partners"
+    }
+   ],
+   "turn": 1
+  },
+  {
+   "stop_reason": "end_turn",
+   "tools_requested": [],
+   "turn": 2
+  }
+ ]
+}
