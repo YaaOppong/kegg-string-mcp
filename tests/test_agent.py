@@ -725,3 +725,41 @@ def test_child_env_forwards_credentials_but_not_the_whole_environment(monkeypatc
     env = child_env()
     assert env["NCBI_EMAIL"] == "you@example.org"
     assert "SOME_UNRELATED_SECRET" not in env
+
+
+def test_quotes_are_not_attributed_to_structured_records():
+    """A KEGG pathway ID has no text to quote from. Attributing a nearby quote to
+    one made a model quoting a tool's own note fail as 'no source text' -- a false
+    positive on correct output."""
+    from kegg_string_mcp.agent.validate import extract_quotes
+
+    text = ('katG is in mtu00360, mtu01110. ahpC returned an empty record set with the note '
+            'that "the gene exists in KEGG but is not mapped to any pathway".')
+    assert extract_quotes(text) == []
+
+
+def test_quotes_are_still_attributed_to_prose_records():
+    from kegg_string_mcp.agent.validate import extract_quotes
+
+    assert extract_quotes('PMID:10609885 "were also deficient in activity"')
+    assert extract_quotes('P9WIE5 "Bifunctional enzyme with both catalase"')
+
+
+def test_markdown_emphasis_around_a_quote_is_not_fabrication():
+    """Models routinely italicise a quotation, and the markers land inside the
+    captured span. Observed live on the gyrA run: five quotes failed purely because
+    the model wrote *"..."* rather than "...".
+    """
+    from kegg_string_mcp.agent.validate import quote_in_source
+
+    source = "The gyrA mutations occurring most frequently in fluoroquinolone-resistant isolates."
+    assert quote_in_source("*gyrA mutations occurring most frequently*", source)
+    assert quote_in_source("**gyrA mutations occurring most frequently**", source)
+    assert quote_in_source("`gyrA mutations occurring most frequently`", source)
+
+
+def test_emphasis_tolerance_does_not_swallow_fabrication():
+    from kegg_string_mcp.agent.validate import quote_in_source
+
+    source = "The gyrA mutations occurring most frequently in resistant isolates."
+    assert not quote_in_source("*gyrA binds directly to the ribosome*", source)

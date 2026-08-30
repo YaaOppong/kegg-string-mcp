@@ -45,12 +45,16 @@ CITATION_PATTERNS = [
     re.compile(r"\b(?:" + UNIPROT_ACCESSION + r")\b"),
 ]
 
-# Any identifier a quote may be attributed to. Adding a source means adding it
-# here as well as to CITATION_PATTERNS -- UniProt was added as a tool without
-# either, so accession citations were invisible and quotes attributed to an
-# accession were never checked at all.
+# Any identifier that can appear as a citation.
 CITE_TOKEN = ("(?:" + PMID + "|" + KEGG_PATHWAY + "|" + STRING_PROTEIN
               + "|" + UNIPROT_ACCESSION + ")")
+
+# Only the PROSE sources may carry a quote. A KEGG pathway ID and a STRING score
+# are structured -- the record means one thing and there is no text to quote from.
+# Including them attributed a quote of a tool's own note to a nearby pathway ID,
+# which then failed as "no source text": a false positive on correct output, which
+# is the one failure a validator must not have.
+QUOTABLE_CITE_TOKEN = "(?:" + PMID + "|" + UNIPROT_ACCESSION + ")"
 
 # A quoted span attributed to a record, in either order. The span must be long
 # enough that matching it means something; a three-character "quote" would pass
@@ -69,11 +73,11 @@ _CLOSE = r"[\"\u201d]"
 _GAP = r"[^\"\u201c]{0,60}?"
 
 QUOTE_THEN_CITE = re.compile(
-    _OPEN + _SPAN + _CLOSE + r"\s*[\(\[]?\s*(" + CITE_TOKEN + r")",
+    _OPEN + _SPAN + _CLOSE + r"\s*[\(\[]?\s*(" + QUOTABLE_CITE_TOKEN + r")",
     re.IGNORECASE,
 )
 CITE_THEN_QUOTE = re.compile(
-    r"(" + CITE_TOKEN + r")" + _GAP + _OPEN + _SPAN + _CLOSE,
+    r"(" + QUOTABLE_CITE_TOKEN + r")" + _GAP + _OPEN + _SPAN + _CLOSE,
     re.IGNORECASE,
 )
 
@@ -97,8 +101,11 @@ def normalise(text: str) -> str:
     return re.sub(r"\s+", " ", text or "").strip().casefold()
 
 
-# Punctuation a quoter legitimately adds or drops at the edges of a span.
-_EDGE_PUNCT = " \t\n.,;:!?\"'\u201c\u201d\u2018\u2019()[]"
+# Punctuation a quoter legitimately adds or drops at the edges of a span. Markdown
+# emphasis is included: models routinely italicise or bold a quotation, and those
+# markers land inside the captured span. Treating "*quoted text*" as absent from a
+# source containing "quoted text" is a false positive on correct output.
+_EDGE_PUNCT = " \t\n.,;:!?\"'\u201c\u201d\u2018\u2019()[]*_`"
 _ELLIPSIS = re.compile(r"\s*(?:\.\.\.|\u2026)\s*")
 
 
