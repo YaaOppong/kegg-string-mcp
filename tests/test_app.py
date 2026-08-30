@@ -229,3 +229,14 @@ def test_the_generated_page_states_the_failure_on_one_line():
     from demo.build_pages import TEMPLATE
 
     assert "caught a bad citation" in TEMPLATE, "the banner phrase is split across lines"
+
+
+def test_deploy_guards_match_calls_not_prose():
+    """A comment saying 'no loadPackage' tripped the workflow's own guard and
+    blocked the deploy. The guards match call syntax; prose about them must not."""
+    import re
+
+    from demo.build_pages import TEMPLATE
+
+    assert not re.search(r"micropip\.install\(", TEMPLATE)
+    assert not re.search(r"loadPackage\(", TEMPLATE)

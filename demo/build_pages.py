@@ -228,7 +228,7 @@ async function main() {
   }
 
   step("importing the checker");
-  // No micropip and no loadPackage: every module here is standard library.
+  // Nothing is installed here: every module in the payload is standard library.
   // runPython only, deliberately: it is the most basic entry point in the JS API,
   // so the page depends on as little of Pyodide's surface as possible.
   pyodide.runPython("import sys; sys.path.insert(0, '/demo')\nimport browser_api");
