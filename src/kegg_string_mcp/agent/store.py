@@ -111,9 +111,25 @@ class RunStore:
             # a correct, traceable citation -- was scored as a hallucination.
             for statement in record.get("detail", {}).get("function_statements", []):
                 for pmid in statement.get("supporting_pmids", []):
-                    self._citable.add(str(pmid))
+                    pmid = str(pmid)
+                    self._citable.add(pmid)
                     for alias in aliases:
-                        self._per_target.setdefault(alias, set()).add(str(pmid))
+                        self._per_target.setdefault(alias, set()).add(pmid)
+                    # Making the PMID citable without registering a record left the
+                    # quote check with nothing to compare against, so a quote
+                    # attached to it failed as "no source text" -- on exactly the
+                    # behaviour the prompt asks for. The article itself was not
+                    # retrieved; what IS held is the UniProt statement the PMID
+                    # evidences, so that is what a quote is checked against, and
+                    # the record says so rather than posing as the abstract.
+                    self._records.setdefault(pmid, {
+                        "record_id": pmid,
+                        "type": "cited_by_uniprot",
+                        "name": f"cited by UniProt {record.get('record_id', '')}",
+                        "detail": {"quotable_text": statement.get("text", ""),
+                                   "source": "UniProt function statement, not the article "
+                                             "itself; the abstract was not retrieved"},
+                    })
             for alias in aliases:
                 self._per_target.setdefault(alias, set()).add(rid)
         self._append("tool_result", {"tool": tool, "arguments": arguments, "result": result})

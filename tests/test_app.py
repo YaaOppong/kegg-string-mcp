@@ -4,6 +4,8 @@ installing a web framework, and so the UI cannot quietly change what is checked.
 """
 
 
+from pathlib import Path
+
 import pytest
 
 from app.replay import RUNS_DIR, available, citation_rows, load, quote_rows, tool_call_rows
@@ -100,3 +102,79 @@ def test_app_module_builds_without_a_network_or_key(monkeypatch):
     from app.app import build
 
     assert build() is not None
+
+
+def test_the_replay_layer_needs_only_the_standard_library():
+    """The demo must be able to run where anthropic, httpx and mcp are awkward --
+    a browser under Pyodide, most obviously. store.py and validate.py are stdlib
+    only; an eager re-export in agent/__init__.py used to drag the whole HTTP and
+    model stack in behind them."""
+    import json
+    import subprocess
+    import sys
+
+    probe = (
+        "import sys, json\n"
+        "before = set(sys.modules)\n"
+        "from app.replay import load, available\n"
+        "heavy = {'anthropic', 'mcp', 'httpx', 'pydantic', 'pydantic_core', 'gradio'}\n"
+        "print(json.dumps(sorted({m.split('.')[0] for m in set(sys.modules) - before} & heavy)))"
+    )
+    result = subprocess.run([sys.executable, "-c", probe], capture_output=True, text=True,
+                            cwd=Path(__file__).resolve().parent.parent, check=False)
+    assert result.returncode == 0, result.stderr
+    pulled = json.loads(result.stdout.strip().splitlines()[-1])
+    assert pulled == [], f"replay pulled in {pulled}"
+
+
+def test_lazy_agent_exports_still_resolve():
+    from kegg_string_mcp import agent
+
+    assert agent.validate is not None
+    assert agent.RunStore is not None
+    assert "annotate_gene" in dir(agent)
+
+
+# --- the failure must be impossible to miss ---------------------------------
+
+def test_failing_runs_are_marked_in_the_picker():
+    """If someone has to select the right gene to find the point, most will not."""
+    pytest.importorskip("gradio")
+    from app.replay import ORDERED
+    from app.ui import _label
+
+    for name in ORDERED:
+        marked = "⚠️" in _label(name)
+        assert marked is (not load(name).clean), f"{name} is mislabelled in the picker"
+
+
+def test_the_verdict_is_the_first_thing_rendered():
+    """The verdict used to sit below the tool-call table, so a visitor had to scroll
+    to find out whether anything was caught."""
+    pytest.importorskip("gradio")
+    from app.ui import render
+
+    verdict = render("furA")[0]
+    assert "caught a bad citation" in verdict
+
+
+def test_a_clean_run_points_at_the_failing_ones():
+    pytest.importorskip("gradio")
+    from app.ui import render
+
+    verdict = render("katG")[0]
+    assert "every citation checked out" in verdict.lower()
+    assert "⚠️" in verdict, "a clean run should say where to find a caught failure"
+
+
+def test_the_static_build_is_generated_from_the_same_sources():
+    """The browser build rewrites import lines only; a divergent copy of the UI or
+    the validator would let the page show something the library does not."""
+    from demo.build_pages import flatten
+
+    ui = (Path(__file__).resolve().parent.parent / "app" / "ui.py").read_text()
+    flat = flatten(ui)
+    assert "from replay import (" in flat
+    assert "from app.replay import" not in flat
+    # Everything except the import line is untouched.
+    assert flat.replace("from replay import (", "from app.replay import (") == ui

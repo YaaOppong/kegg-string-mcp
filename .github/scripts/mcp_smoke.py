@@ -12,10 +12,11 @@ Two things this has to get right, both learned the hard way:
 """
 
 import json
-import selectors
+import queue
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 
 EXPECTED = {"kegg_pathways", "string_partners", "pubmed_abstracts", "uniprot_protein"}
@@ -35,8 +36,7 @@ def main(image: str) -> int:
     except (OSError, FileNotFoundError) as exc:
         print(f"could not start container: {exc}", file=sys.stderr)
         return 1
-    selector = selectors.DefaultSelector()
-    selector.register(proc.stdout, selectors.EVENT_READ)
+
 
     def fail(message: str) -> int:
         print(message, file=sys.stderr)
@@ -51,13 +51,31 @@ def main(image: str) -> int:
         proc.stdin.write(json.dumps(payload) + "\n")
         proc.stdin.flush()
 
+    # A reader thread rather than a selector: the selector watched the raw fd while
+    # readline() consumed through a buffered TextIOWrapper, so a notification
+    # arriving in the same chunk as a response left the response sitting in
+    # Python's buffer with the fd looking idle -- a 60s timeout and a misleading
+    # "no response" on a server that had already answered.
+    lines: queue.Queue = queue.Queue()
+
+    def pump() -> None:
+        for line in proc.stdout:
+            lines.put(line)
+        lines.put(None)
+
+    threading.Thread(target=pump, daemon=True).start()
+
     def read(want_id: int):
         deadline = time.monotonic() + TIMEOUT
-        while time.monotonic() < deadline:
-            if not selector.select(timeout=max(0.0, deadline - time.monotonic())):
-                return None                      # timed out with nothing to read
-            line = proc.stdout.readline()
-            if not line:
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return None
+            try:
+                line = lines.get(timeout=remaining)
+            except queue.Empty:
+                return None
+            if line is None:
                 return None                      # pipe closed: the server exited
             try:
                 message = json.loads(line)
@@ -65,7 +83,6 @@ def main(image: str) -> int:
                 continue
             if message.get("id") == want_id:
                 return message
-        return None
 
     send({"jsonrpc": "2.0", "id": 1, "method": "initialize",
           "params": {"protocolVersion": "2025-06-18", "capabilities": {},
@@ -73,6 +90,10 @@ def main(image: str) -> int:
     initialized = read(1)
     if not initialized:
         return fail(f"no response to initialize within {TIMEOUT}s")
+    if "result" not in initialized:
+        # A JSON-RPC error reply is truthy, so an unguarded ["result"] raised
+        # KeyError past fail() -- losing the stderr dump that exists for this case.
+        return fail(f"initialize returned an error: {initialized.get('error')}")
     print("initialize:", initialized["result"]["serverInfo"])
 
     send({"jsonrpc": "2.0", "method": "notifications/initialized"})
@@ -80,6 +101,8 @@ def main(image: str) -> int:
     listed = read(2)
     if not listed:
         return fail(f"no response to tools/list within {TIMEOUT}s")
+    if "result" not in listed:
+        return fail(f"tools/list returned an error: {listed.get('error')}")
 
     names = {t["name"] for t in listed["result"]["tools"]}
     print("tools/list:", sorted(names))

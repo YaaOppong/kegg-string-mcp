@@ -20,13 +20,20 @@ huggingface-cli login
 huggingface-cli repo create gene-annotation-checked-citations --type space --space_sdk gradio
 
 git remote add space https://huggingface.co/spaces/<your-username>/gene-annotation-checked-citations
-cp app/README_SPACE.md README_SPACE_HF.md   # the Space needs this front matter as its README.md
+cp app/README_SPACE.md README.md   # the Space reads its config from the root README
 git push space main
 ```
 
-The Space needs `README.md` to carry the front matter above, so on the Space branch
-rename `README_SPACE.md` to `README.md`. Everything else — `app/`, `demo/runs/`,
-`src/` — is used as-is.
+Two files must sit at the **repository root**, because that is where Spaces looks:
+
+* `README.md` carrying the front matter above (copy it from `app/README_SPACE.md`).
+* `requirements.txt` — already present at the root for this reason; `app/requirements.txt`
+  is a copy kept beside the app for readability and is **not** the one Spaces reads.
+
+Everything else — `app/`, `demo/runs/`, `src/` — is used as-is.
+
+If you would rather not run a server at all, the same demo is published as a static
+GitHub Pages build; see `demo/build_pages.py`.
 
 No secrets are required. The demo makes no API calls: it replays runs committed in
 `demo/runs/` and re-runs the validator over them.

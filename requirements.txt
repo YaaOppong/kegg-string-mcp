@@ -1,0 +1,8 @@
+# Hugging Face Space dependencies.
+#
+# The package is installed from the Space itself ("."), not from GitHub, so the
+# demo always validates with exactly the code sitting beside it. A Space that
+# pulled a different revision could show a visitor a verdict this repo no longer
+# produces.
+gradio>=5
+.
