@@ -40,7 +40,7 @@ mcp = MCPServer(
         "Deterministic lookups against KEGG, STRING and PubMed for gene annotation. Every record "
         "returned carries a stable record_id and a resolvable URL. Cite only record_ids that "
         "appear in a tool result's record_ids list -- citations are checked programmatically "
-        "against what was actually retrieved. Read the `notes` field: an empty `records` list "
+        "against what was retrieved. Read the `notes` field: an empty `records` list "
         "may mean the identifier failed to resolve rather than that no data exists. When a claim "
         "rests on a PubMed article, quote a verbatim span of that record's `quotable_text` and "
         "attach it to the PMID -- quotes are checked against the retrieved text, so a paraphrase "
