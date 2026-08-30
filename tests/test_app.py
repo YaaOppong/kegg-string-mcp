@@ -55,10 +55,18 @@ def test_at_least_one_run_shows_a_caught_failure():
 
 
 def test_the_default_run_is_one_that_fails():
-    """A visitor who changes nothing should still see the point."""
-    from app.app import ORDERED
+    """A visitor who changes nothing should still see the point. Asserted against
+    the gradio-free module so the whole matrix checks it, not just the demo job."""
+    from app.replay import ORDERED
 
     assert not load(ORDERED[0]).clean, "the first gene offered should be a caught failure"
+
+
+def test_every_offered_run_exists_and_is_labelled():
+    from app.replay import LABELS, ORDERED
+
+    assert set(ORDERED) <= set(RUNS), "the picker offers a run that is not committed"
+    assert set(ORDERED) <= set(LABELS), "an offered run has no human-readable label"
 
 
 def test_failures_name_their_class_and_reason():

@@ -22,6 +22,25 @@ from kegg_string_mcp.agent.validate import ValidationReport, validate
 
 RUNS_DIR = Path(__file__).resolve().parent.parent / "demo" / "runs"
 
+# Which runs to offer, and in what order. Data, not presentation: it lives here so
+# the ordering invariant -- that the first run offered is one where the checking
+# catches something -- can be tested without installing a web framework.
+#
+# furA is first on purpose. A demo where everything passes proves nothing, so a
+# visitor who changes nothing still sees the point.
+ORDERED = ["furA", "gyrB", "katG", "gyrA", "ahpC", "rpoB", "pncA", "katG-ahpC-epistasis"]
+
+LABELS = {
+    "furA": "furA — a transcriptional regulator KEGG has no pathway for",
+    "gyrB": "gyrB — DNA gyrase subunit B, annotated mostly from literature",
+    "katG": "katG — catalase-peroxidase, well annotated in KEGG",
+    "gyrA": "gyrA — DNA gyrase subunit A, absent from KEGG pathways",
+    "ahpC": "ahpC — alkyl hydroperoxide reductase, no KEGG pathway",
+    "rpoB": "rpoB — RNA polymerase beta subunit",
+    "pncA": "pncA — pyrazinamidase, three KEGG pathways",
+    "katG-ahpC-epistasis": "katG + ahpC — looking for a mechanistic link between two genes",
+}
+
 
 @dataclass
 class Replay:

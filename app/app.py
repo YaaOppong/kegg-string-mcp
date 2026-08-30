@@ -8,25 +8,17 @@ from __future__ import annotations
 
 import gradio as gr
 
-from app.replay import available, citation_rows, load, quote_rows, tool_call_rows
+from app.replay import (
+    LABELS,
+    ORDERED,
+    available,
+    citation_rows,
+    load,
+    quote_rows,
+    tool_call_rows,
+)
 
 REPO = "https://github.com/YaaOppong/kegg-string-mcp"
-
-# furA first on purpose. A demo where everything passes proves nothing; this run
-# is one where the checking catches a real misattribution, so a visitor who
-# changes nothing still sees the point of the project.
-ORDERED = ["furA", "gyrB", "katG", "gyrA", "ahpC", "rpoB", "pncA", "katG-ahpC-epistasis"]
-
-LABELS = {
-    "furA": "furA — a transcriptional regulator KEGG has no pathway for",
-    "gyrB": "gyrB — DNA gyrase subunit B, annotated mostly from literature",
-    "katG": "katG — catalase-peroxidase, well annotated in KEGG",
-    "gyrA": "gyrA — DNA gyrase subunit A, absent from KEGG pathways",
-    "ahpC": "ahpC — alkyl hydroperoxide reductase, no KEGG pathway",
-    "rpoB": "rpoB — RNA polymerase beta subunit",
-    "pncA": "pncA — pyrazinamidase, three KEGG pathways",
-    "katG-ahpC-epistasis": "katG + ahpC — looking for a mechanistic link between two genes",
-}
 
 INTRO = f"""
 # Does the annotation actually say what its sources say?
