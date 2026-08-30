@@ -1,0 +1,2762 @@
+{
+ "calls": [
+  {
+   "arguments": {
+    "gene": "katG",
+    "organism": "mtu"
+   },
+   "origin": "pipeline",
+   "result": {
+    "notes": [],
+    "query": {
+     "gene": "katG",
+     "organism": "mtu"
+    },
+    "record_ids": [
+     "mtu00360",
+     "mtu00380",
+     "mtu00983",
+     "mtu01100",
+     "mtu01110"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Phenylalanine metabolism - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00360",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00360"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Tryptophan metabolism - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00380",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00380"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Drug metabolism - other enzymes - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00983",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00983"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Metabolic pathways - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01100",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01100"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Biosynthesis of secondary metabolites - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01110",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01110"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "84cbbd41122ec13d0ca6d80cc904bd151e174f3468aff057090dd165b2e6d590",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv1908c"
+     },
+     {
+      "cached": true,
+      "content_sha256": "fb3e52ff8b817798ee1b884c88affaf5a547b5e386c27d1afd61f0400867b648",
+      "retrieved_at": "2026-08-28T08:49:28.342942+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/pathway/mtu"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv1908c",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "katG"
+   },
+   "origin": "pipeline",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: ahpC, pncA, embB, ndh, kasA, rpoB, gyrA, inhA, gyrB, fabG1, embA, rpsL."
+    ],
+    "query": {
+     "gene": "katG",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv1909c",
+     "83332.Rv3846",
+     "83332.Rv2428",
+     "83332.Rv2043c",
+     "83332.Rv3795",
+     "83332.Rv1907c",
+     "83332.Rv0432",
+     "83332.Rv1854c",
+     "83332.Rv2245",
+     "83332.Rv0667",
+     "83332.Rv0006",
+     "83332.Rv1484",
+     "83332.Rv3566c",
+     "83332.Rv1600",
+     "83332.Rv0005",
+     "83332.Rv2231c",
+     "83332.Rv1483",
+     "83332.Rv3772",
+     "83332.Rv3794",
+     "83332.Rv0682"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.085,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.829
+       },
+       "combined_score": 0.979,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.829,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.878
+      },
+      "name": "furA",
+      "record_id": "83332.Rv1909c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1909c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.05,
+        "cooccurrence": 0.0,
+        "database": 0.5,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.063
+       },
+       "combined_score": 0.973,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.5,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.947
+      },
+      "name": "sodA",
+      "record_id": "83332.Rv3846",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3846"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.082,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.096
+       },
+       "combined_score": 0.968,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.096,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.965
+      },
+      "name": "ahpC",
+      "record_id": "83332.Rv2428",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2428"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.965,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.965
+      },
+      "name": "pncA",
+      "record_id": "83332.Rv2043c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2043c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.044,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.964,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.044,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.963
+      },
+      "name": "embB",
+      "record_id": "83332.Rv3795",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3795"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.731,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.805
+       },
+       "combined_score": 0.957,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.805,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.254
+      },
+      "name": "Rv1907c",
+      "record_id": "83332.Rv1907c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1907c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.5,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.936,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.5,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.877
+      },
+      "name": "sodC",
+      "record_id": "83332.Rv0432",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0432"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.933,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.932
+      },
+      "name": "ndh",
+      "record_id": "83332.Rv1854c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1854c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.042
+       },
+       "combined_score": 0.927,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.927
+      },
+      "name": "kasA",
+      "record_id": "83332.Rv2245",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2245"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.055,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.924,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.055,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.923
+      },
+      "name": "rpoB",
+      "record_id": "83332.Rv0667",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0667"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.059,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.918,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.059,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.917
+      },
+      "name": "gyrA",
+      "record_id": "83332.Rv0006",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0006"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.045,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.044
+       },
+       "combined_score": 0.916,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.045,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.915
+      },
+      "name": "inhA",
+      "record_id": "83332.Rv1484",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1484"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.912,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.151
+      },
+      "name": "nat",
+      "record_id": "83332.Rv3566c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3566c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.052,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.91,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.128
+      },
+      "name": "hisC1",
+      "record_id": "83332.Rv1600",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1600"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.907,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.906
+      },
+      "name": "gyrB",
+      "record_id": "83332.Rv0005",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0005"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.042,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.905,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.091
+      },
+      "name": "cobC",
+      "record_id": "83332.Rv2231c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2231c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.905,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.904
+      },
+      "name": "fabG1",
+      "record_id": "83332.Rv1483",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1483"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.905,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.091
+      },
+      "name": "hisC2",
+      "record_id": "83332.Rv3772",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3772"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.046,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.901,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.046,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.9
+      },
+      "name": "embA",
+      "record_id": "83332.Rv3794",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3794"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.895,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.895
+      },
+      "name": "rpsL",
+      "record_id": "83332.Rv0682",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0682"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "9e05298cff94066fcc37b9fe7732ea3e22e56a742b0fe0301a51e596924d0c9e",
+      "retrieved_at": "2026-08-28T08:49:28.614847+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=katG&limit=1&species=83332"
+     },
+     {
+      "cached": true,
+      "content_sha256": "b63e239a9155345352a48d523bbe1eeb7c01ae4ad748919af18edd5216f9bcde",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv1908c&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "katG",
+     "string_id": "83332.Rv1908c"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "ahpC",
+    "organism": "mtu"
+   },
+   "origin": "pipeline",
+   "result": {
+    "notes": [
+     "KEGG returned no pathway assignments for mtu:Rv2428. The gene exists in KEGG but is not mapped to any pathway in this organism."
+    ],
+    "query": {
+     "gene": "ahpC",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "retrieved_at": "2026-08-28T08:51:16.173734+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv2428"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv2428",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "ahpC"
+   },
+   "origin": "pipeline",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: katG, rpoB, inhA, kasA, sodC, embB, pncA, ndh, fabG1."
+    ],
+    "query": {
+     "gene": "ahpC",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv2429",
+     "83332.Rv1908c",
+     "83332.Rv0667",
+     "83332.Rv1484",
+     "83332.Rv3913",
+     "83332.Rv2427A",
+     "83332.Rv2245",
+     "83332.Rv3846",
+     "83332.Rv0432",
+     "83332.Rv1677",
+     "83332.Rv2874",
+     "83332.Rv1909c",
+     "83332.Rv0816c",
+     "83332.Rv3795",
+     "83332.Rv2878c",
+     "83332.Rv3673c",
+     "83332.Rv0526",
+     "83332.Rv2043c",
+     "83332.Rv1854c",
+     "83332.Rv1483"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.836,
+        "cooccurrence": 0.766,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.844
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.844,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.902
+      },
+      "name": "ahpD",
+      "record_id": "83332.Rv2429",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2429"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.082,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.096
+       },
+       "combined_score": 0.968,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.096,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.965
+      },
+      "name": "katG",
+      "record_id": "83332.Rv1908c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1908c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.152,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.967,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.152,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.963
+      },
+      "name": "rpoB",
+      "record_id": "83332.Rv0667",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0667"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.05,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.071
+       },
+       "combined_score": 0.957,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.071,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.955
+      },
+      "name": "inhA",
+      "record_id": "83332.Rv1484",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1484"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.437,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.808,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.955,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.808,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.588
+      },
+      "name": "trxB2",
+      "record_id": "83332.Rv3913",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3913"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.543
+       },
+       "combined_score": 0.938,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.543,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.87
+      },
+      "name": "oxyR",
+      "record_id": "83332.Rv2427A",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2427A"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.054,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.152,
+        "fusion": 0.0,
+        "neighborhood": 0.065
+       },
+       "combined_score": 0.929,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.152,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.917
+      },
+      "name": "kasA",
+      "record_id": "83332.Rv2245",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2245"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.476,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.924,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.476,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.85
+      },
+      "name": "sodA",
+      "record_id": "83332.Rv3846",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3846"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.217,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.167,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.893,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.217,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.85
+      },
+      "name": "sodC",
+      "record_id": "83332.Rv0432",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0432"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.225,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.882,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.329
+      },
+      "name": "dsbF",
+      "record_id": "83332.Rv1677",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1677"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.221,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.094
+       },
+       "combined_score": 0.873,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.268
+      },
+      "name": "dipZ",
+      "record_id": "83332.Rv2874",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2874"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.573,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.093
+       },
+       "combined_score": 0.87,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.573,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.692
+      },
+      "name": "furA",
+      "record_id": "83332.Rv1909c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1909c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.223,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.868,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.255
+      },
+      "name": "thiX",
+      "record_id": "83332.Rv0816c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0816c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.042,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.848,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.042,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.848
+      },
+      "name": "embB",
+      "record_id": "83332.Rv3795",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3795"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.221,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.843,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.117
+      },
+      "name": "mpt53",
+      "record_id": "83332.Rv2878c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2878c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.223,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.841,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.099
+      },
+      "name": "Rv3673c",
+      "record_id": "83332.Rv3673c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3673c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.221,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.84,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.099
+      },
+      "name": "Rv0526",
+      "record_id": "83332.Rv0526",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0526"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.223,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.837,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.223,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.792
+      },
+      "name": "pncA",
+      "record_id": "83332.Rv2043c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2043c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.085,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.07
+       },
+       "combined_score": 0.834,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.085,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.82
+      },
+      "name": "ndh",
+      "record_id": "83332.Rv1854c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1854c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.061,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.153,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.782,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.153,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.748
+      },
+      "name": "fabG1",
+      "record_id": "83332.Rv1483",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1483"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "adaa8c2a768912f65da49090c752ad81dd78ab52fd7432f5c5d023f4271b28e3",
+      "retrieved_at": "2026-08-28T08:51:16.317583+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=ahpC&limit=1&species=83332"
+     },
+     {
+      "cached": true,
+      "content_sha256": "70575737cc85f950c0d508bcff26e90cebf81ebef140ef4cd5251942426cb275",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv2428&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "ahpC",
+     "string_id": "83332.Rv2428"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "katG"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [],
+    "query": {
+     "gene": "katG",
+     "organism": "mtu"
+    },
+    "record_ids": [
+     "mtu00360",
+     "mtu00380",
+     "mtu00983",
+     "mtu01100",
+     "mtu01110"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Phenylalanine metabolism - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00360",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00360"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Tryptophan metabolism - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00380",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00380"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Drug metabolism - other enzymes - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00983",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00983"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Metabolic pathways - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01100",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01100"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Biosynthesis of secondary metabolites - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01110",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01110"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "84cbbd41122ec13d0ca6d80cc904bd151e174f3468aff057090dd165b2e6d590",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv1908c"
+     },
+     {
+      "cached": true,
+      "content_sha256": "fb3e52ff8b817798ee1b884c88affaf5a547b5e386c27d1afd61f0400867b648",
+      "retrieved_at": "2026-08-28T08:49:28.342942+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/pathway/mtu"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv1908c",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "ahpC"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "KEGG returned no pathway assignments for mtu:Rv2428. The gene exists in KEGG but is not mapped to any pathway in this organism."
+    ],
+    "query": {
+     "gene": "ahpC",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "retrieved_at": "2026-08-28T08:51:16.173734+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv2428"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv2428",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "katG",
+    "required_score": 700
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: ahpC, pncA, embB, ndh, kasA, rpoB, gyrA, inhA, gyrB, fabG1, embA, rpsL."
+    ],
+    "query": {
+     "gene": "katG",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv1909c",
+     "83332.Rv3846",
+     "83332.Rv2428",
+     "83332.Rv2043c",
+     "83332.Rv3795",
+     "83332.Rv1907c",
+     "83332.Rv0432",
+     "83332.Rv1854c",
+     "83332.Rv2245",
+     "83332.Rv0667",
+     "83332.Rv0006",
+     "83332.Rv1484",
+     "83332.Rv3566c",
+     "83332.Rv1600",
+     "83332.Rv0005",
+     "83332.Rv2231c",
+     "83332.Rv1483",
+     "83332.Rv3772",
+     "83332.Rv3794",
+     "83332.Rv0682"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.085,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.829
+       },
+       "combined_score": 0.979,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.829,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.878
+      },
+      "name": "furA",
+      "record_id": "83332.Rv1909c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1909c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.05,
+        "cooccurrence": 0.0,
+        "database": 0.5,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.063
+       },
+       "combined_score": 0.973,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.5,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.947
+      },
+      "name": "sodA",
+      "record_id": "83332.Rv3846",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3846"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.082,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.096
+       },
+       "combined_score": 0.968,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.096,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.965
+      },
+      "name": "ahpC",
+      "record_id": "83332.Rv2428",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2428"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.965,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.965
+      },
+      "name": "pncA",
+      "record_id": "83332.Rv2043c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2043c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.044,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.964,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.044,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.963
+      },
+      "name": "embB",
+      "record_id": "83332.Rv3795",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3795"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.731,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.805
+       },
+       "combined_score": 0.957,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.805,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.254
+      },
+      "name": "Rv1907c",
+      "record_id": "83332.Rv1907c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1907c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.5,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.936,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.5,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.877
+      },
+      "name": "sodC",
+      "record_id": "83332.Rv0432",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0432"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.933,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.932
+      },
+      "name": "ndh",
+      "record_id": "83332.Rv1854c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1854c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.042
+       },
+       "combined_score": 0.927,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.927
+      },
+      "name": "kasA",
+      "record_id": "83332.Rv2245",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2245"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.055,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.924,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.055,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.923
+      },
+      "name": "rpoB",
+      "record_id": "83332.Rv0667",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0667"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.059,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.918,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.059,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.917
+      },
+      "name": "gyrA",
+      "record_id": "83332.Rv0006",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0006"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.045,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.044
+       },
+       "combined_score": 0.916,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.045,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.915
+      },
+      "name": "inhA",
+      "record_id": "83332.Rv1484",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1484"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.912,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.151
+      },
+      "name": "nat",
+      "record_id": "83332.Rv3566c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3566c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.052,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.91,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.128
+      },
+      "name": "hisC1",
+      "record_id": "83332.Rv1600",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1600"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.907,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.906
+      },
+      "name": "gyrB",
+      "record_id": "83332.Rv0005",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0005"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.042,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.905,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.091
+      },
+      "name": "cobC",
+      "record_id": "83332.Rv2231c",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2231c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.905,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.904
+      },
+      "name": "fabG1",
+      "record_id": "83332.Rv1483",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1483"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.9,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.905,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.9,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.091
+      },
+      "name": "hisC2",
+      "record_id": "83332.Rv3772",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3772"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.046,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.901,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.046,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.9
+      },
+      "name": "embA",
+      "record_id": "83332.Rv3794",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3794"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.895,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.047,
+       "partner_of": "83332.Rv1908c",
+       "textmining_score": 0.895
+      },
+      "name": "rpsL",
+      "record_id": "83332.Rv0682",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0682"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "9e05298cff94066fcc37b9fe7732ea3e22e56a742b0fe0301a51e596924d0c9e",
+      "retrieved_at": "2026-08-28T08:49:28.614847+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=katG&limit=1&species=83332"
+     },
+     {
+      "cached": true,
+      "content_sha256": "b63e239a9155345352a48d523bbe1eeb7c01ae4ad748919af18edd5216f9bcde",
+      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv1908c&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "katG",
+     "string_id": "83332.Rv1908c"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "ahpC",
+    "required_score": 700
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: katG, rpoB, inhA, kasA, sodC, embB, pncA, ndh, fabG1."
+    ],
+    "query": {
+     "gene": "ahpC",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv2429",
+     "83332.Rv1908c",
+     "83332.Rv0667",
+     "83332.Rv1484",
+     "83332.Rv3913",
+     "83332.Rv2427A",
+     "83332.Rv2245",
+     "83332.Rv3846",
+     "83332.Rv0432",
+     "83332.Rv1677",
+     "83332.Rv2874",
+     "83332.Rv1909c",
+     "83332.Rv0816c",
+     "83332.Rv3795",
+     "83332.Rv2878c",
+     "83332.Rv3673c",
+     "83332.Rv0526",
+     "83332.Rv2043c",
+     "83332.Rv1854c",
+     "83332.Rv1483"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.836,
+        "cooccurrence": 0.766,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.844
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.844,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.902
+      },
+      "name": "ahpD",
+      "record_id": "83332.Rv2429",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2429"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.082,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.096
+       },
+       "combined_score": 0.968,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.096,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.965
+      },
+      "name": "katG",
+      "record_id": "83332.Rv1908c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1908c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.152,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.967,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.152,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.963
+      },
+      "name": "rpoB",
+      "record_id": "83332.Rv0667",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0667"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.05,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.071
+       },
+       "combined_score": 0.957,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.071,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.955
+      },
+      "name": "inhA",
+      "record_id": "83332.Rv1484",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1484"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.437,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.808,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.955,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.808,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.588
+      },
+      "name": "trxB2",
+      "record_id": "83332.Rv3913",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3913"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.543
+       },
+       "combined_score": 0.938,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.543,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.87
+      },
+      "name": "oxyR",
+      "record_id": "83332.Rv2427A",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2427A"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.054,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.152,
+        "fusion": 0.0,
+        "neighborhood": 0.065
+       },
+       "combined_score": 0.929,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.152,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.917
+      },
+      "name": "kasA",
+      "record_id": "83332.Rv2245",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2245"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.476,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.924,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.476,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.85
+      },
+      "name": "sodA",
+      "record_id": "83332.Rv3846",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3846"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.217,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.167,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.893,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.217,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.85
+      },
+      "name": "sodC",
+      "record_id": "83332.Rv0432",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0432"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.225,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.882,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.329
+      },
+      "name": "dsbF",
+      "record_id": "83332.Rv1677",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1677"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.221,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.094
+       },
+       "combined_score": 0.873,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.268
+      },
+      "name": "dipZ",
+      "record_id": "83332.Rv2874",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2874"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.573,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.093
+       },
+       "combined_score": 0.87,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.573,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.692
+      },
+      "name": "furA",
+      "record_id": "83332.Rv1909c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1909c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.223,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.868,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.255
+      },
+      "name": "thiX",
+      "record_id": "83332.Rv0816c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0816c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.042,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.848,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.042,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.848
+      },
+      "name": "embB",
+      "record_id": "83332.Rv3795",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3795"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.221,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.843,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.117
+      },
+      "name": "mpt53",
+      "record_id": "83332.Rv2878c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2878c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.223,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.841,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.099
+      },
+      "name": "Rv3673c",
+      "record_id": "83332.Rv3673c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3673c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.221,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.84,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.099
+      },
+      "name": "Rv0526",
+      "record_id": "83332.Rv0526",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0526"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.223,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.837,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.223,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.792
+      },
+      "name": "pncA",
+      "record_id": "83332.Rv2043c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2043c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.085,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.07
+       },
+       "combined_score": 0.834,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.085,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.82
+      },
+      "name": "ndh",
+      "record_id": "83332.Rv1854c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1854c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.061,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.153,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.782,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.153,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.748
+      },
+      "name": "fabG1",
+      "record_id": "83332.Rv1483",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1483"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "adaa8c2a768912f65da49090c752ad81dd78ab52fd7432f5c5d023f4271b28e3",
+      "retrieved_at": "2026-08-28T08:51:16.317583+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=ahpC&limit=1&species=83332"
+     },
+     {
+      "cached": true,
+      "content_sha256": "70575737cc85f950c0d508bcff26e90cebf81ebef140ef4cd5251942426cb275",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv2428&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "ahpC",
+     "string_id": "83332.Rv2428"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "ahpC katG",
+    "limit": 6
+   },
+   "origin": "turn 3",
+   "result": {
+    "notes": [
+     "175 articles matched this query; the 6 most relevant were retrieved. A finding absent from these abstracts may still be reported in the 169 not retrieved.",
+     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
+     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+    ],
+    "query": {
+     "gene": "ahpC katG",
+     "limit": 6,
+     "organism": "Mycobacterium tuberculosis"
+    },
+    "record_ids": [
+     "23899494",
+     "10609885",
+     "34086544",
+     "39278670",
+     "35919400",
+     "41856489"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The thioredoxin (Trx) system, which is composed of NADPH, thioredoxin reductase (TrxR), and thioredoxin, is a key antioxidant system in defense against oxidative stress through its disulfide reductase activity regulating protein dithiol/disulfide balance. The Trx system provides the electrons to thiol-dependent peroxidases (peroxiredoxins) to remove reactive oxygen and nitrogen species with a fast reaction rate. Trx antioxidant functions are also shown by involvement in DNA and protein repair by reducing ribonucleotide reductase, methionine sulfoxide reductases, and regulating the activity of many redox-sensitive transcription factors. Moreover, Trx systems play critical roles in the immune response, virus infection, and cell death via interaction with thioredoxin-interacting protein. In mammalian cells, the cytosolic and mitochondrial Trx systems, in which TrxRs are high molecular weight selenoenzymes, together with the glutathione-glutaredoxin (Grx) system (NADPH, glutathione reductase, GSH, and Grx) control the cellular redox environment. Recently mammalian thioredoxin and glutathione systems have been found to be able to provide the electrons crossly and to serve as a backup system for each other. In contrast, bacteria TrxRs are low molecular weight enzymes with a structure and reaction mechanism distinct from mammalian TrxR. Many bacterial species possess specific thiol-dependent antioxidant systems, and the significance of the Trx system in the defense against oxidative stress is different. Particularly, the absence of a GSH-Grx system in some pathogenic bacteria such as Helicobacter pylori, Mycobacterium tuberculosis, and Staphylococcus aureus makes the bacterial Trx system essential for survival under oxidative stress. This provides an opportunity to kill these bacteria by targeting the TrxR-Trx system.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The thioredoxin (Trx) system, which is composed of NADPH, thioredoxin reductase (TrxR), and thioredoxin, is a key antioxidant system in defense against oxidative stress through its disulfide reductase activity regulating protein dithiol/disulfide balance. The Trx system provides the electrons to thiol-dependent peroxidases (peroxiredoxins) to remove reactive oxygen and nitrogen species with a fast reaction rate. Trx antioxidant functions are also shown by involvement in DNA and protein repair by reducing ribonucleotide reductase, methionine sulfoxide reductases, and regulating the activity of many redox-sensitive transcription factors. Moreover, Trx systems play critical roles in the immune response, virus infection, and cell death via interaction with thioredoxin-interacting protein. In mammalian cells, the cytosolic and mitochondrial Trx systems, in which TrxRs are high molecular weight selenoenzymes, together with the glutathione-glutaredoxin (Grx) system (NADPH, glutathione reductase, GSH, and Grx) control the cellular redox environment. Recently mammalian thioredoxin and glutathione systems have been found to be able to provide the electrons crossly and to serve as a backup system for each other. In contrast, bacteria TrxRs are low molecular weight enzymes with a structure and reaction mechanism distinct from mammalian TrxR. Many bacterial species possess specific thiol-dependent antioxidant systems, and the significance of the Trx system in the defense against oxidative stress is different. Particularly, the absence of a GSH-Grx system in some pathogenic bacteria such as Helicobacter pylori, Mycobacterium tuberculosis, and Staphylococcus aureus makes the bacterial Trx system essential for survival under oxidative stress. This provides an opportunity to kill these bacteria by targeting the TrxR-Trx system."
+        }
+       ],
+       "doi": "10.1016/j.freeradbiomed.2013.07.036",
+       "has_abstract": true,
+       "journal": "Free radical biology & medicine",
+       "quotable_text": "The thioredoxin antioxidant system.\n\nThe thioredoxin (Trx) system, which is composed of NADPH, thioredoxin reductase (TrxR), and thioredoxin, is a key antioxidant system in defense against oxidative stress through its disulfide reductase activity regulating protein dithiol/disulfide balance. The Trx system provides the electrons to thiol-dependent peroxidases (peroxiredoxins) to remove reactive oxygen and nitrogen species with a fast reaction rate. Trx antioxidant functions are also shown by involvement in DNA and protein repair by reducing ribonucleotide reductase, methionine sulfoxide reductases, and regulating the activity of many redox-sensitive transcription factors. Moreover, Trx systems play critical roles in the immune response, virus infection, and cell death via interaction with thioredoxin-interacting protein. In mammalian cells, the cytosolic and mitochondrial Trx systems, in which TrxRs are high molecular weight selenoenzymes, together with the glutathione-glutaredoxin (Grx) system (NADPH, glutathione reductase, GSH, and Grx) control the cellular redox environment. Recently mammalian thioredoxin and glutathione systems have been found to be able to provide the electrons crossly and to serve as a backup system for each other. In contrast, bacteria TrxRs are low molecular weight enzymes with a structure and reaction mechanism distinct from mammalian TrxR. Many bacterial species possess specific thiol-dependent antioxidant systems, and the significance of the Trx system in the defense against oxidative stress is different. Particularly, the absence of a GSH-Grx system in some pathogenic bacteria such as Helicobacter pylori, Mycobacterium tuberculosis, and Staphylococcus aureus makes the bacterial Trx system essential for survival under oxidative stress. This provides an opportunity to kill these bacteria by targeting the TrxR-Trx system.",
+       "title": "The thioredoxin antioxidant system.",
+       "year": "2014"
+      },
+      "name": "The thioredoxin antioxidant system.",
+      "record_id": "23899494",
+      "retrieved_at": "2026-08-28T09:48:42.403450+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23899494/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The Mycobacterium tuberculosis AhpC is similar to a family of bacterial and eukaryotic antioxidant proteins with alkylhydroperoxidase (Ahp) and thioredoxin-dependent peroxidase (TPx) activities. AhpC expression is associated with resistance to the front-line antitubercular drug isoniazid in the naturally resistant organisms E. coli and M. smegmatis. We identified several isoniazid-resistant M. tuberculosis isolates with ahpC promoter mutations resulting in AhpC overexpression. These strains were more resistant to cumene hydroperoxide than were wild-type strains. However, these strains were unchanged in their sensitivity to isoniazid, refuting a role for AhpC in detoxification of this drug. All the isoniazid-resistant, AhpC-overexpressing strains were also deficient in activity of the mycobacterial catalase-peroxidase KatG. KatG, the only known catalase in M. tuberculosis, is required for activation of isoniazid. We propose that compensatory ahpC promoter mutations are selected from KatG-deficient, isoniazid-resistant M. tuberculosis during infections, to mitigate the added burden imposed by organic peroxides on these strains.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The Mycobacterium tuberculosis AhpC is similar to a family of bacterial and eukaryotic antioxidant proteins with alkylhydroperoxidase (Ahp) and thioredoxin-dependent peroxidase (TPx) activities. AhpC expression is associated with resistance to the front-line antitubercular drug isoniazid in the naturally resistant organisms E. coli and M. smegmatis. We identified several isoniazid-resistant M. tuberculosis isolates with ahpC promoter mutations resulting in AhpC overexpression. These strains were more resistant to cumene hydroperoxide than were wild-type strains. However, these strains were unchanged in their sensitivity to isoniazid, refuting a role for AhpC in detoxification of this drug. All the isoniazid-resistant, AhpC-overexpressing strains were also deficient in activity of the mycobacterial catalase-peroxidase KatG. KatG, the only known catalase in M. tuberculosis, is required for activation of isoniazid. We propose that compensatory ahpC promoter mutations are selected from KatG-deficient, isoniazid-resistant M. tuberculosis during infections, to mitigate the added burden imposed by organic peroxides on these strains."
+        }
+       ],
+       "doi": "10.1002/biof.5520100219",
+       "has_abstract": true,
+       "journal": "BioFactors (Oxford, England)",
+       "quotable_text": "AhpC, oxidative stress and drug resistance in Mycobacterium tuberculosis.\n\nThe Mycobacterium tuberculosis AhpC is similar to a family of bacterial and eukaryotic antioxidant proteins with alkylhydroperoxidase (Ahp) and thioredoxin-dependent peroxidase (TPx) activities. AhpC expression is associated with resistance to the front-line antitubercular drug isoniazid in the naturally resistant organisms E. coli and M. smegmatis. We identified several isoniazid-resistant M. tuberculosis isolates with ahpC promoter mutations resulting in AhpC overexpression. These strains were more resistant to cumene hydroperoxide than were wild-type strains. However, these strains were unchanged in their sensitivity to isoniazid, refuting a role for AhpC in detoxification of this drug. All the isoniazid-resistant, AhpC-overexpressing strains were also deficient in activity of the mycobacterial catalase-peroxidase KatG. KatG, the only known catalase in M. tuberculosis, is required for activation of isoniazid. We propose that compensatory ahpC promoter mutations are selected from KatG-deficient, isoniazid-resistant M. tuberculosis during infections, to mitigate the added burden imposed by organic peroxides on these strains.",
+       "title": "AhpC, oxidative stress and drug resistance in Mycobacterium tuberculosis.",
+       "year": "1999"
+      },
+      "name": "AhpC, oxidative stress and drug resistance in Mycobacterium tuberculosis.",
+      "record_id": "10609885",
+      "retrieved_at": "2026-08-28T09:48:42.403450+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10609885/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Tuberculosis (TB) is a global threat due to the emergence and spread of drug-resistant Mycobacterium tuberculosis (MTB). Isoniazid (INH) is the main antibiotic used for prevention and treatment of TB. Evidence shows that accumulated mutations can produce INH resistant (INHR) strains, resulting in the progression of multidrug-resistant (MDR) TB. Since point mutations in katG gene, inhA gene, and oxyR-ahpC region correlated with the INH resistance, in this study, we aimed to identify mutations in these three genes in INHR and MDR clinical isolates of MTB by Sanger DNA sequencing analysis. Thirty-three out of 438 isolates were resistant, including 66.7% INHR and 30.3% MDR isolates. In the katG gene, 68.2% INHR isolates had non-synonymous point mutations, mainly R463L (63.6%), and non-synonymous point mutation KatG L587P was seen in one of the MDR isolate. A novel silent substitution L649L was identified in the inhA gene of the MDR isolates. The oxyR-ahpC intergenic region g-88a common mutations (63.6%) in INHR and two distinct novel mutations were found at positions -76 and -77 of the oxyR-ahpC intergenic region. The coexistence of katG non-codon 315 with oxyR-ahpC intergenic region mutations was highly frequent in INHR 59.1% and MDR isolates 70%. Since mutations of all three genes 95.5% lead to the detection of INHR, they might be useful for molecular detection. Our results indicated the continuous evolution and region-specific prevalence of INH resistance. Overall, identification of new mutations in INH resistance can improve the available strategies for diagnosis and control of TB.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Tuberculosis (TB) is a global threat due to the emergence and spread of drug-resistant Mycobacterium tuberculosis (MTB). Isoniazid (INH) is the main antibiotic used for prevention and treatment of TB. Evidence shows that accumulated mutations can produce INH resistant (INHR) strains, resulting in the progression of multidrug-resistant (MDR) TB. Since point mutations in katG gene, inhA gene, and oxyR-ahpC region correlated with the INH resistance, in this study, we aimed to identify mutations in these three genes in INHR and MDR clinical isolates of MTB by Sanger DNA sequencing analysis. Thirty-three out of 438 isolates were resistant, including 66.7% INHR and 30.3% MDR isolates. In the katG gene, 68.2% INHR isolates had non-synonymous point mutations, mainly R463L (63.6%), and non-synonymous point mutation KatG L587P was seen in one of the MDR isolate. A novel silent substitution L649L was identified in the inhA gene of the MDR isolates. The oxyR-ahpC intergenic region g-88a common mutations (63.6%) in INHR and two distinct novel mutations were found at positions -76 and -77 of the oxyR-ahpC intergenic region. The coexistence of katG non-codon 315 with oxyR-ahpC intergenic region mutations was highly frequent in INHR 59.1% and MDR isolates 70%. Since mutations of all three genes 95.5% lead to the detection of INHR, they might be useful for molecular detection. Our results indicated the continuous evolution and region-specific prevalence of INH resistance. Overall, identification of new mutations in INH resistance can improve the available strategies for diagnosis and control of TB."
+        }
+       ],
+       "doi": "10.1080/20477724.2021.1928870",
+       "has_abstract": true,
+       "journal": "Pathogens and global health",
+       "quotable_text": "Significance of the coexistence of non-codon 315 katG, inhA, and oxyR-ahpC intergenic gene mutations among isoniazid-resistant and multidrug-resistant isolates of Mycobacterium tuberculosis: a report of novel mutations.\n\nTuberculosis (TB) is a global threat due to the emergence and spread of drug-resistant Mycobacterium tuberculosis (MTB). Isoniazid (INH) is the main antibiotic used for prevention and treatment of TB. Evidence shows that accumulated mutations can produce INH resistant (INHR) strains, resulting in the progression of multidrug-resistant (MDR) TB. Since point mutations in katG gene, inhA gene, and oxyR-ahpC region correlated with the INH resistance, in this study, we aimed to identify mutations in these three genes in INHR and MDR clinical isolates of MTB by Sanger DNA sequencing analysis. Thirty-three out of 438 isolates were resistant, including 66.7% INHR and 30.3% MDR isolates. In the katG gene, 68.2% INHR isolates had non-synonymous point mutations, mainly R463L (63.6%), and non-synonymous point mutation KatG L587P was seen in one of the MDR isolate. A novel silent substitution L649L was identified in the inhA gene of the MDR isolates. The oxyR-ahpC intergenic region g-88a common mutations (63.6%) in INHR and two distinct novel mutations were found at positions -76 and -77 of the oxyR-ahpC intergenic region. The coexistence of katG non-codon 315 with oxyR-ahpC intergenic region mutations was highly frequent in INHR 59.1% and MDR isolates 70%. Since mutations of all three genes 95.5% lead to the detection of INHR, they might be useful for molecular detection. Our results indicated the continuous evolution and region-specific prevalence of INH resistance. Overall, identification of new mutations in INH resistance can improve the available strategies for diagnosis and control of TB.",
+       "title": "Significance of the coexistence of non-codon 315 katG, inhA, and oxyR-ahpC intergenic gene mutations among isoniazid-resistant and multidrug-resistant isolates of Mycobacterium tuberculosis: a report of novel mutations.",
+       "year": "2022"
+      },
+      "name": "Significance of the coexistence of non-codon 315 katG, inhA, and oxyR-ahpC intergenic gene mutations among isoniazid-resistant and multidrug-resistant isolates of Mycobacterium tuberculosis: a report of novel mutations.",
+      "record_id": "34086544",
+      "retrieved_at": "2026-08-28T09:48:42.403450+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34086544/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "BACKGROUND: Tuberculosis (TB) is an airborne disease caused by Mycobacterium tuberculosis (M. tuberculosis). The world is currently facing challenges due to the spread of anti-tuberculosis drug-resistant of M. tuberculosis. Isoniazid-resistant (INH), is one of the first-line anti-tuberculosis agents that has a high resistance case. This study used Multiplex allele-specific Polymerase Chain Reaction (MAS-PCR) to detect the most common mutations associated with isoniazid resistance on inhA, katG, and ahpC gene.\n\nMETHODS: This study used samples from clinical isolates of M. tuberculosis which had been tested for their antibiotic sensitivity of first-line anti-tuberculosis drugs. The DNA extraction process was carried out using the boiling method and then amplified with specific primers for inhA, katG, and ahpC genes using the MAS-PCR method. The results are then read on the electrophoretic gel with an interpretation of the mutation gene when the target gene DNA bands were absent according to the allele-specific fragments target.\n\nRESULTS: A total of 200 isolates were tested in this study consisting of isoniazid-resistant and susceptible with the largest distribution of Multi-Drug Resistant (MDR) isolates with a total of 146 isolates (73%). The most significant gene mutation was on the ahpC gene in 61 isolates (30,5%) and the combination mutation of the katG + ahpC gene in 52 isolates (26%) with sensitivity and specificity of the test reaching 87% and 42% for the detection of INH-resistant.\n\nCONCLUSION: Mutation on the ahpC gene has the highest percentage in this study. AhpC gene can be considered one of the essential genes to be tested for the cause of isoniazid-resistant. Using MAS-PCR for detecting gene mutation in isoniazid-resistant was simple and easy, it has the potential to be widely used as a rapid screening molecular test.",
+       "abstract_sections": [
+        {
+         "label": "BACKGROUND",
+         "text": "Tuberculosis (TB) is an airborne disease caused by Mycobacterium tuberculosis (M. tuberculosis). The world is currently facing challenges due to the spread of anti-tuberculosis drug-resistant of M. tuberculosis. Isoniazid-resistant (INH), is one of the first-line anti-tuberculosis agents that has a high resistance case. This study used Multiplex allele-specific Polymerase Chain Reaction (MAS-PCR) to detect the most common mutations associated with isoniazid resistance on inhA, katG, and ahpC gene."
+        },
+        {
+         "label": "METHODS",
+         "text": "This study used samples from clinical isolates of M. tuberculosis which had been tested for their antibiotic sensitivity of first-line anti-tuberculosis drugs. The DNA extraction process was carried out using the boiling method and then amplified with specific primers for inhA, katG, and ahpC genes using the MAS-PCR method. The results are then read on the electrophoretic gel with an interpretation of the mutation gene when the target gene DNA bands were absent according to the allele-specific fragments target."
+        },
+        {
+         "label": "RESULTS",
+         "text": "A total of 200 isolates were tested in this study consisting of isoniazid-resistant and susceptible with the largest distribution of Multi-Drug Resistant (MDR) isolates with a total of 146 isolates (73%). The most significant gene mutation was on the ahpC gene in 61 isolates (30,5%) and the combination mutation of the katG + ahpC gene in 52 isolates (26%) with sensitivity and specificity of the test reaching 87% and 42% for the detection of INH-resistant."
+        },
+        {
+         "label": "CONCLUSION",
+         "text": "Mutation on the ahpC gene has the highest percentage in this study. AhpC gene can be considered one of the essential genes to be tested for the cause of isoniazid-resistant. Using MAS-PCR for detecting gene mutation in isoniazid-resistant was simple and easy, it has the potential to be widely used as a rapid screening molecular test."
+        }
+       ],
+       "doi": "10.1016/j.ijtb.2023.03.019",
+       "has_abstract": true,
+       "journal": "The Indian journal of tuberculosis",
+       "quotable_text": "Detection of katG, inhA and ahpC gene mutation in clinical isolates of isoniazid-resistant Mycobacterium tuberculosis in Makassar City, South Sulawesi, Indonesia.\n\nBACKGROUND: Tuberculosis (TB) is an airborne disease caused by Mycobacterium tuberculosis (M. tuberculosis). The world is currently facing challenges due to the spread of anti-tuberculosis drug-resistant of M. tuberculosis. Isoniazid-resistant (INH), is one of the first-line anti-tuberculosis agents that has a high resistance case. This study used Multiplex allele-specific Polymerase Chain Reaction (MAS-PCR) to detect the most common mutations associated with isoniazid resistance on inhA, katG, and ahpC gene.\n\nMETHODS: This study used samples from clinical isolates of M. tuberculosis which had been tested for their antibiotic sensitivity of first-line anti-tuberculosis drugs. The DNA extraction process was carried out using the boiling method and then amplified with specific primers for inhA, katG, and ahpC genes using the MAS-PCR method. The results are then read on the electrophoretic gel with an interpretation of the mutation gene when the target gene DNA bands were absent according to the allele-specific fragments target.\n\nRESULTS: A total of 200 isolates were tested in this study consisting of isoniazid-resistant and susceptible with the largest distribution of Multi-Drug Resistant (MDR) isolates with a total of 146 isolates (73%). The most significant gene mutation was on the ahpC gene in 61 isolates (30,5%) and the combination mutation of the katG + ahpC gene in 52 isolates (26%) with sensitivity and specificity of the test reaching 87% and 42% for the detection of INH-resistant.\n\nCONCLUSION: Mutation on the ahpC gene has the highest percentage in this study. AhpC gene can be considered one of the essential genes to be tested for the cause of isoniazid-resistant. Using MAS-PCR for detecting gene mutation in isoniazid-resistant was simple and easy, it has the potential to be widely used as a rapid screening molecular test.",
+       "title": "Detection of katG, inhA and ahpC gene mutation in clinical isolates of isoniazid-resistant Mycobacterium tuberculosis in Makassar City, South Sulawesi, Indonesia.",
+       "year": "2024"
+      },
+      "name": "Detection of katG, inhA and ahpC gene mutation in clinical isolates of isoniazid-resistant Mycobacterium tuberculosis in Makassar City, South Sulawesi, Indonesia.",
+      "record_id": "39278670",
+      "retrieved_at": "2026-08-28T09:48:42.403450+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39278670/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "BACKGROUND: The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission.\n\nMETHODS: We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed.\n\nRESULTS: In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains.\n\nCONCLUSIONS: Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman.",
+       "abstract_sections": [
+        {
+         "label": "BACKGROUND",
+         "text": "The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission."
+        },
+        {
+         "label": "METHODS",
+         "text": "We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed."
+        },
+        {
+         "label": "RESULTS",
+         "text": "In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains."
+        },
+        {
+         "label": "CONCLUSIONS",
+         "text": "Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman."
+        }
+       ],
+       "doi": "10.7717/peerj.13645",
+       "has_abstract": true,
+       "journal": "PeerJ",
+       "quotable_text": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.\n\nBACKGROUND: The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission.\n\nMETHODS: We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed.\n\nRESULTS: In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains.\n\nCONCLUSIONS: Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman.",
+       "title": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.",
+       "year": "2022"
+      },
+      "name": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.",
+      "record_id": "35919400",
+      "retrieved_at": "2026-08-28T09:48:42.403450+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35919400/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "To characterize the mutation profile of the ahpC gene in isoniazid resistance (INHr) Mycobacterium tuberculosis (MTB) isolates and to evaluate the correlation between specific mutations and resistance levels, a total of 1,337 INHr MTB isolates were collected through the Chinese Drug Resistance Surveillance Program (2013-2020). The minimum inhibitory concentrations (MICs) for INH, rifampicin (RIF), and ethionamide were determined by broth microdilution, followed by whole-genome sequencing analysis. Among 1,337 INHr-MTB isolates, 45.5% (608/1,337) were multidrug-resistant (MDR), and 54.5% (729/1,337) were RIF-sensitive cases, with lineage 2 predominating (1,013/1,337, 75.8%). Resistance mutations were identified in 79.1% (1,058/1,337) of strains, primarily katG Ser315Thr (65.5%, 695/1,058) and inhA C-777T (19.7%, 208/1,058). Notably, 5.3% (56/1,058) isolates harbored standalone ahpC mutations, with 83.3% (5/6) C-81T, 60.0% (9/15) G-48A, 57.1% (4/7) C-54T, 50.0% (3/6) C-57T, and 42.1% (8/19) C-52T mutations showing high-level INH resistance. Accordingly, 91.7% (11/12) dual katG315+inhA mutations conferred high-level INH resistance, while ahpC C-57T mutants universally exhibited MDR. The ahpC mutations are associated with high-level INH resistance in variants without concurrent katG or inhA mutations. This finding significantly advances our understanding of tuberculosis resistance profiling, enabling more comprehensive detection of INHr-MTB and optimizing therapeutic strategies.IMPORTANCEAmong INH-resistant MTB clinical isolates, mutations in the ahpC promoter region have been considered to occur in combination with other mutations, such as katG and inhA, in a compensatory role. While the ahpC mutations have been incorporated into the World Health Organization (WHO)-recommended rapid diagnostic test, Xpert MTB/extensively drug-resistant tuberculosis (XDR), it has been still ambiguous about the standalone effects on INH resistance spectrum. Our findings demonstrate that the ahpC mutations are associated with high-level INH resistance in variants without concurrent katG or inhA mutations. This finding significantly advances our understanding of TB resistance profiling, enabling a more comprehensive detection of INHr-MTB and optimizing therapeutic strategies.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "To characterize the mutation profile of the ahpC gene in isoniazid resistance (INHr) Mycobacterium tuberculosis (MTB) isolates and to evaluate the correlation between specific mutations and resistance levels, a total of 1,337 INHr MTB isolates were collected through the Chinese Drug Resistance Surveillance Program (2013-2020). The minimum inhibitory concentrations (MICs) for INH, rifampicin (RIF), and ethionamide were determined by broth microdilution, followed by whole-genome sequencing analysis. Among 1,337 INHr-MTB isolates, 45.5% (608/1,337) were multidrug-resistant (MDR), and 54.5% (729/1,337) were RIF-sensitive cases, with lineage 2 predominating (1,013/1,337, 75.8%). Resistance mutations were identified in 79.1% (1,058/1,337) of strains, primarily katG Ser315Thr (65.5%, 695/1,058) and inhA C-777T (19.7%, 208/1,058). Notably, 5.3% (56/1,058) isolates harbored standalone ahpC mutations, with 83.3% (5/6) C-81T, 60.0% (9/15) G-48A, 57.1% (4/7) C-54T, 50.0% (3/6) C-57T, and 42.1% (8/19) C-52T mutations showing high-level INH resistance. Accordingly, 91.7% (11/12) dual katG315+inhA mutations conferred high-level INH resistance, while ahpC C-57T mutants universally exhibited MDR. The ahpC mutations are associated with high-level INH resistance in variants without concurrent katG or inhA mutations. This finding significantly advances our understanding of tuberculosis resistance profiling, enabling more comprehensive detection of INHr-MTB and optimizing therapeutic strategies.IMPORTANCEAmong INH-resistant MTB clinical isolates, mutations in the ahpC promoter region have been considered to occur in combination with other mutations, such as katG and inhA, in a compensatory role. While the ahpC mutations have been incorporated into the World Health Organization (WHO)-recommended rapid diagnostic test, Xpert MTB/extensively drug-resistant tuberculosis (XDR), it has been still ambiguous about the standalone effects on INH resistance spectrum. Our findings demonstrate that the ahpC mutations are associated with high-level INH resistance in variants without concurrent katG or inhA mutations. This finding significantly advances our understanding of TB resistance profiling, enabling a more comprehensive detection of INHr-MTB and optimizing therapeutic strategies."
+        }
+       ],
+       "doi": "10.1128/spectrum.02496-25",
+       "has_abstract": true,
+       "journal": "Microbiology spectrum",
+       "quotable_text": "Prevalence and resistance spectrum of ahpC mutations in isoniazid-resistant Mycobacterium tuberculosis isolates.\n\nTo characterize the mutation profile of the ahpC gene in isoniazid resistance (INHr) Mycobacterium tuberculosis (MTB) isolates and to evaluate the correlation between specific mutations and resistance levels, a total of 1,337 INHr MTB isolates were collected through the Chinese Drug Resistance Surveillance Program (2013-2020). The minimum inhibitory concentrations (MICs) for INH, rifampicin (RIF), and ethionamide were determined by broth microdilution, followed by whole-genome sequencing analysis. Among 1,337 INHr-MTB isolates, 45.5% (608/1,337) were multidrug-resistant (MDR), and 54.5% (729/1,337) were RIF-sensitive cases, with lineage 2 predominating (1,013/1,337, 75.8%). Resistance mutations were identified in 79.1% (1,058/1,337) of strains, primarily katG Ser315Thr (65.5%, 695/1,058) and inhA C-777T (19.7%, 208/1,058). Notably, 5.3% (56/1,058) isolates harbored standalone ahpC mutations, with 83.3% (5/6) C-81T, 60.0% (9/15) G-48A, 57.1% (4/7) C-54T, 50.0% (3/6) C-57T, and 42.1% (8/19) C-52T mutations showing high-level INH resistance. Accordingly, 91.7% (11/12) dual katG315+inhA mutations conferred high-level INH resistance, while ahpC C-57T mutants universally exhibited MDR. The ahpC mutations are associated with high-level INH resistance in variants without concurrent katG or inhA mutations. This finding significantly advances our understanding of tuberculosis resistance profiling, enabling more comprehensive detection of INHr-MTB and optimizing therapeutic strategies.IMPORTANCEAmong INH-resistant MTB clinical isolates, mutations in the ahpC promoter region have been considered to occur in combination with other mutations, such as katG and inhA, in a compensatory role. While the ahpC mutations have been incorporated into the World Health Organization (WHO)-recommended rapid diagnostic test, Xpert MTB/extensively drug-resistant tuberculosis (XDR), it has been still ambiguous about the standalone effects on INH resistance spectrum. Our findings demonstrate that the ahpC mutations are associated with high-level INH resistance in variants without concurrent katG or inhA mutations. This finding significantly advances our understanding of TB resistance profiling, enabling a more comprehensive detection of INHr-MTB and optimizing therapeutic strategies.",
+       "title": "Prevalence and resistance spectrum of ahpC mutations in isoniazid-resistant Mycobacterium tuberculosis isolates.",
+       "year": "2026"
+      },
+      "name": "Prevalence and resistance spectrum of ahpC mutations in isoniazid-resistant Mycobacterium tuberculosis isolates.",
+      "record_id": "41856489",
+      "retrieved_at": "2026-08-28T09:48:42.403450+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41856489/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "006ff0f0e6d64f5189f735354253ca6643945e0fbf5147daf9315cb002f69a98",
+      "retrieved_at": "2026-08-28T09:48:42.013035+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=6&retmode=json&sort=relevance&term=%22ahpC+katG%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
+     },
+     {
+      "cached": false,
+      "content_sha256": "5641b5bcb7872568325cbceee6dce8e593790b7a96ddedeb30438fdc80c825d3",
+      "retrieved_at": "2026-08-28T09:48:42.403450+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=23899494%2C10609885%2C34086544%2C39278670%2C35919400%2C41856489&retmode=xml&tool=kegg-string-mcp"
+     }
+    ],
+    "resolved": {
+     "matched_by": "pubmed_search",
+     "query_translation": "\"ahpc\"[All Fields] AND \"katg\"[All Fields] AND \"Mycobacterium tuberculosis\"[All Fields]",
+     "term": "\"ahpC katG\" AND \"Mycobacterium tuberculosis\""
+    }
+   },
+   "tool": "pubmed_abstracts"
+  }
+ ],
+ "id": "katG-ahpC-epistasis",
+ "mode": "epistasis",
+ "organism": "mtu",
+ "summary": "## katG (83332.Rv1908c) \u2013 ahpC (83332.Rv2428)\n\n### What the structured evidence actually says\n\n**The direct edge is real but single-channel.** STRING scores this pair at combined 0.968, which looks like a top-tier interaction \u2014 but the breakdown is textmining 0.965, and the highest non-textmining channel is neighborhood at 0.096. Experimental, database, cooccurrence are all 0.0; coexpression is 0.082. `evidence_beyond_textmining: false`. So the deterministic verdict stands: this edge is literature co-mention, and nothing in STRING's evidence base independently supports a physical or functional interaction between the two proteins.\n\n**\"No shared pathway\" here is partly an annotation gap, not a demonstrated separation.** katG maps to five KEGG pathways (mtu00360, mtu00380, mtu00983, mtu01100, mtu01110). ahpC returned an *empty* record set with the note that \"the gene exists in KEGG but is not mapped to any pathway in this organism.\" KEGG therefore had no opportunity to place these two genes together \u2014 the zero-overlap result carries essentially no information either way. (And mtu01100/mtu01110 are container categories; even had ahpC been in them, that would be a base rate, not a link.)\n\n### The shared neighbourhood is mostly the same literature signal, recounted\n\nEight of the ten shared partners are the canonical first-line drug-resistance panel: rpoB (83332.Rv0667), inhA (83332.Rv1484), fabG1 (83332.Rv1483), pncA (83332.Rv2043c), kasA (83332.Rv2245), embB (83332.Rv3795), ndh (83332.Rv1854c), sodC (83332.Rv0432). Checking the channels on both sides, essentially every one of these edges is textmining-only for katG *and* for ahpC (STRING's own notes flag rpoB, inhA, kasA, embB, pncA, ndh, fabG1 as textmining-only from both anchors). These genes are co-mentioned because they are sequenced together in resistance surveys \u2014 e.g. PMID:35919400 reports \"full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA)\". A shared neighbourhood built out of survey panels is not independent corroboration of the katG\u2013ahpC edge; it is the same co-mention signal appearing twice.\n\n**Two shared partners are the exception.** furA (83332.Rv1909c) and sodA (83332.Rv3846) are connected to *both* genes with support beyond textmining:\n- katG\u2013furA: neighborhood 0.829 (Rv1908c/Rv1909c are adjacent), ahpC\u2013furA: coexpression 0.573\n- katG\u2013sodA: database 0.5, ahpC\u2013sodA: coexpression 0.476\n\nThis is the one genuinely non-literature hint that the two sit in a common oxidative-stress neighbourhood. It is indirect \u2014 a shared second-degree context, not an interaction.\n\n**Their private neighbourhoods are distinct modules.** ahpC's strongest, best-supported partners form a thiol/peroxiredoxin redox module: ahpD (83332.Rv2429; combined 0.999, neighborhood 0.844, cooccurrence 0.766, coexpression 0.836), oxyR (83332.Rv2427A; neighborhood 0.543), trxB2 (83332.Rv3913; experimental 0.808), plus a set with database 0.611 (dsbF 83332.Rv1677, dipZ 83332.Rv2874, thiX 83332.Rv0816c, mpt53 83332.Rv2878c). katG's non-textmining partners are instead its own locus and metabolic-database links: furA, Rv1907c (83332.Rv1907c; neighborhood 0.805, coexpression 0.731), nat (83332.Rv3566c), hisC1 (83332.Rv1600), cobC (83332.Rv2231c), hisC2 (83332.Rv3772). Notably, the two genes' coexpression score with each other is only 0.082 \u2014 they are not co-regulated in STRING's expression compendium, consistent with separate regulators.\n\n### What kind of link is this, then?\n\nOne line of evidence \u2014 literature \u2014 and it describes a *population-genetic* relationship rather than a molecular one. That is the most important interpretive point, because it fits an epistasis call precisely. PMID:10609885 reports that \"All the isoniazid-resistant, AhpC-overexpressing strains were also deficient in activity of the mycobacterial catalase-peroxidase KatG\" and proposes \"that compensatory ahpC promoter mutations are selected from KatG-deficient, isoniazid-resistant M. tuberculosis during infections, to mitigate the added burden imposed by organic peroxides on these strains.\" The same paper explicitly rules out a shared drug-detoxification mechanism: the overexpressing strains \"were unchanged in their sensitivity to isoniazid, refuting a role for AhpC in detoxification of this drug.\" The co-occurrence is observed at genotype level in clinical isolates \u2014 PMID:39278670 reports \"the combination mutation of the katG + ahpC gene in 52 isolates (26%)\" \u2014 and PMID:41856489 notes that \"mutations in the ahpC promoter region have been considered to occur in combination with other mutations, such as katG and inhA, in a compensatory role.\"\n\nTo be explicit about double-counting: these abstracts are very plausibly the source of the 0.965 textmining score. They do not add a second line of evidence; they characterise the one that exists.\n\n**Verdict:** a plausible mechanism exists, but it is compensatory epistasis at the level of loss-of-function genotypes \u2014 ahpC upregulation buffering peroxide stress in KatG-deficient backgrounds \u2014 not a direct physical interaction and not a shared annotated pathway. Neither STRING's experimental channel nor KEGG places these proteins in a common complex or route. The upstream flag is therefore probably picking up genotype co-occurrence/fitness compensation in resistant isolates, which is exactly what an epistasis screen should find, and it should not be reported as a protein\u2013protein interaction.\n\n**What would test it:** direct measurement rather than more literature. A katG-null background with and without an ahpC promoter-up variant, assayed for organic-peroxide survival and competitive fitness, would separate genuine compensation from linkage-driven co-occurrence in clinical lineages. On the network side, the informative gap is the absence of any experimental or coexpression signal linking them despite both being peroxide-detoxifying \u2014 if compensation were transcriptionally mediated, one might expect a coexpression signature, and STRING shows 0.082.",
+ "target": "katG, ahpC",
+ "turns": [
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "katG"
+     },
+     "name": "kegg_pathways"
+    },
+    {
+     "input": {
+      "gene": "ahpC"
+     },
+     "name": "kegg_pathways"
+    }
+   ],
+   "turn": 1
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "katG",
+      "required_score": 700
+     },
+     "name": "string_partners"
+    },
+    {
+     "input": {
+      "gene": "ahpC",
+      "required_score": 700
+     },
+     "name": "string_partners"
+    }
+   ],
+   "turn": 2
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "ahpC katG",
+      "limit": 6
+     },
+     "name": "pubmed_abstracts"
+    }
+   ],
+   "turn": 3
+  },
+  {
+   "stop_reason": "end_turn",
+   "tools_requested": [],
+   "turn": 4
+  }
+ ]
+}

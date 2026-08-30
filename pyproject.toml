@@ -14,6 +14,7 @@ dependencies = ["mcp>=2.0", "httpx>=0.27", "pydantic>=2.6", "anthropic>=1.0"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0", "ruff>=0.4"]
+demo = ["gradio>=5"]
 
 [project.scripts]
 kegg-string-mcp = "kegg_string_mcp.server:main"
@@ -26,7 +27,7 @@ packages = ["src/kegg_string_mcp"]
 "src/kegg_string_mcp/evaluate/gold_mtu.json" = "kegg_string_mcp/evaluate/gold_mtu.json"
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]
+pythonpath = ["src", "."]
 testpaths = ["tests"]
 
 [tool.ruff]

@@ -1,0 +1,689 @@
+{
+ "calls": [
+  {
+   "arguments": {
+    "gene": "furA",
+    "organism": "mtu"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "KEGG returned no pathway assignments for mtu:Rv1909c. The gene exists in KEGG but is not mapped to any pathway in this organism."
+    ],
+    "query": {
+     "gene": "furA",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "retrieved_at": "2026-08-28T08:51:13.497194+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv1909c"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv1909c",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "furA",
+    "required_score": 700,
+    "species": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: zur."
+    ],
+    "query": {
+     "gene": "furA",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv1908c",
+     "83332.Rv2359",
+     "83332.Rv2428",
+     "83332.Rv1907c"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.085,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.829
+       },
+       "combined_score": 0.979,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.829,
+       "partner_of": "83332.Rv1909c",
+       "textmining_score": 0.878
+      },
+      "name": "katG",
+      "record_id": "83332.Rv1908c",
+      "retrieved_at": "2026-08-28T08:51:14.914431+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1908c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.085,
+        "cooccurrence": 0.39,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.9,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.39,
+       "partner_of": "83332.Rv1909c",
+       "textmining_score": 0.836
+      },
+      "name": "zur",
+      "record_id": "83332.Rv2359",
+      "retrieved_at": "2026-08-28T08:51:14.914431+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2359"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.573,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.093
+       },
+       "combined_score": 0.87,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.573,
+       "partner_of": "83332.Rv1909c",
+       "textmining_score": 0.692
+      },
+      "name": "ahpC",
+      "record_id": "83332.Rv2428",
+      "retrieved_at": "2026-08-28T08:51:14.914431+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2428"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.085,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.697
+       },
+       "combined_score": 0.831,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.697,
+       "partner_of": "83332.Rv1909c",
+       "textmining_score": 0.438
+      },
+      "name": "Rv1907c",
+      "record_id": "83332.Rv1907c",
+      "retrieved_at": "2026-08-28T08:51:14.914431+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1907c"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "23f54a910fc0d4454654f5759baf10dfbcf7e09652dfba1e87ccc4caf51f87fb",
+      "retrieved_at": "2026-08-28T08:51:13.769171+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=furA&limit=1&species=83332"
+     },
+     {
+      "cached": true,
+      "content_sha256": "7d8303a35cf6d0903cc19115ea285075ce61a1043b56fc05c7898020d8f31634",
+      "retrieved_at": "2026-08-28T08:51:14.914431+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv1909c&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "furA",
+     "string_id": "83332.Rv1909c"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "Rv1908c",
+    "organism": "mtu"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [],
+    "query": {
+     "gene": "Rv1908c",
+     "organism": "mtu"
+    },
+    "record_ids": [
+     "mtu00360",
+     "mtu00380",
+     "mtu00983",
+     "mtu01100",
+     "mtu01110"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Phenylalanine metabolism - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00360",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00360"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Tryptophan metabolism - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00380",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00380"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Drug metabolism - other enzymes - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu00983",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu00983"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Metabolic pathways - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01100",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01100"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "kegg_gene_id": "mtu:Rv1908c"
+      },
+      "name": "Biosynthesis of secondary metabolites - Mycobacterium tuberculosis H37Rv",
+      "record_id": "mtu01110",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "source": "kegg",
+      "type": "pathway",
+      "url": "https://www.kegg.jp/entry/mtu01110"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "84cbbd41122ec13d0ca6d80cc904bd151e174f3468aff057090dd165b2e6d590",
+      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv1908c"
+     },
+     {
+      "cached": true,
+      "content_sha256": "fb3e52ff8b817798ee1b884c88affaf5a547b5e386c27d1afd61f0400867b648",
+      "retrieved_at": "2026-08-28T08:49:28.342942+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/pathway/mtu"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv1908c",
+     "matched_by": "locus_tag"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "furA Rv1909c",
+    "limit": 8,
+    "organism": "Mycobacterium tuberculosis"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
+     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+    ],
+    "query": {
+     "gene": "furA Rv1909c",
+     "limit": 8,
+     "organism": "Mycobacterium tuberculosis"
+    },
+    "record_ids": [
+     "27328747"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Because of its high pathogenicity and infectivity, tuberculosis is a serious threat to human health. Some information about the functions of the genes in Mycobacterium tuberculosis genome was currently available, but it was not enough to explore transcriptional regulatory mechanisms. Here, we applied the WGCNA (Weighted Gene Correlation Network Analysis) algorithm to mine pooled microarray datasets for the M. tuberculosis H37Rv strain. We constructed a co-expression network that was subdivided into 78 co-expression gene modules. The different response to two kinds of vitro models (a constant 0.2% oxygen hypoxia model and a Wayne model) were explained based on these modules. We identified potential transcription factors based on high Pearson's correlation coefficients between the modules and genes. Three modules that may be associated with hypoxic stimulation were identified, and their potential transcription factors were predicted. In the validation experiment, we determined the expression levels of genes in the modules under hypoxic condition and under overexpression of potential transcription factors (Rv0081, furA (Rv1909c), Rv0324, Rv3334, and Rv3833). The experimental results showed that the three identified modules related to hypoxia and that the overexpression of transcription factors could significantly change the expression levels of genes in the corresponding modules.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Because of its high pathogenicity and infectivity, tuberculosis is a serious threat to human health. Some information about the functions of the genes in Mycobacterium tuberculosis genome was currently available, but it was not enough to explore transcriptional regulatory mechanisms. Here, we applied the WGCNA (Weighted Gene Correlation Network Analysis) algorithm to mine pooled microarray datasets for the M. tuberculosis H37Rv strain. We constructed a co-expression network that was subdivided into 78 co-expression gene modules. The different response to two kinds of vitro models (a constant 0.2% oxygen hypoxia model and a Wayne model) were explained based on these modules. We identified potential transcription factors based on high Pearson's correlation coefficients between the modules and genes. Three modules that may be associated with hypoxic stimulation were identified, and their potential transcription factors were predicted. In the validation experiment, we determined the expression levels of genes in the modules under hypoxic condition and under overexpression of potential transcription factors (Rv0081, furA (Rv1909c), Rv0324, Rv3334, and Rv3833). The experimental results showed that the three identified modules related to hypoxia and that the overexpression of transcription factors could significantly change the expression levels of genes in the corresponding modules."
+        }
+       ],
+       "doi": "10.1038/srep28422",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Scientific reports",
+       "mentions": [
+        "furA",
+        "Rv1909c"
+       ],
+       "pmcid": "PMC4916473",
+       "quotable_text": "Construction and application of a co-expression network in Mycobacterium tuberculosis.\n\nBecause of its high pathogenicity and infectivity, tuberculosis is a serious threat to human health. Some information about the functions of the genes in Mycobacterium tuberculosis genome was currently available, but it was not enough to explore transcriptional regulatory mechanisms. Here, we applied the WGCNA (Weighted Gene Correlation Network Analysis) algorithm to mine pooled microarray datasets for the M. tuberculosis H37Rv strain. We constructed a co-expression network that was subdivided into 78 co-expression gene modules. The different response to two kinds of vitro models (a constant 0.2% oxygen hypoxia model and a Wayne model) were explained based on these modules. We identified potential transcription factors based on high Pearson's correlation coefficients between the modules and genes. Three modules that may be associated with hypoxic stimulation were identified, and their potential transcription factors were predicted. In the validation experiment, we determined the expression levels of genes in the modules under hypoxic condition and under overexpression of potential transcription factors (Rv0081, furA (Rv1909c), Rv0324, Rv3334, and Rv3833). The experimental results showed that the three identified modules related to hypoxia and that the overexpression of transcription factors could significantly change the expression levels of genes in the corresponding modules.",
+       "title": "Construction and application of a co-expression network in Mycobacterium tuberculosis.",
+       "year": "2016"
+      },
+      "name": "Construction and application of a co-expression network in Mycobacterium tuberculosis.",
+      "record_id": "27328747",
+      "retrieved_at": "2026-08-28T10:31:54.597146+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27328747/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "1bfee5e5055bf11639bb56aaf0c09b7b0e4b1b161d00149c98d4927519fafac6",
+      "retrieved_at": "2026-08-28T10:31:54.243499+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=8&retmode=json&sort=relevance&term=%22furA+Rv1909c%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
+     },
+     {
+      "cached": false,
+      "content_sha256": "8b45ec0d98d542ea8582f8e3a2d0d3002f2b15797bea2c5fd241e33276270a0f",
+      "retrieved_at": "2026-08-28T10:31:54.597146+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=27328747&retmode=xml&tool=kegg-string-mcp"
+     }
+    ],
+    "resolved": {
+     "matched_by": "pubmed_search",
+     "query_translation": "\"fura\"[All Fields] AND \"rv1909c\"[All Fields] AND \"Mycobacterium tuberculosis\"[All Fields]",
+     "term": "\"furA Rv1909c\" AND \"Mycobacterium tuberculosis\""
+    }
+   },
+   "tool": "pubmed_abstracts"
+  },
+  {
+   "arguments": {
+    "gene": "furA katG regulation oxidative stress",
+    "limit": 6,
+    "organism": "Mycobacterium tuberculosis"
+   },
+   "origin": "turn 3",
+   "result": {
+    "notes": [
+     "10 articles matched this query; the 6 most relevant were retrieved. A finding absent from these abstracts may still be reported in the 4 not retrieved.",
+     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
+     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+    ],
+    "query": {
+     "gene": "furA katG regulation oxidative stress",
+     "limit": 6,
+     "organism": "Mycobacterium tuberculosis"
+    },
+    "record_ids": [
+     "11698368",
+     "9733688",
+     "11401695",
+     "11395468",
+     "19169435",
+     "37358434"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The DNA region upstream of katG in Mycobacterium smegmatis was cloned and sequenced. The furA gene, highly homologous to Mycobacterium tuberculosis furA, mapped in this region. The furA-katG organization appears to be conserved among several mycobacteria. The transcription pattern of furA and katG in M. smegmatis upon oxidative stress was analyzed by Northern blotting and primer extension. Although transcription of both furA and katG was induced upon oxidative stress, transcripts covering both genes could not be identified either by Northern blotting or by reverse transcriptase PCR. Specific transcripts and 5' ends were identified for furA and katG, respectively. By cloning M. smegmatis and M. tuberculosis DNA regions upstream of a reporter gene, we demonstrated the presence of two promoters, pfurA, located immediately upstream of the furA gene, and pkatG, located within the terminal part of the furA coding sequence. Transcription from pfurA was induced upon oxidative stress. A 23-bp sequence overlapping the pfurA -35 region is highly conserved among mycobacteria and streptomycetes and might be involved in controlling pfurA activity. Transcription from a cloned pkatG, lacking the upstream pfurA region, was not induced upon oxidative stress, suggesting a cis-acting regulatory role of this region.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The DNA region upstream of katG in Mycobacterium smegmatis was cloned and sequenced. The furA gene, highly homologous to Mycobacterium tuberculosis furA, mapped in this region. The furA-katG organization appears to be conserved among several mycobacteria. The transcription pattern of furA and katG in M. smegmatis upon oxidative stress was analyzed by Northern blotting and primer extension. Although transcription of both furA and katG was induced upon oxidative stress, transcripts covering both genes could not be identified either by Northern blotting or by reverse transcriptase PCR. Specific transcripts and 5' ends were identified for furA and katG, respectively. By cloning M. smegmatis and M. tuberculosis DNA regions upstream of a reporter gene, we demonstrated the presence of two promoters, pfurA, located immediately upstream of the furA gene, and pkatG, located within the terminal part of the furA coding sequence. Transcription from pfurA was induced upon oxidative stress. A 23-bp sequence overlapping the pfurA -35 region is highly conserved among mycobacteria and streptomycetes and might be involved in controlling pfurA activity. Transcription from a cloned pkatG, lacking the upstream pfurA region, was not induced upon oxidative stress, suggesting a cis-acting regulatory role of this region."
+        }
+       ],
+       "doi": "10.1128/JB.183.23.6801-6806.2001",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Journal of bacteriology",
+       "mentions": [
+        "furA",
+        "katG",
+        "regulation",
+        "oxidative",
+        "stress"
+       ],
+       "pmcid": "PMC95520",
+       "quotable_text": "Transcriptional regulation of furA and katG upon oxidative stress in Mycobacterium smegmatis.\n\nThe DNA region upstream of katG in Mycobacterium smegmatis was cloned and sequenced. The furA gene, highly homologous to Mycobacterium tuberculosis furA, mapped in this region. The furA-katG organization appears to be conserved among several mycobacteria. The transcription pattern of furA and katG in M. smegmatis upon oxidative stress was analyzed by Northern blotting and primer extension. Although transcription of both furA and katG was induced upon oxidative stress, transcripts covering both genes could not be identified either by Northern blotting or by reverse transcriptase PCR. Specific transcripts and 5' ends were identified for furA and katG, respectively. By cloning M. smegmatis and M. tuberculosis DNA regions upstream of a reporter gene, we demonstrated the presence of two promoters, pfurA, located immediately upstream of the furA gene, and pkatG, located within the terminal part of the furA coding sequence. Transcription from pfurA was induced upon oxidative stress. A 23-bp sequence overlapping the pfurA -35 region is highly conserved among mycobacteria and streptomycetes and might be involved in controlling pfurA activity. Transcription from a cloned pkatG, lacking the upstream pfurA region, was not induced upon oxidative stress, suggesting a cis-acting regulatory role of this region.",
+       "title": "Transcriptional regulation of furA and katG upon oxidative stress in Mycobacterium smegmatis.",
+       "year": "2001"
+      },
+      "name": "Transcriptional regulation of furA and katG upon oxidative stress in Mycobacterium smegmatis.",
+      "record_id": "11698368",
+      "retrieved_at": "2026-08-28T10:32:00.661932+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11698368/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Oxidative stress response in pathogenic mycobacteria is believed to be of significance for host-pathogen interactions at various stages of infection. It also plays a role in determining the intrinsic susceptibility to isoniazid in mycobacterial species. In this work, we characterized the oxyR-ahpC and furA-katG loci in the nontuberculous pathogen Mycobacterium marinum. In contrast to Mycobacterium smegmatis and like Mycobacterium tuberculosis and Mycobacterium leprae, M. marinum was shown to possess a closely linked and divergently oriented equivalents of the regulator of peroxide stress response oxyR and its subordinate gene ahpC, encoding a homolog of alkyl hydroperoxide reductase. Purified mycobacterial OxyR was found to bind to the oxyR-ahpC promoter region from M. marinum and additional mycobacterial species. Mobility shift DNA binding analyses using OxyR binding sites from several mycobacteria and a panel of in vitro-generated mutants validated the proposed consensus mycobacterial recognition sequence. M. marinum AhpC levels detected by immunoblotting, were increased upon treatment with H2O2, in keeping with the presence of a functional OxyR and its binding site within the promoter region of ahpC. In contrast, OxyR did not bind to the sequences upstream of the katG structural gene, and katG expression did not follow the pattern seen with ahpC. Instead, a new open reading frame encoding a homolog of the ferric uptake regulator Fur was identified immediately upstream of katG in M. marinum. The furA-katG linkage and arrangement are ubiquitous in mycobacteria, suggesting the presence of additional regulators of oxidative stress response and potentially explaining the observed differences in ahpC and katG expression. Collectively, these findings broaden our understanding of oxidative stress response in mycobacteria. They also suggest that M. marinum will be useful as a model system for studying the role of oxidative stress response in mycobacterial physiology, intracellular survival, and other host-pathogen interactions associated with mycobacterial diseases.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Oxidative stress response in pathogenic mycobacteria is believed to be of significance for host-pathogen interactions at various stages of infection. It also plays a role in determining the intrinsic susceptibility to isoniazid in mycobacterial species. In this work, we characterized the oxyR-ahpC and furA-katG loci in the nontuberculous pathogen Mycobacterium marinum. In contrast to Mycobacterium smegmatis and like Mycobacterium tuberculosis and Mycobacterium leprae, M. marinum was shown to possess a closely linked and divergently oriented equivalents of the regulator of peroxide stress response oxyR and its subordinate gene ahpC, encoding a homolog of alkyl hydroperoxide reductase. Purified mycobacterial OxyR was found to bind to the oxyR-ahpC promoter region from M. marinum and additional mycobacterial species. Mobility shift DNA binding analyses using OxyR binding sites from several mycobacteria and a panel of in vitro-generated mutants validated the proposed consensus mycobacterial recognition sequence. M. marinum AhpC levels detected by immunoblotting, were increased upon treatment with H2O2, in keeping with the presence of a functional OxyR and its binding site within the promoter region of ahpC. In contrast, OxyR did not bind to the sequences upstream of the katG structural gene, and katG expression did not follow the pattern seen with ahpC. Instead, a new open reading frame encoding a homolog of the ferric uptake regulator Fur was identified immediately upstream of katG in M. marinum. The furA-katG linkage and arrangement are ubiquitous in mycobacteria, suggesting the presence of additional regulators of oxidative stress response and potentially explaining the observed differences in ahpC and katG expression. Collectively, these findings broaden our understanding of oxidative stress response in mycobacteria. They also suggest that M. marinum will be useful as a model system for studying the role of oxidative stress response in mycobacterial physiology, intracellular survival, and other host-pathogen interactions associated with mycobacterial diseases."
+        }
+       ],
+       "doi": "10.1128/JB.180.18.4856-4864.1998",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Journal of bacteriology",
+       "mentions": [
+        "furA",
+        "katG",
+        "oxidative",
+        "stress"
+       ],
+       "pmcid": "PMC107510",
+       "quotable_text": "Oxidative stress response and characterization of the oxyR-ahpC and furA-katG loci in Mycobacterium marinum.\n\nOxidative stress response in pathogenic mycobacteria is believed to be of significance for host-pathogen interactions at various stages of infection. It also plays a role in determining the intrinsic susceptibility to isoniazid in mycobacterial species. In this work, we characterized the oxyR-ahpC and furA-katG loci in the nontuberculous pathogen Mycobacterium marinum. In contrast to Mycobacterium smegmatis and like Mycobacterium tuberculosis and Mycobacterium leprae, M. marinum was shown to possess a closely linked and divergently oriented equivalents of the regulator of peroxide stress response oxyR and its subordinate gene ahpC, encoding a homolog of alkyl hydroperoxide reductase. Purified mycobacterial OxyR was found to bind to the oxyR-ahpC promoter region from M. marinum and additional mycobacterial species. Mobility shift DNA binding analyses using OxyR binding sites from several mycobacteria and a panel of in vitro-generated mutants validated the proposed consensus mycobacterial recognition sequence. M. marinum AhpC levels detected by immunoblotting, were increased upon treatment with H2O2, in keeping with the presence of a functional OxyR and its binding site within the promoter region of ahpC. In contrast, OxyR did not bind to the sequences upstream of the katG structural gene, and katG expression did not follow the pattern seen with ahpC. Instead, a new open reading frame encoding a homolog of the ferric uptake regulator Fur was identified immediately upstream of katG in M. marinum. The furA-katG linkage and arrangement are ubiquitous in mycobacteria, suggesting the presence of additional regulators of oxidative stress response and potentially explaining the observed differences in ahpC and katG expression. Collectively, these findings broaden our understanding of oxidative stress response in mycobacteria. They also suggest that M. marinum will be useful as a model system for studying the role of oxidative stress response in mycobacterial physiology, intracellular survival, and other host-pathogen interactions associated with mycobacterial diseases.",
+       "title": "Oxidative stress response and characterization of the oxyR-ahpC and furA-katG loci in Mycobacterium marinum.",
+       "year": "1998"
+      },
+      "name": "Oxidative stress response and characterization of the oxyR-ahpC and furA-katG loci in Mycobacterium marinum.",
+      "record_id": "9733688",
+      "retrieved_at": "2026-08-28T10:32:00.661932+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9733688/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Mycobacterium tuberculosis has two genes for ferric uptake regulator orthologues, one of which, furA, is situated immediately upstream of katG encoding catalase-peroxidase, a major virulence factor that also activates the prodrug isoniazid. This association suggested that furA might regulate katG and other genes involved in pathogenesis. Transcript mapping showed katG to be expressed from a strong promoter, with consensus -10 and -35 elements, preceding furA. No promoter activity was demonstrated downstream of the furA start codon, using different gene reporter systems, indicating that furA and katG are co-transcribed from a common regulatory region. The respective roles of these two genes in the isoniazid susceptibility and virulence of M. tuberculosis were assessed by combinatorial complementation of a Delta(furA-katG) strain that is heavily attenuated in a mouse model of tuberculosis. In the absence of furA, katG was upregulated, cells became hypersensitive to isoniazid, and full virulence was restored, indicating that furA regulates the transcription of both genes. When furA alone was introduced into the Delta(furA-katG) mutant, survival in mouse lungs was moderately increased, suggesting that FurA could regulate genes, other than katG, that are involved in pathogenesis. These do not include the oxidative stress genes ahpC and sodA, or those for siderophore production.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Mycobacterium tuberculosis has two genes for ferric uptake regulator orthologues, one of which, furA, is situated immediately upstream of katG encoding catalase-peroxidase, a major virulence factor that also activates the prodrug isoniazid. This association suggested that furA might regulate katG and other genes involved in pathogenesis. Transcript mapping showed katG to be expressed from a strong promoter, with consensus -10 and -35 elements, preceding furA. No promoter activity was demonstrated downstream of the furA start codon, using different gene reporter systems, indicating that furA and katG are co-transcribed from a common regulatory region. The respective roles of these two genes in the isoniazid susceptibility and virulence of M. tuberculosis were assessed by combinatorial complementation of a Delta(furA-katG) strain that is heavily attenuated in a mouse model of tuberculosis. In the absence of furA, katG was upregulated, cells became hypersensitive to isoniazid, and full virulence was restored, indicating that furA regulates the transcription of both genes. When furA alone was introduced into the Delta(furA-katG) mutant, survival in mouse lungs was moderately increased, suggesting that FurA could regulate genes, other than katG, that are involved in pathogenesis. These do not include the oxidative stress genes ahpC and sodA, or those for siderophore production."
+        }
+       ],
+       "doi": "10.1046/j.1365-2958.2001.02427.x",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "Molecular microbiology",
+       "mentions": [
+        "furA",
+        "katG",
+        "regulation",
+        "oxidative",
+        "stress"
+       ],
+       "pmcid": "",
+       "quotable_text": "Regulation of catalase-peroxidase (KatG) expression, isoniazid sensitivity and virulence by furA of Mycobacterium tuberculosis.\n\nMycobacterium tuberculosis has two genes for ferric uptake regulator orthologues, one of which, furA, is situated immediately upstream of katG encoding catalase-peroxidase, a major virulence factor that also activates the prodrug isoniazid. This association suggested that furA might regulate katG and other genes involved in pathogenesis. Transcript mapping showed katG to be expressed from a strong promoter, with consensus -10 and -35 elements, preceding furA. No promoter activity was demonstrated downstream of the furA start codon, using different gene reporter systems, indicating that furA and katG are co-transcribed from a common regulatory region. The respective roles of these two genes in the isoniazid susceptibility and virulence of M. tuberculosis were assessed by combinatorial complementation of a Delta(furA-katG) strain that is heavily attenuated in a mouse model of tuberculosis. In the absence of furA, katG was upregulated, cells became hypersensitive to isoniazid, and full virulence was restored, indicating that furA regulates the transcription of both genes. When furA alone was introduced into the Delta(furA-katG) mutant, survival in mouse lungs was moderately increased, suggesting that FurA could regulate genes, other than katG, that are involved in pathogenesis. These do not include the oxidative stress genes ahpC and sodA, or those for siderophore production.",
+       "title": "Regulation of catalase-peroxidase (KatG) expression, isoniazid sensitivity and virulence by furA of Mycobacterium tuberculosis.",
+       "year": "2001"
+      },
+      "name": "Regulation of catalase-peroxidase (KatG) expression, isoniazid sensitivity and virulence by furA of Mycobacterium tuberculosis.",
+      "record_id": "11401695",
+      "retrieved_at": "2026-08-28T10:32:00.661932+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11401695/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Intracellular pathogenic bacteria, including Mycobacterium tuberculosis, frequently have multitiered defense mechanisms ensuring their survival in host phagocytic cells. One such defense determinant in M. tuberculosis is the katG gene, which encodes an enzyme with catalase, peroxidase, and peroxynitritase activities. KatG is considered to be important for protection against reactive oxygen and nitrogen intermediates produced by phagocytic cells. However, KatG also activates the front-line antituberculosis drug isoniazid, hence rendering M. tuberculosis exquisitely sensitive to this compound. In this context, katG expression represents a double-edged sword, as it is an important virulence determinant but at the same time its activity levels determine sensitivity to INH. Thus, it is important to delineate the regulation and expression of katG, as this not only can aid understanding of how M. tuberculosis survives and persists in the host but also may provide information of relevance for better management of INH therapy. Here, we report the first extensive analysis of the katG promoter activity examined both in vitro and in vivo. Using S1 nuclease protection analysis, we mapped the katG mRNA 5' ends and demonstrated that two promoters, P(1)furA and P(1)katG, control transcription of katG. The furA and katG genes are cotranscribed from P(1)furA. Both P(1)furA and P(1)katG promoters show induction upon challenge with hydrogen peroxide and cumene hydroperoxide. Studies carried out using the transcriptional fusions P(1)furA-gfp, P(1)katG-gfp, and P(1)furA-P(1)katG-gfp confirmed the existence of two katG promoters. In addition, we showed that both promoters are expressed in vivo during intracellular growth of virulent M. tuberculosis H37Rv. P(1)furA is induced early upon infection, and P(1)katG becomes active only upon extended growth in macrophages. These studies delineate the transcriptional organization of the furA-katG region and indicate differential regulation in vivo of the two katG promoters. These phenomena most likely reflect the differing demands at sequential stages of the infection cycle and may provide information for improved understanding of host-pathogen interactions in tuberculosis and for further optimization of INH chemotherapy.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Intracellular pathogenic bacteria, including Mycobacterium tuberculosis, frequently have multitiered defense mechanisms ensuring their survival in host phagocytic cells. One such defense determinant in M. tuberculosis is the katG gene, which encodes an enzyme with catalase, peroxidase, and peroxynitritase activities. KatG is considered to be important for protection against reactive oxygen and nitrogen intermediates produced by phagocytic cells. However, KatG also activates the front-line antituberculosis drug isoniazid, hence rendering M. tuberculosis exquisitely sensitive to this compound. In this context, katG expression represents a double-edged sword, as it is an important virulence determinant but at the same time its activity levels determine sensitivity to INH. Thus, it is important to delineate the regulation and expression of katG, as this not only can aid understanding of how M. tuberculosis survives and persists in the host but also may provide information of relevance for better management of INH therapy. Here, we report the first extensive analysis of the katG promoter activity examined both in vitro and in vivo. Using S1 nuclease protection analysis, we mapped the katG mRNA 5' ends and demonstrated that two promoters, P(1)furA and P(1)katG, control transcription of katG. The furA and katG genes are cotranscribed from P(1)furA. Both P(1)furA and P(1)katG promoters show induction upon challenge with hydrogen peroxide and cumene hydroperoxide. Studies carried out using the transcriptional fusions P(1)furA-gfp, P(1)katG-gfp, and P(1)furA-P(1)katG-gfp confirmed the existence of two katG promoters. In addition, we showed that both promoters are expressed in vivo during intracellular growth of virulent M. tuberculosis H37Rv. P(1)furA is induced early upon infection, and P(1)katG becomes active only upon extended growth in macrophages. These studies delineate the transcriptional organization of the furA-katG region and indicate differential regulation in vivo of the two katG promoters. These phenomena most likely reflect the differing demands at sequential stages of the infection cycle and may provide information for improved understanding of host-pathogen interactions in tuberculosis and for further optimization of INH chemotherapy."
+        }
+       ],
+       "doi": "10.1128/JB.183.13.4033-4039.2001",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Journal of bacteriology",
+       "mentions": [
+        "furA",
+        "katG",
+        "regulation"
+       ],
+       "pmcid": "PMC95287",
+       "quotable_text": "Mapping of Mycobacterium tuberculosis katG promoters and their differential expression in infected macrophages.\n\nIntracellular pathogenic bacteria, including Mycobacterium tuberculosis, frequently have multitiered defense mechanisms ensuring their survival in host phagocytic cells. One such defense determinant in M. tuberculosis is the katG gene, which encodes an enzyme with catalase, peroxidase, and peroxynitritase activities. KatG is considered to be important for protection against reactive oxygen and nitrogen intermediates produced by phagocytic cells. However, KatG also activates the front-line antituberculosis drug isoniazid, hence rendering M. tuberculosis exquisitely sensitive to this compound. In this context, katG expression represents a double-edged sword, as it is an important virulence determinant but at the same time its activity levels determine sensitivity to INH. Thus, it is important to delineate the regulation and expression of katG, as this not only can aid understanding of how M. tuberculosis survives and persists in the host but also may provide information of relevance for better management of INH therapy. Here, we report the first extensive analysis of the katG promoter activity examined both in vitro and in vivo. Using S1 nuclease protection analysis, we mapped the katG mRNA 5' ends and demonstrated that two promoters, P(1)furA and P(1)katG, control transcription of katG. The furA and katG genes are cotranscribed from P(1)furA. Both P(1)furA and P(1)katG promoters show induction upon challenge with hydrogen peroxide and cumene hydroperoxide. Studies carried out using the transcriptional fusions P(1)furA-gfp, P(1)katG-gfp, and P(1)furA-P(1)katG-gfp confirmed the existence of two katG promoters. In addition, we showed that both promoters are expressed in vivo during intracellular growth of virulent M. tuberculosis H37Rv. P(1)furA is induced early upon infection, and P(1)katG becomes active only upon extended growth in macrophages. These studies delineate the transcriptional organization of the furA-katG region and indicate differential regulation in vivo of the two katG promoters. These phenomena most likely reflect the differing demands at sequential stages of the infection cycle and may provide information for improved understanding of host-pathogen interactions in tuberculosis and for further optimization of INH chemotherapy.",
+       "title": "Mapping of Mycobacterium tuberculosis katG promoters and their differential expression in infected macrophages.",
+       "year": "2001"
+      },
+      "name": "Mapping of Mycobacterium tuberculosis katG promoters and their differential expression in infected macrophages.",
+      "record_id": "11395468",
+      "retrieved_at": "2026-08-28T10:32:00.661932+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11395468/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The ferric uptake regulators (Fur) form a large family of bacterial metal-activated DNA-binding proteins that control a diverse set of genes at the transcriptional level. Mycobacterium tuberculosis, the causative agent of tuberculosis, expresses two members of the Fur family, designated FurA and FurB. Although both belong to the same family, they share only approximately 25% sequence identity and as a consequence, they differ significantly in some of their key biological functions. FurA appears to be a specialized iron-dependent regulator that controls the katG gene, which encodes for a catalase-peroxidase involved in the response of M. tuberculosis to oxidative stress. KatG is also the key mycobacterial enzyme responsible for the activation of the first-line tuberculosis drug Isoniazid. FurB in contrast requires Zn(2+) rather than Fe(2+), to bind to its target sequence in regulated genes, which include those involved in Zn(2+)-homeostasis. Recent biochemical, crystallographic and spectroscopic data have now shed light on the activation and metal discrimination mechanisms in this protein family.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The ferric uptake regulators (Fur) form a large family of bacterial metal-activated DNA-binding proteins that control a diverse set of genes at the transcriptional level. Mycobacterium tuberculosis, the causative agent of tuberculosis, expresses two members of the Fur family, designated FurA and FurB. Although both belong to the same family, they share only approximately 25% sequence identity and as a consequence, they differ significantly in some of their key biological functions. FurA appears to be a specialized iron-dependent regulator that controls the katG gene, which encodes for a catalase-peroxidase involved in the response of M. tuberculosis to oxidative stress. KatG is also the key mycobacterial enzyme responsible for the activation of the first-line tuberculosis drug Isoniazid. FurB in contrast requires Zn(2+) rather than Fe(2+), to bind to its target sequence in regulated genes, which include those involved in Zn(2+)-homeostasis. Recent biochemical, crystallographic and spectroscopic data have now shed light on the activation and metal discrimination mechanisms in this protein family."
+        }
+       ],
+       "doi": "10.3390/ijms9081548",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "International journal of molecular sciences",
+       "mentions": [
+        "furA",
+        "katG",
+        "oxidative",
+        "stress"
+       ],
+       "pmcid": "PMC2630230",
+       "quotable_text": "The Metal-Dependent Regulators FurA and FurB from Mycobacterium Tuberculosis.\n\nThe ferric uptake regulators (Fur) form a large family of bacterial metal-activated DNA-binding proteins that control a diverse set of genes at the transcriptional level. Mycobacterium tuberculosis, the causative agent of tuberculosis, expresses two members of the Fur family, designated FurA and FurB. Although both belong to the same family, they share only approximately 25% sequence identity and as a consequence, they differ significantly in some of their key biological functions. FurA appears to be a specialized iron-dependent regulator that controls the katG gene, which encodes for a catalase-peroxidase involved in the response of M. tuberculosis to oxidative stress. KatG is also the key mycobacterial enzyme responsible for the activation of the first-line tuberculosis drug Isoniazid. FurB in contrast requires Zn(2+) rather than Fe(2+), to bind to its target sequence in regulated genes, which include those involved in Zn(2+)-homeostasis. Recent biochemical, crystallographic and spectroscopic data have now shed light on the activation and metal discrimination mechanisms in this protein family.",
+       "title": "The Metal-Dependent Regulators FurA and FurB from Mycobacterium Tuberculosis.",
+       "year": "2008"
+      },
+      "name": "The Metal-Dependent Regulators FurA and FurB from Mycobacterium Tuberculosis.",
+      "record_id": "19169435",
+      "retrieved_at": "2026-08-28T10:32:00.661932+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19169435/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Mycobacterium tuberculosis (Mtb) is highly resistant to host oxidative killing. We hypothesized that the evolutionary adaptation of M. smegmatis to hydrogen peroxide (H2O2) would endow the nonpathogenic Mycobacterium persistent in a host. In the study, we screened a highly H2O2-resistant strain (mc2114) via evolutionary H2O2 adaptation in vitro. The MIC of mc2114 to H2O2 is 320 times that of wild-type mc2155. Mouse infection experiments showed that mc2114, similar to Mtb, was persistent in the lungs and caused high lethality in mice with restricted responses of NOX2, ROS, IFN-\u03b3, decreased macrophage apoptosis, and overexpressed inflammatory cytokines in the lungs. Whole-genome sequencing analysis revealed that mc2114 harbored 29 single nucleotide polymorphisms in multiple genes; one of them was on the furA gene that caused FurA deficiency-mediated overexpression of KatG, a catalase-peroxidase to detoxify ROS. Complementation of mc2114 with a wild-type furA gene reversed lethality and hyper-inflammatory response in mice with rescued overexpression of KatG and inflammatory cytokines, whereas NOX2, ROS, IFN-\u03b3, and macrophage apoptosis remained reduced. The results indicate that although FurA regulates KatG expression, it does not contribute significantly to the restriction of ROS response. Instead, FurA deficiency is responsible for the detrimental pulmonary inflammation that contributes to the severity of the infection, a previously nonrecognized function of FurA in mycobacterial pathogenesis. The study also indicates that mycobacterial resistance to oxidative burst results from complex mechanisms involving adaptive genetic changes in multiple genes. IMPORTANCE Mycobacterium tuberculosis (Mtb) causes human tuberculosis (TB), which has killed more people in human history than any other microorganism. However, the mechanisms underlying Mtb pathogenesis and related genes have not yet been fully elucidated, which impedes the development of effective strategies for containing and eradicating TB. In the study, we generated a mutant of M. smegmatis (mc2114) with multiple mutations by an adaptive evolutionary screen with H2O2. One of the mutations in furA caused a deficiency of FurA, which mediated severe inflammatory lung injury and higher lethality in mice by overexpression of inflammatory cytokines. Our results indicate that FurA-regulated pulmonary inflammation plays a critical role in mycobacterial pathogenesis in addition to the known downregulation of NOX2, ROS, IFN-\u03b3 responses, and macrophage apoptosis. Further analysis of the mutations in mc2114 would identify more genes related to the increased pathogenicity and help in devising new strategies for containing and eradicating TB.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Mycobacterium tuberculosis (Mtb) is highly resistant to host oxidative killing. We hypothesized that the evolutionary adaptation of M. smegmatis to hydrogen peroxide (H2O2) would endow the nonpathogenic Mycobacterium persistent in a host. In the study, we screened a highly H2O2-resistant strain (mc2114) via evolutionary H2O2 adaptation in vitro. The MIC of mc2114 to H2O2 is 320 times that of wild-type mc2155. Mouse infection experiments showed that mc2114, similar to Mtb, was persistent in the lungs and caused high lethality in mice with restricted responses of NOX2, ROS, IFN-\u03b3, decreased macrophage apoptosis, and overexpressed inflammatory cytokines in the lungs. Whole-genome sequencing analysis revealed that mc2114 harbored 29 single nucleotide polymorphisms in multiple genes; one of them was on the furA gene that caused FurA deficiency-mediated overexpression of KatG, a catalase-peroxidase to detoxify ROS. Complementation of mc2114 with a wild-type furA gene reversed lethality and hyper-inflammatory response in mice with rescued overexpression of KatG and inflammatory cytokines, whereas NOX2, ROS, IFN-\u03b3, and macrophage apoptosis remained reduced. The results indicate that although FurA regulates KatG expression, it does not contribute significantly to the restriction of ROS response. Instead, FurA deficiency is responsible for the detrimental pulmonary inflammation that contributes to the severity of the infection, a previously nonrecognized function of FurA in mycobacterial pathogenesis. The study also indicates that mycobacterial resistance to oxidative burst results from complex mechanisms involving adaptive genetic changes in multiple genes. IMPORTANCE Mycobacterium tuberculosis (Mtb) causes human tuberculosis (TB), which has killed more people in human history than any other microorganism. However, the mechanisms underlying Mtb pathogenesis and related genes have not yet been fully elucidated, which impedes the development of effective strategies for containing and eradicating TB. In the study, we generated a mutant of M. smegmatis (mc2114) with multiple mutations by an adaptive evolutionary screen with H2O2. One of the mutations in furA caused a deficiency of FurA, which mediated severe inflammatory lung injury and higher lethality in mice by overexpression of inflammatory cytokines. Our results indicate that FurA-regulated pulmonary inflammation plays a critical role in mycobacterial pathogenesis in addition to the known downregulation of NOX2, ROS, IFN-\u03b3 responses, and macrophage apoptosis. Further analysis of the mutations in mc2114 would identify more genes related to the increased pathogenicity and help in devising new strategies for containing and eradicating TB."
+        }
+       ],
+       "doi": "10.1128/spectrum.05367-22",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Microbiology spectrum",
+       "mentions": [
+        "furA",
+        "katG",
+        "regulation",
+        "oxidative"
+       ],
+       "pmcid": "PMC10433983",
+       "quotable_text": "Coevolution of furA-Regulated Hyper-Inflammation and Mycobacterial Resistance to Oxidative Killing through Adaptation to Hydrogen Peroxide.\n\nMycobacterium tuberculosis (Mtb) is highly resistant to host oxidative killing. We hypothesized that the evolutionary adaptation of M. smegmatis to hydrogen peroxide (H2O2) would endow the nonpathogenic Mycobacterium persistent in a host. In the study, we screened a highly H2O2-resistant strain (mc2114) via evolutionary H2O2 adaptation in vitro. The MIC of mc2114 to H2O2 is 320 times that of wild-type mc2155. Mouse infection experiments showed that mc2114, similar to Mtb, was persistent in the lungs and caused high lethality in mice with restricted responses of NOX2, ROS, IFN-\u03b3, decreased macrophage apoptosis, and overexpressed inflammatory cytokines in the lungs. Whole-genome sequencing analysis revealed that mc2114 harbored 29 single nucleotide polymorphisms in multiple genes; one of them was on the furA gene that caused FurA deficiency-mediated overexpression of KatG, a catalase-peroxidase to detoxify ROS. Complementation of mc2114 with a wild-type furA gene reversed lethality and hyper-inflammatory response in mice with rescued overexpression of KatG and inflammatory cytokines, whereas NOX2, ROS, IFN-\u03b3, and macrophage apoptosis remained reduced. The results indicate that although FurA regulates KatG expression, it does not contribute significantly to the restriction of ROS response. Instead, FurA deficiency is responsible for the detrimental pulmonary inflammation that contributes to the severity of the infection, a previously nonrecognized function of FurA in mycobacterial pathogenesis. The study also indicates that mycobacterial resistance to oxidative burst results from complex mechanisms involving adaptive genetic changes in multiple genes. IMPORTANCE Mycobacterium tuberculosis (Mtb) causes human tuberculosis (TB), which has killed more people in human history than any other microorganism. However, the mechanisms underlying Mtb pathogenesis and related genes have not yet been fully elucidated, which impedes the development of effective strategies for containing and eradicating TB. In the study, we generated a mutant of M. smegmatis (mc2114) with multiple mutations by an adaptive evolutionary screen with H2O2. One of the mutations in furA caused a deficiency of FurA, which mediated severe inflammatory lung injury and higher lethality in mice by overexpression of inflammatory cytokines. Our results indicate that FurA-regulated pulmonary inflammation plays a critical role in mycobacterial pathogenesis in addition to the known downregulation of NOX2, ROS, IFN-\u03b3 responses, and macrophage apoptosis. Further analysis of the mutations in mc2114 would identify more genes related to the increased pathogenicity and help in devising new strategies for containing and eradicating TB.",
+       "title": "Coevolution of furA-Regulated Hyper-Inflammation and Mycobacterial Resistance to Oxidative Killing through Adaptation to Hydrogen Peroxide.",
+       "year": "2023"
+      },
+      "name": "Coevolution of furA-Regulated Hyper-Inflammation and Mycobacterial Resistance to Oxidative Killing through Adaptation to Hydrogen Peroxide.",
+      "record_id": "37358434",
+      "retrieved_at": "2026-08-28T10:32:00.661932+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37358434/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "be2b338d5b2e7eb0e69ad65d338bf8211f68089e71671c3cb12a2a0ab66ef02c",
+      "retrieved_at": "2026-08-28T10:32:00.146168+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=6&retmode=json&sort=relevance&term=%22furA+katG+regulation+oxidative+stress%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
+     },
+     {
+      "cached": false,
+      "content_sha256": "84f34e8ad62ac9cf84babd42a462814e0d7bfb257fe7cdf92d2dc2f958052dec",
+      "retrieved_at": "2026-08-28T10:32:00.661932+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=11698368%2C9733688%2C11401695%2C11395468%2C19169435%2C37358434&retmode=xml&tool=kegg-string-mcp"
+     }
+    ],
+    "resolved": {
+     "matched_by": "pubmed_search",
+     "query_translation": "\"fura\"[All Fields] AND \"katg\"[All Fields] AND (\"regulate\"[All Fields] OR \"regulated\"[All Fields] OR \"regulates\"[All Fields] OR \"regulating\"[All Fields] OR \"regulation\"[All Fields] OR \"regulation s\"[All Fields] OR \"regulations\"[All Fields] OR \"regulative\"[All Fields] OR \"regulator\"[All Fields] OR \"regulator s\"[All Fields] OR \"regulators\"[All Fields]) AND (\"oxidability\"[All Fields] OR \"oxidable\"[All Fields] OR \"oxidant\"[All Fields] OR \"oxidant s\"[All Fields] OR \"oxidants\"[All Fields] OR \"oxidate\"[All Fields] OR \"oxidated\"[All Fields] OR \"oxidates\"[All Fields] OR \"oxidating\"[All Fields] OR \"oxidation\"[All Fields] OR \"oxidations\"[All Fields] OR \"oxidative\"[All Fields] OR \"oxidatively\"[All Fields] OR \"oxidatives\"[All Fields] OR \"oxide\"[All Fields] OR \"oxide s\"[All Fields] OR \"oxides\"[All Fields] OR \"oxidic\"[All Fields] OR \"oxiding\"[All Fields] OR \"oxidisability\"[All Fields] OR \"oxidisable\"[All Fields] OR \"oxidisation\"[All Fields] OR \"oxidise\"[All Fields] OR \"oxidised\"[All Fields] OR \"oxidiser\"[All Fields] OR \"oxidisers\"[All Fields] OR \"oxidises\"[All Fields] OR \"oxidising\"[All Fields] OR \"oxidization\"[All Fields] OR \"oxidize\"[All Fields] OR \"oxidized\"[All Fields] OR \"oxidizer\"[All Fields] OR \"oxidizers\"[All Fields] OR \"oxidizes\"[All Fields] OR \"oxidizing\"[All Fields]) AND (\"stress\"[All Fields] OR \"stressed\"[All Fields] OR \"stresses\"[All Fields] OR \"stressful\"[All Fields] OR \"stressfulness\"[All Fields] OR \"stressing\"[All Fields]) AND \"Mycobacterium tuberculosis\"[All Fields]",
+     "term": "\"furA katG regulation oxidative stress\" AND \"Mycobacterium tuberculosis\""
+    }
+   },
+   "tool": "pubmed_abstracts"
+  }
+ ],
+ "id": "furA",
+ "mode": "single",
+ "organism": "mtu",
+ "summary": "# furA (Rv1909c) \u2014 *M. tuberculosis* H37Rv\n\n**Identity.** KEGG resolves `furA` to **mtu:Rv1909c** (matched by symbol); STRING resolves it to **83332.Rv1909c**.\n\n## Function\n\nFurA is one of two ferric-uptake-regulator (Fur) family transcriptional regulators in *M. tuberculosis*, and it acts as the negative regulator of the adjacent catalase-peroxidase gene *katG*.\n\n- PMID:19169435 \"Mycobacterium tuberculosis, the causative agent of tuberculosis, expresses two members of the Fur family, designated FurA and FurB\" and \"FurA appears to be a specialized iron-dependent regulator that controls the katG gene, which encodes for a catalase-peroxidase involved in the response of M. tuberculosis to oxidative stress.\"\n- Genetic evidence in *M. tuberculosis* itself: PMID:11401695 \"In the absence of furA, katG was upregulated, cells became hypersensitive to isoniazid, and full virulence was restored, indicating that furA regulates the transcription of both genes.\" The same study places the two genes in one transcription unit \u2014 PMID:11401695 \"indicating that furA and katG are co-transcribed from a common regulatory region\" \u2014 and notes FurA likely has targets beyond *katG*, while explicitly excluding some obvious candidates: PMID:11401695 \"These do not include the oxidative stress genes ahpC and sodA, or those for siderophore production.\"\n- The *furA* promoter is peroxide-responsive and active during infection: PMID:11395468 \"Both P(1)furA and P(1)katG promoters show induction upon challenge with hydrogen peroxide and cumene hydroperoxide\" and \"P(1)furA is induced early upon infection, and P(1)katG becomes active only upon extended growth in macrophages.\"\n- Because FurA represses the isoniazid-activating enzyme, loss of FurA has pathogenesis consequences beyond ROS detoxification: PMID:37358434 \"one of them was on the furA gene that caused FurA deficiency-mediated overexpression of KatG, a catalase-peroxidase to detoxify ROS\" and \"FurA deficiency is responsible for the detrimental pulmonary inflammation that contributes to the severity of the infection.\"\n\nNote on evidence class: the katG/oxidative-stress literature above and STRING's textmining channel are **one** line of evidence, not two.\n\n## Pathways\n\n**KEGG assigns furA to no pathway.** This is a resolution success, not a failure \u2014 the tool reports that \"The gene exists in KEGG but is not mapped to any pathway in this organism.\" This is expected for a regulatory protein; KEGG's mtu pathway maps are metabolism-centric.\n\nFor context, its operonic partner **katG (mtu:Rv1908c)** *is* mapped, to **mtu00360** (Phenylalanine metabolism), **mtu00380** (Tryptophan metabolism) and **mtu00983** (Drug metabolism \u2013 other enzymes); the last of these is the isoniazid-activation context. (mtu01100 and mtu01110 are genome-scale container maps and say little about either gene.) FurA itself is not a member of these maps \u2014 it sits upstream of one of their enzymes.\n\n## Interaction partners (STRING, score \u2265 700)\n\n| Partner | STRING ID | Combined | Strongest non-textmining channel | Beyond textmining? |\n|---|---|---|---|---|\n| katG | 83332.Rv1908c | 0.979 | neighborhood 0.829 | yes |\n| zur | 83332.Rv2359 | 0.900 | cooccurrence 0.390 | **no** |\n| ahpC | 83332.Rv2428 | 0.870 | coexpression 0.573 | yes |\n| Rv1907c | 83332.Rv1907c | 0.831 | neighborhood 0.697 | yes |\n\n- **katG (83332.Rv1908c)** \u2014 the top partner and the functionally established one. Its non-textmining support is *genomic neighborhood* (0.829), i.e. conserved gene adjacency, which is exactly what the transcript mapping describes as a shared operon. There is no experimental-channel or database-channel score for this pair (both 0.0), so STRING does not offer physical-interaction evidence \u2014 the relationship is regulator/target and operonic, not a protein complex.\n- **Rv1907c (83332.Rv1907c)** \u2014 supported by neighborhood (0.697) alone among the non-textmining channels; this is the other flanking gene of the locus. Guilt-by-adjacency only, and I have no functional information on this gene from these tools.\n- **ahpC (83332.Rv2428)** \u2014 supported by coexpression (0.573). Worth flagging a tension: coexpression is consistent with a shared peroxide-stress regulon, but the *M. tuberculosis* complementation study specifically excluded *ahpC* from FurA's regulon \u2014 PMID:11401695 \"These do not include the oxidative stress genes ahpC and sodA\". Co-regulation by a common stress stimulus is the more defensible reading than direct FurA control of *ahpC*.\n- **zur (83332.Rv2359)** \u2014 the tool notes this one is \"Supported essentially only by textmining.\" Its only non-textmining channel is a weak cooccurrence score (0.390, below STRING's 0.4 medium threshold). Zur/FurB is FurA's Fur-family paralogue, and the paralogy is what the literature co-mentions concern \u2014 PMID:19169435 \"FurB in contrast requires Zn(2+) rather than Fe(2+), to bind to its target sequence in regulated genes, which include those involved in Zn(2+)-homeostasis\" \u2014 with that same abstract noting they \"share only approximately 25% sequence identity\" and \"differ significantly in some of their key biological functions.\" Treat this as a family relationship reflected in the literature, **not** as evidence of a functional or physical FurA\u2013Zur interaction.\n\n## What remains unknown\n\nThe identity of FurA's regulon beyond *katG* is genuinely open \u2014 PMID:11401695 \"suggesting that FurA could regulate genes, other than katG, that are involved in pathogenesis\" \u2014 and none of the tools here identify those targets. One report predicts a hypoxia-associated regulatory role (PMID:27328747 \"overexpression of potential transcription factors (Rv0081, furA (Rv1909c), Rv0324, Rv3334, and Rv3833)\"), but that is a correlation-based co-expression module prediction, not a demonstrated FurA target set, and I would not annotate on it.",
+ "target": "furA",
+ "turns": [
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "furA",
+      "organism": "mtu"
+     },
+     "name": "kegg_pathways"
+    },
+    {
+     "input": {
+      "gene": "furA",
+      "required_score": 700,
+      "species": 83332
+     },
+     "name": "string_partners"
+    }
+   ],
+   "turn": 1
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "Rv1908c",
+      "organism": "mtu"
+     },
+     "name": "kegg_pathways"
+    },
+    {
+     "input": {
+      "gene": "furA Rv1909c",
+      "limit": 8,
+      "organism": "Mycobacterium tuberculosis"
+     },
+     "name": "pubmed_abstracts"
+    }
+   ],
+   "turn": 2
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "furA katG regulation oxidative stress",
+      "limit": 6,
+      "organism": "Mycobacterium tuberculosis"
+     },
+     "name": "pubmed_abstracts"
+    }
+   ],
+   "turn": 3
+  },
+  {
+   "stop_reason": "end_turn",
+   "tools_requested": [],
+   "turn": 4
+  }
+ ]
+}

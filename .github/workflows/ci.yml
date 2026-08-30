@@ -46,6 +46,21 @@ jobs:
       - run: pip install ruff
       - run: ruff check .
 
+  demo:
+    # The demo replays committed fixtures and re-validates them, so it breaks the
+    # moment the validator changes shape. Building it on every push means the
+    # public page cannot drift from the library it demonstrates.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev,demo]"
+      - name: Replay every demo run and build the page
+        run: pytest -q tests/test_app.py
+
   docker:
     runs-on: ubuntu-latest
     steps:

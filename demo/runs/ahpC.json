@@ -1,0 +1,885 @@
+{
+ "calls": [
+  {
+   "arguments": {
+    "gene": "ahpC",
+    "organism": "mtu"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "KEGG returned no pathway assignments for mtu:Rv2428. The gene exists in KEGG but is not mapped to any pathway in this organism."
+    ],
+    "query": {
+     "gene": "ahpC",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "retrieved_at": "2026-08-28T08:51:16.173734+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv2428"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv2428",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "ahpC",
+    "required_score": 700,
+    "species": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: katG, rpoB, inhA, kasA, sodC, embB, pncA, ndh, fabG1."
+    ],
+    "query": {
+     "gene": "ahpC",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv2429",
+     "83332.Rv1908c",
+     "83332.Rv0667",
+     "83332.Rv1484",
+     "83332.Rv3913",
+     "83332.Rv2427A",
+     "83332.Rv2245",
+     "83332.Rv3846",
+     "83332.Rv0432",
+     "83332.Rv1677",
+     "83332.Rv2874",
+     "83332.Rv1909c",
+     "83332.Rv0816c",
+     "83332.Rv3795",
+     "83332.Rv2878c",
+     "83332.Rv3673c",
+     "83332.Rv0526",
+     "83332.Rv2043c",
+     "83332.Rv1854c",
+     "83332.Rv1483"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.836,
+        "cooccurrence": 0.766,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.844
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.844,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.902
+      },
+      "name": "ahpD",
+      "record_id": "83332.Rv2429",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2429"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.082,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.096
+       },
+       "combined_score": 0.968,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.096,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.965
+      },
+      "name": "katG",
+      "record_id": "83332.Rv1908c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1908c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.152,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.967,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.152,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.963
+      },
+      "name": "rpoB",
+      "record_id": "83332.Rv0667",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0667"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.05,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.071
+       },
+       "combined_score": 0.957,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.071,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.955
+      },
+      "name": "inhA",
+      "record_id": "83332.Rv1484",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1484"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.437,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.808,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.955,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.808,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.588
+      },
+      "name": "trxB2",
+      "record_id": "83332.Rv3913",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3913"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.543
+       },
+       "combined_score": 0.938,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.543,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.87
+      },
+      "name": "oxyR",
+      "record_id": "83332.Rv2427A",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2427A"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.054,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.152,
+        "fusion": 0.0,
+        "neighborhood": 0.065
+       },
+       "combined_score": 0.929,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.152,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.917
+      },
+      "name": "kasA",
+      "record_id": "83332.Rv2245",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2245"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.476,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.114
+       },
+       "combined_score": 0.924,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.476,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.85
+      },
+      "name": "sodA",
+      "record_id": "83332.Rv3846",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3846"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.217,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.167,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.893,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.217,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.85
+      },
+      "name": "sodC",
+      "record_id": "83332.Rv0432",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0432"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.225,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.882,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.329
+      },
+      "name": "dsbF",
+      "record_id": "83332.Rv1677",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1677"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.221,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.094
+       },
+       "combined_score": 0.873,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.268
+      },
+      "name": "dipZ",
+      "record_id": "83332.Rv2874",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2874"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.573,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.093
+       },
+       "combined_score": 0.87,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.573,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.692
+      },
+      "name": "furA",
+      "record_id": "83332.Rv1909c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1909c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.223,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.868,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.255
+      },
+      "name": "thiX",
+      "record_id": "83332.Rv0816c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0816c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.042,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.848,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.042,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.848
+      },
+      "name": "embB",
+      "record_id": "83332.Rv3795",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3795"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.221,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.843,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.117
+      },
+      "name": "mpt53",
+      "record_id": "83332.Rv2878c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2878c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.223,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.841,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.099
+      },
+      "name": "Rv3673c",
+      "record_id": "83332.Rv3673c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3673c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.221,
+        "cooccurrence": 0.0,
+        "database": 0.611,
+        "experimental": 0.468,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.84,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.611,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.099
+      },
+      "name": "Rv0526",
+      "record_id": "83332.Rv0526",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0526"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.223,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.837,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.223,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.792
+      },
+      "name": "pncA",
+      "record_id": "83332.Rv2043c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2043c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.085,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.07
+       },
+       "combined_score": 0.834,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.085,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.82
+      },
+      "name": "ndh",
+      "record_id": "83332.Rv1854c",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1854c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.061,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.153,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.782,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.153,
+       "partner_of": "83332.Rv2428",
+       "textmining_score": 0.748
+      },
+      "name": "fabG1",
+      "record_id": "83332.Rv1483",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1483"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "adaa8c2a768912f65da49090c752ad81dd78ab52fd7432f5c5d023f4271b28e3",
+      "retrieved_at": "2026-08-28T08:51:16.317583+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=ahpC&limit=1&species=83332"
+     },
+     {
+      "cached": true,
+      "content_sha256": "70575737cc85f950c0d508bcff26e90cebf81ebef140ef4cd5251942426cb275",
+      "retrieved_at": "2026-08-28T08:51:17.655711+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv2428&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "ahpC",
+     "string_id": "83332.Rv2428"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "ahpC",
+    "limit": 6,
+    "organism": "Mycobacterium tuberculosis"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "225 articles matched this query; the 6 most relevant were retrieved. A finding absent from these abstracts may still be reported in the 219 not retrieved.",
+     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
+     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration.",
+     "PMID(s) 23899494 matched the search but do NOT mention ahpC anywhere in the retrieved title or abstract -- they matched on record metadata not shown here. There is nothing in them to quote for a claim about this gene. PubMed searched [All Fields], which spans MeSH terms, author keywords and substance lists as well as the title and abstract -- and it does NOT search full text. So a record can match without the gene appearing in the text retrieved here, and a paper that discusses the gene only in its Results is not findable this way."
+    ],
+    "query": {
+     "gene": "ahpC",
+     "limit": 6,
+     "organism": "Mycobacterium tuberculosis"
+    },
+    "record_ids": [
+     "10609885",
+     "23899494",
+     "35919400",
+     "40078052",
+     "34086544",
+     "10766746"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The Mycobacterium tuberculosis AhpC is similar to a family of bacterial and eukaryotic antioxidant proteins with alkylhydroperoxidase (Ahp) and thioredoxin-dependent peroxidase (TPx) activities. AhpC expression is associated with resistance to the front-line antitubercular drug isoniazid in the naturally resistant organisms E. coli and M. smegmatis. We identified several isoniazid-resistant M. tuberculosis isolates with ahpC promoter mutations resulting in AhpC overexpression. These strains were more resistant to cumene hydroperoxide than were wild-type strains. However, these strains were unchanged in their sensitivity to isoniazid, refuting a role for AhpC in detoxification of this drug. All the isoniazid-resistant, AhpC-overexpressing strains were also deficient in activity of the mycobacterial catalase-peroxidase KatG. KatG, the only known catalase in M. tuberculosis, is required for activation of isoniazid. We propose that compensatory ahpC promoter mutations are selected from KatG-deficient, isoniazid-resistant M. tuberculosis during infections, to mitigate the added burden imposed by organic peroxides on these strains.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The Mycobacterium tuberculosis AhpC is similar to a family of bacterial and eukaryotic antioxidant proteins with alkylhydroperoxidase (Ahp) and thioredoxin-dependent peroxidase (TPx) activities. AhpC expression is associated with resistance to the front-line antitubercular drug isoniazid in the naturally resistant organisms E. coli and M. smegmatis. We identified several isoniazid-resistant M. tuberculosis isolates with ahpC promoter mutations resulting in AhpC overexpression. These strains were more resistant to cumene hydroperoxide than were wild-type strains. However, these strains were unchanged in their sensitivity to isoniazid, refuting a role for AhpC in detoxification of this drug. All the isoniazid-resistant, AhpC-overexpressing strains were also deficient in activity of the mycobacterial catalase-peroxidase KatG. KatG, the only known catalase in M. tuberculosis, is required for activation of isoniazid. We propose that compensatory ahpC promoter mutations are selected from KatG-deficient, isoniazid-resistant M. tuberculosis during infections, to mitigate the added burden imposed by organic peroxides on these strains."
+        }
+       ],
+       "doi": "10.1002/biof.5520100219",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "BioFactors (Oxford, England)",
+       "mentions": [
+        "ahpC"
+       ],
+       "pmcid": "",
+       "quotable_text": "AhpC, oxidative stress and drug resistance in Mycobacterium tuberculosis.\n\nThe Mycobacterium tuberculosis AhpC is similar to a family of bacterial and eukaryotic antioxidant proteins with alkylhydroperoxidase (Ahp) and thioredoxin-dependent peroxidase (TPx) activities. AhpC expression is associated with resistance to the front-line antitubercular drug isoniazid in the naturally resistant organisms E. coli and M. smegmatis. We identified several isoniazid-resistant M. tuberculosis isolates with ahpC promoter mutations resulting in AhpC overexpression. These strains were more resistant to cumene hydroperoxide than were wild-type strains. However, these strains were unchanged in their sensitivity to isoniazid, refuting a role for AhpC in detoxification of this drug. All the isoniazid-resistant, AhpC-overexpressing strains were also deficient in activity of the mycobacterial catalase-peroxidase KatG. KatG, the only known catalase in M. tuberculosis, is required for activation of isoniazid. We propose that compensatory ahpC promoter mutations are selected from KatG-deficient, isoniazid-resistant M. tuberculosis during infections, to mitigate the added burden imposed by organic peroxides on these strains.",
+       "title": "AhpC, oxidative stress and drug resistance in Mycobacterium tuberculosis.",
+       "year": "1999"
+      },
+      "name": "AhpC, oxidative stress and drug resistance in Mycobacterium tuberculosis.",
+      "record_id": "10609885",
+      "retrieved_at": "2026-08-28T10:31:08.472397+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10609885/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The thioredoxin (Trx) system, which is composed of NADPH, thioredoxin reductase (TrxR), and thioredoxin, is a key antioxidant system in defense against oxidative stress through its disulfide reductase activity regulating protein dithiol/disulfide balance. The Trx system provides the electrons to thiol-dependent peroxidases (peroxiredoxins) to remove reactive oxygen and nitrogen species with a fast reaction rate. Trx antioxidant functions are also shown by involvement in DNA and protein repair by reducing ribonucleotide reductase, methionine sulfoxide reductases, and regulating the activity of many redox-sensitive transcription factors. Moreover, Trx systems play critical roles in the immune response, virus infection, and cell death via interaction with thioredoxin-interacting protein. In mammalian cells, the cytosolic and mitochondrial Trx systems, in which TrxRs are high molecular weight selenoenzymes, together with the glutathione-glutaredoxin (Grx) system (NADPH, glutathione reductase, GSH, and Grx) control the cellular redox environment. Recently mammalian thioredoxin and glutathione systems have been found to be able to provide the electrons crossly and to serve as a backup system for each other. In contrast, bacteria TrxRs are low molecular weight enzymes with a structure and reaction mechanism distinct from mammalian TrxR. Many bacterial species possess specific thiol-dependent antioxidant systems, and the significance of the Trx system in the defense against oxidative stress is different. Particularly, the absence of a GSH-Grx system in some pathogenic bacteria such as Helicobacter pylori, Mycobacterium tuberculosis, and Staphylococcus aureus makes the bacterial Trx system essential for survival under oxidative stress. This provides an opportunity to kill these bacteria by targeting the TrxR-Trx system.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The thioredoxin (Trx) system, which is composed of NADPH, thioredoxin reductase (TrxR), and thioredoxin, is a key antioxidant system in defense against oxidative stress through its disulfide reductase activity regulating protein dithiol/disulfide balance. The Trx system provides the electrons to thiol-dependent peroxidases (peroxiredoxins) to remove reactive oxygen and nitrogen species with a fast reaction rate. Trx antioxidant functions are also shown by involvement in DNA and protein repair by reducing ribonucleotide reductase, methionine sulfoxide reductases, and regulating the activity of many redox-sensitive transcription factors. Moreover, Trx systems play critical roles in the immune response, virus infection, and cell death via interaction with thioredoxin-interacting protein. In mammalian cells, the cytosolic and mitochondrial Trx systems, in which TrxRs are high molecular weight selenoenzymes, together with the glutathione-glutaredoxin (Grx) system (NADPH, glutathione reductase, GSH, and Grx) control the cellular redox environment. Recently mammalian thioredoxin and glutathione systems have been found to be able to provide the electrons crossly and to serve as a backup system for each other. In contrast, bacteria TrxRs are low molecular weight enzymes with a structure and reaction mechanism distinct from mammalian TrxR. Many bacterial species possess specific thiol-dependent antioxidant systems, and the significance of the Trx system in the defense against oxidative stress is different. Particularly, the absence of a GSH-Grx system in some pathogenic bacteria such as Helicobacter pylori, Mycobacterium tuberculosis, and Staphylococcus aureus makes the bacterial Trx system essential for survival under oxidative stress. This provides an opportunity to kill these bacteria by targeting the TrxR-Trx system."
+        }
+       ],
+       "doi": "10.1016/j.freeradbiomed.2013.07.036",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "Free radical biology & medicine",
+       "mentions": [],
+       "pmcid": "",
+       "quotable_text": "The thioredoxin antioxidant system.\n\nThe thioredoxin (Trx) system, which is composed of NADPH, thioredoxin reductase (TrxR), and thioredoxin, is a key antioxidant system in defense against oxidative stress through its disulfide reductase activity regulating protein dithiol/disulfide balance. The Trx system provides the electrons to thiol-dependent peroxidases (peroxiredoxins) to remove reactive oxygen and nitrogen species with a fast reaction rate. Trx antioxidant functions are also shown by involvement in DNA and protein repair by reducing ribonucleotide reductase, methionine sulfoxide reductases, and regulating the activity of many redox-sensitive transcription factors. Moreover, Trx systems play critical roles in the immune response, virus infection, and cell death via interaction with thioredoxin-interacting protein. In mammalian cells, the cytosolic and mitochondrial Trx systems, in which TrxRs are high molecular weight selenoenzymes, together with the glutathione-glutaredoxin (Grx) system (NADPH, glutathione reductase, GSH, and Grx) control the cellular redox environment. Recently mammalian thioredoxin and glutathione systems have been found to be able to provide the electrons crossly and to serve as a backup system for each other. In contrast, bacteria TrxRs are low molecular weight enzymes with a structure and reaction mechanism distinct from mammalian TrxR. Many bacterial species possess specific thiol-dependent antioxidant systems, and the significance of the Trx system in the defense against oxidative stress is different. Particularly, the absence of a GSH-Grx system in some pathogenic bacteria such as Helicobacter pylori, Mycobacterium tuberculosis, and Staphylococcus aureus makes the bacterial Trx system essential for survival under oxidative stress. This provides an opportunity to kill these bacteria by targeting the TrxR-Trx system.",
+       "title": "The thioredoxin antioxidant system.",
+       "year": "2014"
+      },
+      "name": "The thioredoxin antioxidant system.",
+      "record_id": "23899494",
+      "retrieved_at": "2026-08-28T10:31:08.472397+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23899494/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "BACKGROUND: The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission.\n\nMETHODS: We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed.\n\nRESULTS: In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains.\n\nCONCLUSIONS: Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman.",
+       "abstract_sections": [
+        {
+         "label": "BACKGROUND",
+         "text": "The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission."
+        },
+        {
+         "label": "METHODS",
+         "text": "We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed."
+        },
+        {
+         "label": "RESULTS",
+         "text": "In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains."
+        },
+        {
+         "label": "CONCLUSIONS",
+         "text": "Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman."
+        }
+       ],
+       "doi": "10.7717/peerj.13645",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "PeerJ",
+       "mentions": [
+        "ahpC"
+       ],
+       "pmcid": "PMC9339217",
+       "quotable_text": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.\n\nBACKGROUND: The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission.\n\nMETHODS: We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed.\n\nRESULTS: In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains.\n\nCONCLUSIONS: Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman.",
+       "title": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.",
+       "year": "2022"
+      },
+      "name": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.",
+      "record_id": "35919400",
+      "retrieved_at": "2026-08-28T10:31:08.472397+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/35919400/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "BACKGROUND: Vietnam is a hotspot for the emergence and spread of multidrug-resistant Mycobacterium tuberculosis. This study aimed to perform a retrospective study on the compensatory evolution in multidrug-resistant M. tuberculosis strains and the association with drug-resistant mutations and M. tuberculosis genotypes.\n\nMETHODS: Hundred and seventy-three strains resistant to rifampicin (n = 126) and/or isoniazid (n = 170) (multidrug-resistant = 123) were selected according to different drug-resistant patterns and genotypes. The genes/promoter regions including rpoA, rpoB, rpoC, katG, inhA, inhA promoter, ahpC, ahpC promoter, gyrA, gyrB, and rrs were sequenced for each strain.\n\nRESULTS: Frequency of rifampicin- and isoniazid-resistant mutations in multidrug-resistant strains was 99.2% and 97.0%, respectively. Mutations associated with low -high levels of drug resistance with low- or no-fitness costs compared to the wild type, including rpoB_Ser450Leu, katG_Ser315Thr, inhA-15(A-T), gyrA_Asp94Gly, and rrs_A1401GA, accounted for 46.3%, 76.4%, 16.2%, 8.9%, and 11.4%, respectively, in the multidrug-resistant strains. Beijing and Euro-American genotype strains were associated with high-level drug-resistant mutations, rpoB_Ser450Leu, katG_Ser315Thr, and gyrA_Asp94Gly, while East African-Indian genotype strains were associated with low to high-level drug-resistant mutations, rpoB_His445Asp, rpoB_His445Tyr, inhA-15(C-T) and rrs_A1401G. Multidrug-resistant strains (19.5%) harboured compensatory mutations linked to rifampicin resistance in rpoA, rpoB, or rpoC. Notably, the frequency of compensatory mutations in Beijing genotypes was significantly higher than in East African-Indian genotypes (21.1% vs. 3.3%, OR = 7.7; 95% CI = 1.0 to 61.2, p = 0.03). The proportion of multidrug-resistant strains with rpoB_Ser450Leu mutations carrying rpoA-rpoC mutations was higher than that of strains with other rpoB mutations (OR = 5.4; 95% CI = 1.4 to 21.1, p = 0.02) and was associated with Beijing strains. Only 1.2% (2/170) isoniazid-resistant strains carried aphC-52(C-T) mutation in the promoter region of the ahpC gene, which was hypothesised to be the compensatory mutation in isoniazid-resistant strains. Meanwhile, 11 isoniazid-resistant strains carried a katG mutation combined with either inhA-8(T-C) or inhA-15(A-T) mutations and were associated with East African-Indian strains.\n\nCONCLUSIONS: Mutations associated with high levels of drug resistance without/with low fitness costs (rpoB_Ser450Leu and katG_Ser315Thr) along with compensatory mutations linked to rifampicin resistance were strongly associated with multidrug-resistant M. tuberculosis Beijing strains in Vietnam.",
+       "abstract_sections": [
+        {
+         "label": "BACKGROUND",
+         "text": "Vietnam is a hotspot for the emergence and spread of multidrug-resistant Mycobacterium tuberculosis. This study aimed to perform a retrospective study on the compensatory evolution in multidrug-resistant M. tuberculosis strains and the association with drug-resistant mutations and M. tuberculosis genotypes."
+        },
+        {
+         "label": "METHODS",
+         "text": "Hundred and seventy-three strains resistant to rifampicin (n = 126) and/or isoniazid (n = 170) (multidrug-resistant = 123) were selected according to different drug-resistant patterns and genotypes. The genes/promoter regions including rpoA, rpoB, rpoC, katG, inhA, inhA promoter, ahpC, ahpC promoter, gyrA, gyrB, and rrs were sequenced for each strain."
+        },
+        {
+         "label": "RESULTS",
+         "text": "Frequency of rifampicin- and isoniazid-resistant mutations in multidrug-resistant strains was 99.2% and 97.0%, respectively. Mutations associated with low -high levels of drug resistance with low- or no-fitness costs compared to the wild type, including rpoB_Ser450Leu, katG_Ser315Thr, inhA-15(A-T), gyrA_Asp94Gly, and rrs_A1401GA, accounted for 46.3%, 76.4%, 16.2%, 8.9%, and 11.4%, respectively, in the multidrug-resistant strains. Beijing and Euro-American genotype strains were associated with high-level drug-resistant mutations, rpoB_Ser450Leu, katG_Ser315Thr, and gyrA_Asp94Gly, while East African-Indian genotype strains were associated with low to high-level drug-resistant mutations, rpoB_His445Asp, rpoB_His445Tyr, inhA-15(C-T) and rrs_A1401G. Multidrug-resistant strains (19.5%) harboured compensatory mutations linked to rifampicin resistance in rpoA, rpoB, or rpoC. Notably, the frequency of compensatory mutations in Beijing genotypes was significantly higher than in East African-Indian genotypes (21.1% vs. 3.3%, OR = 7.7; 95% CI = 1.0 to 61.2, p = 0.03). The proportion of multidrug-resistant strains with rpoB_Ser450Leu mutations carrying rpoA-rpoC mutations was higher than that of strains with other rpoB mutations (OR = 5.4; 95% CI = 1.4 to 21.1, p = 0.02) and was associated with Beijing strains. Only 1.2% (2/170) isoniazid-resistant strains carried aphC-52(C-T) mutation in the promoter region of the ahpC gene, which was hypothesised to be the compensatory mutation in isoniazid-resistant strains. Meanwhile, 11 isoniazid-resistant strains carried a katG mutation combined with either inhA-8(T-C) or inhA-15(A-T) mutations and were associated with East African-Indian strains."
+        },
+        {
+         "label": "CONCLUSIONS",
+         "text": "Mutations associated with high levels of drug resistance without/with low fitness costs (rpoB_Ser450Leu and katG_Ser315Thr) along with compensatory mutations linked to rifampicin resistance were strongly associated with multidrug-resistant M. tuberculosis Beijing strains in Vietnam."
+        }
+       ],
+       "doi": "10.1111/tmi.14104",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Tropical medicine & international health : TM & IH",
+       "mentions": [
+        "ahpC"
+       ],
+       "pmcid": "PMC12050163",
+       "quotable_text": "Multi-drug resistance and compensatory mutations in Mycobacterium tuberculosis in Vietnam.\n\nBACKGROUND: Vietnam is a hotspot for the emergence and spread of multidrug-resistant Mycobacterium tuberculosis. This study aimed to perform a retrospective study on the compensatory evolution in multidrug-resistant M. tuberculosis strains and the association with drug-resistant mutations and M. tuberculosis genotypes.\n\nMETHODS: Hundred and seventy-three strains resistant to rifampicin (n = 126) and/or isoniazid (n = 170) (multidrug-resistant = 123) were selected according to different drug-resistant patterns and genotypes. The genes/promoter regions including rpoA, rpoB, rpoC, katG, inhA, inhA promoter, ahpC, ahpC promoter, gyrA, gyrB, and rrs were sequenced for each strain.\n\nRESULTS: Frequency of rifampicin- and isoniazid-resistant mutations in multidrug-resistant strains was 99.2% and 97.0%, respectively. Mutations associated with low -high levels of drug resistance with low- or no-fitness costs compared to the wild type, including rpoB_Ser450Leu, katG_Ser315Thr, inhA-15(A-T), gyrA_Asp94Gly, and rrs_A1401GA, accounted for 46.3%, 76.4%, 16.2%, 8.9%, and 11.4%, respectively, in the multidrug-resistant strains. Beijing and Euro-American genotype strains were associated with high-level drug-resistant mutations, rpoB_Ser450Leu, katG_Ser315Thr, and gyrA_Asp94Gly, while East African-Indian genotype strains were associated with low to high-level drug-resistant mutations, rpoB_His445Asp, rpoB_His445Tyr, inhA-15(C-T) and rrs_A1401G. Multidrug-resistant strains (19.5%) harboured compensatory mutations linked to rifampicin resistance in rpoA, rpoB, or rpoC. Notably, the frequency of compensatory mutations in Beijing genotypes was significantly higher than in East African-Indian genotypes (21.1% vs. 3.3%, OR = 7.7; 95% CI = 1.0 to 61.2, p = 0.03). The proportion of multidrug-resistant strains with rpoB_Ser450Leu mutations carrying rpoA-rpoC mutations was higher than that of strains with other rpoB mutations (OR = 5.4; 95% CI = 1.4 to 21.1, p = 0.02) and was associated with Beijing strains. Only 1.2% (2/170) isoniazid-resistant strains carried aphC-52(C-T) mutation in the promoter region of the ahpC gene, which was hypothesised to be the compensatory mutation in isoniazid-resistant strains. Meanwhile, 11 isoniazid-resistant strains carried a katG mutation combined with either inhA-8(T-C) or inhA-15(A-T) mutations and were associated with East African-Indian strains.\n\nCONCLUSIONS: Mutations associated with high levels of drug resistance without/with low fitness costs (rpoB_Ser450Leu and katG_Ser315Thr) along with compensatory mutations linked to rifampicin resistance were strongly associated with multidrug-resistant M. tuberculosis Beijing strains in Vietnam.",
+       "title": "Multi-drug resistance and compensatory mutations in Mycobacterium tuberculosis in Vietnam.",
+       "year": "2025"
+      },
+      "name": "Multi-drug resistance and compensatory mutations in Mycobacterium tuberculosis in Vietnam.",
+      "record_id": "40078052",
+      "retrieved_at": "2026-08-28T10:31:08.472397+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40078052/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Tuberculosis (TB) is a global threat due to the emergence and spread of drug-resistant Mycobacterium tuberculosis (MTB). Isoniazid (INH) is the main antibiotic used for prevention and treatment of TB. Evidence shows that accumulated mutations can produce INH resistant (INHR) strains, resulting in the progression of multidrug-resistant (MDR) TB. Since point mutations in katG gene, inhA gene, and oxyR-ahpC region correlated with the INH resistance, in this study, we aimed to identify mutations in these three genes in INHR and MDR clinical isolates of MTB by Sanger DNA sequencing analysis. Thirty-three out of 438 isolates were resistant, including 66.7% INHR and 30.3% MDR isolates. In the katG gene, 68.2% INHR isolates had non-synonymous point mutations, mainly R463L (63.6%), and non-synonymous point mutation KatG L587P was seen in one of the MDR isolate. A novel silent substitution L649L was identified in the inhA gene of the MDR isolates. The oxyR-ahpC intergenic region g-88a common mutations (63.6%) in INHR and two distinct novel mutations were found at positions -76 and -77 of the oxyR-ahpC intergenic region. The coexistence of katG non-codon 315 with oxyR-ahpC intergenic region mutations was highly frequent in INHR 59.1% and MDR isolates 70%. Since mutations of all three genes 95.5% lead to the detection of INHR, they might be useful for molecular detection. Our results indicated the continuous evolution and region-specific prevalence of INH resistance. Overall, identification of new mutations in INH resistance can improve the available strategies for diagnosis and control of TB.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Tuberculosis (TB) is a global threat due to the emergence and spread of drug-resistant Mycobacterium tuberculosis (MTB). Isoniazid (INH) is the main antibiotic used for prevention and treatment of TB. Evidence shows that accumulated mutations can produce INH resistant (INHR) strains, resulting in the progression of multidrug-resistant (MDR) TB. Since point mutations in katG gene, inhA gene, and oxyR-ahpC region correlated with the INH resistance, in this study, we aimed to identify mutations in these three genes in INHR and MDR clinical isolates of MTB by Sanger DNA sequencing analysis. Thirty-three out of 438 isolates were resistant, including 66.7% INHR and 30.3% MDR isolates. In the katG gene, 68.2% INHR isolates had non-synonymous point mutations, mainly R463L (63.6%), and non-synonymous point mutation KatG L587P was seen in one of the MDR isolate. A novel silent substitution L649L was identified in the inhA gene of the MDR isolates. The oxyR-ahpC intergenic region g-88a common mutations (63.6%) in INHR and two distinct novel mutations were found at positions -76 and -77 of the oxyR-ahpC intergenic region. The coexistence of katG non-codon 315 with oxyR-ahpC intergenic region mutations was highly frequent in INHR 59.1% and MDR isolates 70%. Since mutations of all three genes 95.5% lead to the detection of INHR, they might be useful for molecular detection. Our results indicated the continuous evolution and region-specific prevalence of INH resistance. Overall, identification of new mutations in INH resistance can improve the available strategies for diagnosis and control of TB."
+        }
+       ],
+       "doi": "10.1080/20477724.2021.1928870",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Pathogens and global health",
+       "mentions": [
+        "ahpC"
+       ],
+       "pmcid": "PMC8812758",
+       "quotable_text": "Significance of the coexistence of non-codon 315 katG, inhA, and oxyR-ahpC intergenic gene mutations among isoniazid-resistant and multidrug-resistant isolates of Mycobacterium tuberculosis: a report of novel mutations.\n\nTuberculosis (TB) is a global threat due to the emergence and spread of drug-resistant Mycobacterium tuberculosis (MTB). Isoniazid (INH) is the main antibiotic used for prevention and treatment of TB. Evidence shows that accumulated mutations can produce INH resistant (INHR) strains, resulting in the progression of multidrug-resistant (MDR) TB. Since point mutations in katG gene, inhA gene, and oxyR-ahpC region correlated with the INH resistance, in this study, we aimed to identify mutations in these three genes in INHR and MDR clinical isolates of MTB by Sanger DNA sequencing analysis. Thirty-three out of 438 isolates were resistant, including 66.7% INHR and 30.3% MDR isolates. In the katG gene, 68.2% INHR isolates had non-synonymous point mutations, mainly R463L (63.6%), and non-synonymous point mutation KatG L587P was seen in one of the MDR isolate. A novel silent substitution L649L was identified in the inhA gene of the MDR isolates. The oxyR-ahpC intergenic region g-88a common mutations (63.6%) in INHR and two distinct novel mutations were found at positions -76 and -77 of the oxyR-ahpC intergenic region. The coexistence of katG non-codon 315 with oxyR-ahpC intergenic region mutations was highly frequent in INHR 59.1% and MDR isolates 70%. Since mutations of all three genes 95.5% lead to the detection of INHR, they might be useful for molecular detection. Our results indicated the continuous evolution and region-specific prevalence of INH resistance. Overall, identification of new mutations in INH resistance can improve the available strategies for diagnosis and control of TB.",
+       "title": "Significance of the coexistence of non-codon 315 katG, inhA, and oxyR-ahpC intergenic gene mutations among isoniazid-resistant and multidrug-resistant isolates of Mycobacterium tuberculosis: a report of novel mutations.",
+       "year": "2022"
+      },
+      "name": "Significance of the coexistence of non-codon 315 katG, inhA, and oxyR-ahpC intergenic gene mutations among isoniazid-resistant and multidrug-resistant isolates of Mycobacterium tuberculosis: a report of novel mutations.",
+      "record_id": "34086544",
+      "retrieved_at": "2026-08-28T10:31:08.472397+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34086544/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The peroxiredoxin AhpC from Mycobacterium tuberculosis has been expressed, purified, and characterized. It differs from other well characterized AhpC proteins in that it has three rather than one or two cysteine residues. Mutagenesis studies show that all three cysteine residues are important for catalytic activity. Analysis of the M. tuberculosis genome identified a second protein, AhpD, which has no sequence identity with AhpC but is under the control of the same promoter. This protein has also been cloned, expressed, purified, and characterized. AhpD, which has only been identified in the genomes of mycobacteria and Streptomyces viridosporus, is shown here to also be an alkylhydroperoxidase. The endogenous electron donor for catalytic turnover of the two proteins is not known, but both can be turned over with AhpF from Salmonella typhimurium or, particularly in the case of AhpC, with dithiothreitol. AhpC and AhpD reduce alkylhydroperoxides more effectively than H(2)O(2) but do not appear to interact with each other. These two proteins appear to be critical elements of the antioxidant defense system of M. tuberculosis and may be suitable targets for the development of novel anti-tuberculosis strategies.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The peroxiredoxin AhpC from Mycobacterium tuberculosis has been expressed, purified, and characterized. It differs from other well characterized AhpC proteins in that it has three rather than one or two cysteine residues. Mutagenesis studies show that all three cysteine residues are important for catalytic activity. Analysis of the M. tuberculosis genome identified a second protein, AhpD, which has no sequence identity with AhpC but is under the control of the same promoter. This protein has also been cloned, expressed, purified, and characterized. AhpD, which has only been identified in the genomes of mycobacteria and Streptomyces viridosporus, is shown here to also be an alkylhydroperoxidase. The endogenous electron donor for catalytic turnover of the two proteins is not known, but both can be turned over with AhpF from Salmonella typhimurium or, particularly in the case of AhpC, with dithiothreitol. AhpC and AhpD reduce alkylhydroperoxides more effectively than H(2)O(2) but do not appear to interact with each other. These two proteins appear to be critical elements of the antioxidant defense system of M. tuberculosis and may be suitable targets for the development of novel anti-tuberculosis strategies."
+        }
+       ],
+       "doi": "10.1074/jbc.M001001200",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "The Journal of biological chemistry",
+       "mentions": [
+        "ahpC"
+       ],
+       "pmcid": "",
+       "quotable_text": "The AhpC and AhpD antioxidant defense system of Mycobacterium tuberculosis.\n\nThe peroxiredoxin AhpC from Mycobacterium tuberculosis has been expressed, purified, and characterized. It differs from other well characterized AhpC proteins in that it has three rather than one or two cysteine residues. Mutagenesis studies show that all three cysteine residues are important for catalytic activity. Analysis of the M. tuberculosis genome identified a second protein, AhpD, which has no sequence identity with AhpC but is under the control of the same promoter. This protein has also been cloned, expressed, purified, and characterized. AhpD, which has only been identified in the genomes of mycobacteria and Streptomyces viridosporus, is shown here to also be an alkylhydroperoxidase. The endogenous electron donor for catalytic turnover of the two proteins is not known, but both can be turned over with AhpF from Salmonella typhimurium or, particularly in the case of AhpC, with dithiothreitol. AhpC and AhpD reduce alkylhydroperoxides more effectively than H(2)O(2) but do not appear to interact with each other. These two proteins appear to be critical elements of the antioxidant defense system of M. tuberculosis and may be suitable targets for the development of novel anti-tuberculosis strategies.",
+       "title": "The AhpC and AhpD antioxidant defense system of Mycobacterium tuberculosis.",
+       "year": "2000"
+      },
+      "name": "The AhpC and AhpD antioxidant defense system of Mycobacterium tuberculosis.",
+      "record_id": "10766746",
+      "retrieved_at": "2026-08-28T10:31:08.472397+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/10766746/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "40ffd0efae9240c3a96c62196a4c37de06a6243b05b7d89bfcdba04a51cf9afd",
+      "retrieved_at": "2026-08-28T10:31:08.052040+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=6&retmode=json&sort=relevance&term=%22ahpC%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
+     },
+     {
+      "cached": false,
+      "content_sha256": "0d034c777f97d619859c1426f0824fc454c67c1fe1ece5d5b9a6bc7175e7ea20",
+      "retrieved_at": "2026-08-28T10:31:08.472397+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=10609885%2C23899494%2C35919400%2C40078052%2C34086544%2C10766746&retmode=xml&tool=kegg-string-mcp"
+     }
+    ],
+    "resolved": {
+     "matched_by": "pubmed_search",
+     "query_translation": "\"ahpC\"[All Fields] AND \"Mycobacterium tuberculosis\"[All Fields]",
+     "term": "\"ahpC\" AND \"Mycobacterium tuberculosis\""
+    }
+   },
+   "tool": "pubmed_abstracts"
+  }
+ ],
+ "id": "ahpC",
+ "mode": "single",
+ "organism": "mtu",
+ "summary": "# ahpC \u2014 Rv2428 (M. tuberculosis H37Rv)\n\n## Identity\nKEGG resolved the symbol `ahpC` to **mtu:Rv2428** (matched by symbol). STRING resolved it to **83332.Rv2428**, preferred name `ahpC`.\n\n## Pathways\n\n**KEGG assigns this gene to no pathway.** The tool note is explicit that this is not a resolution failure: \"The gene exists in KEGG but is not mapped to any pathway in this organism.\" So there is no KEGG pathway ID to cite here, and I will not substitute a plausible one. Any pathway-level statement below comes from STRING network context or literature, not from KEGG.\n\n## Function\n\nAhpC is a **peroxiredoxin / alkyl hydroperoxide reductase**, the catalytic component of a thiol-based antioxidant defence. This is directly characterised biochemically: PMID:10766746 \"The peroxiredoxin AhpC from Mycobacterium tuberculosis has been expressed, purified, and characterized\" and it \"differs from other well characterized AhpC proteins in that it has three rather than one or two cysteine residues\", with \"all three cysteine residues are important for catalytic activity\". Substrate preference is for organic peroxides over hydrogen peroxide: PMID:10766746 \"AhpC and AhpD reduce alkylhydroperoxides more effectively than H(2)O(2)\". Enzymatically it is described as having \"alkylhydroperoxidase (Ahp) and thioredoxin-dependent peroxidase (TPx) activities\" (PMID:10609885).\n\nNote a caveat that bears on the network below: PMID:10766746 reports that AhpC and AhpD \"do not appear to interact with each other\", and that \"The endogenous electron donor for catalytic turnover of the two proteins is not known.\"\n\n## Notable interaction partners (STRING, \u22650.700)\n\n**Supported by channels beyond textmining:**\n\n- **83332.Rv2429 (ahpD)** \u2014 combined 0.999; the strongest partner, and the evidence is genomic rather than physical: neighborhood 0.844, cooccurrence 0.766, coexpression 0.836, experimental 0.0. This is the classic operon/conserved-gene-cluster signature. Consistent with PMID:10766746 \"a second protein, AhpD, which has no sequence identity with AhpC but is under the control of the same promoter\" \u2014 i.e. co-regulation, not complex formation.\n- **83332.Rv3913 (trxB2)** \u2014 combined 0.955, experimental 0.808, coexpression 0.437. This is the best *experimentally* supported partner in the set, and it fits the thioredoxin-dependent peroxidase activity noted above (a thioredoxin reductase supplying reducing equivalents).\n- **83332.Rv2427A (oxyR)** \u2014 combined 0.938, neighborhood 0.543. The adjacent oxidative-stress regulator; genomic-context evidence, no experimental channel.\n- **83332.Rv1909c (furA)** \u2014 combined 0.870, coexpression 0.573.\n- **83332.Rv3846 (sodA)** \u2014 combined 0.924, coexpression 0.476. Co-regulated oxidative-stress enzyme.\n- **A block of partners sharing an identical evidence fingerprint** (experimental 0.468, database 0.611): **83332.Rv1677 (dsbF)**, **83332.Rv2874 (dipZ)**, **83332.Rv0816c (thiX)**, **83332.Rv2878c (mpt53)**, **83332.Rv3673c**, **83332.Rv0526**. The repeated identical scores indicate these come from a shared database/complex assignment rather than six independent pairwise experiments \u2014 most plausibly a common thiol-redox annotation grouping. Treat as one piece of evidence, not six.\n\n**Supported essentially by textmining alone** (the tool flags these: katG, rpoB, inhA, kasA, sodC, embB, pncA, ndh, fabG1) \u2014 **83332.Rv1908c (katG)** 0.968, **83332.Rv0667 (rpoB)** 0.967, **83332.Rv1484 (inhA)** 0.957, **83332.Rv2245 (kasA)** 0.929, **83332.Rv0432 (sodC)** 0.893, **83332.Rv3795 (embB)** 0.848, **83332.Rv2043c (pncA)** 0.837, **83332.Rv1854c (ndh)** 0.834, **83332.Rv1483 (fabG1)** 0.782.\n\nThese high combined scores are misleading if read as interaction evidence. They are the drug-resistance gene-panel literature: papers that sequence `katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA` together (PMID:35919400) or `rpoA, rpoB, rpoC, katG, inhA, inhA promoter, ahpC, ahpC promoter, gyrA, gyrB, and rrs` (PMID:40078052). Co-mention in a resistance panel is not a functional or physical association. **The abstracts I retrieved are very likely the source of these textmining scores, so they are one line of evidence (literature), not two.**\n\n## The katG relationship, specifically\n\nThe ahpC\u2013katG link is real biology but *not* a protein interaction. It is a compensatory-regulation relationship in isoniazid-resistant clinical isolates: PMID:10609885 reports \"isoniazid-resistant M. tuberculosis isolates with ahpC promoter mutations resulting in AhpC overexpression\", that \"All the isoniazid-resistant, AhpC-overexpressing strains were also deficient in activity of the mycobacterial catalase-peroxidase KatG\", and proposes \"compensatory ahpC promoter mutations are selected from KatG-deficient, isoniazid-resistant M. tuberculosis during infections, to mitigate the added burden imposed by organic peroxides on these strains.\"\n\nImportantly, the same paper **refutes** a direct drug-detoxification role: the overexpressing strains \"were unchanged in their sensitivity to isoniazid, refuting a role for AhpC in detoxification of this drug.\" The resistance-associated variation is promoter/intergenic, not coding \u2014 PMID:34086544 describes \"The oxyR-ahpC intergenic region g-88a common mutations (63.6%) in INHR\", and PMID:40078052 found only \"1.2% (2/170) isoniazid-resistant strains carried aphC-52(C-T) mutation in the promoter region of the ahpC gene.\" So ahpC is a useful resistance *marker* and fitness compensator, not a resistance determinant.\n\n## Summary\n\nRv2428 encodes a three-cysteine peroxiredoxin that reduces organic hydroperoxides, functioning in thiol-dependent oxidative-stress defence. KEGG places it in **no** pathway. Its most informative partners are ahpD (83332.Rv2429, co-operonic) and trxB2 (83332.Rv3913, the one strongly experimentally-supported link, consistent with thioredoxin-dependent turnover), with oxyR (83332.Rv2427A), furA (83332.Rv1909c) and sodA (83332.Rv3846) as genomic-context/co-expression associations in the same stress regulon. Its prominent links to the isoniazid/MDR gene set are literature co-mention artefacts of resistance-panel sequencing, with the exception of the genuine \u2014 but regulatory and compensatory, not physical \u2014 relationship to katG. The physiological electron donor was still unresolved in the characterisation paper retrieved here.",
+ "target": "ahpC",
+ "turns": [
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "ahpC",
+      "organism": "mtu"
+     },
+     "name": "kegg_pathways"
+    },
+    {
+     "input": {
+      "gene": "ahpC",
+      "required_score": 700,
+      "species": 83332
+     },
+     "name": "string_partners"
+    }
+   ],
+   "turn": 1
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "ahpC",
+      "limit": 6,
+      "organism": "Mycobacterium tuberculosis"
+     },
+     "name": "pubmed_abstracts"
+    }
+   ],
+   "turn": 2
+  },
+  {
+   "stop_reason": "end_turn",
+   "tools_requested": [],
+   "turn": 3
+  }
+ ]
+}
