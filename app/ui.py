@@ -22,7 +22,9 @@ from app.replay import (
 REPO = "https://github.com/YaaOppong/kegg-string-mcp"
 
 INTRO = f"""
-# Does the annotation say what its sources say?
+# LLM Gene Annotation Demo
+
+### Does the annotation say what its sources say?
 
 This annotates *Mycobacterium tuberculosis* genes. It hands a language model a set of
 lookup tools — KEGG for pathways, STRING for protein interactions, PubMed for
@@ -81,7 +83,7 @@ def render(choice: str):
 
 
 def build() -> gr.Blocks:
-    with gr.Blocks(title="Annotation with checked citations",
+    with gr.Blocks(title="LLM Gene Annotation Demo",
                    theme=gr.themes.Soft()) as page:
         gr.Markdown(INTRO)
 
