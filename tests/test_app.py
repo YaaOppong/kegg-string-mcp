@@ -167,14 +167,57 @@ def test_a_clean_run_points_at_the_failing_ones():
     assert "⚠️" in verdict, "a clean run should say where to find a caught failure"
 
 
-def test_the_static_build_is_generated_from_the_same_sources():
-    """The browser build rewrites import lines only; a divergent copy of the UI or
-    the validator would let the page show something the library does not."""
-    from demo.build_pages import flatten
+def test_the_static_build_rewrites_only_import_lines():
+    """A divergent copy of the validator would let the page show a verdict the
+    library does not produce, so the module bodies must be copied verbatim."""
+    from demo.build_pages import REWRITES, flatten
 
-    ui = (Path(__file__).resolve().parent.parent / "app" / "ui.py").read_text()
-    flat = flatten(ui)
-    assert "from replay import (" in flat
-    assert "from app.replay import" not in flat
-    # Everything except the import line is untouched.
-    assert flat.replace("from replay import (", "from app.replay import (") == ui
+    source = (Path(__file__).resolve().parent.parent / "app" / "replay.py").read_text()
+    flat = flatten(source)
+    assert "from store import RunStore" in flat
+    assert "from kegg_string_mcp" not in flat
+
+    restored = flat
+    for old, new in REWRITES:
+        restored = restored.replace(new, old)
+    assert restored == source, "the build changed something other than an import line"
+
+
+def test_the_static_build_installs_no_packages():
+    """Gradio-Lite pulled gradio through micropip, which pulls huggingface-hub --
+    a package with no pure-Python wheel, so the page failed to start. Bare Pyodide
+    with a standard-library-only payload has no dependency resolution to fail."""
+    import ast
+    import sys
+
+    from demo.build_pages import payload
+
+    files = payload()
+    assert "browser_api.py" in files and "validate.py" in files
+
+    # Parse rather than grep: a docstring explaining why micropip is avoided is
+    # not an install, and a substring check cannot tell the difference.
+    stdlib = set(sys.stdlib_module_names)
+    local = {name[:-3] for name in files if name.endswith(".py")}
+    for name, body in files.items():
+        if not name.endswith(".py"):
+            continue
+        for node in ast.walk(ast.parse(body)):
+            if isinstance(node, ast.Import):
+                roots = [alias.name.split(".")[0] for alias in node.names]
+            elif isinstance(node, ast.ImportFrom):
+                roots = [(node.module or "").split(".")[0]] if node.level == 0 else []
+            else:
+                continue
+            for root in roots:
+                assert root in stdlib or root in local, (
+                    f"{name} imports {root!r}, which the browser would have to install")
+
+
+def test_the_static_payload_carries_every_offered_run():
+    from app.replay import ORDERED
+    from demo.build_pages import payload
+
+    files = payload()
+    for name in ORDERED:
+        assert f"runs/{name}.json" in files, f"{name} is offered but not embedded"
