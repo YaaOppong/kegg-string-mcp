@@ -198,8 +198,8 @@ function table(el, headers, rows, classify) {
     }).join("") + "</tr>").join("") + "</tbody>";
 }
 
-const FAIL_BANNER = `<strong>&#9888;&#65039; On this run, the checking caught a bad
-citation.</strong><br/>The write-up below cites records that were <strong>not</strong>
+const FAIL_BANNER = `<strong>&#9888;&#65039; On this run, the checking caught a bad citation.</strong>
+<br/>The write-up below cites records that were <strong>not</strong>
 retrieved for this gene. The model produced real, correctly-formatted identifiers for
 things it was never shown for this gene &mdash; that is the failure this project exists
 to catch, and it is caught here on a real run. Details in section 3.`;

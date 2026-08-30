@@ -221,3 +221,11 @@ def test_the_static_payload_carries_every_offered_run():
     files = payload()
     for name in ORDERED:
         assert f"runs/{name}.json" in files, f"{name} is offered but not embedded"
+
+
+def test_the_generated_page_states_the_failure_on_one_line():
+    """The Pages workflow greps for this phrase and grep is line-based, so a line
+    break inside it silently fails the deploy. It did."""
+    from demo.build_pages import TEMPLATE
+
+    assert "caught a bad citation" in TEMPLATE, "the banner phrase is split across lines"
