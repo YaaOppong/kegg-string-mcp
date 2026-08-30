@@ -1,5 +1,5 @@
 ---
-title: Gene Annotation With Checked Citations
+title: LLM Gene Annotation Demo
 emoji: 🧬
 colorFrom: indigo
 colorTo: green
@@ -10,7 +10,9 @@ license: mit
 short_description: Watch an LLM annotate a TB gene, then watch its citations get checked
 ---
 
-# Deploying this demo to a Hugging Face Space
+# LLM Gene Annotation Demo
+
+## Deploying to a Hugging Face Space
 
 The Space is a git repo containing this repository's files.
 

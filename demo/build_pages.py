@@ -85,7 +85,7 @@ TEMPLATE = r"""<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gene annotation with checked citations</title>
+<title>LLM Gene Annotation Demo</title>
 <meta name="description" content="Watch a language model annotate a tuberculosis gene, then watch every citation it wrote get checked against what the tools returned." />
 <style>
  :root { --fail:#b3261e; --fail-bg:#fdecea; --ok:#1e8e3e; --ok-bg:#e9f7ef; --line:#d8dce2; }
@@ -115,7 +115,9 @@ TEMPLATE = r"""<!doctype html>
 </head>
 <body>
 <main>
-<h1>Does the annotation say what its sources say?</h1>
+<h1>LLM Gene Annotation Demo</h1>
+<p class="lede" style="font-size:1.12rem;color:#444;margin-top:-.4rem">
+Does the annotation say what its sources say?</p>
 
 <p class="lede">This annotates <em>Mycobacterium tuberculosis</em> genes. It hands a
 language model a set of lookup tools &mdash; KEGG for pathways, STRING for protein

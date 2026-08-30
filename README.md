@@ -1,6 +1,6 @@
 # kegg-string-mcp
 
-[![Live demo](https://img.shields.io/badge/live%20demo-open-2ea44f)](https://yaaoppong.github.io/kegg-string-mcp/)
+[![LLM Gene Annotation Demo](https://img.shields.io/badge/demo-LLM%20Gene%20Annotation-2ea44f)](https://yaaoppong.github.io/kegg-string-mcp/)
 [![CI](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml)
 
 An [MCP](https://modelcontextprotocol.io) server exposing **KEGG**, **STRING**, **UniProt** and
@@ -59,7 +59,7 @@ For PubMed records that check is necessary but not sufficient, so each article a
 carries `quotable_text`: the exact retrieved title-and-abstract string. See
 [Structured records and prose](#structured-records-and-prose) below.
 
-## Demo
+## LLM Gene Annotation Demo
 
 **<https://yaaoppong.github.io/kegg-string-mcp/>**
 
