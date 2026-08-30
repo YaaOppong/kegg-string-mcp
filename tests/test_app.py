@@ -4,6 +4,8 @@ installing a web framework, and so the UI cannot quietly change what is checked.
 """
 
 
+from pathlib import Path
+
 import pytest
 
 from app.replay import RUNS_DIR, available, citation_rows, load, quote_rows, tool_call_rows
@@ -100,3 +102,34 @@ def test_app_module_builds_without_a_network_or_key(monkeypatch):
     from app.app import build
 
     assert build() is not None
+
+
+def test_the_replay_layer_needs_only_the_standard_library():
+    """The demo must be able to run where anthropic, httpx and mcp are awkward --
+    a browser under Pyodide, most obviously. store.py and validate.py are stdlib
+    only; an eager re-export in agent/__init__.py used to drag the whole HTTP and
+    model stack in behind them."""
+    import json
+    import subprocess
+    import sys
+
+    probe = (
+        "import sys, json\n"
+        "before = set(sys.modules)\n"
+        "from app.replay import load, available\n"
+        "heavy = {'anthropic', 'mcp', 'httpx', 'pydantic', 'pydantic_core', 'gradio'}\n"
+        "print(json.dumps(sorted({m.split('.')[0] for m in set(sys.modules) - before} & heavy)))"
+    )
+    result = subprocess.run([sys.executable, "-c", probe], capture_output=True, text=True,
+                            cwd=Path(__file__).resolve().parent.parent, check=False)
+    assert result.returncode == 0, result.stderr
+    pulled = json.loads(result.stdout.strip().splitlines()[-1])
+    assert pulled == [], f"replay pulled in {pulled}"
+
+
+def test_lazy_agent_exports_still_resolve():
+    from kegg_string_mcp import agent
+
+    assert agent.validate is not None
+    assert agent.RunStore is not None
+    assert "annotate_gene" in dir(agent)
