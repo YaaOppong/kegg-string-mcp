@@ -54,7 +54,7 @@ class McpTools:
     def names(self) -> set[str]:
         return {t.name for t in self._tools}
 
-    def _check(self, name: str, arguments: dict[str, Any]) -> list[str]:
+    def _check(self, name: str, arguments: dict[str, Any]) -> tuple[dict[str, Any], list[str]]:
         """Validate against the schema the server advertises.
 
         MCP silently drops arguments a tool does not declare, so a model asking for
@@ -65,7 +65,7 @@ class McpTools:
         """
         schema = next((t.input_schema for t in self._tools if t.name == name), None)
         if schema is None:
-            return [f"'{name}' is not a tool this server exposes"]
+            return {}, [f"'{name}' is not a tool this server exposes"]
         properties = schema.get("properties", {})
         problems = [f"'{key}' is not a parameter of {name} "
                     f"(accepts: {', '.join(sorted(properties))})"
@@ -73,23 +73,34 @@ class McpTools:
         for key in schema.get("required", []):
             if key not in arguments:
                 problems.append(f"'{key}' is required by {name}")
+
+        # Coerce rather than refuse, matching pipeline._coerce. A model emitting
+        # limit="20" is a deviation both paths have to survive identically, and
+        # since MCP is the default path, refusing here would turn a case the
+        # direct dispatch handles into an empty envelope.
+        coerced: dict[str, Any] = {}
+        casts = {"integer": int, "number": float, "string": str, "boolean": bool}
         for key, value in arguments.items():
             expected = properties.get(key, {}).get("type")
-            if expected == "integer" and not isinstance(value, int):
-                problems.append(f"'{key}' must be an integer, got {value!r}")
-            elif expected == "string" and not isinstance(value, str):
-                problems.append(f"'{key}' must be a string, got {value!r}")
-        return problems
+            cast = casts.get(expected)
+            if cast is None or isinstance(value, cast):
+                coerced[key] = value
+                continue
+            try:
+                coerced[key] = cast(value)
+            except (TypeError, ValueError):
+                problems.append(f"'{key}' must be {expected}, got {value!r}")
+        return coerced, problems
 
     async def __call__(self, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
-        problems = self._check(name, arguments)
+        coerced, problems = self._check(name, arguments)
         if problems:
             return {"query": dict(arguments), "records": [], "record_ids": [],
                     "notes": [(f"Invalid argument(s), so no lookup was performed: "
                                f"{'; '.join(problems)}. An empty result here does NOT "
                                f"mean there is no data.")]}
 
-        result = await self.session.call_tool(name, arguments)
+        result = await self.session.call_tool(name, coerced)
 
         if getattr(result, "is_error", False):
             # A tool error is data the model can act on, not a crash. Same contract
@@ -125,7 +136,13 @@ def _first_text(result: Any) -> str:
 def child_env() -> dict[str, str]:
     env = {k: os.environ[k] for k in FORWARDED_ENV if k in os.environ}
     # The child is a Python process; without PATH and the venv it may not resolve.
-    for key in ("PATH", "HOME", "VIRTUAL_ENV", "CONDA_PREFIX", "SYSTEMROOT"):
+    # PYTHONPATH matters for a src/ layout: without it an uninstalled checkout run
+    # as `PYTHONPATH=src python -m ...` spawns a child that cannot import the
+    # package. The proxy and cert vars matter because the child, not the parent,
+    # is the one that talks to KEGG, STRING, NCBI and UniProt.
+    for key in ("PATH", "HOME", "VIRTUAL_ENV", "CONDA_PREFIX", "SYSTEMROOT", "PYTHONPATH",
+                "HTTP_PROXY", "HTTPS_PROXY", "NO_PROXY", "http_proxy", "https_proxy",
+                "no_proxy", "SSL_CERT_FILE", "REQUESTS_CA_BUNDLE"):
         if key in os.environ:
             env[key] = os.environ[key]
     return env

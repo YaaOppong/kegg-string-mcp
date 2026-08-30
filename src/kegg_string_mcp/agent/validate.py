@@ -36,12 +36,12 @@ STRING_PROTEIN = r"\d{2,7}\.(?=[A-Za-z0-9_]*[A-Za-z])[A-Za-z0-9_]+"
 # PMIDs only in explicit PMID: form. A bare 8-digit number is ambiguous -- it
 # could be a coordinate, a score, a year range -- and treating every one as a
 # citation would flag ordinary prose as unsupported.
-PMID = r"PMID:?\s*\d{1,8}"
+PMID = r"(?i:PMID:?\s*\d{1,8})"
 
 CITATION_PATTERNS = [
     re.compile(r"\b(?:" + KEGG_PATHWAY + r")\b"),
     re.compile(r"\b(?:" + STRING_PROTEIN + r")\b"),
-    re.compile(r"\b(?:" + PMID + r")\b", re.IGNORECASE),
+    re.compile(r"\b(?:" + PMID + r")\b"),
     re.compile(r"\b(?:" + UNIPROT_ACCESSION + r")\b"),
 ]
 
@@ -67,18 +67,24 @@ _QUOTE_CHARS = r"\"\u201c\u201d"
 _SPAN = r"([^" + _QUOTE_CHARS + r"]{" + str(MIN_QUOTE_CHARS) + r",})"
 _OPEN = r"[\"\u201c]"
 _CLOSE = r"[\"\u201d]"
-# The gap must exclude only OPENING quote characters. Excluding the closing curly
-# quote too (an accident of reusing _QUOTE_CHARS here) stopped this matching when
-# a closing curly quote sat between the citation and the next span.
-_GAP = r"[^\"\u201c]{0,60}?"
+# The gap excludes every quote character, opening and closing. Allowing a closing
+# curly quote through let this pattern reach across a FINISHED quotation and bind a
+# later, unrelated span to a citation that sat inside the earlier one -- in
+# `"essential (PMID: 1)" and "it also binds NADH"`, the PMID belongs to the first
+# quotation, not the second. An earlier review argued the narrow class suppressed a
+# valid match and I widened it; that was wrong, and the test written at the time
+# encoded the misattribution as expected behaviour.
+_GAP = r"[^\"\u201c\u201d]{0,60}?"
 
 QUOTE_THEN_CITE = re.compile(
+    # No global IGNORECASE: UniProt accessions are case-sensitive, and matching
+    # them loosely made the quote extractor recognise lowercase accession-shaped
+    # tokens the citation extractor never sees -- so a run failed on a token that
+    # was never a citation. Only the PMID alternative is case-insensitive.
     _OPEN + _SPAN + _CLOSE + r"\s*[\(\[]?\s*(" + QUOTABLE_CITE_TOKEN + r")",
-    re.IGNORECASE,
 )
 CITE_THEN_QUOTE = re.compile(
     r"(" + QUOTABLE_CITE_TOKEN + r")" + _GAP + _OPEN + _SPAN + _CLOSE,
-    re.IGNORECASE,
 )
 
 

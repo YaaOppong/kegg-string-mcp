@@ -190,8 +190,10 @@ class UniProtClient:
         if not gene:
             problems.append("no gene identifier was supplied")
         elif _QUERY_SYNTAX.search(gene):
-            problems.append('gene contains UniProt query syntax (: ( ) [ ] " or whitespace), '
-                            "which would change the meaning of the search")
+            offending = "".join(sorted({c for c in gene if _QUERY_SYNTAX.search(c)})) or gene[0]
+            problems.append(f"gene contains UniProt (Lucene) query syntax {offending!r}, which "
+                            f"would change the meaning of the search rather than the terms "
+                            f"searched for")
         if organism_id <= 0:
             problems.append(f"organism_id={organism_id} is not a valid NCBI taxon ID")
         if not 1 <= limit <= MAX_LIMIT:

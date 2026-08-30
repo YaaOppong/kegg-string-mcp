@@ -608,14 +608,16 @@ def test_verbatim_quote_on_a_uniprot_record_passes():
     assert [q.status for q in report.quotes] == ["verified"] and report.passed
 
 
-def test_closing_curly_quote_does_not_block_the_next_attribution():
-    """A lint-only refactor reused the quote-character class for the gap, silently
-    narrowing it so a quote after a closing curly quote was never checked."""
+def test_a_citation_inside_a_quotation_is_not_bound_to_the_next_one():
+    """`"essential (PMID: 1)" and "it also binds NADH"` — the PMID belongs to the
+    first quotation. An earlier review argued the gap class was too narrow and I
+    widened it; that let this pattern reach across a finished quotation and
+    attribute the second span to the first span's citation."""
     from kegg_string_mcp.agent.validate import extract_quotes
 
-    pairs = extract_quotes('“essential (PMID: 12345678)” and '
-                           '“it also binds NADH in vitro”.')
-    assert ("12345678", "it also binds NADH in vitro") in pairs
+    pairs = extract_quotes('The protein is “essential (PMID: 12345678)” and separately '
+                           '“it also binds NADH in vitro” per UniProt.')
+    assert ("12345678", "it also binds NADH in vitro") not in pairs
 
 
 def test_pmids_from_a_uniprot_statement_are_citable(tmp_path):
@@ -668,11 +670,30 @@ def test_mcp_dispatch_validates_against_the_servers_advertised_schema():
     assert "'species' is not a parameter of kegg_pathways" in envelope["notes"][0]
     assert not Session.called, "an invalid call must not reach the server"
 
-    typed = asyncio.run(tools("kegg_pathways", {"gene": 42}))
-    assert "must be a string" in typed["notes"][0]
-
     missing = asyncio.run(tools("kegg_pathways", {"organism": "mtu"}))
     assert "'gene' is required" in missing["notes"][0]
+
+
+def test_both_dispatch_paths_coerce_types_identically():
+    """MCP is the default path, so refusing a type the direct dispatch coerces would
+    turn a survivable model deviation into an empty envelope."""
+    import asyncio
+
+    from kegg_string_mcp.agent.mcp_tools import McpTools
+    from kegg_string_mcp.agent.pipeline import _coerce
+
+    sent = {}
+
+    class Session:
+        async def call_tool(self, name, arguments):
+            sent.update(arguments)
+
+    tools = McpTools(Session(), [_fake_tool()])
+    asyncio.run(tools("kegg_pathways", {"gene": 42}))
+    assert sent == {"gene": "42"}, "MCP should coerce, as the direct path does"
+
+    direct, problems = _coerce("kegg_pathways", {"gene": 42})
+    assert direct == {"gene": "42"} and not problems
 
 
 def test_mcp_dispatch_surfaces_a_tool_error_as_an_envelope():
@@ -763,3 +784,42 @@ def test_emphasis_tolerance_does_not_swallow_fabrication():
 
     source = "The gyrA mutations occurring most frequently in resistant isolates."
     assert not quote_in_source("*gyrA binds directly to the ribosome*", source)
+
+
+def test_a_pmid_cited_by_uniprot_has_something_to_check_a_quote_against(tmp_path):
+    """Making the PMID citable without registering a record left the quote check
+    with nothing to compare against, so a quote attached to it failed as 'no source
+    text' — on exactly the behaviour the prompt asks for."""
+    from kegg_string_mcp.agent.validate import validate
+
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("uniprot_protein", {"gene": "katG"}, {
+        "resolved": {"accession": "P9WIE5"}, "record_ids": ["P9WIE5"],
+        "records": [{"record_id": "P9WIE5", "type": "protein", "name": "Catalase", "url": "u",
+                     "detail": {"quotable_text": "a bifunctional catalase-peroxidase enzyme",
+                                "function_statements": [
+                                    {"text": "a bifunctional catalase-peroxidase enzyme",
+                                     "supporting_pmids": ["18178143"], "experimental": True,
+                                     "tiers": ["experimental"], "evidence_codes": ["ECO:0000269"]}]}}],
+    })
+    report = validate('UniProt states "a bifunctional catalase-peroxidase enzyme" (PMID:18178143).',
+                      store.citable_ids, store.per_target, "KATG", records=store.records)
+    assert report.passed, report.summary_line()
+    assert [q.status for q in report.quotes] == ["verified"]
+
+
+def test_a_fabricated_quote_on_such_a_pmid_still_fails(tmp_path):
+    from kegg_string_mcp.agent.validate import validate
+
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("uniprot_protein", {"gene": "katG"}, {
+        "resolved": {}, "record_ids": ["P9WIE5"],
+        "records": [{"record_id": "P9WIE5", "type": "protein", "name": "n", "url": "u",
+                     "detail": {"quotable_text": "a catalase-peroxidase",
+                                "function_statements": [
+                                    {"text": "a catalase-peroxidase",
+                                     "supporting_pmids": ["18178143"]}]}}],
+    })
+    report = validate('PMID:18178143 "binds directly to the ribosome in vitro"',
+                      store.citable_ids, store.per_target, "KATG", records=store.records)
+    assert [q.status for q in report.quotes] == ["not_in_source"]

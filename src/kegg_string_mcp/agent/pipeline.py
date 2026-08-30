@@ -131,7 +131,8 @@ async def _call(tools: Any, name: str, arguments: dict[str, Any]) -> dict[str, A
 
 async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Path("runs"),
                              tools: Any | None = None, client: Any | None = None,
-                             tool_schemas: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+                             tool_schemas: list[dict[str, Any]] | None = None,
+                             kegg: KeggClient | None = None) -> dict[str, Any]:
     """Pre-compute every pairwise relationship, then let the model interpret it.
 
     The set intersections are done here rather than by the model: a model doing
@@ -158,7 +159,10 @@ async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path
     # Pathway sizes and the genome denominator are pipeline-internal arithmetic,
     # not model-facing tools, so they use a direct client regardless of how the
     # model's tools are dispatched -- McpTools has no `.kegg` to reach into.
-    kegg = getattr(tools, "kegg", None) or KeggClient(PoliteClient(DiskCache()))
+    # Explicit parameter first: falling back to a fresh live client whenever the
+    # injected dispatch lacked `.kegg` meant a caller isolating this function from
+    # the network silently got real KEGG traffic anyway.
+    kegg = kegg or getattr(tools, "kegg", None) or KeggClient(PoliteClient(DiskCache()))
     # The only upstream calls in the pipeline that are not already fail-soft.
     # One KEGG 5xx here discarded every per-gene fetch already made and crashed.
     try:
