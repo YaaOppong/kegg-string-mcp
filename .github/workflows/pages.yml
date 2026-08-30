@@ -33,8 +33,10 @@ jobs:
           grep -q 'browser_api' docs/index.html
           grep -q 'caught a bad citation' docs/index.html
           # Bare Pyodide only: a package install is what broke the first attempt.
-          ! grep -q 'micropip.install' docs/index.html
-          ! grep -q 'loadPackage' docs/index.html
+          # Match calls, not words -- a comment saying "no loadPackage" previously
+          # tripped this check and blocked the deploy.
+          ! grep -qE 'micropip\.install\(' docs/index.html
+          ! grep -qE 'loadPackage\(' docs/index.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: docs
