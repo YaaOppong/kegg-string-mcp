@@ -5,3 +5,7 @@ __pycache__/
 .ruff_cache/
 /cache/
 /docs/
+
+# Local scratch: exploration notebooks. Notebooks carry execution state and
+# outputs, which diff badly and would drift from the code they demonstrate.
+/notebooks/
