@@ -262,8 +262,12 @@ it redistributes no third-party data. Terms remain the caller's responsibility:
 - **KEGG** — free for academic use; commercial use requires a licence from Pathway Solutions.
 - **STRING** — CC BY 4.0, free for academic and commercial use, attribution required.
 - **PubMed** — records are US government works and free to use; the abstracts themselves
-  are frequently under publisher copyright. This server retrieves them per query and
-  caches locally for the caller; it redistributes nothing. Respect NCBI's
+  are frequently under publisher copyright. The server retrieves them per query and caches
+  locally for the caller. A small number of abstracts *are* committed, in `demo/runs/` and
+  `tests/fixtures/`, because the demo cannot show quote-checking without the text it checks
+  against and the tests cannot run offline without it — roughly 40 records, retained for
+  research and educational use. Larger corpora built by the retrieval arm are **not**
+  committed. Respect NCBI's
   [E-utilities usage policy](https://www.ncbi.nlm.nih.gov/books/NBK25497/) — set
   `NCBI_EMAIL`.
 

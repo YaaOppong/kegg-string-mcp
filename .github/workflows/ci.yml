@@ -61,6 +61,21 @@ jobs:
       - name: Replay every demo run and build the page
         run: pytest -q tests/test_app.py
 
+  vector:
+    # The retrieval arm is an optional extra, so it gets its own job rather than
+    # widening the matrix: chromadb and its ONNX model are a heavier install than
+    # the core package, and nobody using the MCP server should pay for them.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e ".[dev,vector]"
+      - name: Retrieval tests
+        run: pytest -q tests/test_retrieval.py
+
   docker:
     runs-on: ubuntu-latest
     steps:

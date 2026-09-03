@@ -9,3 +9,8 @@ __pycache__/
 # Local scratch: exploration notebooks. Notebooks carry execution state and
 # outputs, which diff badly and would drift from the code they demonstrate.
 /notebooks/
+
+# Retrieval corpora and comparison outputs. The corpus is a few hundred PubMed
+# abstracts under publisher copyright; it is rebuildable from demo/build_corpus
+# in one command, so it is not redistributed here.
+/data/
