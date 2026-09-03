@@ -14,7 +14,6 @@ was fetched.
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 
 DEFAULT_GENES = ["katG", "inhA", "rpoB", "embB", "pncA", "fabG1",
