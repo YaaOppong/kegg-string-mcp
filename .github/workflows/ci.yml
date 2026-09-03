@@ -25,12 +25,14 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: pip install -e ".[dev]"
       - name: Run tests
-        run: pytest -q
+        # Retrieval tests need the optional [vector] extra and run in their own job,
+        # the same way the demo tests do. The core install must not need them.
+        run: pytest -q --ignore=tests/test_retrieval.py --ignore=tests/test_app.py
       - name: Prove the suite is hermetic
         # The suite is meant never to touch the network. Re-run it with all HTTP
         # traffic pointed at a dead port: a test that quietly grew a real request
         # fails here rather than becoming flaky months later.
-        run: pytest -q
+        run: pytest -q --ignore=tests/test_retrieval.py --ignore=tests/test_app.py
         env:
           HTTP_PROXY: http://127.0.0.1:9
           HTTPS_PROXY: http://127.0.0.1:9

@@ -1,9 +1,12 @@
 """Retrieval arm tests.
 
-Most run without the `[vector]` extra: the corpus builder, BM25, rank fusion and
-the LangGraph cycle are all exercised with fakes, so the main suite stays fast and
-installable without chromadb. Only the dense-index tests need the extra, and they
-skip cleanly without it.
+The corpus builder, rank fusion and the comparison logic depend on nothing beyond
+the standard library and run in the core matrix. Everything else needs part of the
+optional `[vector]` extra and skips cleanly without it -- BM25 needs `rank_bm25`,
+the graph needs `langgraph`, the dense index needs `chromadb`.
+
+The fakes matter: the graph's control flow is tested against a scripted retriever
+rather than a real index, so the cycle is under test rather than the retriever.
 """
 
 from __future__ import annotations
@@ -14,9 +17,19 @@ from pathlib import Path
 import pytest
 
 from kegg_string_mcp.retrieval.corpus import Corpus, Passage, build
-from kegg_string_mcp.retrieval.index import Hit, KeywordIndex, reciprocal_rank_fusion
+from kegg_string_mcp.retrieval.index import Hit, reciprocal_rank_fusion
+
+# Each arm needs a different piece of the optional extra, so they are gated
+# separately rather than skipping the whole file.
+bm25 = pytest.importorskip("rank_bm25", reason="needs the [vector] extra")
+requires_graph = pytest.mark.skipif(
+    __import__("importlib.util", fromlist=["util"]).find_spec("langgraph") is None,
+    reason="needs the [vector] extra")
 
 CORPUS = Path(__file__).resolve().parent.parent / "data" / "corpus_tb.json"
+
+
+from kegg_string_mcp.retrieval.index import KeywordIndex
 
 
 def passage(pid, text, mentions=(), title="t"):
@@ -156,6 +169,7 @@ def hits_naming(*mention_sets):
             for i, (n, m) in enumerate((next(_ids), m) for m in mention_sets)]
 
 
+@requires_graph
 def test_graph_stops_when_one_paper_names_both_genes():
     from kegg_string_mcp.retrieval.graph import RetrievalGraph
 
@@ -164,6 +178,7 @@ def test_graph_stops_when_one_paper_names_both_genes():
     assert out["sufficient"] and out["rounds"] == 1
 
 
+@requires_graph
 def test_graph_rewrites_when_no_single_paper_covers_the_pair():
     """The union across hits is the wrong test: a corpus built one gene at a time
     almost always mentions both genes between its hits while no paper discusses the
@@ -177,6 +192,7 @@ def test_graph_rewrites_when_no_single_paper_covers_the_pair():
     assert len(retriever.queries) == 2 and retriever.queries[0] != retriever.queries[1]
 
 
+@requires_graph
 def test_graph_gives_up_rather_than_inventing_a_link():
     """'No joint evidence' is a result. The loop is bounded so a corpus that does
     not contain the answer terminates instead of spinning."""
@@ -189,6 +205,7 @@ def test_graph_gives_up_rather_than_inventing_a_link():
     assert "never in the same paper" in out["reason"] or "nothing retrieved" in out["reason"]
 
 
+@requires_graph
 def test_graph_stops_when_a_rewrite_finds_nothing_new():
     """A rewrite that returns only passages already seen has exhausted its
     phrasing; spinning further rounds costs time for no evidence."""
@@ -200,6 +217,7 @@ def test_graph_stops_when_a_rewrite_finds_nothing_new():
     assert out["rounds"] < 5
 
 
+@requires_graph
 def test_rewrites_vary_between_rounds():
     from kegg_string_mcp.retrieval.graph import RetrievalGraph
 
