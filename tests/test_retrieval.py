@@ -11,7 +11,9 @@ rather than a real index, so the cycle is under test rather than the retriever.
 
 from __future__ import annotations
 
-import json
+# Each arm needs a different piece of the optional extra, so they are gated
+# separately rather than skipping the whole file.
+from importlib.util import find_spec
 from pathlib import Path
 
 import pytest
@@ -19,22 +21,32 @@ import pytest
 from kegg_string_mcp.retrieval.corpus import Corpus, Passage, build
 from kegg_string_mcp.retrieval.index import Hit, reciprocal_rank_fusion
 
-# Each arm needs a different piece of the optional extra, so they are gated
-# separately rather than skipping the whole file.
-bm25 = pytest.importorskip("rank_bm25", reason="needs the [vector] extra")
-requires_graph = pytest.mark.skipif(
-    __import__("importlib.util", fromlist=["util"]).find_spec("langgraph") is None,
-    reason="needs the [vector] extra")
 
-CORPUS = Path(__file__).resolve().parent.parent / "data" / "corpus_tb.json"
+def _missing(module: str) -> bool:
+    return find_spec(module) is None
+
+
+# Gated per arm, not per file: a module-level importorskip skipped everything,
+# including the corpus and rank-fusion tests that need nothing beyond stdlib.
+requires_bm25 = pytest.mark.skipif(_missing("rank_bm25"), reason="needs the [vector] extra")
+requires_graph = pytest.mark.skipif(_missing("langgraph"), reason="needs the [vector] extra")
+requires_chroma = pytest.mark.skipif(_missing("chromadb"), reason="needs the [vector] extra")
+
+# Committed, and built from abstracts already in demo/runs, so it adds no new
+# redistribution. data/ is gitignored, so anything keyed on it skips on a fresh
+# checkout -- which is how the headline assertions came to run nowhere.
+FIXTURE = Path(__file__).resolve().parent / "fixtures" / "corpus_small.json"
 
 
 from kegg_string_mcp.retrieval.index import KeywordIndex
 
 
 def passage(pid, text, mentions=(), title="t"):
+    """`mentions` is what the query that fetched the paper matched; `genes_named`
+    is what the text says. Scoring uses the latter -- see annotate_genes_named."""
     return Passage(passage_id=pid, pmid=pid, text=text, title=title, year="2020",
-                   journal="J", doi="", pmcid="", in_pmc=False, mentions=list(mentions))
+                   journal="J", doi="", pmcid="", in_pmc=False, mentions=list(mentions),
+                   genes_named=list(mentions))
 
 
 def tiny_corpus():
@@ -106,11 +118,13 @@ def test_every_passage_keeps_its_provenance():
 # --- keyword arm -----------------------------------------------------------
 
 
+@requires_bm25
 def test_bm25_matches_exact_gene_symbols():
     hits = KeywordIndex(tiny_corpus()).search("ahpC hydroperoxide", k=3)
     assert hits[0].pmid in {"2", "3"}
 
 
+@requires_bm25
 def test_tokeniser_keeps_identifiers_intact():
     """Gene symbols and locus tags must survive tokenisation as single tokens."""
     tokens = KeywordIndex._tokenise("Rv1908c and beta-lactamase in M. tuberculosis")
@@ -118,9 +132,10 @@ def test_tokeniser_keeps_identifiers_intact():
     assert "beta-lactamase" in tokens
 
 
-def test_keyword_hits_carry_mentions_for_scoring():
+@requires_bm25
+def test_keyword_hits_carry_the_scoring_field():
     hits = KeywordIndex(tiny_corpus()).search("katG ahpC compensation", k=4)
-    assert any(set(h.mentions) >= {"katG", "ahpC"} for h in hits)
+    assert any(set(h.genes_named) >= {"katG", "ahpC"} for h in hits)
 
 
 # --- fusion ----------------------------------------------------------------
@@ -165,7 +180,8 @@ _ids = iter(range(1, 10_000))
 def hits_naming(*mention_sets):
     """Fresh passage ids each call: reusing them makes a later round look like it
     returned nothing new, which trips the graph's no-progress guard."""
-    return [Hit(str(n), str(n), score=1.0, rank=i + 1, title="", text="", mentions=list(m))
+    return [Hit(str(n), str(n), score=1.0, rank=i + 1, title="", text="",
+                mentions=list(m), genes_named=list(m))
             for i, (n, m) in enumerate((next(_ids), m) for m in mention_sets)]
 
 
@@ -230,14 +246,31 @@ def test_rewrites_vary_between_rounds():
 
 
 def test_on_target_uses_what_the_text_names_not_what_was_queried():
-    """PubMed matches on metadata the reader never sees, so a paper can be returned
-    for a gene it never names. Scoring on the query would call that a hit."""
+    """`mentions` records only the terms of the query that fetched the paper, so a
+    paper found by searching katG can never record ahpC however prominently it
+    discusses it. Scoring on that measured corpus construction, not retrieval --
+    it undercounted pair evidence 25 vs 88 on the TB corpus."""
     from kegg_string_mcp.retrieval.compare import on_target
 
-    named, unnamed = hits_naming(["katG"], [])
-    assert on_target([named, unnamed], ["katG"]) == [named]
+    fetched_for_katg_but_names_both = Hit("1", "1", score=1.0, rank=1, title="", text="",
+                                          mentions=["katG"], genes_named=["katG", "ahpC"])
+    unrelated = Hit("2", "2", score=1.0, rank=2, title="", text="",
+                    mentions=["katG"], genes_named=[])
+    assert on_target([fetched_for_katg_but_names_both, unrelated], ["ahpC"]) == \
+        [fetched_for_katg_but_names_both]
 
 
+@requires_bm25
+def test_corpus_build_annotates_genes_named_over_the_whole_gene_list():
+    fake = FakePubMed({"katG": [("1", "katG is compensated by ahpC promoter mutations", ["katG"])],
+                       "ahpC": []})
+    corpus = build(["katG", "ahpC"], client=fake)
+    only = corpus.passages[0]
+    assert only.mentions == ["katG"], "what the query matched"
+    assert sorted(only.genes_named) == ["ahpC", "katG"], "what the text names"
+
+
+@requires_bm25
 def test_comparison_reports_overlap_and_precision():
     from kegg_string_mcp.retrieval.compare import compare
 
@@ -251,13 +284,18 @@ def test_comparison_reports_overlap_and_precision():
 # --- dense index, needs the optional extra ---------------------------------
 
 
-@pytest.mark.skipif(not CORPUS.exists(), reason="corpus not built")
+@requires_bm25
+@requires_chroma
 def test_dense_and_keyword_arms_disagree_on_the_real_corpus():
-    """If the arms returned the same thing there would be nothing to measure."""
-    pytest.importorskip("chromadb")
+    """If the arms returned the same thing there would be nothing to measure.
+
+    Runs against a committed fixture rather than the gitignored corpus: keyed on
+    `data/`, this assertion skipped silently on every fresh checkout, so a
+    regression making the arms identical would have passed CI green.
+    """
     from kegg_string_mcp.retrieval.index import VectorIndex
 
-    corpus = Corpus.read(CORPUS)
+    corpus = Corpus.read(FIXTURE)
     query = "how does katG relate to ahpC in isoniazid resistance?"
     kw = {h.pmid for h in KeywordIndex(corpus).search(query, k=10)}
     vec = {h.pmid for h in VectorIndex(corpus).search(query, k=10)}
@@ -265,16 +303,45 @@ def test_dense_and_keyword_arms_disagree_on_the_real_corpus():
     assert kw != vec, "the arms are interchangeable, so the comparison is vacuous"
 
 
-@pytest.mark.skipif(not CORPUS.exists(), reason="corpus not built")
-def test_recorded_comparison_has_the_headline_numbers():
-    path = CORPUS.parent / "comparison.json"
-    if not path.exists():
-        pytest.skip("comparison not run")
-    data = json.loads(path.read_text())
+@requires_bm25
+@requires_chroma
+def test_the_three_arms_run_end_to_end_on_the_fixture():
+    """The headline metrics are computed, not merely importable."""
+    from kegg_string_mcp.retrieval.compare import compare, pair_queries
+    from kegg_string_mcp.retrieval.index import HybridIndex, VectorIndex
+
+    corpus = Corpus.read(FIXTURE)
+    keyword, vector = KeywordIndex(corpus), VectorIndex(corpus)
+    arms = {"keyword": keyword, "vector": vector, "hybrid": HybridIndex(keyword, vector)}
+    result = compare(arms, pair_queries(["katG", "ahpC"])[:1], k=5)
+    data = result.to_dict()
     assert set(data["arms"]) == {"keyword", "vector", "hybrid"}
-    assert data["queries"] >= 10
     for arm, value in data["mean_on_target_precision"].items():
         assert 0.0 <= value <= 1.0, arm
+
+
+@requires_bm25
+def test_chunking_keeps_every_chunk_inside_the_embedding_window():
+    """The dense arm truncates at its context window while BM25 indexes every
+    word, so unchunked passages made the comparison a confound: 80% of abstracts
+    were only partly visible to one arm."""
+    from kegg_string_mcp.retrieval.corpus import CHUNK_WORDS, chunk
+
+    corpus = Corpus.read(FIXTURE)
+    chunked = chunk(corpus)
+    assert max(len(p.text.split()) for p in chunked.passages) <= CHUNK_WORDS
+    assert {p.pmid for p in chunked.passages} == {p.pmid for p in corpus.passages}
+
+
+@requires_bm25
+def test_paper_level_metrics_dedupe_chunks():
+    """Counting each chunk would inflate pair evidence by the chunking parameters
+    rather than by retrieval."""
+    from kegg_string_mcp.retrieval.compare import naming_all
+
+    hits = [Hit(f"1#{i}", "1", score=1.0, rank=i + 1, title="", text="",
+                genes_named=["katG", "ahpC"]) for i in range(3)]
+    assert len(naming_all(hits, ["katG", "ahpC"])) == 1
 
 
 # --- index identity --------------------------------------------------------
@@ -296,9 +363,7 @@ def test_corpus_fingerprint_tracks_content_not_metadata():
     assert corpus_fingerprint(a) != corpus_fingerprint(c)
 
 
-@pytest.mark.skipif(
-    __import__("importlib.util", fromlist=["util"]).find_spec("chromadb") is None,
-    reason="needs the [vector] extra")
+@requires_chroma
 def test_a_second_corpus_does_not_inherit_the_first_ones_index(tmp_path):
     """Keyed on collection name alone, a second corpus silently reused the first
     one's vectors: the load was skipped because the collection was non-empty, and
@@ -317,9 +382,7 @@ def test_a_second_corpus_does_not_inherit_the_first_ones_index(tmp_path):
     assert [h.passage_id for h in back] == ["1"]
 
 
-@pytest.mark.skipif(
-    __import__("importlib.util", fromlist=["util"]).find_spec("chromadb") is None,
-    reason="needs the [vector] extra")
+@requires_chroma
 def test_empty_corpus_returns_nothing_rather_than_raising():
     from kegg_string_mcp.retrieval.index import VectorIndex
 

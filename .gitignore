@@ -11,6 +11,6 @@ __pycache__/
 /notebooks/
 
 # Retrieval corpora and comparison outputs. The corpus is a few hundred PubMed
-# abstracts under publisher copyright; it is rebuildable from demo/build_corpus
+# abstracts under publisher copyright; it is rebuildable via scripts/build_corpus.py
 # in one command, so it is not redistributed here.
 /data/

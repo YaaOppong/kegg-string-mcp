@@ -35,12 +35,25 @@ from kegg_string_mcp.retrieval.index import DEFAULT_K, Hit
 def on_target(hits: list[Hit], genes: list[str]) -> list[Hit]:
     """Hits whose own text names at least one of the queried genes."""
     wanted = {g.lower() for g in genes}
-    return [h for h in hits if wanted & {m.lower() for m in h.mentions}]
+    return [h for h in hits if wanted & {m.lower() for m in h.genes_named}]
 
 
 def naming_all(hits: list[Hit], genes: list[str]) -> list[Hit]:
+    """Passages naming every gene of the pair, deduplicated to one per paper.
+
+    Chunking splits an abstract into overlapping windows, so a paper can appear
+    several times in one result list. Counting each chunk would inflate the
+    pair-evidence metric by the chunking parameters rather than by retrieval.
+    """
     wanted = {g.lower() for g in genes}
-    return [h for h in hits if wanted <= {m.lower() for m in h.mentions}]
+    matched = [h for h in hits if wanted <= {m.lower() for m in h.genes_named}]
+    seen: set[str] = set()
+    unique: list[Hit] = []
+    for hit in matched:
+        if hit.pmid not in seen:
+            seen.add(hit.pmid)
+            unique.append(hit)
+    return unique
 
 
 @dataclass
@@ -118,20 +131,34 @@ def compare(arms: dict[str, Any], queries: list[tuple[str, list[str]]],
     return out
 
 
-def exact_term_probe(arms: dict[str, Any], terms: list[str], k: int = DEFAULT_K) -> list[dict]:
-    """Query a bare identifier and ask whether the top-k actually name it.
+def exact_term_probe(arms: dict[str, Any], terms: list[str], k: int = DEFAULT_K,
+                     corpus: Any | None = None) -> list[dict]:
+    """Query a bare identifier and ask whether the top-k passages contain it.
 
     The known weakness of dense retrieval: a gene symbol or locus tag has no
     useful neighbourhood in embedding space, while BM25 matches it exactly. This
     is the measurement that argues for hybrid search rather than a swap.
     """
+    import re
+
     rows = []
     for term in terms:
+        # Scored against the passage TEXT, not the corpus gene list: a locus tag
+        # like Rv1908c is never a corpus gene, so scoring it the same way as a
+        # gene-pair query guaranteed a zero for every arm and made the probe read
+        # as "BM25 fails at exact terms too" -- the opposite of what it measures.
+        pattern = re.compile(rf"\b{re.escape(term)}\b", re.IGNORECASE)
         row: dict[str, Any] = {"term": term}
         for name, arm in arms.items():
             hits = arm.search(term, k=k)
-            row[name] = {"hits": len(hits),
-                         "naming_the_term": len(on_target(hits, [term])),
+            containing = [h for h in hits if pattern.search(h.text)]
+            row[name] = {"hits": len(hits), "containing_the_term": len(containing),
                          "top_pmid": hits[0].pmid if hits else None}
+        # How many passages in the whole corpus contain it at all. Without this a
+        # zero is ambiguous between "retrieval missed it" and "it is not there" --
+        # and for a locus tag it is usually the latter, which is a finding about
+        # the corpus rather than about any retriever.
+        row["in_corpus"] = (sum(1 for psg in corpus.passages if pattern.search(psg.text))
+                            if corpus is not None else None)
         rows.append(row)
     return rows

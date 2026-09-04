@@ -53,6 +53,7 @@ class Hit:
     title: str
     text: str
     mentions: list[str] = field(default_factory=list)
+    genes_named: list[str] = field(default_factory=list)
 
     @property
     def url(self) -> str:
@@ -61,7 +62,7 @@ class Hit:
     def to_dict(self) -> dict[str, Any]:
         return {"passage_id": self.passage_id, "pmid": self.pmid, "score": round(self.score, 4),
                 "rank": self.rank, "title": self.title, "mentions": self.mentions,
-                "url": self.url}
+                "genes_named": self.genes_named, "url": self.url}
 
 
 class Retriever(Protocol):
@@ -97,7 +98,8 @@ class KeywordIndex:
         return [
             Hit(passage_id=self.passages[i].passage_id, pmid=self.passages[i].pmid,
                 score=float(scores[i]), rank=rank, title=self.passages[i].title,
-                text=self.passages[i].text, mentions=list(self.passages[i].mentions))
+                text=self.passages[i].text, mentions=list(self.passages[i].mentions),
+                genes_named=list(self.passages[i].genes_named))
             for rank, i in enumerate(order, start=1)
         ]
 
@@ -157,7 +159,8 @@ class VectorIndex:
             # score in the same direction (higher is better).
             hits.append(Hit(passage_id=pid, pmid=passage.pmid, score=1.0 - float(dist),
                             rank=rank, title=passage.title, text=passage.text,
-                            mentions=list(passage.mentions)))
+                            mentions=list(passage.mentions),
+                            genes_named=list(passage.genes_named)))
         return hits
 
 
@@ -180,7 +183,8 @@ def reciprocal_rank_fusion(runs: list[list[Hit]], k: int = DEFAULT_K,
     order = sorted(fused, key=lambda pid: -fused[pid])[:k]
     return [
         Hit(passage_id=pid, pmid=best[pid].pmid, score=fused[pid], rank=rank,
-            title=best[pid].title, text=best[pid].text, mentions=best[pid].mentions)
+            title=best[pid].title, text=best[pid].text, mentions=best[pid].mentions,
+            genes_named=best[pid].genes_named)
         for rank, pid in enumerate(order, start=1)
     ]
 

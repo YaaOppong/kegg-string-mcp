@@ -31,10 +31,10 @@ def main() -> int:
     args = parser.parse_args()
 
     from kegg_string_mcp.retrieval.compare import compare, exact_term_probe, pair_queries
-    from kegg_string_mcp.retrieval.corpus import build
+    from kegg_string_mcp.retrieval.corpus import build, chunk
     from kegg_string_mcp.retrieval.index import HybridIndex, KeywordIndex, VectorIndex
 
-    corpus = build(args.genes, limit=args.limit)
+    corpus = chunk(build(args.genes, limit=args.limit))
     corpus_path = corpus.write(args.out / "corpus_tb.json")
     chars = sum(len(p.text) for p in corpus.passages)
     print(f"  corpus: {len(corpus.passages)} passages, {chars:,} chars -> {corpus_path}")
@@ -46,7 +46,7 @@ def main() -> int:
             "hybrid": HybridIndex(keyword, vector)}
 
     result = compare(arms, pair_queries(corpus.genes), k=args.k)
-    result.exact_term = exact_term_probe(arms, EXACT_TERMS, k=args.k)
+    result.exact_term = exact_term_probe(arms, EXACT_TERMS, k=args.k, corpus=corpus)
     path = result.write(args.out / "comparison.json")
 
     data = result.to_dict()
@@ -54,10 +54,10 @@ def main() -> int:
     print("  mean on-target precision@k :", data["mean_on_target_precision"])
     print("  mean papers naming both    :", data["mean_papers_naming_both"])
     print("  mean overlap               :", data["mean_overlap"])
-    print("\n  exact-term probe (naming the queried term / k):")
+    print("\n  exact-term probe (top-k passages containing the queried term):")
     for row in data["exact_term"]:
-        cells = "  ".join(f"{a}={row[a]['naming_the_term']}/{args.k}" for a in arms)
-        print(f"    {row['term']:10} {cells}")
+        cells = "  ".join(f"{a}={row[a]['containing_the_term']}/{args.k}" for a in arms)
+        print(f"    {row['term']:10} in_corpus={row['in_corpus']:<4} {cells}")
     print(f"\n  written: {path}")
     return 0
 

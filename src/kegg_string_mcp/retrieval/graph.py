@@ -50,19 +50,20 @@ def papers_naming_all(hits: list[Hit], genes: list[str]) -> list[Hit]:
     mention both genes between them while no single paper discusses the pair.
     Evidence for a *pair* is one paper that names both.
 
-    `mentions` is what the retrieved text actually says, not what was queried --
-    PubMed matches on metadata the reader never sees, so a paper can come back for
-    a gene it never names.
+    Scored on `genes_named` -- what the passage's text names, computed over the
+    whole corpus -- not on `mentions`, which records only the terms of the query
+    that fetched the paper. Judging on `mentions` made the loop reject evidence
+    sitting in its own hits.
     """
     wanted = {g.lower() for g in genes}
-    return [h for h in hits if wanted <= {m.lower() for m in h.mentions}]
+    return [h for h in hits if wanted <= {m.lower() for m in h.genes_named}]
 
 
 def genes_covered(hits: list[Hit], genes: list[str]) -> list[str]:
     """Genes named somewhere in the retrieved text, across all hits."""
     seen: set[str] = set()
     for hit in hits:
-        seen.update(m.lower() for m in hit.mentions)
+        seen.update(m.lower() for m in hit.genes_named)
     return [g for g in genes if g.lower() in seen]
 
 
