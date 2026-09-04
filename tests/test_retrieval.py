@@ -275,3 +275,52 @@ def test_recorded_comparison_has_the_headline_numbers():
     assert data["queries"] >= 10
     for arm, value in data["mean_on_target_precision"].items():
         assert 0.0 <= value <= 1.0, arm
+
+
+# --- index identity --------------------------------------------------------
+
+
+def test_corpus_fingerprint_tracks_content_not_metadata():
+    """Re-running the corpus build reorders `queried_for` without changing what is
+    searchable, so the fingerprint must ignore it or every rebuild re-embeds."""
+    from kegg_string_mcp.retrieval.index import corpus_fingerprint
+
+    a = tiny_corpus()
+    b = tiny_corpus()
+    b.passages[0].queried_for = ["ahpC", "katG"]
+    b.passages[0].mentions = ["katG", "extra"]
+    assert corpus_fingerprint(a) == corpus_fingerprint(b)
+
+    c = tiny_corpus()
+    c.passages[0].text += " and more"
+    assert corpus_fingerprint(a) != corpus_fingerprint(c)
+
+
+@pytest.mark.skipif(
+    __import__("importlib.util", fromlist=["util"]).find_spec("chromadb") is None,
+    reason="needs the [vector] extra")
+def test_a_second_corpus_does_not_inherit_the_first_ones_index(tmp_path):
+    """Keyed on collection name alone, a second corpus silently reused the first
+    one's vectors: the load was skipped because the collection was non-empty, and
+    retrieval then answered from the wrong text. Nothing failed -- the comparison
+    numbers would simply have been wrong."""
+    from kegg_string_mcp.retrieval.index import VectorIndex
+
+    first = Corpus(genes=["katG"], passages=[passage("1", "katG catalase peroxidase")])
+    second = Corpus(genes=["gyrA"], passages=[passage("99", "gyrA gyrase supercoiling")])
+
+    VectorIndex(first, path=str(tmp_path))
+    hits = VectorIndex(second, path=str(tmp_path)).search("gyrase", k=2)
+    assert [h.passage_id for h in hits] == ["99"]
+
+    back = VectorIndex(first, path=str(tmp_path)).search("catalase", k=2)
+    assert [h.passage_id for h in back] == ["1"]
+
+
+@pytest.mark.skipif(
+    __import__("importlib.util", fromlist=["util"]).find_spec("chromadb") is None,
+    reason="needs the [vector] extra")
+def test_empty_corpus_returns_nothing_rather_than_raising():
+    from kegg_string_mcp.retrieval.index import VectorIndex
+
+    assert VectorIndex(Corpus(genes=[], passages=[])).search("anything", k=5) == []

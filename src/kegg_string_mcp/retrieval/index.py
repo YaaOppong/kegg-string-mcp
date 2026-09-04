@@ -17,12 +17,29 @@ arm here rather than in a separate project.
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass, field
 from typing import Any, Protocol
 
 from kegg_string_mcp.retrieval.corpus import Corpus, Passage
 
 DEFAULT_K = 10
+
+
+def corpus_fingerprint(corpus: Corpus) -> str:
+    """Short content hash of the corpus: its passage ids and their text.
+
+    Two corpora with the same passages share an index; any difference gets a fresh
+    one. Metadata is excluded deliberately -- re-running the corpus build changes
+    `queried_for` ordering without changing what is searchable.
+    """
+    digest = hashlib.sha256()
+    for passage in sorted(corpus.passages, key=lambda p: p.passage_id):
+        digest.update(passage.passage_id.encode())
+        digest.update(b"\x00")
+        digest.update(passage.text.encode())
+        digest.update(b"\x00")
+    return digest.hexdigest()[:12]
 
 
 @dataclass
@@ -99,12 +116,19 @@ class VectorIndex:
         client = (chromadb.PersistentClient(path=path) if path
                   else chromadb.EphemeralClient())
         self._embed = embedding_functions.ONNXMiniLM_L6_V2()
+        # The collection name carries a fingerprint of the corpus. Keyed on name
+        # alone, a second corpus silently reused the first one's vectors -- the
+        # load was skipped because count() was non-zero -- and every retrieval
+        # then answered from the wrong text. That is fatal for a comparison
+        # harness: the numbers would be wrong without anything failing.
+        # Same instinct as the HTTP cache elsewhere in the repo: address by content.
+        name = f"{collection}-{corpus_fingerprint(corpus)}"
         # Cosine, not the default L2: these embeddings are direction-normalised and
         # cosine is what the model was trained against.
         self._collection = client.get_or_create_collection(
-            collection, metadata={"hnsw:space": "cosine"})
+            name, metadata={"hnsw:space": "cosine"})
 
-        if self._collection.count() == 0 and corpus.passages:
+        if self._collection.count() != len(corpus.passages) and corpus.passages:
             self._collection.add(
                 ids=[p.passage_id for p in corpus.passages],
                 documents=[p.text for p in corpus.passages],
@@ -113,13 +137,22 @@ class VectorIndex:
             )
 
     def search(self, query: str, k: int = DEFAULT_K) -> list[Hit]:
+        if not self.passages:
+            return []
         result = self._collection.query(
             query_embeddings=self._embed([query]),
             n_results=min(k, max(self._collection.count(), 1)))
         hits: list[Hit] = []
         for rank, (pid, dist) in enumerate(
                 zip(result["ids"][0], result["distances"][0]), start=1):
-            passage = self.passages[pid]
+            passage = self.passages.get(pid)
+            if passage is None:
+                # Belt and braces behind the fingerprint: an id the corpus does not
+                # contain means the collection is not this corpus, and returning it
+                # would attribute someone else's text to this run.
+                raise RuntimeError(
+                    f"vector collection returned id {pid!r}, which is not in this corpus -- "
+                    f"the index does not match the corpus it was opened with")
             # Chroma returns cosine *distance*; report similarity so both arms
             # score in the same direction (higher is better).
             hits.append(Hit(passage_id=pid, pmid=passage.pmid, score=1.0 - float(dist),
