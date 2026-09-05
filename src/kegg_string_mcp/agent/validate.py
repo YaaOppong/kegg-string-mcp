@@ -32,6 +32,26 @@ from typing import Any
 # ordinary words and gene symbols in prose are not read as citations.
 UNIPROT_ACCESSION = r"[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2}"
 KEGG_PATHWAY = r"[a-z]{3,4}\d{5}"
+# A lineage-marker record ID. Prefixed rather than a bare H37Rv coordinate: an
+# unprefixed 7-digit position is indistinguishable from a PMID, and a citation
+# validator that cannot tell a genome coordinate from a paper is worse than none.
+TBDB_MARKER = r"tbdb:\d{1,7}"
+# A WHO-catalogue variant, e.g. tbdb:katG:p.Ser315Thr. The gene segment starts
+# with a letter and the lineage form is all digits, so the two cannot collide.
+#
+# Mutation strings carry HGVS punctuation (p.Ser315Thr, c.-15C>T, n.1401A>G) and
+# consequence terms (frameshift_variant), so the tail must be permissive -- but
+# it is anchored on the LAST character, which the other patterns get from a
+# closing \b they cannot use here. Without that anchor a citation ending a
+# sentence swallowed the full stop: "graded in tbdb:katG:p.Ser315Thr." extracted
+# the ID with a trailing '.', which then matched nothing in the citable set and
+# was reported unsupported -- a false failure on a correctly cited summary.
+#
+# '*' and '?' are legitimate final characters and must not be stripped: 604
+# catalogue variants are nonsense mutations ending in '*' (p.Arg163*) and 91 end
+# in '?' (p.Met1?, p.Ter628Argext*?). '?' was missing from the class entirely, so
+# those 91 could never be cited correctly. No catalogue variant ends in '.'.
+TBDB_VARIANT = r"tbdb:[A-Za-z]\w*:[A-Za-z0-9_.>*?-]*[A-Za-z0-9*?]"
 STRING_PROTEIN = r"\d{2,7}\.(?=[A-Za-z0-9_]*[A-Za-z])[A-Za-z0-9_]+"
 # PMIDs only in explicit PMID: form. A bare 8-digit number is ambiguous -- it
 # could be a coordinate, a score, a year range -- and treating every one as a
@@ -43,11 +63,17 @@ CITATION_PATTERNS = [
     re.compile(r"\b(?:" + STRING_PROTEIN + r")\b"),
     re.compile(r"\b(?:" + PMID + r")\b"),
     re.compile(r"\b(?:" + UNIPROT_ACCESSION + r")\b"),
+    # The two tbdb forms are mutually exclusive -- the lineage form is all digits
+    # after the prefix and the variant form starts with a letter -- so neither can
+    # claim part of the other and the order here is presentational.
+    re.compile(r"\b(?:" + TBDB_VARIANT + r")"),
+    re.compile(r"\b(?:" + TBDB_MARKER + r")"),
 ]
 
 # Any identifier that can appear as a citation.
 CITE_TOKEN = ("(?:" + PMID + "|" + KEGG_PATHWAY + "|" + STRING_PROTEIN
-              + "|" + UNIPROT_ACCESSION + ")")
+              + "|" + UNIPROT_ACCESSION + "|" + TBDB_VARIANT
+              + "|" + TBDB_MARKER + ")")
 
 # Only the PROSE sources may carry a quote. A KEGG pathway ID and a STRING score
 # are structured -- the record means one thing and there is no text to quote from.
@@ -231,6 +257,25 @@ def extract_citations(text: str) -> list[str]:
     return found
 
 
+def _quotation_ranges(text: str) -> list[tuple[int, int]]:
+    """Character ranges enclosed by quotation marks, paired left to right.
+
+    Straight quotes carry no direction, so a regex cannot tell an opening mark
+    from a closing one; pairing them in order can. This is what stops a citation
+    that sits INSIDE a quotation from being read as introducing the NEXT one.
+    """
+    marks = [i for i, c in enumerate(text or "") if c in "\"\u201c\u201d"]
+    # An odd count means a mark is unpaired somewhere, and left-to-right pairing
+    # then treats a closing mark as an opening one -- inverting every range after
+    # it. Observed: a stray quote earlier in the text made the range cover a
+    # legitimate leading citation, so its quote was vetoed and never checked at
+    # all. Silently skipping a check is worse than the false positive the veto
+    # exists to prevent, so an unbalanced text gets no ranges and no veto.
+    if len(marks) % 2:
+        return []
+    return [(a, b) for a, b in zip(marks[::2], marks[1::2], strict=False)]
+
+
 def extract_quotes(text: str) -> list[tuple[str, str]]:
     """(record_id, quoted span) pairs, in either written order.
 
@@ -239,13 +284,28 @@ def extract_quotes(text: str) -> list[tuple[str, str]]:
     the natural way to write this -- and the leading-citation pattern would reach
     forward across the sentence boundary and bind the second quote to the first
     PMID as well, failing a correctly-cited summary.
+
+    A leading citation that sits INSIDE a quotation is ignored for the same
+    reason. Quoting a tool note that happens to name its own record --
+    `"UniProt holds no FUNCTION statement for P71814 -- ..."` -- put an accession
+    inside the quotation with no citation after the closing mark. The
+    leading-citation pattern then ran from that accession, over the closing mark
+    it could not recognise as closing, and bound the model's own following prose
+    as a quotation attributed to the record. It failed as "not in source": a
+    false accusation of fabrication against correct output, which is the one
+    failure a validator must not have.
     """
     pairs: list[tuple[str, str]] = []
     claimed: set[str] = set()
     for span, token in QUOTE_THEN_CITE.findall(text or ""):
         pairs.append((as_record_id(token), span))
         claimed.add(span)
-    for token, span in CITE_THEN_QUOTE.findall(text or ""):
+    inside = _quotation_ranges(text)
+    for match in CITE_THEN_QUOTE.finditer(text or ""):
+        token, span = match.group(1), match.group(2)
+        start = match.start(1)
+        if any(open_at < start < close_at for open_at, close_at in inside):
+            continue
         record_id = as_record_id(token)
         if span not in claimed and (record_id, span) not in pairs:
             pairs.append((record_id, span))
@@ -279,7 +339,8 @@ def nearest_span(quote: str, source: str) -> tuple[float, str]:
     return round(best_ratio, 3), best_span
 
 
-def check_quotes(text: str, records: dict[str, dict[str, Any]]) -> list[QuoteCheck]:
+def check_quotes(text: str, records: dict[str, dict[str, Any]],
+                 notes: dict[str, list[str]] | None = None) -> list[QuoteCheck]:
     """Verify each quoted span really appears in the record it is attributed to.
 
     This is the step that upgrades validation from "the model cited a record that
@@ -291,11 +352,20 @@ def check_quotes(text: str, records: dict[str, dict[str, Any]]) -> list[QuoteChe
     fairly. A correctly quoted span can still be framed misleadingly; that is a
     harder problem and this check does not claim to solve it.
     """
+    notes = notes or {}
     checks: list[QuoteCheck] = []
     for record_id, quote in extract_quotes(text):
         record = records.get(record_id)
         source = (record or {}).get("detail", {}).get("quotable_text", "")
-        if not source:
+        # A tool NOTE is source text too. UniProt's "No function statement for
+        # A0A0N7EHL5 ..." was quoted verbatim and reported as likely fabricated,
+        # because only record quotable_text was searched -- a false accusation
+        # against correct output. Only the notes from the result that returned
+        # THIS record are searched, so a quote cannot be verified against a note
+        # about something else.
+        if any(quote_in_source(quote, note) for note in notes.get(record_id, [])):
+            checks.append(QuoteCheck(record_id, quote, "verified"))
+        elif not source:
             checks.append(QuoteCheck(record_id, quote, "no_source_text",
                                      "no retrieved text for this record to check the quote against"))
         elif quote_in_source(quote, source):
@@ -318,6 +388,7 @@ def validate(
     per_target: dict[str, set[str]] | None = None,
     claimed_target: str | None = None,
     records: dict[str, dict[str, Any]] | None = None,
+    notes: dict[str, list[str]] | None = None,
 ) -> ValidationReport:
     """Check every identifier in `text` against what the tools returned.
 
@@ -345,7 +416,7 @@ def validate(
             report.citations.append(Citation(identifier, "verified"))
 
     if records:
-        report.quotes = check_quotes(text, records)
+        report.quotes = check_quotes(text, records, notes)
 
     report.uncited_records = sorted(citable_ids - set(cited))
     return report

@@ -28,8 +28,10 @@ from mcp.types import ToolAnnotations
 from kegg_string_mcp.cache import DiskCache
 from kegg_string_mcp.http import PoliteClient
 from kegg_string_mcp.kegg import KeggClient
+from kegg_string_mcp.lineage import LineageClient
 from kegg_string_mcp.provenance import ToolResult
 from kegg_string_mcp.pubmed import DEFAULT_LIMIT, MTB_H37RV_NAME, PubMedClient
+from kegg_string_mcp.resistance import ResistanceClient
 from kegg_string_mcp.string_db import MTB_H37RV, StringClient
 from kegg_string_mcp.uniprot import UniProtClient
 
@@ -56,6 +58,8 @@ _http = PoliteClient(DiskCache())
 _kegg = KeggClient(_http)
 _string = StringClient(_http)
 _uniprot = UniProtClient(_http)
+_lineage = LineageClient(_http)
+_resistance = ResistanceClient(_http)
 _pubmed = PubMedClient(_http)
 
 READ_ONLY = ToolAnnotations(readOnlyHint=True, openWorldHint=True)
@@ -162,6 +166,59 @@ def uniprot_protein(gene: str, organism_id: int = 83332, limit: int = 3) -> Tool
         limit: Maximum UniProt entries to return.
     """
     return _uniprot.protein(gene=gene, organism_id=organism_id, limit=limit)
+
+
+@mcp.tool(
+    annotations=READ_ONLY,
+    description=(
+        "Whether a gene contains a lineage-defining SNP from the M. tuberculosis SNP barcode "
+        "(TB-Profiler tbdb, after Coll 2014 and Napier 2020). Use this when a gene comes out of "
+        "a scan over clinical isolates, because an association between two lineage-marked genes "
+        "can be population structure rather than biology. IMPORTANT: this is a lookup, not a "
+        "verdict. A positive result says the gene CONTAINS a lineage-defining position -- 855 of "
+        "4,008 M. tuberculosis genes do -- not that the variant you are asking about is one. "
+        "Compare your variant's H37Rv coordinate against the `position` field to answer that. "
+        "Whether an association survives conditioning on lineage is a question for genotype "
+        "data and this tool cannot answer it. Records are structured, so cite the record_id; "
+        "there is no text to quote."
+    ),
+)
+def lineage_markers(gene: str, organism: str = "mtu") -> ToolResult:
+    """Lineage-defining SNPs contained in one gene.
+
+    Args:
+        gene: Gene symbol or locus tag (e.g. phoP, Rv0757).
+        organism: KEGG organism code, used for the gene coordinates. Defaults to 'mtu'.
+    """
+    return _lineage.markers(gene=gene, organism=organism)
+
+
+@mcp.tool(
+    annotations=READ_ONLY,
+    description=(
+        "WHO-graded drug-resistance variants for a gene, from the TB-Profiler tbdb catalogue "
+        "(WHO catalogue of mutations v2). Returns whether the gene is resistance-associated, "
+        "which drugs, and the graded variants themselves. A gene counts as "
+        "resistance-associated if ANY of its variants is graded associated, however many are "
+        "not. IMPORTANT: this takes a gene, and the flag is about the gene. It does not mean "
+        "a particular variant confers resistance -- within katG, p.Ser315Thr is 'Assoc w R' "
+        "while p.Arg463Leu, a common polymorphism, is explicitly 'Not assoc w R'. The graded "
+        "variants are returned so the detail is citable, but grading one is not something "
+        "this tool does. Distinguish the three "
+        "negatives: a gene absent from the catalogue was never assessed (it covers 74 genes "
+        "chosen for resistance surveillance), a gene present with no associated variant WAS "
+        "assessed, and a variant graded 'Uncertain significance' -- 70% of all rows -- is "
+        "neither. Records are structured, so cite the record_id; there is no text to quote."
+    ),
+)
+def resistance_variants(gene: str, drug: str | None = None) -> ToolResult:
+    """WHO-graded resistance variants for one gene.
+
+    Args:
+        gene: Gene symbol or locus tag as the catalogue names it (e.g. katG, Rv0678, gid).
+        drug: Optional drug name to restrict to (e.g. isoniazid, bedaquiline).
+    """
+    return _resistance.variants(gene=gene, drug=drug)
 
 
 def main() -> None:

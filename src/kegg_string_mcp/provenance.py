@@ -18,7 +18,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
-Source = Literal["kegg", "string", "pubmed", "uniprot"]
+Source = Literal["kegg", "string", "pubmed", "uniprot", "tbdb"]
 
 
 def sha256(data: str | bytes) -> str:
@@ -35,7 +35,7 @@ class Record(BaseModel):
     """One retrieved fact, citable by `record_id`."""
 
     record_id: str = Field(description="Stable ID within the source, e.g. 'mtu00360', '83332.Rv1908c', '35038342'.")
-    type: str = Field(description="'pathway' | 'partner' | 'article'.")
+    type: str = Field(description="'pathway' | 'partner' | 'article' | 'lineage_marker'.")
     name: str
     url: str = Field(description="Resolvable URL for a human to check.")
     source: Source

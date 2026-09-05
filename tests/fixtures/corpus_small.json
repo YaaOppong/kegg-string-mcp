@@ -1,0 +1,878 @@
+{
+ "genes": [
+  "katG",
+  "ahpC",
+  "furA",
+  "gyrA",
+  "gyrB",
+  "inhA",
+  "rpoB",
+  "embB",
+  "pncA",
+  "fabG1",
+  "pknB",
+  "sodA",
+  "MfpA"
+ ],
+ "notes": [],
+ "passages": [
+  {
+   "passage_id": "10609885",
+   "pmid": "10609885",
+   "text": "AhpC, oxidative stress and drug resistance in Mycobacterium tuberculosis.\n\nThe Mycobacterium tuberculosis AhpC is similar to a family of bacterial and eukaryotic antioxidant proteins with alkylhydroperoxidase (Ahp) and thioredoxin-dependent peroxidase (TPx) activities. AhpC expression is associated with resistance to the front-line antitubercular drug isoniazid in the naturally resistant organisms E. coli and M. smegmatis. We identified several isoniazid-resistant M. tuberculosis isolates with ahpC promoter mutations resulting in AhpC overexpression. These strains were more resistant to cumene hydroperoxide than were wild-type strains. However, these strains were unchanged in their sensitivity to isoniazid, refuting a role for AhpC in detoxification of this drug. All the isoniazid-resistant, AhpC-overexpressing strains were also deficient in activity of the mycobacterial catalase-peroxidase KatG. KatG, the only known catalase in M. tuberculosis, is required for activation of isoniazid. We propose that compensatory ahpC promoter mutations are selected from KatG-deficient, isoniazid-resistant M. tuberculosis during infections, to mitigate the added burden imposed by organic peroxides on these strains.",
+   "title": "AhpC, oxidative stress and drug resistance in Mycobacterium tuberculosis.",
+   "year": "1999",
+   "journal": "BioFactors (Oxford, England)",
+   "doi": "10.1002/biof.5520100219",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [
+    "ahpC"
+   ],
+   "queried_for": [
+    "ahpC"
+   ],
+   "genes_named": [
+    "katG",
+    "ahpC"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/10609885/"
+  },
+  {
+   "passage_id": "10766746",
+   "pmid": "10766746",
+   "text": "The AhpC and AhpD antioxidant defense system of Mycobacterium tuberculosis.\n\nThe peroxiredoxin AhpC from Mycobacterium tuberculosis has been expressed, purified, and characterized. It differs from other well characterized AhpC proteins in that it has three rather than one or two cysteine residues. Mutagenesis studies show that all three cysteine residues are important for catalytic activity. Analysis of the M. tuberculosis genome identified a second protein, AhpD, which has no sequence identity with AhpC but is under the control of the same promoter. This protein has also been cloned, expressed, purified, and characterized. AhpD, which has only been identified in the genomes of mycobacteria and Streptomyces viridosporus, is shown here to also be an alkylhydroperoxidase. The endogenous electron donor for catalytic turnover of the two proteins is not known, but both can be turned over with AhpF from Salmonella typhimurium or, particularly in the case of AhpC, with dithiothreitol. AhpC and AhpD reduce alkylhydroperoxides more effectively than H(2)O(2) but do not appear to interact with each other. These two proteins appear to be critical elements of the antioxidant defense system of M. tuberculosis and may be suitable targets for the development of novel anti-tuberculosis strategies.",
+   "title": "The AhpC and AhpD antioxidant defense system of Mycobacterium tuberculosis.",
+   "year": "2000",
+   "journal": "The Journal of biological chemistry",
+   "doi": "10.1074/jbc.M001001200",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [
+    "ahpC"
+   ],
+   "queried_for": [
+    "ahpC"
+   ],
+   "genes_named": [
+    "ahpC"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/10766746/"
+  },
+  {
+   "passage_id": "11395468",
+   "pmid": "11395468",
+   "text": "Mapping of Mycobacterium tuberculosis katG promoters and their differential expression in infected macrophages.\n\nIntracellular pathogenic bacteria, including Mycobacterium tuberculosis, frequently have multitiered defense mechanisms ensuring their survival in host phagocytic cells. One such defense determinant in M. tuberculosis is the katG gene, which encodes an enzyme with catalase, peroxidase, and peroxynitritase activities. KatG is considered to be important for protection against reactive oxygen and nitrogen intermediates produced by phagocytic cells. However, KatG also activates the front-line antituberculosis drug isoniazid, hence rendering M. tuberculosis exquisitely sensitive to this compound. In this context, katG expression represents a double-edged sword, as it is an important virulence determinant but at the same time its activity levels determine sensitivity to INH. Thus, it is important to delineate the regulation and expression of katG, as this not only can aid understanding of how M. tuberculosis survives and persists in the host but also may provide information of relevance for better management of INH therapy. Here, we report the first extensive analysis of the katG promoter activity examined both in vitro and in vivo. Using S1 nuclease protection analysis, we mapped the katG mRNA 5' ends and demonstrated that two promoters, P(1)furA and P(1)katG, control transcription of katG. The furA and katG genes are cotranscribed from P(1)furA. Both P(1)furA and P(1)katG promoters show induction upon challenge with hydrogen peroxide and cumene hydroperoxide. Studies carried out using the transcriptional fusions P(1)furA-gfp, P(1)katG-gfp, and P(1)furA-P(1)katG-gfp confirmed the existence of two katG promoters. In addition, we showed that both promoters are expressed in vivo during intracellular growth of virulent M. tuberculosis H37Rv. P(1)furA is induced early upon infection, and P(1)katG becomes active only upon extended growth in macrophages. These studies delineate the transcriptional organization of the furA-katG region and indicate differential regulation in vivo of the two katG promoters. These phenomena most likely reflect the differing demands at sequential stages of the infection cycle and may provide information for improved understanding of host-pathogen interactions in tuberculosis and for further optimization of INH chemotherapy.",
+   "title": "Mapping of Mycobacterium tuberculosis katG promoters and their differential expression in infected macrophages.",
+   "year": "2001",
+   "journal": "Journal of bacteriology",
+   "doi": "10.1128/JB.183.13.4033-4039.2001",
+   "pmcid": "PMC95287",
+   "in_pmc": true,
+   "mentions": [
+    "furA",
+    "katG",
+    "regulation"
+   ],
+   "queried_for": [
+    "furA katG regulation oxidative stress"
+   ],
+   "genes_named": [
+    "katG",
+    "furA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/11395468/"
+  },
+  {
+   "passage_id": "11401695",
+   "pmid": "11401695",
+   "text": "Regulation of catalase-peroxidase (KatG) expression, isoniazid sensitivity and virulence by furA of Mycobacterium tuberculosis.\n\nMycobacterium tuberculosis has two genes for ferric uptake regulator orthologues, one of which, furA, is situated immediately upstream of katG encoding catalase-peroxidase, a major virulence factor that also activates the prodrug isoniazid. This association suggested that furA might regulate katG and other genes involved in pathogenesis. Transcript mapping showed katG to be expressed from a strong promoter, with consensus -10 and -35 elements, preceding furA. No promoter activity was demonstrated downstream of the furA start codon, using different gene reporter systems, indicating that furA and katG are co-transcribed from a common regulatory region. The respective roles of these two genes in the isoniazid susceptibility and virulence of M. tuberculosis were assessed by combinatorial complementation of a Delta(furA-katG) strain that is heavily attenuated in a mouse model of tuberculosis. In the absence of furA, katG was upregulated, cells became hypersensitive to isoniazid, and full virulence was restored, indicating that furA regulates the transcription of both genes. When furA alone was introduced into the Delta(furA-katG) mutant, survival in mouse lungs was moderately increased, suggesting that FurA could regulate genes, other than katG, that are involved in pathogenesis. These do not include the oxidative stress genes ahpC and sodA, or those for siderophore production.",
+   "title": "Regulation of catalase-peroxidase (KatG) expression, isoniazid sensitivity and virulence by furA of Mycobacterium tuberculosis.",
+   "year": "2001",
+   "journal": "Molecular microbiology",
+   "doi": "10.1046/j.1365-2958.2001.02427.x",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [
+    "furA",
+    "katG",
+    "regulation",
+    "oxidative",
+    "stress"
+   ],
+   "queried_for": [
+    "furA katG regulation oxidative stress"
+   ],
+   "genes_named": [
+    "katG",
+    "ahpC",
+    "furA",
+    "sodA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/11401695/"
+  },
+  {
+   "passage_id": "11698368",
+   "pmid": "11698368",
+   "text": "Transcriptional regulation of furA and katG upon oxidative stress in Mycobacterium smegmatis.\n\nThe DNA region upstream of katG in Mycobacterium smegmatis was cloned and sequenced. The furA gene, highly homologous to Mycobacterium tuberculosis furA, mapped in this region. The furA-katG organization appears to be conserved among several mycobacteria. The transcription pattern of furA and katG in M. smegmatis upon oxidative stress was analyzed by Northern blotting and primer extension. Although transcription of both furA and katG was induced upon oxidative stress, transcripts covering both genes could not be identified either by Northern blotting or by reverse transcriptase PCR. Specific transcripts and 5' ends were identified for furA and katG, respectively. By cloning M. smegmatis and M. tuberculosis DNA regions upstream of a reporter gene, we demonstrated the presence of two promoters, pfurA, located immediately upstream of the furA gene, and pkatG, located within the terminal part of the furA coding sequence. Transcription from pfurA was induced upon oxidative stress. A 23-bp sequence overlapping the pfurA -35 region is highly conserved among mycobacteria and streptomycetes and might be involved in controlling pfurA activity. Transcription from a cloned pkatG, lacking the upstream pfurA region, was not induced upon oxidative stress, suggesting a cis-acting regulatory role of this region.",
+   "title": "Transcriptional regulation of furA and katG upon oxidative stress in Mycobacterium smegmatis.",
+   "year": "2001",
+   "journal": "Journal of bacteriology",
+   "doi": "10.1128/JB.183.23.6801-6806.2001",
+   "pmcid": "PMC95520",
+   "in_pmc": true,
+   "mentions": [
+    "furA",
+    "katG",
+    "regulation",
+    "oxidative",
+    "stress"
+   ],
+   "queried_for": [
+    "furA katG regulation oxidative stress"
+   ],
+   "genes_named": [
+    "katG",
+    "furA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/11698368/"
+  },
+  {
+   "passage_id": "16388575",
+   "pmid": "16388575",
+   "text": "Pentapeptide repeat proteins.\n\nThe pentapeptide repeat protein (PRP) family has more than 500 members in the prokaryotic and eukaryotic kingdoms. These proteins are composed of, or contain domains composed of, tandemly repeated amino acid sequences with a consensus sequence of [S,T,A,V][D,N][L,F][S,T,R][G]. The biochemical function of the vast majority of PRP family members is unknown. The three-dimensional structure of the first member of the PRP family was determined for the fluoroquinolone resistance protein (MfpA) from Mycobacterium tuberculosis. The structure revealed that the pentapeptide repeats encode the folding of a novel right-handed quadrilateral beta-helix. MfpA binds to DNA gyrase and inhibits its activity. The rod-shaped, dimeric protein exhibits remarkable similarity in size, shape, and electrostatics to DNA.",
+   "title": "Pentapeptide repeat proteins.",
+   "year": "2006",
+   "journal": "Biochemistry",
+   "doi": "10.1021/bi052130w",
+   "pmcid": "PMC2566302",
+   "in_pmc": true,
+   "mentions": [
+    "MfpA",
+    "gyrase"
+   ],
+   "queried_for": [
+    "MfpA gyrase"
+   ],
+   "genes_named": [
+    "MfpA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/16388575/"
+  },
+  {
+   "passage_id": "18977756",
+   "pmid": "18977756",
+   "text": "Solution structure and refolding of the Mycobacterium tuberculosis pentapeptide repeat protein MfpA.\n\nThe pentapeptide repeat is a recently discovered protein fold. Mycobacterium tuberculosis MfpA is a founding member of the pentapeptide repeat protein (PRP) family that confers resistance to the antibiotic fluoroquinolone by binding to DNA gyrase and inhibiting its activity. The size, shape, and surface potential of MfpA mimics duplex DNA. As an initial step in a comprehensive biophysical analysis of the role of PRPs in the regulation of cellular topoisomerase activity and conferring antibiotic resistance, we have explored the solution structure and refolding of MfpA by fluorescence spectroscopy, CD, and analytical centrifugation. A unique CD spectrum for the pentapeptide repeat fold is described. This spectrum reveals a native structure whose beta-strands and turns within the right-handed quadrilateral beta-helix that define the PRP fold differ from canonical secondary structure types. MfpA refolded from urea or guanidium by dialysis or dilution forms stable aggregates of monomers whose secondary and tertiary structure are not native. In contrast, MfpA refolded using a novel \"time-dependent renaturation\" protocol yields protein with native secondary, tertiary, and quaternary structure. The generality of \"time-dependent renaturation\" to other proteins and denaturation methods is discussed.",
+   "title": "Solution structure and refolding of the Mycobacterium tuberculosis pentapeptide repeat protein MfpA.",
+   "year": "2008",
+   "journal": "The Journal of biological chemistry",
+   "doi": "10.1074/jbc.M804702200",
+   "pmcid": "PMC2606005",
+   "in_pmc": true,
+   "mentions": [
+    "MfpA",
+    "gyrase"
+   ],
+   "queried_for": [
+    "MfpA gyrase"
+   ],
+   "genes_named": [
+    "MfpA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/18977756/"
+  },
+  {
+   "passage_id": "19060136",
+   "pmid": "19060136",
+   "text": "The pentapeptide repeat proteins MfpAMt and QnrB4 exhibit opposite effects on DNA gyrase catalytic reactions and on the ternary gyrase-DNA-quinolone complex.\n\nMfpA(Mt) and QnrB4 are two newly characterized pentapeptide repeat proteins (PRPs) that interact with DNA gyrase. The mfpA(Mt) gene is chromosome borne in Mycobacterium tuberculosis, while qnrB4 is plasmid borne in enterobacteria. We expressed and purified the two PRPs and compared their effects on DNA gyrase, taking into account host specificity, i.e., the effect of MfpA(Mt) on M. tuberculosis gyrase and the effect of QnrB4 on Escherichia coli gyrase. Whereas QnrB4 inhibited E. coli gyrase activity only at concentrations higher than 30 microM, MfpA(Mt) inhibited all catalytic reactions of the M. tuberculosis gyrase described for this enzyme (supercoiling, cleavage, relaxation, and decatenation) with a 50% inhibitory concentration of 2 microM. We showed that the D87 residue in GyrA has a major role in the MfpA(Mt)-gyrase interaction, as D87H and D87G substitutions abolished MfpA(Mt) inhibition of M. tuberculosis gyrase catalytic reactions, while A83S modification did not. Since MfpA(Mt) and QnrB4 have been involved in resistance to fluoroquinolones, we measured the inhibition of the quinolone effect in the presence of each PRP. QnrB4 reversed quinolone inhibition of E. coli gyrase at 0.1 microM as described for other Qnr proteins, but MfpA(Mt) did not modify M. tuberculosis gyrase inhibition by fluoroquinolones. Crossover experiments showed that MfpA(Mt) also inhibited E. coli gyrase function, while QnrB4 did not reverse quinolone inhibition of M. tuberculosis gyrase. In conclusion, our in vitro experiments showed that MfpA(Mt) and QnrB4 exhibit opposite effects on DNA gyrase and that these effects are protein and species specific.",
+   "title": "The pentapeptide repeat proteins MfpAMt and QnrB4 exhibit opposite effects on DNA gyrase catalytic reactions and on the ternary gyrase-DNA-quinolone complex.",
+   "year": "2009",
+   "journal": "Journal of bacteriology",
+   "doi": "10.1128/JB.01205-08",
+   "pmcid": "PMC2648189",
+   "in_pmc": true,
+   "mentions": [
+    "MfpA",
+    "gyrase"
+   ],
+   "queried_for": [
+    "MfpA gyrase"
+   ],
+   "genes_named": [
+    "gyrA",
+    "MfpA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/19060136/"
+  },
+  {
+   "passage_id": "19169435",
+   "pmid": "19169435",
+   "text": "The Metal-Dependent Regulators FurA and FurB from Mycobacterium Tuberculosis.\n\nThe ferric uptake regulators (Fur) form a large family of bacterial metal-activated DNA-binding proteins that control a diverse set of genes at the transcriptional level. Mycobacterium tuberculosis, the causative agent of tuberculosis, expresses two members of the Fur family, designated FurA and FurB. Although both belong to the same family, they share only approximately 25% sequence identity and as a consequence, they differ significantly in some of their key biological functions. FurA appears to be a specialized iron-dependent regulator that controls the katG gene, which encodes for a catalase-peroxidase involved in the response of M. tuberculosis to oxidative stress. KatG is also the key mycobacterial enzyme responsible for the activation of the first-line tuberculosis drug Isoniazid. FurB in contrast requires Zn(2+) rather than Fe(2+), to bind to its target sequence in regulated genes, which include those involved in Zn(2+)-homeostasis. Recent biochemical, crystallographic and spectroscopic data have now shed light on the activation and metal discrimination mechanisms in this protein family.",
+   "title": "The Metal-Dependent Regulators FurA and FurB from Mycobacterium Tuberculosis.",
+   "year": "2008",
+   "journal": "International journal of molecular sciences",
+   "doi": "10.3390/ijms9081548",
+   "pmcid": "PMC2630230",
+   "in_pmc": true,
+   "mentions": [
+    "furA",
+    "katG",
+    "oxidative",
+    "stress"
+   ],
+   "queried_for": [
+    "furA katG regulation oxidative stress"
+   ],
+   "genes_named": [
+    "katG",
+    "furA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/19169435/"
+  },
+  {
+   "passage_id": "23899494",
+   "pmid": "23899494",
+   "text": "The thioredoxin antioxidant system.\n\nThe thioredoxin (Trx) system, which is composed of NADPH, thioredoxin reductase (TrxR), and thioredoxin, is a key antioxidant system in defense against oxidative stress through its disulfide reductase activity regulating protein dithiol/disulfide balance. The Trx system provides the electrons to thiol-dependent peroxidases (peroxiredoxins) to remove reactive oxygen and nitrogen species with a fast reaction rate. Trx antioxidant functions are also shown by involvement in DNA and protein repair by reducing ribonucleotide reductase, methionine sulfoxide reductases, and regulating the activity of many redox-sensitive transcription factors. Moreover, Trx systems play critical roles in the immune response, virus infection, and cell death via interaction with thioredoxin-interacting protein. In mammalian cells, the cytosolic and mitochondrial Trx systems, in which TrxRs are high molecular weight selenoenzymes, together with the glutathione-glutaredoxin (Grx) system (NADPH, glutathione reductase, GSH, and Grx) control the cellular redox environment. Recently mammalian thioredoxin and glutathione systems have been found to be able to provide the electrons crossly and to serve as a backup system for each other. In contrast, bacteria TrxRs are low molecular weight enzymes with a structure and reaction mechanism distinct from mammalian TrxR. Many bacterial species possess specific thiol-dependent antioxidant systems, and the significance of the Trx system in the defense against oxidative stress is different. Particularly, the absence of a GSH-Grx system in some pathogenic bacteria such as Helicobacter pylori, Mycobacterium tuberculosis, and Staphylococcus aureus makes the bacterial Trx system essential for survival under oxidative stress. This provides an opportunity to kill these bacteria by targeting the TrxR-Trx system.",
+   "title": "The thioredoxin antioxidant system.",
+   "year": "2014",
+   "journal": "Free radical biology & medicine",
+   "doi": "10.1016/j.freeradbiomed.2013.07.036",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [],
+   "queried_for": [
+    "ahpC"
+   ],
+   "genes_named": [],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/23899494/"
+  },
+  {
+   "passage_id": "25816236",
+   "pmid": "25816236",
+   "text": "Frequency and geographic distribution of gyrA and gyrB mutations associated with fluoroquinolone resistance in clinical Mycobacterium tuberculosis isolates: a systematic review.\n\nBACKGROUND: The detection of mutations in the gyrA and gyrB genes in the Mycobacterium tuberculosis genome that have been demonstrated to confer phenotypic resistance to fluoroquinolones is the most promising technology for rapid diagnosis of fluoroquinolone resistance.\n\nMETHODS: In order to characterize the diversity and frequency of gyrA and gyrB mutations and to describe the global distribution of these mutations, we conducted a systematic review, from May 1996 to April 2013, of all published studies evaluating Mycobacterium tuberculosis mutations associated with resistance to fluoroquinolones. The overall goal of the study was to determine the potential utility and reliability of these mutations as diagnostic markers to detect phenotypic fluoroquinolone resistance in Mycobacterium tuberculosis and to describe their geographic distribution.\n\nRESULTS: Forty-six studies, covering four continents and 18 countries, provided mutation data for 3,846 unique clinical isolates with phenotypic resistance profiles to fluoroquinolones. The gyrA mutations occurring most frequently in fluoroquinolone-resistant isolates, ranged from 21-32% for D94G and 13-20% for A90V, by drug. Eighty seven percent of all strains that were phenotypically resistant to moxifloxacin and 83% of ofloxacin resistant isolates contained mutations in gyrA. Additionally we found that 83% and 80% of moxifloxacin and ofloxacin resistant strains respectively, were observed to have mutations in the gyrA codons interrogated by the existing MTBDRsl line probe assay. In China and Russia, 83% and 84% of fluoroquinolone resistant strains respectively, were observed to have gyrA mutations in the gene regions covered by the MTBDRsl assay.\n\nCONCLUSIONS: Molecular diagnostics, specifically the Genotype MTBDRsl assay, focusing on codons 88-94 should have moderate to high sensitivity in most countries. While we did observe geographic differences in the frequencies of single gyrA mutations across countries, molecular diagnostics based on detection of all gyrA mutations demonstrated to confer resistance should have broad and global utility.",
+   "title": "Frequency and geographic distribution of gyrA and gyrB mutations associated with fluoroquinolone resistance in clinical Mycobacterium tuberculosis isolates: a systematic review.",
+   "year": "2015",
+   "journal": "PloS one",
+   "doi": "10.1371/journal.pone.0120470",
+   "pmcid": "PMC4376704",
+   "in_pmc": true,
+   "mentions": [
+    "gyrA"
+   ],
+   "queried_for": [
+    "gyrA"
+   ],
+   "genes_named": [
+    "gyrA",
+    "gyrB"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/25816236/"
+  },
+  {
+   "passage_id": "27328747",
+   "pmid": "27328747",
+   "text": "Construction and application of a co-expression network in Mycobacterium tuberculosis.\n\nBecause of its high pathogenicity and infectivity, tuberculosis is a serious threat to human health. Some information about the functions of the genes in Mycobacterium tuberculosis genome was currently available, but it was not enough to explore transcriptional regulatory mechanisms. Here, we applied the WGCNA (Weighted Gene Correlation Network Analysis) algorithm to mine pooled microarray datasets for the M. tuberculosis H37Rv strain. We constructed a co-expression network that was subdivided into 78 co-expression gene modules. The different response to two kinds of vitro models (a constant 0.2% oxygen hypoxia model and a Wayne model) were explained based on these modules. We identified potential transcription factors based on high Pearson's correlation coefficients between the modules and genes. Three modules that may be associated with hypoxic stimulation were identified, and their potential transcription factors were predicted. In the validation experiment, we determined the expression levels of genes in the modules under hypoxic condition and under overexpression of potential transcription factors (Rv0081, furA (Rv1909c), Rv0324, Rv3334, and Rv3833). The experimental results showed that the three identified modules related to hypoxia and that the overexpression of transcription factors could significantly change the expression levels of genes in the corresponding modules.",
+   "title": "Construction and application of a co-expression network in Mycobacterium tuberculosis.",
+   "year": "2016",
+   "journal": "Scientific reports",
+   "doi": "10.1038/srep28422",
+   "pmcid": "PMC4916473",
+   "in_pmc": true,
+   "mentions": [
+    "furA",
+    "Rv1909c"
+   ],
+   "queried_for": [
+    "furA Rv1909c"
+   ],
+   "genes_named": [
+    "furA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/27328747/"
+  },
+  {
+   "passage_id": "27806933",
+   "pmid": "27806933",
+   "text": "Mechanisms of fluoroquinolone resistance in Mycobacterium tuberculosis.\n\nTuberculosis, caused by the pathogen Mycobacterium tuberculosis, is one of the world's deadliest bacterial infectious disease. It is still a global-health threat, particularly because of the drug-resistant forms. Fluoroquinolones, with target of gyrase, are among the drugs used to treat tuberculosis. However, their widespread use has led to bacterial resistance. The molecular mechanisms of fluoroquinolone resistance in mycobacterium tuberculosis have been reported, such as DNA gyrase mutations, drug efflux pumps system, bacterial cell wall thickness and pentapeptide proteins (MfpA) mediated regulation of gyrase. Mutations in gyrase conferring quinolone resistance play important roles and have been extensively studied. Recent studies have shown that the regulation of DNA gyrase affects mycobacterial drug resistance, but the mechanisms, especially by post-translational modification and regulatory proteins, are poorly understood. In this review, we summarize the fluoroquinolone drug development, and the molecular genetics of fluoroquinolone resistance in mycobacteria. Comprehensive understanding of the mechanisms of fluoroquinolone resistance in Mycobacterium tuberculosis will open a new view on understanding drug resistance in mycobacteria and lead to novel strategies to develop new accurate diagnosis methods.",
+   "title": "Mechanisms of fluoroquinolone resistance in Mycobacterium tuberculosis.",
+   "year": "2016",
+   "journal": "Yi chuan = Hereditas",
+   "doi": "10.16288/j.yczz.16-136",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [
+    "MfpA",
+    "gyrase"
+   ],
+   "queried_for": [
+    "MfpA gyrase"
+   ],
+   "genes_named": [
+    "MfpA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/27806933/"
+  },
+  {
+   "passage_id": "30793747",
+   "pmid": "30793747",
+   "text": "Rifampicin and rifabutin resistance in 1003 Mycobacterium tuberculosis clinical isolates.\n\nOBJECTIVES: Drug-resistant TB remains a public health challenge. Rifamycins are among the most potent anti-TB drugs. They are known to target the RpoB subunit of RNA polymerase; however, our understanding of how rifamycin resistance is genetically encoded remains incomplete. Here we investigated rpoB genetic diversity and cross-resistance between the two rifamycin drugs rifampicin and rifabutin.\n\nMETHODS: We performed WGS of 1003 Mycobacterium tuberculosis clinical isolates and determined MICs of both rifamycin agents on 7H10 agar using the indirect proportion method. We generated rpoB mutants in a laboratory strain and measured their antibiotic susceptibility using the alamarBlue reduction assay.\n\nRESULTS: Of the 1003 isolates, 766 were rifampicin resistant and 210 (27%) of these were rifabutin susceptible; 102/210 isolates had the rpoB mutation D435V (Escherichia coli D516V). Isolates with discordant resistance were 17.2 times more likely to harbour a D435V mutation than those resistant to both agents (OR 17.2, 95% CI 10.5-27.9, P value <10-40). Compared with WT, the D435V in vitro mutant had an increased IC50 of both rifamycins; however, in both cases to a lesser degree than the S450L (E. coli S531L) mutation.\n\nCONCLUSIONS: The observation that the rpoB D435V mutation produces an increase in the IC50 of both drugs contrasts with findings from previous smaller studies that suggested that isolates with the D435V mutation remain rifabutin susceptible despite being rifampicin resistant. Our finding thus suggests that the recommended critical testing concentration for rifabutin should be revised.",
+   "title": "Rifampicin and rifabutin resistance in 1003 Mycobacterium tuberculosis clinical isolates.",
+   "year": "2019",
+   "journal": "The Journal of antimicrobial chemotherapy",
+   "doi": "10.1093/jac/dkz048",
+   "pmcid": "PMC6524487",
+   "in_pmc": true,
+   "mentions": [
+    "rpoB"
+   ],
+   "queried_for": [
+    "rpoB"
+   ],
+   "genes_named": [
+    "rpoB"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/30793747/"
+  },
+  {
+   "passage_id": "33095938",
+   "pmid": "33095938",
+   "text": "Revelation of point mutations effect in Mycobacterium tuberculosis MfpA protein that involved in mycobacterial DNA supercoiling and fluoroquinolone resistance.\n\nMfpA protein encoded by Mycobacterium tuberculosis (Mtb) and stands for Mycobacterium fluoroquinolone resistance protein A. This protein provides Mtb intrinsic resistant property from fluoroquinolone antibiotics by inhibiting DNA gyrase that are known to be the primary target of fluoroquinolone drugs. DNA gyrases are important for bacterial chromosomal genesis as they are majorly involved in DNA replication, transcription, bacterial stress response to several external stimulus. Therefore, in Mtb it forms an essential integrity and also a desirable target for drug development approaches. This article implies on determining the essential facts about mfpA including its interaction study, epitope prediction, modelling and validation and most importantly it deals with the mutation. Mutational analysis was carried out on the basis of sequential information and there were several mutations that cause a large decrease in stability of the protein. Total 24 mutations were shortlisted based on \u0394\u0394G value W154G, F54G, L84G, F9G, W4G, F74G, F64G, F49G, L104G, L94G, L124G, F29G, L39G, L59G, W60G, L114G, W154G, W154S, L19G, L144G, L129G, F34G, W154D, W154A and W4S. Separate mutation on DXXG GTPase motif was examined to check any effect on protein stability and we found that D33A, D98A, D128A, G36A, G101A, G131A, D33G, D98G, D128G, G36W, G101W, G131W, D33K, D98K, D128K decreases protein stability the most. Further stress dependent analysis on selected residues showed that lower temperature and pH destabilizes the protein. The reason behind this increase in protein destability was drastic decrease and disruption of interatomic interactions in mutant MfpA. This analysis provides essential information about the residues that are important for MfpA stability and also enlightens protein vulnerability after mutation. This article is protected by copyright. All rights reserved.",
+   "title": "Revelation of point mutations effect in Mycobacterium tuberculosis MfpA protein that involved in mycobacterial DNA supercoiling and fluoroquinolone resistance.",
+   "year": "2020",
+   "journal": "Biotechnology and applied biochemistry",
+   "doi": "10.1002/bab.2058",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [
+    "MfpA",
+    "gyrase"
+   ],
+   "queried_for": [
+    "MfpA gyrase"
+   ],
+   "genes_named": [
+    "MfpA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/33095938/"
+  },
+  {
+   "passage_id": "33142220",
+   "pmid": "33142220",
+   "text": "Pyrazinamide resistance and pncA mutations in drug resistant Mycobacterium tuberculosis clinical isolates from Myanmar.\n\nPyrazinamide (PZA) is an important anti-tuberculosis drug, which is active against semi-dormant bacilli and used as a component of first-line drugs and drug-resistant tuberculosis regimens. Mutations in pncA and its promoter region are main cause of PZA resistance. There are limited PZA susceptibility data as there is no routine drug susceptibility testing (DST) for PZA. This study was aimed to determine the proportion of PZA resistance among rifampicin-resistant tuberculosis patients and to identify mutations which are responsible for PZA resistance in pncA and its promoter region. Liquid-based DST was performed to detect PZA susceptibility on 192 culture positive rifampicin-resistant isolates collected from National Tuberculosis Reference Laboratory. Sequencing on pncA including its promoter region was performed and analysis was done on 157 isolates. Phenotypic PZA resistance was detected in 58.9% of isolates. Sixty-five different mutations were distributed in pncA or promoter region of 82 isolates. Sensitivity and specificity of pncA sequencing in detection of PZA resistance showed 89.8% and 95.6% respectively. High proportion of PZA resistance among rifampicin-resistant cases highlighted the need for effective treatment regimen development for PZA-resistant MDR-TB. It is also suggested that routine PZA susceptibility test should be incorporated to treatment monitoring regimen and National Drug Resistance surveys.",
+   "title": "Pyrazinamide resistance and pncA mutations in drug resistant Mycobacterium tuberculosis clinical isolates from Myanmar.",
+   "year": "2020",
+   "journal": "Tuberculosis (Edinburgh, Scotland)",
+   "doi": "10.1016/j.tube.2020.102013",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [
+    "pncA"
+   ],
+   "queried_for": [
+    "pncA"
+   ],
+   "genes_named": [
+    "pncA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/33142220/"
+  },
+  {
+   "passage_id": "33846134",
+   "pmid": "33846134",
+   "text": "Disputed rpoB Mutations in Mycobacterium tuberculosis and Tuberculosis Treatment Outcomes.\n\nDiscordant results between genotypic drug susceptibility testing (gDST) and phenotypic DST (pDST) for Mycobacterium tuberculosis isolates with disputed (discordance between gDST and pDST results) mutations affect rifampin (RIF)-resistant (RR) and multidrug-resistant (MDR) tuberculosis (TB) treatments due to a lack of practical clinical guidelines. To investigate the role of disputed rpoB mutations in M. tuberculosis and TB treatment outcomes, initial isolates of 837 clinical RR- or MDR-TB cases confirmed during 2014 to 2018 were retested using agar-based RIF pDST and rpoB gene sequencing. MICs were determined for isolates with disputed rpoB mutations. Disputed rpoB mutations were identified in 77 (9.2%) M. tuberculosis isolates, including 50 (64.9%) and 14 (18.2%) phenotypically RIF- and rifabutin (RFB)-resistant isolates, respectively. The predominant single mutations were those encoding L533P (a change of L to P at position 533) (44.2%) and L511P (20.8%). Most of the isolates harboring mutations encoding L511P (87.5%), H526N (100%), D516Y (70.0%), and L533P (63.6%) had MICs of \u22641 mg/liter, whereas isolates harboring the mutation encoding H526L (75%) had a MIC of >1 mg/liter. Of the 63 cases with treatment outcomes available, 11 (17.5%) cases died, 1 (1.6%) case transferred out, and 51 (81%) cases had favorable outcomes, including 8 and 20 cases treated with standard-dose RIF- and RFB-containing regimens, respectively. Excluding cases that transferred out or received no or 1-day treatment, we observed statistically significant differences between the outcomes using active and inactive fluoroquinolones (FQs) (P = 0.008, odds ratio = 0.05 [95% confidence interval, 0.01 to 0.38]) in 57 cases (where active means a case susceptible to the drug and inactive means a case resistant to the drug or drug not used). We concluded that disputed rpoB mutations are not rare. Depending on the resources available, sequencing and/or MIC testing is recommended for better management of RR- and MDR-TB cases.",
+   "title": "Disputed rpoB Mutations in Mycobacterium tuberculosis and Tuberculosis Treatment Outcomes.",
+   "year": "2021",
+   "journal": "Antimicrobial agents and chemotherapy",
+   "doi": "10.1128/AAC.01573-20",
+   "pmcid": "PMC8218645",
+   "in_pmc": true,
+   "mentions": [
+    "rpoB"
+   ],
+   "queried_for": [
+    "rpoB"
+   ],
+   "genes_named": [
+    "rpoB"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/33846134/"
+  },
+  {
+   "passage_id": "34086544",
+   "pmid": "34086544",
+   "text": "Significance of the coexistence of non-codon 315 katG, inhA, and oxyR-ahpC intergenic gene mutations among isoniazid-resistant and multidrug-resistant isolates of Mycobacterium tuberculosis: a report of novel mutations.\n\nTuberculosis (TB) is a global threat due to the emergence and spread of drug-resistant Mycobacterium tuberculosis (MTB). Isoniazid (INH) is the main antibiotic used for prevention and treatment of TB. Evidence shows that accumulated mutations can produce INH resistant (INHR) strains, resulting in the progression of multidrug-resistant (MDR) TB. Since point mutations in katG gene, inhA gene, and oxyR-ahpC region correlated with the INH resistance, in this study, we aimed to identify mutations in these three genes in INHR and MDR clinical isolates of MTB by Sanger DNA sequencing analysis. Thirty-three out of 438 isolates were resistant, including 66.7% INHR and 30.3% MDR isolates. In the katG gene, 68.2% INHR isolates had non-synonymous point mutations, mainly R463L (63.6%), and non-synonymous point mutation KatG L587P was seen in one of the MDR isolate. A novel silent substitution L649L was identified in the inhA gene of the MDR isolates. The oxyR-ahpC intergenic region g-88a common mutations (63.6%) in INHR and two distinct novel mutations were found at positions -76 and -77 of the oxyR-ahpC intergenic region. The coexistence of katG non-codon 315 with oxyR-ahpC intergenic region mutations was highly frequent in INHR 59.1% and MDR isolates 70%. Since mutations of all three genes 95.5% lead to the detection of INHR, they might be useful for molecular detection. Our results indicated the continuous evolution and region-specific prevalence of INH resistance. Overall, identification of new mutations in INH resistance can improve the available strategies for diagnosis and control of TB.",
+   "title": "Significance of the coexistence of non-codon 315 katG, inhA, and oxyR-ahpC intergenic gene mutations among isoniazid-resistant and multidrug-resistant isolates of Mycobacterium tuberculosis: a report of novel mutations.",
+   "year": "2022",
+   "journal": "Pathogens and global health",
+   "doi": "10.1080/20477724.2021.1928870",
+   "pmcid": "PMC8812758",
+   "in_pmc": true,
+   "mentions": [
+    "ahpC"
+   ],
+   "queried_for": [
+    "ahpC"
+   ],
+   "genes_named": [
+    "katG",
+    "ahpC",
+    "inhA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/34086544/"
+  },
+  {
+   "passage_id": "34675557",
+   "pmid": "34675557",
+   "text": "rpoB Mutations and Effects on Rifampin Resistance in Mycobacterium tuberculosis.\n\nOBJECTIVE: To investigate the mutations within the whole rpoB gene of Mycobacterium tuberculosis and analyze their effects on rifampin (RIF) resistance based on crystal structure.\n\nMETHODS: We sequenced the entire rpoB gene in 175 tuberculosis isolates and quantified their minimum inhibitory concentrations using microplate-based assays. Additionally, the structural interactions between wild-type/mutant RpoB and RIF were also analyzed.\n\nRESULTS: Results revealed that a total of 34 mutations distributed across 17 different sites within the whole rpoB gene were identified. Of the 34 mutations, 25 could alter the structural interaction between RpoB and RIF and contribute to RIF resistance. Statistical analysis showed that S450L, H445D, H445Y and H445R mutations were associated with high-level RIF resistance, while D435V was associated with moderate-level RIF resistance.\n\nCONCLUSION: Some mutations within the rpoB gene could affect the interaction between RpoB and RIF and thus are associated with RIF resistance. These findings could be helpful to design new antibiotics and develop novel diagnostic tools for drug resistance in TB.",
+   "title": "rpoB Mutations and Effects on Rifampin Resistance in Mycobacterium tuberculosis.",
+   "year": "2021",
+   "journal": "Infection and drug resistance",
+   "doi": "10.2147/IDR.S333433",
+   "pmcid": "PMC8502021",
+   "in_pmc": true,
+   "mentions": [
+    "rpoB"
+   ],
+   "queried_for": [
+    "rpoB"
+   ],
+   "genes_named": [
+    "rpoB"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/34675557/"
+  },
+  {
+   "passage_id": "35768376",
+   "pmid": "35768376",
+   "text": "[Prevalence and transmission of pyrazinamide-resistant Mycobacterium tuberculosis in Hunan Province,China].\n\nObjective: To provide a scientific reference for the prevention and treatment of pyrazinamide-resistant tuberculosis (PZA-R TB), we analyzed the prevalence and risk factors of pyrazinamide-resistant tuberculosis in Hunan province and described the genotyping and clustering characteristics of the pyrazinamide-resistant Mycobacterium tuberculosis (PZA-R MTB) isolates. Methods: The drug susceptibility test results of first-line anti-tuberculosis drugs including isoniazid (INH), rifampicin (RFP), streptomycin (SM), ethambutol (EMB) and pyrazinamide (PZA), and the characteristics of patients were collected from 3 862 tuberculosis patients in Hunan Chest Hospital (Institute of Tuberculosis Control and Prevention) from January 2016 to December 2018. The prevalence of PZA-R TB was calculated and risk factors were analyzed by univariate and multivariable logistic regression analysis. Two hundred and twelve Mycobacterium tuberculosis isolates selected from June 2017 to June 2018 were genotyped using the 24-loci MIRU-VNTR system. The genetic difference value (h), and the Hunter-Gaston index (HGI) were used to evaluate the resolution and variation for the 24 loci. MIRU-VNTR results were analyzed using BioNumerics 5.0 software to conduct cluster analysis. Clustered isolates were further analyzed by pncA gene sequencing. Results: The rate of PZA-R TB among tuberculosis patients and MDR patients was 14.7%(566/3 862) and 60.5%(511/844), respectively. Multivariable logistic regression analysis showed that patients who were INH mono-resistance and MDR had a higher risk of developing PZA resistance, compared with TB patients who were pan-sensitive to anti-TB drugs (INH, RFP, SM, and EMB). The adjusted OR value (95%CI) was 13.08(5.67-30.18), 298.41(164.88-540.08), respectively, and P values were all less than 0.01. Clustering analysis showed that 65 strains formed 19 clusters, the clustering rate was 30.7%(65/212). Of 19 clusters, eight clusters had at least two isolates with identical pncA mutation types within each cluster. In eight clusters, cluster 4, 6, 16 had four, three, and two patients who lived in the same county, respectively, thus providing probable epidemiological links for the recent transmission of PZA-R Mycobacterium tuberculosis. At least 47.6%(101/212) of PZA drug-resistant TB patients were suggestive of primary drug resistance caused by transmission. Conclusions: The prevalence of PZA-R TB was severe in Hunan province. PZA susceptibility testing should be performed for isolates resistant to any first-line anti-tuberculosis drugs, especially for MDR-MTB isolates. Nearly half of tuberculosis patients were suggestive of primary drug resistance caused by transmission. The prevention and treatment strategy of PZA-R TB should focus on the standardized treatment and management of patients as well as control of the source of infection.",
+   "title": "[Prevalence and transmission of pyrazinamide-resistant Mycobacterium tuberculosis in Hunan Province,China].",
+   "year": "2022",
+   "journal": "Zhonghua jie he he hu xi za zhi = Zhonghua jiehe he huxi zazhi = Chinese journal of tuberculosis and respiratory diseases",
+   "doi": "10.3760/cma.j.cn112147-20211219-00904",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [
+    "pncA"
+   ],
+   "queried_for": [
+    "pncA"
+   ],
+   "genes_named": [
+    "pncA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/35768376/"
+  },
+  {
+   "passage_id": "35919400",
+   "pmid": "35919400",
+   "text": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.\n\nBACKGROUND: The Sultanate of Oman is country a low TB-incidence, with less than seven cases per 105 population detected in 2020. Recent years have witnessed a persistence in TB cases, with sustained incidence rate among expatriates and limited reduction among Omanis. This pattern suggests transmission from the migrant population. The present study examined the genetic profile and drug resistance-conferring mutations in Mycobacterium tuberculosis collected from Omanis and expatriates to recognise possible causes of disease transmission.\n\nMETHODS: We examined M. tuberculosis cultured positive samples, collected from Omanis (n = 1,344) and expatriates (n = 1,203) between 2009 and 2018. These isolates had a known in vitro susceptibility profile to first line anti-TB, Streptomycin (SM), Isoniazid (INH), Rifampicin (RIF), Ethambutol (EMB) and Pyrazinamide (PZA). The diversity of the isolates was assessed by spacer oligo-typing (spoligotyping). Drug resistance-conferring mutations resulted from full-length sequence of nine genes (katG, inhA, ahpc, rpoB, rpsL, rrs, embB, embC, pncA) and their phenotypic relationship were analysed.\n\nRESULTS: In total, 341/2192 (13.4%), M. tuberculosis strains showed resistance to any drug, comprising mono-resistance (MR) (242, 71%), poly-resistance (PR) (40, 11.7%) and multi-drug resistance (MDR) (59, 17.3%). The overall rate of resistance among Omanis and expatriates was similar; however, MDR and PZAR were significantly higher among Omanis, while INHR was greater among expatriates. Mutations rpsL K43R and rpoB S450L were linked to Streptomycin (SMR) and Rifampicin resistance (RIFR) respectively. Whereas, katG S315T and inhA -C15T/G-17T were associated with Isoniazid resistance (INHR). The resistance patterns (mono-resistant, poly-resistant and MDR) and drug resistance-conferring mutations were found in different spoligo-lineages. rpsL K43R, katG S315T and rpoB S450L mutations were significantly higher in Beijing strains.\n\nCONCLUSIONS: Diverse drug resistant M. tuberculosis strains exist in Oman, with drug resistance-conferring mutations widespread in multiple spoligo-lineages, indicative of a large resistance reservoir. Beijing's M. tuberculosis lineage was associated with MDR, and multiple drug resistance-conferring mutations, favouring the hypothesis of migration as a possible source of resistant lineages in Oman.",
+   "title": "Drug resistant Mycobacterium tuberculosis in Oman: resistance-conferring mutations and lineage diversity.",
+   "year": "2022",
+   "journal": "PeerJ",
+   "doi": "10.7717/peerj.13645",
+   "pmcid": "PMC9339217",
+   "in_pmc": true,
+   "mentions": [
+    "ahpC"
+   ],
+   "queried_for": [
+    "ahpC"
+   ],
+   "genes_named": [
+    "katG",
+    "ahpC",
+    "inhA",
+    "rpoB",
+    "embB",
+    "pncA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/35919400/"
+  },
+  {
+   "passage_id": "36065280",
+   "pmid": "36065280",
+   "text": "Pyrazinamide Resistance and pncA Mutation Profiles in Multidrug Resistant Mycobacterium Tuberculosis.\n\nPURPOSE: Pyrazinamide (PZA) is a critical component of standardized chemotherapy for tuberculosis (TB) and is recommended for the treatment of multidrug-resistant (MDR) TB. We aimed to characterize mutations in pncA of M. tuberculosis and evaluate their diagnostic accuracy for PZA susceptibility in China. We also combined genotypic methods with phenotypic susceptibility testing and pyrazinamidase (PZAse) activity to confirm PZA-resistant M. tuberculosis isolates.\n\nRESULTS: An evaluation of 82 MDR M. tuberculosis strains revealed that 28.0% (23/82) were phenotypically resistant to 100 mg/L PZA and 15.9% (13/82) showed resistance to 300 mg/L PZA. Mutations in pncA were detected at 33 unique sites, and the majority were point mutations. No evident mutation hotspots or mutations affecting multiple amino acids were found, but the association between pncA mutations and PZA resistance was significant under 100 and 300 mg/L. The sensitivity of pncA mutation detection for predicting PZA susceptibility was 82.6% (19/23), and the specificity was 61.0% (36/59), based on 100 mg/L PZA, whereas the sensitivity was 84.6% (11/13) and the specificity was 55.1% (38/69), based on 300 mg/L PZA. All mutations identified in the highly PZA-resistant (300 mg/L) strains had an 80% loss relative to PZAse activity. No evident PZAse activity loss was observed in one synonymous mutation strain and the loss exceed 60% in all other strains.\n\nCONCLUSION: The association between pncA mutation and PZA resistance was significant. Relatively, the molecular method have shown better reliability than the phenotypic method for the detection of PZA resistance. This provides a theoretical basis for the clinical diagnosis of drug-resistant TB.",
+   "title": "Pyrazinamide Resistance and pncA Mutation Profiles in Multidrug Resistant Mycobacterium Tuberculosis.",
+   "year": "2022",
+   "journal": "Infection and drug resistance",
+   "doi": "10.2147/IDR.S368444",
+   "pmcid": "PMC9440668",
+   "in_pmc": true,
+   "mentions": [
+    "pncA"
+   ],
+   "queried_for": [
+    "pncA"
+   ],
+   "genes_named": [
+    "pncA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/36065280/"
+  },
+  {
+   "passage_id": "36915970",
+   "pmid": "36915970",
+   "text": "The past, present and future of tuberculosis treatment.\n\nTuberculosis (TB) is an ancient infectious disease. Before the availability of effective drug therapy, it had high morbidity and mortality. In the past 100 years, the discovery of revolutionary anti-TB drugs such as streptomycin, isoniazid, pyrazinamide, ethambutol and rifampicin, along with drug combination treatment, has greatly improved TB control globally. As anti-TB drugs were widely used, multidrug-resistant (MDR) and extensively drug-resistant (XDR) strains of Mycobacterium tuberculosis emerged due to acquired genetic mutations, and this now presents a major problem for effective treatment. Genes associated with drug resistance have been identified, including katG mutations in isoniazid resistance, rpoB mutations in rifampin resistance, pncA mutations in pyrazinamide resistance, and gyrA mutations in quinolone resistance. The major mechanisms of drug resistance include loss of enzyme activity in prodrug activation, drug target alteration, overexpression of drug target, and overexpression of the efflux pump. During the disease process, Mycobacterium tuberculosis may reside in different microenvironments where it is expose to acidic pH, low oxygen, reactive oxygen species and anti-TB drugs, which can facilitate the development of non-replicating persisters and promote bacterial survival. The mechanisms of persister formation may include toxin-antitoxin (TA) modules, DNA protection and repair, protein degradation such as trans-translation, efflux, and altered metabolism. In recent years, the use of new anti-TB drugs, repurposed drugs, and their drug combinations has greatly improved treatment outcomes in patients with both drug-susceptible TB and MDR/XDR-TB. The importance of developing more effective drugs targeting persisters of Mycobacterium tuberculosis is emphasized. In addition, host-directed therapeutics using both conventional drugs and herbal medicines for more effective TB treatment should also be explored. In this article, we review historical aspects of the research on anti-TB drugs and discuss the current understanding and treatments of drug resistant and persistent tuberculosis to inform future therapeutic development.",
+   "title": "The past, present and future of tuberculosis treatment.",
+   "year": "2022",
+   "journal": "Zhejiang da xue xue bao. Yi xue ban = Journal of Zhejiang University. Medical sciences",
+   "doi": "10.3724/zdxbyxb-2022-0454",
+   "pmcid": "PMC10262004",
+   "in_pmc": true,
+   "mentions": [
+    "gyrA"
+   ],
+   "queried_for": [
+    "gyrA"
+   ],
+   "genes_named": [
+    "katG",
+    "gyrA",
+    "rpoB",
+    "pncA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/36915970/"
+  },
+  {
+   "passage_id": "37187254",
+   "pmid": "37187254",
+   "text": "Emergence and evolution of drug-resistant Mycobacterium tuberculosis in eastern China: A six-year prospective study.\n\nUnderstanding the emergence and evolution of drug resistance can inform public health intervention to combat tuberculosis (TB). In this prospective molecular epidemiological surveillance study from 2015 to 2021 in eastern China, we prospectively collected whole-genome sequencing and epidemiological data on TB patients. We dissect the ordering of drug resistance mutation acquisition for nine commonly used anti-TB drugs, and we found that the katG S315T mutation first appeared around 1959, followed by rpoB S450L (1969), rpsL L43A (1972), embB M306V (1978), rrs 1401 (1981), fabG1 (1982), pncA (1985) and folC (1988) mutations. GyrA gene mutations appeared after the year of 2000. We observed that the first expansion of Mycobacterium tuberculosis (M.tb) resistance population among eastern China appeared after the introduction of isoniazid, streptomycin and para-amino salicylic acid, and the second expansion after the ethambutol, rifampicin, pyrazinamide, ethionamide and aminoglycosides. We speculate these two expansions are linked with population shift historically. By geospatial analysis, we found drug-resistant isolates migrated within eastern China. With epidemiological data of clonal strains, we observed some strains can evolve continuously in individuals and transmit readily in a population. In conclusion, this study mirrored the emergence and evolution of drug-resistant M.tb in eastern China were linked to the sequence and timing of introduction of anti-TB drugs, and multiple factors may contribute to the resistant population enlarged. To resolve the epidemic of drug-resistant TB, it requires applying anti-TB drugs carefully and/or identifying resistant patients timely to prevent them from developing high-level resistance and transmitting to others.",
+   "title": "Emergence and evolution of drug-resistant Mycobacterium tuberculosis in eastern China: A six-year prospective study.",
+   "year": "2023",
+   "journal": "Genomics",
+   "doi": "10.1016/j.ygeno.2023.110640",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [
+    "gyrA"
+   ],
+   "queried_for": [
+    "gyrA"
+   ],
+   "genes_named": [
+    "katG",
+    "gyrA",
+    "rpoB",
+    "embB",
+    "pncA",
+    "fabG1"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/37187254/"
+  },
+  {
+   "passage_id": "37358434",
+   "pmid": "37358434",
+   "text": "Coevolution of furA-Regulated Hyper-Inflammation and Mycobacterial Resistance to Oxidative Killing through Adaptation to Hydrogen Peroxide.\n\nMycobacterium tuberculosis (Mtb) is highly resistant to host oxidative killing. We hypothesized that the evolutionary adaptation of M. smegmatis to hydrogen peroxide (H2O2) would endow the nonpathogenic Mycobacterium persistent in a host. In the study, we screened a highly H2O2-resistant strain (mc2114) via evolutionary H2O2 adaptation in vitro. The MIC of mc2114 to H2O2 is 320 times that of wild-type mc2155. Mouse infection experiments showed that mc2114, similar to Mtb, was persistent in the lungs and caused high lethality in mice with restricted responses of NOX2, ROS, IFN-\u03b3, decreased macrophage apoptosis, and overexpressed inflammatory cytokines in the lungs. Whole-genome sequencing analysis revealed that mc2114 harbored 29 single nucleotide polymorphisms in multiple genes; one of them was on the furA gene that caused FurA deficiency-mediated overexpression of KatG, a catalase-peroxidase to detoxify ROS. Complementation of mc2114 with a wild-type furA gene reversed lethality and hyper-inflammatory response in mice with rescued overexpression of KatG and inflammatory cytokines, whereas NOX2, ROS, IFN-\u03b3, and macrophage apoptosis remained reduced. The results indicate that although FurA regulates KatG expression, it does not contribute significantly to the restriction of ROS response. Instead, FurA deficiency is responsible for the detrimental pulmonary inflammation that contributes to the severity of the infection, a previously nonrecognized function of FurA in mycobacterial pathogenesis. The study also indicates that mycobacterial resistance to oxidative burst results from complex mechanisms involving adaptive genetic changes in multiple genes. IMPORTANCE Mycobacterium tuberculosis (Mtb) causes human tuberculosis (TB), which has killed more people in human history than any other microorganism. However, the mechanisms underlying Mtb pathogenesis and related genes have not yet been fully elucidated, which impedes the development of effective strategies for containing and eradicating TB. In the study, we generated a mutant of M. smegmatis (mc2114) with multiple mutations by an adaptive evolutionary screen with H2O2. One of the mutations in furA caused a deficiency of FurA, which mediated severe inflammatory lung injury and higher lethality in mice by overexpression of inflammatory cytokines. Our results indicate that FurA-regulated pulmonary inflammation plays a critical role in mycobacterial pathogenesis in addition to the known downregulation of NOX2, ROS, IFN-\u03b3 responses, and macrophage apoptosis. Further analysis of the mutations in mc2114 would identify more genes related to the increased pathogenicity and help in devising new strategies for containing and eradicating TB.",
+   "title": "Coevolution of furA-Regulated Hyper-Inflammation and Mycobacterial Resistance to Oxidative Killing through Adaptation to Hydrogen Peroxide.",
+   "year": "2023",
+   "journal": "Microbiology spectrum",
+   "doi": "10.1128/spectrum.05367-22",
+   "pmcid": "PMC10433983",
+   "in_pmc": true,
+   "mentions": [
+    "furA",
+    "katG",
+    "regulation",
+    "oxidative"
+   ],
+   "queried_for": [
+    "furA katG regulation oxidative stress"
+   ],
+   "genes_named": [
+    "katG",
+    "furA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/37358434/"
+  },
+  {
+   "passage_id": "37721235",
+   "pmid": "37721235",
+   "text": "Fluoroquinolone resistance mutations among Mycobacterium tuberculosis and their interconnection with treatment outcome.\n\nBACKGROUND: Fluoroquinolone (FQ) antibiotics are among the most potent second-line antitubercular drugs these days. The aim of the study was to analyze the frequency and pattern of genetic mutation in preextensive (pre-XDR) and extensively drug-resistant Mycobacterium tuberculosis using second-line line probe assay (LPA) and to compare drug-resistant mutations with different treatment outcomes.\n\nMETHODS: Sputum, lymph node aspirate, and cold accesses from patients with rifampicin-resistant Tuberculosis (TB) were subjected to first-line and second-line LPA (Genotype MTBDRsl by Hain Life Science, Germany) to assess additional drug resistance to fluoroquinolones (levofloxacin and moxifloxacin). Final treatment outcomes as per the National TB Elimination Program were assessed and compared with the mutation profile.\n\nRESULTS: One hundred and fifty subjects were observed to have mutations associated with resistance to FQs and constituted the final study population. The most frequent mutation observed among GyrA drug resistance mutation was D94G (Gyr A MUT3C, 44/150, 66%) corresponding to high-level resistance to levofloxacin and moxifloxacin. The same mutation was associated with poor treatment outcome as died or treatment failure (odds ratio 2.50, relative risk 1.67, P = 0.043). The most common hetero-resistance mutation pattern observed in GyrA gene was wild type plus Asp94Gly mutation in 24.6% of isolates.\n\nCONCLUSIONS: GyrA MUT3C hybridization corresponding to single-point mutation of aspartic acid to glycine at codon 94 constitutes the most common mutation in GyrA gene locus in M. tuberculosis with significant association with treatment outcome as died compared to those with treatment outcome as cured.",
+   "title": "Fluoroquinolone resistance mutations among Mycobacterium tuberculosis and their interconnection with treatment outcome.",
+   "year": "2023",
+   "journal": "International journal of mycobacteriology",
+   "doi": "10.4103/ijmy.ijmy_116_23",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [
+    "gyrA"
+   ],
+   "queried_for": [
+    "gyrA"
+   ],
+   "genes_named": [
+    "gyrA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/37721235/"
+  },
+  {
+   "passage_id": "38602399",
+   "pmid": "38602399",
+   "text": "Comparison of targeted next-generation sequencing and the Xpert MTB/RIF assay for detection of Mycobacterium tuberculosis in clinical isolates and sputum specimens.\n\nTargeted next-generation sequencing (tNGS) can be used to perform Mycobacterium tuberculosis (MTB) complex-specific amplification or target capture directly from sputum samples, yielding simultaneous coverage of many genes and DNA regions associated with antimicrobial resistance (AMR). Performance comparisons of tNGS and another molecular testing tool, Xpert MTB/rifampicin (RIF), have been empirical. Here, using a dilution series of a RIF-resistant clinical isolate of MTB, we found that tNGS had a slightly lower limit of bacterial detection (102 CFU/mL) compared with Xpert MTB/RIF (103 CFU/mL) in culture medium. However, the minimum detection limit of the rpoB S450L mutation in this isolate was significantly lower with tNGS (102 CFU/mL) than with Xpert MTB/RIF (106 CFU/mL). Sputum samples collected from 129 suspected pulmonary tuberculosis patients were also prospectively studied with the clinical diagnosis as a reference, revealing that the sensitivity of tNGS (48.6%) was higher than those of culture (46.8%), Xpert MTB/RIF (39.4%), and smear microscopy (34.9%) testing. Notably, AMR analysis of 56 MTB-positive samples as determined by tNGS revealed high mutation frequencies of 96.4%, 35.7%, 26.8%, and 19.6% in the following AMR-associated genes: rrs, rpoB, katG, and pncA, respectively. The findings of this study provide theoretical support for the differential clinical application of tNGS and Xpert MTB/RIF and suggest that tNGS has greater application value in tuberculosis drug resistance monitoring and prevention.IMPORTANCETargeted next-generation sequencing (tNGS) can be used to perform Mycobacterium tuberculosis (MTB) complex-specific amplification or target capture directly from sputum samples, yielding simultaneous coverage of genes and DNA regions associated with antimicrobial resistance (AMR). Performance comparisons of tNGS and Xpert MTB/rifampicin (RIF) have been empirical. The Xpert MTB/RIF assay is a commercial system that uses the nucleic acid amplification detection method for rapid (2 hours) diagnosis of tuberculosis (TB). The cost of the tNGS and Xpert MTB/RIF assays in this study was similar, at USD 98 and USD 70-104 per sample, respectively, but the time required for tNGS (3 days) was much longer than that required for the Xpert MTB/RIF assay. However, tNGS yielded more accurate results and a larger number of AMR-associated gene mutations, which compensated for the extra time and highlighted the greater application value of tNGS in TB drug resistance monitoring and prevention.",
+   "title": "Comparison of targeted next-generation sequencing and the Xpert MTB/RIF assay for detection of Mycobacterium tuberculosis in clinical isolates and sputum specimens.",
+   "year": "2024",
+   "journal": "Microbiology spectrum",
+   "doi": "10.1128/spectrum.04098-23",
+   "pmcid": "PMC11064545",
+   "in_pmc": true,
+   "mentions": [
+    "pncA"
+   ],
+   "queried_for": [
+    "pncA"
+   ],
+   "genes_named": [
+    "katG",
+    "rpoB",
+    "pncA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/38602399/"
+  },
+  {
+   "passage_id": "39278670",
+   "pmid": "39278670",
+   "text": "Detection of katG, inhA and ahpC gene mutation in clinical isolates of isoniazid-resistant Mycobacterium tuberculosis in Makassar City, South Sulawesi, Indonesia.\n\nBACKGROUND: Tuberculosis (TB) is an airborne disease caused by Mycobacterium tuberculosis (M. tuberculosis). The world is currently facing challenges due to the spread of anti-tuberculosis drug-resistant of M. tuberculosis. Isoniazid-resistant (INH), is one of the first-line anti-tuberculosis agents that has a high resistance case. This study used Multiplex allele-specific Polymerase Chain Reaction (MAS-PCR) to detect the most common mutations associated with isoniazid resistance on inhA, katG, and ahpC gene.\n\nMETHODS: This study used samples from clinical isolates of M. tuberculosis which had been tested for their antibiotic sensitivity of first-line anti-tuberculosis drugs. The DNA extraction process was carried out using the boiling method and then amplified with specific primers for inhA, katG, and ahpC genes using the MAS-PCR method. The results are then read on the electrophoretic gel with an interpretation of the mutation gene when the target gene DNA bands were absent according to the allele-specific fragments target.\n\nRESULTS: A total of 200 isolates were tested in this study consisting of isoniazid-resistant and susceptible with the largest distribution of Multi-Drug Resistant (MDR) isolates with a total of 146 isolates (73%). The most significant gene mutation was on the ahpC gene in 61 isolates (30,5%) and the combination mutation of the katG + ahpC gene in 52 isolates (26%) with sensitivity and specificity of the test reaching 87% and 42% for the detection of INH-resistant.\n\nCONCLUSION: Mutation on the ahpC gene has the highest percentage in this study. AhpC gene can be considered one of the essential genes to be tested for the cause of isoniazid-resistant. Using MAS-PCR for detecting gene mutation in isoniazid-resistant was simple and easy, it has the potential to be widely used as a rapid screening molecular test.",
+   "title": "Detection of katG, inhA and ahpC gene mutation in clinical isolates of isoniazid-resistant Mycobacterium tuberculosis in Makassar City, South Sulawesi, Indonesia.",
+   "year": "2024",
+   "journal": "The Indian journal of tuberculosis",
+   "doi": "10.1016/j.ijtb.2023.03.019",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [],
+   "queried_for": [
+    "ahpC katG"
+   ],
+   "genes_named": [
+    "katG",
+    "ahpC",
+    "inhA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/39278670/"
+  },
+  {
+   "passage_id": "39353459",
+   "pmid": "39353459",
+   "text": "The catalogue of Mycobacterium tuberculosis mutations associated with drug resistance to 12 drugs in China from a nationwide survey: a genomic analysis.\n\nBACKGROUND: WHO issued the first edition catalogue of Mycobacterium tuberculosis complex (MTBC) mutations associated with drug resistance in 2021. However, country-specific issues might lead to arising complex and additional drug-resistant mutations. We aimed to fully reflect the characteristics of drug resistance mutations in China.\n\nMETHODS: We analysed MTBC isolates from the nationwide drug-resistant tuberculosis surveillance with 70 counties in 31 provinces, municipalities, and autonomous regions in China. Three types of MYCOTB plates were used to perform drug susceptibility testing for 12 antibiotics (rifampicin, isoniazid, ethambutol, levofloxacin, moxifloxacin, amikacin, kanamycin, ethionamide, clofazimine, linezolid, delamanid, and bedaquiline). Mutations were divided into five groups according to their odds ratios, positive predictive values, false discovery rate-corrected p values, and 95% CIs: (1) associated with resistance; (2) associated with resistance-interim; (3) uncertain significance; (4) not associated with resistance-interim; and (5) not associated with resistance. The Wilcoxon rank-sum and Kruskal-Wallis tests were used to quantify the association between mutations and minimum inhibitory concentrations (MICs). Our dataset was compared with the first edition of the WHO catalogue.\n\nFINDINGS: We analysed 10 146 MTBC isolates, of which 9071 (89\u00b74%) isolates were included in the final analysis. 744 (8\u00b72%) isolates were resistant to rifampicin and 1339 (14\u00b78%) to isoniazid. 208 (1\u00b79%) of 11 065 mutations were classified as associated with resistance or associated with resistance-interim. 33 (97\u00b71%) of 34 mutations in group 1 and 92 (52\u00b79%) of 174 in group 2 also appeared in groups 1 or 2 of the WHO catalogue. Of 81 indel mutations in group 2, 15 (18\u00b75%) were in the WHO catalogue. The newly discovered mutation gyrA_Ala288Asp was associated with levofloxacin resistance. MIC values for rifampicin, isoniazid, moxifloxacin, and levofloxacin corresponding to resistance mutations in group 1 were significantly different (p<0\u00b70001), and 12 high-level resistance mutations were detected. 61 mutations in group 3 occurred as solo in at least five phenotypically susceptible isolates, but with MIC values moderately higher than other susceptible isolates. Among 945 phenotypically resistant but genotypically susceptible isolates, 433 (45\u00b78%) were mutated for at least one efflux pump gene.\n\nINTERPRETATION: Our analysis reflects the complexity of drug resistance mutations in China and suggests that indel mutations, efflux pump genes, protein structure, and MICs should be fully considered in the WHO catalogue, especially in countries with a high tuberculosis burden.\n\nFUNDING: National Key Research and Development Program of China and the Science and Technology Major Project of Tibetan Autonomous Region of China.",
+   "title": "The catalogue of Mycobacterium tuberculosis mutations associated with drug resistance to 12 drugs in China from a nationwide survey: a genomic analysis.",
+   "year": "2024",
+   "journal": "The Lancet. Microbe",
+   "doi": "10.1016/S2666-5247(24)00131-9",
+   "pmcid": "PMC11543636",
+   "in_pmc": true,
+   "mentions": [
+    "gyrA"
+   ],
+   "queried_for": [
+    "gyrA"
+   ],
+   "genes_named": [],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/39353459/"
+  },
+  {
+   "passage_id": "40078052",
+   "pmid": "40078052",
+   "text": "Multi-drug resistance and compensatory mutations in Mycobacterium tuberculosis in Vietnam.\n\nBACKGROUND: Vietnam is a hotspot for the emergence and spread of multidrug-resistant Mycobacterium tuberculosis. This study aimed to perform a retrospective study on the compensatory evolution in multidrug-resistant M. tuberculosis strains and the association with drug-resistant mutations and M. tuberculosis genotypes.\n\nMETHODS: Hundred and seventy-three strains resistant to rifampicin (n = 126) and/or isoniazid (n = 170) (multidrug-resistant = 123) were selected according to different drug-resistant patterns and genotypes. The genes/promoter regions including rpoA, rpoB, rpoC, katG, inhA, inhA promoter, ahpC, ahpC promoter, gyrA, gyrB, and rrs were sequenced for each strain.\n\nRESULTS: Frequency of rifampicin- and isoniazid-resistant mutations in multidrug-resistant strains was 99.2% and 97.0%, respectively. Mutations associated with low -high levels of drug resistance with low- or no-fitness costs compared to the wild type, including rpoB_Ser450Leu, katG_Ser315Thr, inhA-15(A-T), gyrA_Asp94Gly, and rrs_A1401GA, accounted for 46.3%, 76.4%, 16.2%, 8.9%, and 11.4%, respectively, in the multidrug-resistant strains. Beijing and Euro-American genotype strains were associated with high-level drug-resistant mutations, rpoB_Ser450Leu, katG_Ser315Thr, and gyrA_Asp94Gly, while East African-Indian genotype strains were associated with low to high-level drug-resistant mutations, rpoB_His445Asp, rpoB_His445Tyr, inhA-15(C-T) and rrs_A1401G. Multidrug-resistant strains (19.5%) harboured compensatory mutations linked to rifampicin resistance in rpoA, rpoB, or rpoC. Notably, the frequency of compensatory mutations in Beijing genotypes was significantly higher than in East African-Indian genotypes (21.1% vs. 3.3%, OR = 7.7; 95% CI = 1.0 to 61.2, p = 0.03). The proportion of multidrug-resistant strains with rpoB_Ser450Leu mutations carrying rpoA-rpoC mutations was higher than that of strains with other rpoB mutations (OR = 5.4; 95% CI = 1.4 to 21.1, p = 0.02) and was associated with Beijing strains. Only 1.2% (2/170) isoniazid-resistant strains carried aphC-52(C-T) mutation in the promoter region of the ahpC gene, which was hypothesised to be the compensatory mutation in isoniazid-resistant strains. Meanwhile, 11 isoniazid-resistant strains carried a katG mutation combined with either inhA-8(T-C) or inhA-15(A-T) mutations and were associated with East African-Indian strains.\n\nCONCLUSIONS: Mutations associated with high levels of drug resistance without/with low fitness costs (rpoB_Ser450Leu and katG_Ser315Thr) along with compensatory mutations linked to rifampicin resistance were strongly associated with multidrug-resistant M. tuberculosis Beijing strains in Vietnam.",
+   "title": "Multi-drug resistance and compensatory mutations in Mycobacterium tuberculosis in Vietnam.",
+   "year": "2025",
+   "journal": "Tropical medicine & international health : TM & IH",
+   "doi": "10.1111/tmi.14104",
+   "pmcid": "PMC12050163",
+   "in_pmc": true,
+   "mentions": [
+    "ahpC"
+   ],
+   "queried_for": [
+    "ahpC"
+   ],
+   "genes_named": [
+    "katG",
+    "ahpC",
+    "gyrA",
+    "gyrB",
+    "inhA",
+    "rpoB"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40078052/"
+  },
+  {
+   "passage_id": "40459255",
+   "pmid": "40459255",
+   "text": "Identification and quantification of gyrA variants in fluoroquinolone-resistant Mycobacterium tuberculosis in a MeltArray reaction.\n\nFluoroquinolones (FQs) resistance in Mycobacterium tuberculosis (MTB), primarily driven by mutations in the quinolone resistance-determining region (QRDR) of gyrA, poses a major concern in treating for multidrug-resistant tuberculosis (MDR-TB). These QRDR mutations are known to confer varying levels of resistance, leading to differences in treatment outcomes. Here, we introduced the MeltArray MTB/FQs assay, a multiplex PCR method that detected 11 gyrA-QRDR mutations and quantified their fractions via a polynomial regression algorithm-based formula, enabling mutation identification and quantification within 3 h in one reaction. This assay, with a limit of detection (LOD) of 50 copies/reaction, could identify mixtures containing 5% mutant gDNA across 50 to 50,000 copies/reaction. Clinical evaluation of 442 culture samples displayed 95.23% sensitivity and 99.32% specificity compared with phenotypic antimicrobial susceptibility testing (pAST). Evaluation of 121 paired sputum-culture samples revealed sensitivities of 90.32% in sputum samples and 95.24% in culture samples, both with specificities of 100%, when compared with pAST. Further evaluation of 285 sputum samples showed 93.75% positive percent agreement (PPA) and 98.10% negative percent agreement (NPA) in comparison with the MeltPro MTB/FQs kit (Zeesan Biotech, China). All mutant samples identified by MeltArray MTB/FQs but classified as susceptible by pAST or as wild type by MeltPro MTB/FQs were confirmed through Sanger sequencing and droplet digital PCR (ddPCR). The formula for predicting mutation fraction (MUT%) showed accuracy rates of 88.00%, 88.89%, and 83.33% in the training, validation, and test data sets, respectively, when compared with ddPCR results. Overall, MeltArray MTB/FQs assay offers an upgraded alternative for routine FQs resistance monitoring.IMPORTANCERising FQs resistance has driven the spread of pre-extensively drug-resistant tuberculosis (pre-XDR-TB), challenging global tuberculosis (TB) control efforts. Conventional molecular assays for FQs resistance often cannot distinguish between low-level and high-level resistance mutations or detect low-fraction heteroresistant populations. In this study, we established a MeltArray MTB/FQs assay that can identify all the 11 critical mutations in the gyrA-QRDR with a LOD of 50 copies/reaction, enabling direct, culture-independent analysis of sputum samples. By using an algorithm to quantify mutations at levels as low as 5% in mixtures, MeltArray achieved both mutation identification and quantification within 3 h in a reaction, thus providing a powerful tool for early detection and precise management of pre-XDR-TB.",
+   "title": "Identification and quantification of gyrA variants in fluoroquinolone-resistant Mycobacterium tuberculosis in a MeltArray reaction.",
+   "year": "2025",
+   "journal": "Journal of clinical microbiology",
+   "doi": "10.1128/jcm.00146-25",
+   "pmcid": "PMC12239727",
+   "in_pmc": true,
+   "mentions": [
+    "gyrA"
+   ],
+   "queried_for": [
+    "gyrA"
+   ],
+   "genes_named": [
+    "gyrA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40459255/"
+  },
+  {
+   "passage_id": "40887591",
+   "pmid": "40887591",
+   "text": "Efflux pumps positively contribute to rifampin resistance in rpoB mutant Mycobacterium tuberculosis.\n\nBACKGROUND: While several recent studies have documented the importance of efflux pumps as mediators of rifampin (RIF) resistance, it remains uncertain which efflux pumps play major roles in rifampin-resistant Mycobacterium tuberculosis strains harboring rpoB gene mutations.\n\nMETHODS: In this study, minimum inhibitory concentration (MIC) values for RIF were calculated and the expression of 13 efflux pump genes was evaluated across 35 clinical rifampicin-resistant M. tuberculosis isolates carrying the rpoB mutation before and after efflux pump inhibitor treatment.\n\nRESULTS: Rv0677c and Rv0191 were identified as the efflux pump genes that were most frequently overexpressed, and treatment with the inhibitor verapamil was sufficient to synergistically enhance the antibacterial effects of RIF and downregulate efflux pump gene expression. Greater numbers of overexpressed efflux pump genes were associated with a more significant decrease in the MIC value for RIF following verapamil treatment. Levels of RIF resistance for clinical isolates with the rpoB codon 445 mutation were also found to be significantly less susceptible to the effects of verapamil as compared to the resistance of strains with the codon 450 and 170 mutations.\n\nCONCLUSIONS: These results suggest that levels of RIF resistance in clinical RIF-resistant M. tuberculosis isolates are ultimately determined by a combination of efflux pump activity and rpoB gene mutations.",
+   "title": "Efflux pumps positively contribute to rifampin resistance in rpoB mutant Mycobacterium tuberculosis.",
+   "year": "2025",
+   "journal": "Annals of clinical microbiology and antimicrobials",
+   "doi": "10.1186/s12941-025-00816-5",
+   "pmcid": "PMC12400691",
+   "in_pmc": true,
+   "mentions": [
+    "rpoB"
+   ],
+   "queried_for": [
+    "rpoB"
+   ],
+   "genes_named": [
+    "rpoB"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/40887591/"
+  },
+  {
+   "passage_id": "41599000",
+   "pmid": "41599000",
+   "text": "Beyond Hotspot Mutations: Diagnostic Relevance of High Frequency, Low Frequency, and Disputed rpoB Variants in Rifampicin-Resistant Mycobacterium tuberculosis.\n\nRifampicin-resistant tuberculosis (RR-TB) remains a major threat to global TB control, primarily driven by mutations in the rpoB gene of Mycobacterium tuberculosis (Mtb). Most resistance-conferring mutations occur within the 81-base pair RIF resistance determining region (RRDR), particularly at codons S450L, H445Y/D, and D435V, which are strongly associated with high level resistance. However, increasing evidence of low-frequency and disputed variants both within and beyond the RRDR reveals a broader genetic spectrum that contributes to diagnostic uncertainty and variable phenotypic outcomes. This review summarizes current knowledge of high frequency, low frequency, and disputed rpoB mutations and their implications for molecular detection of RIF resistance. Structural analyses show that specific amino acid substitutions alter key hydrogen bonds or create steric hindrance in the RIF-binding pocket, leading to diverse resistance levels. Despite the success of molecular platforms such as Xpert MTB/RIF and line probe assays, their hotspot-based detection limits sensitivity to noncanonical variants. Lowering the minimum inhibitory concentration (MIC) breakpoint and integrating sequencing-based approaches, such as targeted and whole-genome sequencing, can enhance detection accuracy. A combined genomic and phenotypic framework will be essential to close existing diagnostic gaps and advance precision guided management of RIF-resistant and multidrug-resistant tuberculosis.",
+   "title": "Beyond Hotspot Mutations: Diagnostic Relevance of High Frequency, Low Frequency, and Disputed rpoB Variants in Rifampicin-Resistant Mycobacterium tuberculosis.",
+   "year": "2025",
+   "journal": "Pathogens (Basel, Switzerland)",
+   "doi": "10.3390/pathogens15010016",
+   "pmcid": "PMC12844990",
+   "in_pmc": true,
+   "mentions": [
+    "rpoB"
+   ],
+   "queried_for": [
+    "rpoB"
+   ],
+   "genes_named": [
+    "rpoB"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41599000/"
+  },
+  {
+   "passage_id": "41856489",
+   "pmid": "41856489",
+   "text": "Prevalence and resistance spectrum of ahpC mutations in isoniazid-resistant Mycobacterium tuberculosis isolates.\n\nTo characterize the mutation profile of the ahpC gene in isoniazid resistance (INHr) Mycobacterium tuberculosis (MTB) isolates and to evaluate the correlation between specific mutations and resistance levels, a total of 1,337 INHr MTB isolates were collected through the Chinese Drug Resistance Surveillance Program (2013-2020). The minimum inhibitory concentrations (MICs) for INH, rifampicin (RIF), and ethionamide were determined by broth microdilution, followed by whole-genome sequencing analysis. Among 1,337 INHr-MTB isolates, 45.5% (608/1,337) were multidrug-resistant (MDR), and 54.5% (729/1,337) were RIF-sensitive cases, with lineage 2 predominating (1,013/1,337, 75.8%). Resistance mutations were identified in 79.1% (1,058/1,337) of strains, primarily katG Ser315Thr (65.5%, 695/1,058) and inhA C-777T (19.7%, 208/1,058). Notably, 5.3% (56/1,058) isolates harbored standalone ahpC mutations, with 83.3% (5/6) C-81T, 60.0% (9/15) G-48A, 57.1% (4/7) C-54T, 50.0% (3/6) C-57T, and 42.1% (8/19) C-52T mutations showing high-level INH resistance. Accordingly, 91.7% (11/12) dual katG315+inhA mutations conferred high-level INH resistance, while ahpC C-57T mutants universally exhibited MDR. The ahpC mutations are associated with high-level INH resistance in variants without concurrent katG or inhA mutations. This finding significantly advances our understanding of tuberculosis resistance profiling, enabling more comprehensive detection of INHr-MTB and optimizing therapeutic strategies.IMPORTANCEAmong INH-resistant MTB clinical isolates, mutations in the ahpC promoter region have been considered to occur in combination with other mutations, such as katG and inhA, in a compensatory role. While the ahpC mutations have been incorporated into the World Health Organization (WHO)-recommended rapid diagnostic test, Xpert MTB/extensively drug-resistant tuberculosis (XDR), it has been still ambiguous about the standalone effects on INH resistance spectrum. Our findings demonstrate that the ahpC mutations are associated with high-level INH resistance in variants without concurrent katG or inhA mutations. This finding significantly advances our understanding of TB resistance profiling, enabling a more comprehensive detection of INHr-MTB and optimizing therapeutic strategies.",
+   "title": "Prevalence and resistance spectrum of ahpC mutations in isoniazid-resistant Mycobacterium tuberculosis isolates.",
+   "year": "2026",
+   "journal": "Microbiology spectrum",
+   "doi": "10.1128/spectrum.02496-25",
+   "pmcid": "",
+   "in_pmc": false,
+   "mentions": [],
+   "queried_for": [
+    "ahpC katG"
+   ],
+   "genes_named": [
+    "katG",
+    "ahpC",
+    "inhA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/41856489/"
+  },
+  {
+   "passage_id": "9733688",
+   "pmid": "9733688",
+   "text": "Oxidative stress response and characterization of the oxyR-ahpC and furA-katG loci in Mycobacterium marinum.\n\nOxidative stress response in pathogenic mycobacteria is believed to be of significance for host-pathogen interactions at various stages of infection. It also plays a role in determining the intrinsic susceptibility to isoniazid in mycobacterial species. In this work, we characterized the oxyR-ahpC and furA-katG loci in the nontuberculous pathogen Mycobacterium marinum. In contrast to Mycobacterium smegmatis and like Mycobacterium tuberculosis and Mycobacterium leprae, M. marinum was shown to possess a closely linked and divergently oriented equivalents of the regulator of peroxide stress response oxyR and its subordinate gene ahpC, encoding a homolog of alkyl hydroperoxide reductase. Purified mycobacterial OxyR was found to bind to the oxyR-ahpC promoter region from M. marinum and additional mycobacterial species. Mobility shift DNA binding analyses using OxyR binding sites from several mycobacteria and a panel of in vitro-generated mutants validated the proposed consensus mycobacterial recognition sequence. M. marinum AhpC levels detected by immunoblotting, were increased upon treatment with H2O2, in keeping with the presence of a functional OxyR and its binding site within the promoter region of ahpC. In contrast, OxyR did not bind to the sequences upstream of the katG structural gene, and katG expression did not follow the pattern seen with ahpC. Instead, a new open reading frame encoding a homolog of the ferric uptake regulator Fur was identified immediately upstream of katG in M. marinum. The furA-katG linkage and arrangement are ubiquitous in mycobacteria, suggesting the presence of additional regulators of oxidative stress response and potentially explaining the observed differences in ahpC and katG expression. Collectively, these findings broaden our understanding of oxidative stress response in mycobacteria. They also suggest that M. marinum will be useful as a model system for studying the role of oxidative stress response in mycobacterial physiology, intracellular survival, and other host-pathogen interactions associated with mycobacterial diseases.",
+   "title": "Oxidative stress response and characterization of the oxyR-ahpC and furA-katG loci in Mycobacterium marinum.",
+   "year": "1998",
+   "journal": "Journal of bacteriology",
+   "doi": "10.1128/JB.180.18.4856-4864.1998",
+   "pmcid": "PMC107510",
+   "in_pmc": true,
+   "mentions": [
+    "furA",
+    "katG",
+    "oxidative",
+    "stress"
+   ],
+   "queried_for": [
+    "furA katG regulation oxidative stress"
+   ],
+   "genes_named": [
+    "katG",
+    "ahpC",
+    "furA"
+   ],
+   "chunk_index": 0,
+   "chunk_of": 1,
+   "url": "https://pubmed.ncbi.nlm.nih.gov/9733688/"
+  }
+ ]
+}

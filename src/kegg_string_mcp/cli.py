@@ -83,7 +83,10 @@ def main(argv: list[str] | None = None) -> int:
         for quote in payload["validation"].get("quotes", []):
             if quote["status"] != "verified":
                 triage = f" [{quote['triage']}, similarity {quote['similarity']}]" if quote.get("triage") else ""
-                print(f"  {quote['status'].upper():13} PMID:{quote['record_id']}{triage}")
+                # Not every quotable record is a PMID: UniProt accessions are
+                # quotable too, and the hard-coded prefix printed
+                # "PMID:A0A0N7EHL5" for one.
+                print(f"  {quote['status'].upper():13} {quote['record_id']}{triage}")
                 print(f"                  quoted:  {quote['quote'][:88]!r}")
                 if quote.get("closest_span"):
                     print(f"                  closest: {quote['closest_span'][:88]!r}")

@@ -4,7 +4,12 @@ from pathlib import Path
 
 from kegg_string_mcp.agent.evidence import all_pairs, classify_pathway, pair_evidence
 from kegg_string_mcp.agent.store import RunStore
-from kegg_string_mcp.agent.validate import extract_citations, validate
+from kegg_string_mcp.agent.validate import (
+    check_quotes,
+    extract_citations,
+    extract_quotes,
+    validate,
+)
 
 KEGG_RESULT = {
     "resolved": {"kegg_gene_id": "mtu:Rv1908c", "matched_by": "symbol"},
@@ -823,3 +828,169 @@ def test_a_fabricated_quote_on_such_a_pmid_still_fails(tmp_path):
     report = validate('PMID:18178143 "binds directly to the ribosome in vitro"',
                       store.citable_ids, store.per_target, "KATG", records=store.records)
     assert [q.status for q in report.quotes] == ["not_in_source"]
+
+
+# --- lineage-marker record IDs -------------------------------------------------
+# tbdb IDs became citable when lineage_markers joined the stage 1 tools. These
+# pin the properties that would fail silently: that they are recognised at all,
+# that a bare genome coordinate is not mistaken for one, and that they are
+# structured rather than quotable.
+
+def test_a_lineage_marker_id_is_a_citation():
+    assert extract_citations("phoR carries a lineage marker (tbdb:852641).") == ["tbdb:852641"]
+
+
+def test_several_lineage_markers_are_all_extracted():
+    text = "Two markers, tbdb:852641 and tbdb:853469, fall in phoR."
+    assert extract_citations(text) == ["tbdb:852641", "tbdb:853469"]
+
+
+def test_a_bare_genome_coordinate_is_not_a_citation():
+    """An unprefixed 7-digit H37Rv position is indistinguishable from a PMID.
+    The prefix is what stops the validator confusing a coordinate with a paper --
+    without it, "position 852641" would cite a PubMed article."""
+    assert extract_citations("Position 852641 falls inside phoR.") == []
+
+
+def test_a_lineage_marker_is_not_quotable():
+    """A marker is structured, like a KEGG pathway ID: the record means one thing
+    and there is no text to quote from it."""
+    assert extract_quotes('The gene is "described as a marker" (tbdb:852641).') == []
+
+
+def test_lineage_markers_mix_with_the_other_sources():
+    text = "See tbdb:852641, PMID:35919400 and mtu00360."
+    assert set(extract_citations(text)) == {"tbdb:852641", "35919400", "mtu00360"}
+
+
+def test_an_uncited_lineage_marker_is_caught_as_unsupported():
+    """The point of the whole layer: a marker the tools never returned must fail."""
+    report = validate("phoR is a lineage marker (tbdb:999999).",
+                      citable_ids={"tbdb:852641"})
+    assert not report.passed
+    assert [c.identifier for c in report.unsupported] == ["tbdb:999999"]
+
+
+def test_a_retrieved_lineage_marker_passes():
+    report = validate("phoR carries a lineage marker (tbdb:852641).",
+                      citable_ids={"tbdb:852641"})
+    assert report.passed
+    assert report.unsupported == []
+
+
+def test_a_citation_inside_a_quotation_does_not_bind_the_next_span():
+    """From a real run. Quoting a tool note that names its own record put an
+    accession inside the quotation with no citation after the closing mark. The
+    leading-citation pattern ran from that accession, across a closing mark it
+    could not tell from an opening one, and bound the model's own prose as a
+    quotation -- which then failed as "not in source". A false accusation of
+    fabrication against correct output is the one failure a validator must not
+    have."""
+    text = ('The note is explicit: "UniProt holds no FUNCTION statement for P71814 - '
+            'the entry exists but its function is not described." '
+            '`has_experimental_function` is false, and there is no subunit annotation '
+            'to quote. The name is "Possible two component system regulator" (P71814).')
+    quotes = extract_quotes(text)
+    assert quotes == [("P71814", "Possible two component system regulator")]
+
+
+def test_a_leading_citation_outside_any_quotation_still_binds():
+    """The guard must not cost the ordinary leading-citation form."""
+    text = 'PMID:35919400 reported that "the isolates carried katG mutations".'
+    assert extract_quotes(text) == [("35919400", "the isolates carried katG mutations")]
+
+
+# --- quoting a tool note ----------------------------------------------------
+# A note is part of what the tool said in this run, so quoting one verbatim is
+# quoting a real source. Searching only record quotable_text reported it as
+# likely fabricated.
+
+NOTE = ("No function statement for A0A0N7EHL5, A0A0N9DRZ6 carries experimental "
+        "evidence (ECO:0000269); all are inferred.")
+_SUMMARY = f'Two further entries matched (A0A0N7EHL5, A0A0N9DRZ6) but the tool notes "{NOTE}"'
+
+
+def test_a_verbatim_tool_note_is_not_a_fabrication():
+    """From a real katG run. The quote is note 3 of the UniProt result, word for
+    word, and was reported NOT_IN_SOURCE [likely_fabricated] because notes were
+    never searched -- the record has its own text, so the quote was compared
+    against the wrong source rather than found missing."""
+    records = {"A0A0N7EHL5": {"record_id": "A0A0N7EHL5",
+                              "detail": {"quotable_text": "Catalase-peroxidase."}}}
+    assert check_quotes(_SUMMARY, records)[0].status == "not_in_source"
+    checks = check_quotes(_SUMMARY, records, {"A0A0N7EHL5": [NOTE]})
+    assert [c.status for c in checks] == ["verified"]
+
+
+def test_a_note_belonging_to_another_record_does_not_verify_a_quote():
+    """The loophole to avoid: notes are searched per record, so a quote cannot
+    be verified against a note the tool returned about something else."""
+    records = {"A0A0N7EHL5": {"record_id": "A0A0N7EHL5",
+                              "detail": {"quotable_text": "Catalase-peroxidase."}}}
+    checks = check_quotes(_SUMMARY, records, {"P9WIE5": [NOTE]})
+    assert [c.status for c in checks] == ["not_in_source"]
+
+
+def test_a_genuinely_fabricated_quote_still_fails_with_notes_present():
+    """The fix must not turn the check into one that passes everything."""
+    records = {"A0A0N7EHL5": {"record_id": "A0A0N7EHL5",
+                              "detail": {"quotable_text": "Catalase-peroxidase activity."}}}
+    text = 'The entry states "this protein activates isoniazid" (A0A0N7EHL5).'
+    checks = check_quotes(text, records, {"A0A0N7EHL5": [NOTE]})
+    assert [c.status for c in checks] == ["not_in_source"]
+
+
+def test_store_keys_notes_to_the_records_of_the_same_result(tmp_path: Path):
+    store = _store(tmp_path)
+    store.tool_result("uniprot_protein", {"gene": "katG"},
+              {"records": [{"record_id": "P9WIE5", "detail": {}}],
+               "record_ids": ["P9WIE5"], "notes": ["a note about katG"]})
+    store.tool_result("kegg_pathways", {"gene": "katG"},
+              {"records": [{"record_id": "mtu00360"}], "record_ids": ["mtu00360"],
+               "notes": ["a note about pathways"]})
+    assert store.notes["P9WIE5"] == ["a note about katG"]
+    assert store.notes["mtu00360"] == ["a note about pathways"]
+
+
+# --- variant record IDs at sentence edges --------------------------------------
+# The other citation patterns end in \b, which stops them consuming trailing
+# punctuation. A variant ID legitimately ends in '*' or '?', so it cannot use a
+# word boundary and is anchored on its last character instead.
+
+def test_a_variant_id_ending_a_sentence_does_not_swallow_the_full_stop():
+    """Ending a sentence on a citation is normal writing. Swallowing the stop
+    produced an ID matching nothing in the citable set, reported unsupported --
+    a false failure on a correctly cited summary."""
+    assert extract_citations("Graded in tbdb:katG:p.Ser315Thr.") == ["tbdb:katG:p.Ser315Thr"]
+
+
+def test_nonsense_and_unknown_variants_keep_their_final_character():
+    """604 catalogue variants end in '*' (p.Arg163*) and 91 in '?' (p.Met1?).
+    '?' was missing from the character class, so those could never be cited."""
+    text = "See tbdb:ahpC:p.Arg163*, tbdb:ahpC:p.Met1? and tbdb:aftB:p.Ter628Argext*?."
+    assert extract_citations(text) == [
+        "tbdb:ahpC:p.Arg163*", "tbdb:ahpC:p.Met1?", "tbdb:aftB:p.Ter628Argext*?"]
+
+
+def test_promoter_and_consequence_forms_survive_punctuation():
+    assert extract_citations("Promoter tbdb:inhA:c.-15C>T; and more.") == ["tbdb:inhA:c.-15C>T"]
+    assert extract_citations("Loss of function (tbdb:katG:frameshift_variant).") == [
+        "tbdb:katG:frameshift_variant"]
+
+
+def test_an_unbalanced_quote_does_not_silently_skip_a_quote_check():
+    """A stray quotation mark inverts left-to-right pairing, so every range after
+    it is wrong. One such range covered a legitimate leading citation and vetoed
+    its quote, which was then never checked at all. Not checking is worse than
+    the false positive the veto prevents."""
+    text = 'The 5" marker. PMID:12345678 says "the isolates carried katG mutations".'
+    assert extract_quotes(text) == [("12345678", "the isolates carried katG mutations")]
+
+
+def test_the_veto_still_applies_when_quoting_is_balanced():
+    """The P71814 case must stay fixed."""
+    text = ('The note is explicit: "UniProt holds no FUNCTION statement for P71814 - '
+            'the entry exists but its function is not described." '
+            '`has_experimental_function` is false. The name is '
+            '"Possible two component system regulator" (P71814).')
+    assert extract_quotes(text) == [("P71814", "Possible two component system regulator")]

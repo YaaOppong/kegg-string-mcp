@@ -33,8 +33,10 @@ underlying service covers.
 | `string_partners` | `gene`<br>`species` = `83332`<br>`limit` = `20`<br>`required_score` = `700` | One record per interaction partner: `record_id` (e.g. `83332.Rv1909c`), preferred name, combined score, full per-channel breakdown, `https://string-db.org/network/…` URL |
 | `pubmed_abstracts` | `gene`<br>`organism` = `Mycobacterium tuberculosis`<br>`limit` = `10` | One record per article: `record_id` (PMID, e.g. `35038342`), title, abstract, `quotable_text`, journal, year, DOI, `https://pubmed.ncbi.nlm.nih.gov/…` URL |
 | `uniprot_protein` | `gene`<br>`organism_id` = `83332`<br>`limit` = `3` | One record per UniProt entry: `record_id` (accession, e.g. `P9WG47`), protein name, function statements tiered by evidence code with supporting PMIDs, catalytic activity, PDB cross-refs, `quotable_text`, `https://www.uniprot.org/uniprotkb/…` URL |
+| `lineage_markers` | `gene`<br>`organism` = `mtu` | One record per lineage-defining SNP the gene contains: `record_id` (e.g. `tbdb:851797`), the lineage it marks, H37Rv position, allele, `https://github.com/jodyphelan/tbdb` URL |
+| `resistance_variants` | `gene`<br>`drug` (optional) | Whether the gene is resistance-associated, the drugs, and per-grade counts; one record per resistance-associated variant: `record_id` (e.g. `tbdb:katG:p.Ser315Thr`), WHO grading, drug, source |
 
-All four are annotated `readOnlyHint`, expose structured output schemas, and are
+All six are annotated `readOnlyHint`, expose structured output schemas, and are
 deterministic: same input and same cache produce the same output.
 
 ### Result envelope
@@ -148,7 +150,7 @@ in the retrieved text, not the genes queried.
 ## Evaluation
 
 **The reference is incomplete, and that is the point.** KEGG assigns a pathway to just
-**1,171 of 4,008** *M. tuberculosis* genes — 29%. `gyrA`, one of the most studied genes
+**about 1,170 of 4,008** *M. tuberculosis* genes — 29%. `gyrA`, one of the most studied genes
 in TB, has none. So the gold set has two classes:
 
 - **positive controls** — KEGG assigns pathways. Measures whether the pipeline
@@ -262,8 +264,12 @@ it redistributes no third-party data. Terms remain the caller's responsibility:
 - **KEGG** — free for academic use; commercial use requires a licence from Pathway Solutions.
 - **STRING** — CC BY 4.0, free for academic and commercial use, attribution required.
 - **PubMed** — records are US government works and free to use; the abstracts themselves
-  are frequently under publisher copyright. This server retrieves them per query and
-  caches locally for the caller; it redistributes nothing. Respect NCBI's
+  are frequently under publisher copyright. The server retrieves them per query and caches
+  locally for the caller. A small number of abstracts *are* committed, in `demo/runs/` and
+  `tests/fixtures/`, because the demo cannot show quote-checking without the text it checks
+  against and the tests cannot run offline without it — roughly 40 records, retained for
+  research and educational use. Larger corpora built by the retrieval arm are **not**
+  committed. Respect NCBI's
   [E-utilities usage policy](https://www.ncbi.nlm.nih.gov/books/NBK25497/) — set
   `NCBI_EMAIL`.
 

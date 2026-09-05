@@ -1,0 +1,1622 @@
+{
+ "calls": [
+  {
+   "arguments": {
+    "gene": "phoP",
+    "organism": "mtu"
+   },
+   "origin": "pipeline",
+   "result": {
+    "notes": [
+     "KEGG returned no pathway assignments for mtu:Rv0757. The gene exists in KEGG but is not mapped to any pathway in this organism."
+    ],
+    "query": {
+     "gene": "phoP",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "retrieved_at": "2026-09-05T12:14:18.267852+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0757"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv0757",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "phoP",
+    "limit": 20
+   },
+   "origin": "pipeline",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: esxA, whiB3, tatC, fadD26, devR, esxB, sigH, espR, pks2, pks4."
+    ],
+    "query": {
+     "gene": "phoP",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv0758",
+     "83332.Rv0902c",
+     "83332.Rv0490",
+     "83332.Rv3875",
+     "83332.Rv3416",
+     "83332.Rv1032c",
+     "83332.Rv0600c",
+     "83332.Rv3764c",
+     "83332.Rv2093c",
+     "83332.Rv2930",
+     "83332.Rv3133c",
+     "83332.Rv0982",
+     "83332.Rv3874",
+     "83332.Rv3245c",
+     "83332.Rv0756c",
+     "83332.Rv3223c",
+     "83332.Rv0601c",
+     "83332.Rv3849",
+     "83332.Rv3825c",
+     "83332.Rv1181"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.267,
+        "cooccurrence": 0.772,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.022,
+        "neighborhood": 0.817
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.817,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.977
+      },
+      "name": "phoR",
+      "record_id": "83332.Rv0758",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0758"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.362,
+        "cooccurrence": 0.718,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.0,
+        "neighborhood": 0.059
+       },
+       "combined_score": 0.963,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.718,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.711
+      },
+      "name": "prrB",
+      "record_id": "83332.Rv0902c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0902c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.264,
+        "cooccurrence": 0.731,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.04,
+        "neighborhood": 0.099
+       },
+       "combined_score": 0.918,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.731,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.466
+      },
+      "name": "senX3",
+      "record_id": "83332.Rv0490",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0490"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.072,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.044
+       },
+       "combined_score": 0.913,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.072,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.91
+      },
+      "name": "esxA",
+      "record_id": "83332.Rv3875",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3875"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.055,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.903,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.055,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.901
+      },
+      "name": "whiB3",
+      "record_id": "83332.Rv3416",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3416"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.345,
+        "cooccurrence": 0.72,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.001,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.896,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.72,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.191
+      },
+      "name": "trcS",
+      "record_id": "83332.Rv1032c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1032c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.345,
+        "cooccurrence": 0.753,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.0,
+        "neighborhood": 0.059
+       },
+       "combined_score": 0.895,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.753,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.083
+      },
+      "name": "Rv0600c",
+      "record_id": "83332.Rv0600c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0600c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.349,
+        "cooccurrence": 0.702,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.012,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.881,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.702,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.123
+      },
+      "name": "tcrY",
+      "record_id": "83332.Rv3764c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3764c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.05,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.044
+       },
+       "combined_score": 0.871,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.05,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.869
+      },
+      "name": "tatC",
+      "record_id": "83332.Rv2093c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2093c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.042,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.851,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.042,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.851
+      },
+      "name": "fadD26",
+      "record_id": "83332.Rv2930",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2930"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.057,
+        "cooccurrence": 0.153,
+        "database": 0.0,
+        "experimental": 0.143,
+        "fusion": 0.0,
+        "neighborhood": 0.043
+       },
+       "combined_score": 0.845,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.153,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.8
+      },
+      "name": "devR",
+      "record_id": "83332.Rv3133c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3133c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.36,
+        "cooccurrence": 0.62,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.0,
+        "neighborhood": 0.069
+       },
+       "combined_score": 0.843,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.62,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.076
+      },
+      "name": "mprB",
+      "record_id": "83332.Rv0982",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0982"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.067,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.046
+       },
+       "combined_score": 0.812,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.067,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.806
+      },
+      "name": "esxB",
+      "record_id": "83332.Rv3874",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3874"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.253,
+        "cooccurrence": 0.531,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.007,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.809,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.531,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.316
+      },
+      "name": "mtrB",
+      "record_id": "83332.Rv3245c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3245c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.773
+       },
+       "combined_score": 0.783,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.773,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.077
+      },
+      "name": "Rv0756c",
+      "record_id": "83332.Rv0756c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0756c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.052,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.76,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.052,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.757
+      },
+      "name": "sigH",
+      "record_id": "83332.Rv3223c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3223c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.353,
+        "cooccurrence": 0.353,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.0,
+        "neighborhood": 0.059
+       },
+       "combined_score": 0.727,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.366,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.076
+      },
+      "name": "Rv0601c",
+      "record_id": "83332.Rv0601c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0601c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.046,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.719,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.046,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.717
+      },
+      "name": "espR",
+      "record_id": "83332.Rv3849",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3849"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.077,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.047
+       },
+       "combined_score": 0.718,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.077,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.705
+      },
+      "name": "pks2",
+      "record_id": "83332.Rv3825c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3825c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.075,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.044
+       },
+       "combined_score": 0.714,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.075,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.703
+      },
+      "name": "pks4",
+      "record_id": "83332.Rv1181",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1181"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "66400c44367c4fe50b3181d79a1d53259f2a0e11f2bbdfb5a6322ea3b4fd5929",
+      "retrieved_at": "2026-09-05T11:50:31.112545+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=phoP&limit=1&species=83332"
+     },
+     {
+      "cached": true,
+      "content_sha256": "8e50918f878d1c6ceb657ad5a48934d2906e471c58105a6cd1b901ec3f62f0f3",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv0757&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "phoP",
+     "string_id": "83332.Rv0757"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "phoR",
+    "organism": "mtu"
+   },
+   "origin": "pipeline",
+   "result": {
+    "notes": [
+     "KEGG returned no pathway assignments for mtu:Rv0758. The gene exists in KEGG but is not mapped to any pathway in this organism."
+    ],
+    "query": {
+     "gene": "phoR",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "retrieved_at": "2026-09-05T12:14:19.793214+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0758"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv0758",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "phoR",
+    "limit": 20
+   },
+   "origin": "pipeline",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4)."
+    ],
+    "query": {
+     "gene": "phoR",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv0757",
+     "83332.Rv0491",
+     "83332.Rv1033c",
+     "83332.Rv3765c",
+     "83332.Rv0602c",
+     "83332.Rv3246c",
+     "83332.Rv0903c",
+     "83332.Rv3454",
+     "83332.Rv0981",
+     "83332.Rv2884",
+     "83332.Rv1027c",
+     "83332.Rv0818",
+     "83332.Rv0756c"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.267,
+        "cooccurrence": 0.772,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.022,
+        "neighborhood": 0.817
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.817,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.977
+      },
+      "name": "phoP",
+      "record_id": "83332.Rv0757",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0757"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.253,
+        "cooccurrence": 0.727,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.004,
+        "neighborhood": 0.098
+       },
+       "combined_score": 0.915,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.727,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.462
+      },
+      "name": "regX3",
+      "record_id": "83332.Rv0491",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0491"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.25,
+        "cooccurrence": 0.743,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.004,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.896,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.743,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.325
+      },
+      "name": "trcR",
+      "record_id": "83332.Rv1033c",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1033c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.246,
+        "cooccurrence": 0.748,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.015,
+        "neighborhood": 0.098
+       },
+       "combined_score": 0.88,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.748,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.188
+      },
+      "name": "tcrX",
+      "record_id": "83332.Rv3765c",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3765c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.248,
+        "cooccurrence": 0.742,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.008,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.877,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.742,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.205
+      },
+      "name": "tcrA",
+      "record_id": "83332.Rv0602c",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0602c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.25,
+        "cooccurrence": 0.746,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.042,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.866,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.746,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.113
+      },
+      "name": "mtrA",
+      "record_id": "83332.Rv3246c",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3246c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.257,
+        "cooccurrence": 0.74,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.017,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.86,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.74,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.092
+      },
+      "name": "prrA",
+      "record_id": "83332.Rv0903c",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0903c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.0,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.836,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.836,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.836,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.0
+      },
+      "name": "Rv3454",
+      "record_id": "83332.Rv3454",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3454"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.25,
+        "cooccurrence": 0.665,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.097,
+        "neighborhood": 0.098
+       },
+       "combined_score": 0.833,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.665,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.092
+      },
+      "name": "mprA",
+      "record_id": "83332.Rv0981",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0981"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.255,
+        "cooccurrence": 0.5,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.0,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.8,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.5,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.324
+      },
+      "name": "Rv2884",
+      "record_id": "83332.Rv2884",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2884"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.249,
+        "cooccurrence": 0.575,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.0,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.784,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.575,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.151
+      },
+      "name": "kdpE",
+      "record_id": "83332.Rv1027c",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1027c"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.254,
+        "cooccurrence": 0.398,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.0,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.758,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.398,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.324
+      },
+      "name": "Rv0818",
+      "record_id": "83332.Rv0818",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0818"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "channels": {
+        "coexpression": 0.05,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.732
+       },
+       "combined_score": 0.747,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.732,
+       "partner_of": "83332.Rv0758",
+       "textmining_score": 0.083
+      },
+      "name": "Rv0756c",
+      "record_id": "83332.Rv0756c",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0756c"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "cc6eb45289413c9513a7efdeadba5a26cd73e2df1225b25210473a0a6d87a207",
+      "retrieved_at": "2026-09-05T11:50:33.357687+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=phoR&limit=1&species=83332"
+     },
+     {
+      "cached": false,
+      "content_sha256": "ae27b256f95ef0ff64576473491311c714ed3116e3ccfe524741979768e9d4d1",
+      "retrieved_at": "2026-09-05T13:07:38.695787+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?caller_identity=kegg-string-mcp&identifiers=83332.Rv0758&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "phoR",
+     "string_id": "83332.Rv0758"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "phoP"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "phoP contains 1 lineage-defining position(s). This says the gene can carry a lineage marker, not that a particular variant in it is one -- compare your variant's H37Rv position against the `position` field."
+    ],
+    "query": {
+     "gene": "phoP",
+     "organism": "mtu"
+    },
+    "record_ids": [
+     "tbdb:851797"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "allele": "A",
+       "gene": "phoP",
+       "lineage": "lineage1.1.1.1",
+       "lineage_name": "Indo-Oceanic",
+       "position": 851797
+      },
+      "name": "lineage1.1.1.1 (Indo-Oceanic)",
+      "record_id": "tbdb:851797",
+      "retrieved_at": "2026-09-05T12:17:55.565069+00:00",
+      "source": "tbdb",
+      "type": "lineage_marker",
+      "url": "https://github.com/jodyphelan/tbdb"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "9c05673045615483890c0e31e65ddb9175ecdce7a22ac9a6868a840ae3f2a753",
+      "retrieved_at": "2026-09-05T12:17:55.565069+00:00",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/barcode.bed"
+     },
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     }
+    ],
+    "resolved": {
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "lineage_markers"
+  },
+  {
+   "arguments": {
+    "gene": "phoR"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "phoR contains 2 lineage-defining position(s). This says the gene can carry a lineage marker, not that a particular variant in it is one -- compare your variant's H37Rv position against the `position` field."
+    ],
+    "query": {
+     "gene": "phoR",
+     "organism": "mtu"
+    },
+    "record_ids": [
+     "tbdb:852641",
+     "tbdb:853469"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "allele": "T",
+       "gene": "phoR",
+       "lineage": "lineage1.1.3",
+       "lineage_name": "Indo-Oceanic",
+       "position": 852641
+      },
+      "name": "lineage1.1.3 (Indo-Oceanic)",
+      "record_id": "tbdb:852641",
+      "retrieved_at": "2026-09-05T12:17:55.565069+00:00",
+      "source": "tbdb",
+      "type": "lineage_marker",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "allele": "A",
+       "gene": "phoR",
+       "lineage": "lineage4.3.2",
+       "lineage_name": "Euro-American (LAM)",
+       "position": 853469
+      },
+      "name": "lineage4.3.2 (Euro-American (LAM))",
+      "record_id": "tbdb:853469",
+      "retrieved_at": "2026-09-05T12:17:55.565069+00:00",
+      "source": "tbdb",
+      "type": "lineage_marker",
+      "url": "https://github.com/jodyphelan/tbdb"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "9c05673045615483890c0e31e65ddb9175ecdce7a22ac9a6868a840ae3f2a753",
+      "retrieved_at": "2026-09-05T12:17:55.565069+00:00",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/barcode.bed"
+     },
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     }
+    ],
+    "resolved": {
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "lineage_markers"
+  },
+  {
+   "arguments": {
+    "gene": "phoP"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "KEGG returned no pathway assignments for mtu:Rv0757. The gene exists in KEGG but is not mapped to any pathway in this organism."
+    ],
+    "query": {
+     "gene": "phoP",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "retrieved_at": "2026-09-05T12:14:18.267852+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0757"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv0757",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "phoR"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "KEGG returned no pathway assignments for mtu:Rv0758. The gene exists in KEGG but is not mapped to any pathway in this organism."
+    ],
+    "query": {
+     "gene": "phoR",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "retrieved_at": "2026-09-05T12:14:19.793214+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0758"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv0758",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "phoP"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "UniProt holds no FUNCTION statement for P71814 -- the entry exists but its function is not described. Nothing to quote."
+    ],
+    "query": {
+     "gene": "phoP",
+     "limit": 3,
+     "organism_id": 83332
+    },
+    "record_ids": [
+     "P71814"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [],
+       "entry_name": "P71814_MYCTU",
+       "function_statements": [],
+       "gene_names": [
+        "phoP"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [
+        "Rv0757"
+       ],
+       "pdb": [
+        "2RV8",
+        "3R0J",
+        "5ED4",
+        "9JI3",
+        "9JI4",
+        "9JI5",
+        "9KET",
+        "9KEU",
+        "9KEV"
+       ],
+       "quotable_text": "Possible two component system response transcriptional positive regulator PhoP",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "Possible two component system response transcriptional positive regulator PhoP",
+      "record_id": "P71814",
+      "retrieved_at": "2026-09-05T12:39:06.212970+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/P71814"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "a6ff960f90156d236328bd05323616a21a96b681bc518a0b0fd1e1ba981d8c7b",
+      "retrieved_at": "2026-09-05T12:39:06.212970+00:00",
+      "status": 200,
+      "url": "https://rest.uniprot.org/uniprotkb/search?fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Ccc_function%2Ccc_catalytic_activity%2Ccc_subunit%2Cxref_pdb%2Cec&format=json&query=organism_id%3A83332+AND+gene%3AphoP&size=3"
+     }
+    ],
+    "resolved": {
+     "accession": "P71814",
+     "matched_by": "uniprot_search",
+     "n_entries": 1,
+     "uniprot_release": "2026_03"
+    }
+   },
+   "tool": "uniprot_protein"
+  },
+  {
+   "arguments": {
+    "gene": "phoR"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "UniProt holds no FUNCTION statement for P71815 -- the entry exists but its function is not described. Nothing to quote."
+    ],
+    "query": {
+     "gene": "phoR",
+     "limit": 3,
+     "organism_id": 83332
+    },
+    "record_ids": [
+     "P71815"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "ATP + protein L-histidine = ADP + protein N-phospho-L-histidine."
+       ],
+       "entry_name": "P71815_MYCTU",
+       "function_statements": [],
+       "gene_names": [
+        "phoR"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [
+        "Rv0758"
+       ],
+       "pdb": [
+        "5UKV",
+        "5UKY"
+       ],
+       "quotable_text": "histidine kinase\n\nATP + protein L-histidine = ADP + protein N-phospho-L-histidine.",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "histidine kinase",
+      "record_id": "P71815",
+      "retrieved_at": "2026-09-05T12:39:06.944668+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/P71815"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "31278a8c3fecfde365f07f22a433839dcee5143c7ce55929bb2dae4cae8c36f9",
+      "retrieved_at": "2026-09-05T12:39:06.944668+00:00",
+      "status": 200,
+      "url": "https://rest.uniprot.org/uniprotkb/search?fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Ccc_function%2Ccc_catalytic_activity%2Ccc_subunit%2Cxref_pdb%2Cec&format=json&query=organism_id%3A83332+AND+gene%3AphoR&size=3"
+     }
+    ],
+    "resolved": {
+     "accession": "P71815",
+     "matched_by": "uniprot_search",
+     "n_entries": 1,
+     "uniprot_release": "2026_03"
+    }
+   },
+   "tool": "uniprot_protein"
+  },
+  {
+   "arguments": {
+    "gene": "Rv0756c"
+   },
+   "origin": "turn 3",
+   "result": {
+    "notes": [
+     "UniProt holds no FUNCTION statement for P71813 -- the entry exists but its function is not described. Nothing to quote."
+    ],
+    "query": {
+     "gene": "Rv0756c",
+     "limit": 3,
+     "organism_id": 83332
+    },
+    "record_ids": [
+     "P71813"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "catalytic_activity": [],
+       "entry_name": "P71813_MYCTU",
+       "function_statements": [],
+       "gene_names": [],
+       "has_experimental_function": false,
+       "locus_tags": [
+        "Rv0756c"
+       ],
+       "pdb": [],
+       "quotable_text": "Uncharacterized protein",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "Uncharacterized protein",
+      "record_id": "P71813",
+      "retrieved_at": "2026-09-05T13:07:58.450436+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/P71813"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "e56a0c23fd79045f25045d660a5f9749501c8cf41ea6434e5444f24f66f7e408",
+      "retrieved_at": "2026-09-05T13:07:58.450436+00:00",
+      "status": 200,
+      "url": "https://rest.uniprot.org/uniprotkb/search?fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Ccc_function%2Ccc_catalytic_activity%2Ccc_subunit%2Cxref_pdb%2Cec&format=json&query=organism_id%3A83332+AND+gene%3ARv0756c&size=3"
+     }
+    ],
+    "resolved": {
+     "accession": "P71813",
+     "matched_by": "uniprot_search",
+     "n_entries": 1,
+     "uniprot_release": "2026_03"
+    }
+   },
+   "tool": "uniprot_protein"
+  },
+  {
+   "arguments": {
+    "gene": "phoP phoR two-component phosphotransfer",
+    "limit": 6
+   },
+   "origin": "turn 3",
+   "result": {
+    "notes": [
+     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
+     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+    ],
+    "query": {
+     "gene": "phoP phoR two-component phosphotransfer",
+     "limit": 6,
+     "organism": "Mycobacterium tuberculosis"
+    },
+    "record_ids": [
+     "28782049",
+     "16979633",
+     "8655513"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The PhoP-PhoR two-component system is essential for the virulence of Mycobacterium tuberculosis (Mtb) and therefore represents a potential target for developing novel antituberculosis therapies. However, little is known about the mechanism by which this two-component system regulates the virulence. In this study, we demonstrated that a phoR mutant Mtb strain has phenotypes similar to those of a phoP mutant, suggesting that PhoP and PhoR work in the same pathway to regulate Mtb virulence. We determined the structure of the dimerization and histidine phosphotransfer (DHp) domain of PhoR to a 1.9 \u00c5 resolution. The structure revealed that the DHp domain is a dimer. Each subunit consists of two antiparallel \u03b1 helices connected by a loop of five residues. The two subunits of the dimer fold into a four-helical bundle with a continuous hydrophobic core. The topology of the four-helical bundle is identical to the histidine kinases that are known to have a cis-autophosphorylation mechanism, suggesting that PhoR is likely to autophosphorylate in cis. The dimer is asymmetric, with one subunit having a greater bending angle than the other at the highly conserved proline residue five-residues downstream of the phosphorylation site histidine. This structural asymmetry of the dimer suggests the flexibility of the PhoR DHp domain, which is likely to be important for the signal transduction mechanism in controlling the autophosphorylation and phosphotransfer reactions and communicating with the upstream structure.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The PhoP-PhoR two-component system is essential for the virulence of Mycobacterium tuberculosis (Mtb) and therefore represents a potential target for developing novel antituberculosis therapies. However, little is known about the mechanism by which this two-component system regulates the virulence. In this study, we demonstrated that a phoR mutant Mtb strain has phenotypes similar to those of a phoP mutant, suggesting that PhoP and PhoR work in the same pathway to regulate Mtb virulence. We determined the structure of the dimerization and histidine phosphotransfer (DHp) domain of PhoR to a 1.9 \u00c5 resolution. The structure revealed that the DHp domain is a dimer. Each subunit consists of two antiparallel \u03b1 helices connected by a loop of five residues. The two subunits of the dimer fold into a four-helical bundle with a continuous hydrophobic core. The topology of the four-helical bundle is identical to the histidine kinases that are known to have a cis-autophosphorylation mechanism, suggesting that PhoR is likely to autophosphorylate in cis. The dimer is asymmetric, with one subunit having a greater bending angle than the other at the highly conserved proline residue five-residues downstream of the phosphorylation site histidine. This structural asymmetry of the dimer suggests the flexibility of the PhoR DHp domain, which is likely to be important for the signal transduction mechanism in controlling the autophosphorylation and phosphotransfer reactions and communicating with the upstream structure."
+        }
+       ],
+       "doi": "10.1021/acsomega.7b00612",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "ACS omega",
+       "mentions": [
+        "phoP",
+        "phoR",
+        "two-component",
+        "phosphotransfer"
+       ],
+       "pmcid": "PMC5537716",
+       "quotable_text": "Asymmetric Structure of the Dimerization Domain of PhoR, a Sensor Kinase Important for the Virulence of Mycobacterium tuberculosis.\n\nThe PhoP-PhoR two-component system is essential for the virulence of Mycobacterium tuberculosis (Mtb) and therefore represents a potential target for developing novel antituberculosis therapies. However, little is known about the mechanism by which this two-component system regulates the virulence. In this study, we demonstrated that a phoR mutant Mtb strain has phenotypes similar to those of a phoP mutant, suggesting that PhoP and PhoR work in the same pathway to regulate Mtb virulence. We determined the structure of the dimerization and histidine phosphotransfer (DHp) domain of PhoR to a 1.9 \u00c5 resolution. The structure revealed that the DHp domain is a dimer. Each subunit consists of two antiparallel \u03b1 helices connected by a loop of five residues. The two subunits of the dimer fold into a four-helical bundle with a continuous hydrophobic core. The topology of the four-helical bundle is identical to the histidine kinases that are known to have a cis-autophosphorylation mechanism, suggesting that PhoR is likely to autophosphorylate in cis. The dimer is asymmetric, with one subunit having a greater bending angle than the other at the highly conserved proline residue five-residues downstream of the phosphorylation site histidine. This structural asymmetry of the dimer suggests the flexibility of the PhoR DHp domain, which is likely to be important for the signal transduction mechanism in controlling the autophosphorylation and phosphotransfer reactions and communicating with the upstream structure.",
+       "title": "Asymmetric Structure of the Dimerization Domain of PhoR, a Sensor Kinase Important for the Virulence of Mycobacterium tuberculosis.",
+       "year": "2017"
+      },
+      "name": "Asymmetric Structure of the Dimerization Domain of PhoR, a Sensor Kinase Important for the Virulence of Mycobacterium tuberculosis.",
+      "record_id": "28782049",
+      "retrieved_at": "2026-09-05T13:07:59.540869+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28782049/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The PhoP-PhoR two-component system is essential for virulence and intracellular growth of Mycobacterium tuberculosis (MTB) in human and mouse macrophages or in mice. Here, PhoP and truncated PhoR sensor proteins were shown to participate in phosphotransfer reactions using conserved residues characteristic of two-component signaling systems. beta-Galactosidase activity originating from phoP promoter-lacZ construct was inhibited in presence of PhoP, suggesting transcriptional auto-inhibition by the response regulator. In vitro binding of PhoP is consistent with the in vivo transcriptional repression, indicating phosphorylation-independent assembly of the transcription initiation complex at elevated concentrations of PhoP. DNaseI protection studies reveal a consensus recognition sequence within the phoP promoter that includes three 9-bp direct repeat units. Each repeat unit adjusts to the consensus (1)AC(T)/(G)(T)/(G)(T)/(G)P(y)AP(u)C(9). Alteration in the sequence of the newly-identified direct repeat units relieved phoP transcriptional repression in presence of PhoP, suggesting that PhoP represses its own expression by sequence-specific interaction(s) with the repeat units. Together, these results identify so far unknown PhoP-regulated genetic determinants in the regulatory region of the phoP promoter that are central to understanding of how PhoP may possibly function as a global regulator in MTB.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The PhoP-PhoR two-component system is essential for virulence and intracellular growth of Mycobacterium tuberculosis (MTB) in human and mouse macrophages or in mice. Here, PhoP and truncated PhoR sensor proteins were shown to participate in phosphotransfer reactions using conserved residues characteristic of two-component signaling systems. beta-Galactosidase activity originating from phoP promoter-lacZ construct was inhibited in presence of PhoP, suggesting transcriptional auto-inhibition by the response regulator. In vitro binding of PhoP is consistent with the in vivo transcriptional repression, indicating phosphorylation-independent assembly of the transcription initiation complex at elevated concentrations of PhoP. DNaseI protection studies reveal a consensus recognition sequence within the phoP promoter that includes three 9-bp direct repeat units. Each repeat unit adjusts to the consensus (1)AC(T)/(G)(T)/(G)(T)/(G)P(y)AP(u)C(9). Alteration in the sequence of the newly-identified direct repeat units relieved phoP transcriptional repression in presence of PhoP, suggesting that PhoP represses its own expression by sequence-specific interaction(s) with the repeat units. Together, these results identify so far unknown PhoP-regulated genetic determinants in the regulatory region of the phoP promoter that are central to understanding of how PhoP may possibly function as a global regulator in MTB."
+        }
+       ],
+       "doi": "10.1016/j.febslet.2006.09.004",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "FEBS letters",
+       "mentions": [
+        "phoP",
+        "phoR",
+        "two-component",
+        "phosphotransfer"
+       ],
+       "pmcid": "",
+       "quotable_text": "Transcriptional autoregulation by Mycobacterium tuberculosis PhoP involves recognition of novel direct repeat sequences in the regulatory region of the promoter.\n\nThe PhoP-PhoR two-component system is essential for virulence and intracellular growth of Mycobacterium tuberculosis (MTB) in human and mouse macrophages or in mice. Here, PhoP and truncated PhoR sensor proteins were shown to participate in phosphotransfer reactions using conserved residues characteristic of two-component signaling systems. beta-Galactosidase activity originating from phoP promoter-lacZ construct was inhibited in presence of PhoP, suggesting transcriptional auto-inhibition by the response regulator. In vitro binding of PhoP is consistent with the in vivo transcriptional repression, indicating phosphorylation-independent assembly of the transcription initiation complex at elevated concentrations of PhoP. DNaseI protection studies reveal a consensus recognition sequence within the phoP promoter that includes three 9-bp direct repeat units. Each repeat unit adjusts to the consensus (1)AC(T)/(G)(T)/(G)(T)/(G)P(y)AP(u)C(9). Alteration in the sequence of the newly-identified direct repeat units relieved phoP transcriptional repression in presence of PhoP, suggesting that PhoP represses its own expression by sequence-specific interaction(s) with the repeat units. Together, these results identify so far unknown PhoP-regulated genetic determinants in the regulatory region of the phoP promoter that are central to understanding of how PhoP may possibly function as a global regulator in MTB.",
+       "title": "Transcriptional autoregulation by Mycobacterium tuberculosis PhoP involves recognition of novel direct repeat sequences in the regulatory region of the promoter.",
+       "year": "2006"
+      },
+      "name": "Transcriptional autoregulation by Mycobacterium tuberculosis PhoP involves recognition of novel direct repeat sequences in the regulatory region of the promoter.",
+      "record_id": "16979633",
+      "retrieved_at": "2026-09-05T13:07:59.540869+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16979633/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "A putative two-component system, mtrA-mtrB, was isolated from M. tuberculosis H37Rv by using phoB from Pseudomonas aeruginosa as a hybridization probe. The predicted gene product of mtrA displayed high similarity with typical response regulators, including AfsQ1, PhoB, PhoP, and OmpR. The predicted gene product of mtrB displayed similarities with the histidine protein kinases AfsQ2, PhoR, and EnvZ and other members of this class of proteins. Expression analysis in the T7 system showed that mtrA encoded a polypeptide with an apparent molecular mass of 30 kDa. MtrA was overproduced, purified, and demonstrated to participate in typical phosphotransfer reactions using a heterologous histidine protein kinase, CheA, as a phosphoryl group donor. Mycobacterium bovis BCG, harboring an mtrA-gfp (green fluorescent protein cDNA) transcriptional fusion, was used to monitor mtrA expression in infected J774 monolayers. Flow cytometric and fluorescence microscopic analyses indicated that the mtrA promoter was activated upon entry and incubation in J774 macrophages. In contrast, the hsp60-gfp fusion displayed no change in expression under the growth conditions tested. These results suggest a potential role for mtrA in adaptation of the M. tuberculosis complex organisms to environmental changes which may include intracellular conditions.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "A putative two-component system, mtrA-mtrB, was isolated from M. tuberculosis H37Rv by using phoB from Pseudomonas aeruginosa as a hybridization probe. The predicted gene product of mtrA displayed high similarity with typical response regulators, including AfsQ1, PhoB, PhoP, and OmpR. The predicted gene product of mtrB displayed similarities with the histidine protein kinases AfsQ2, PhoR, and EnvZ and other members of this class of proteins. Expression analysis in the T7 system showed that mtrA encoded a polypeptide with an apparent molecular mass of 30 kDa. MtrA was overproduced, purified, and demonstrated to participate in typical phosphotransfer reactions using a heterologous histidine protein kinase, CheA, as a phosphoryl group donor. Mycobacterium bovis BCG, harboring an mtrA-gfp (green fluorescent protein cDNA) transcriptional fusion, was used to monitor mtrA expression in infected J774 monolayers. Flow cytometric and fluorescence microscopic analyses indicated that the mtrA promoter was activated upon entry and incubation in J774 macrophages. In contrast, the hsp60-gfp fusion displayed no change in expression under the growth conditions tested. These results suggest a potential role for mtrA in adaptation of the M. tuberculosis complex organisms to environmental changes which may include intracellular conditions."
+        }
+       ],
+       "doi": "10.1128/jb.178.11.3314-3321.1996",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Journal of bacteriology",
+       "mentions": [
+        "phoP",
+        "phoR",
+        "two-component",
+        "phosphotransfer"
+       ],
+       "pmcid": "PMC178085",
+       "quotable_text": "Elements of signal transduction in Mycobacterium tuberculosis: in vitro phosphorylation and in vivo expression of the response regulator MtrA.\n\nA putative two-component system, mtrA-mtrB, was isolated from M. tuberculosis H37Rv by using phoB from Pseudomonas aeruginosa as a hybridization probe. The predicted gene product of mtrA displayed high similarity with typical response regulators, including AfsQ1, PhoB, PhoP, and OmpR. The predicted gene product of mtrB displayed similarities with the histidine protein kinases AfsQ2, PhoR, and EnvZ and other members of this class of proteins. Expression analysis in the T7 system showed that mtrA encoded a polypeptide with an apparent molecular mass of 30 kDa. MtrA was overproduced, purified, and demonstrated to participate in typical phosphotransfer reactions using a heterologous histidine protein kinase, CheA, as a phosphoryl group donor. Mycobacterium bovis BCG, harboring an mtrA-gfp (green fluorescent protein cDNA) transcriptional fusion, was used to monitor mtrA expression in infected J774 monolayers. Flow cytometric and fluorescence microscopic analyses indicated that the mtrA promoter was activated upon entry and incubation in J774 macrophages. In contrast, the hsp60-gfp fusion displayed no change in expression under the growth conditions tested. These results suggest a potential role for mtrA in adaptation of the M. tuberculosis complex organisms to environmental changes which may include intracellular conditions.",
+       "title": "Elements of signal transduction in Mycobacterium tuberculosis: in vitro phosphorylation and in vivo expression of the response regulator MtrA.",
+       "year": "1996"
+      },
+      "name": "Elements of signal transduction in Mycobacterium tuberculosis: in vitro phosphorylation and in vivo expression of the response regulator MtrA.",
+      "record_id": "8655513",
+      "retrieved_at": "2026-09-05T13:07:59.540869+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/8655513/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "906b425059917a4141d439a957eb24c049530f5b087e382be7a94bdafc3efa06",
+      "retrieved_at": "2026-09-05T13:07:59.027984+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=6&retmode=json&sort=relevance&term=%22phoP+phoR+two-component+phosphotransfer%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
+     },
+     {
+      "cached": false,
+      "content_sha256": "cdbdb11aec722e6feeaa0cbfdfa68778a656f71c6ac77e8ecd7a713620582d76",
+      "retrieved_at": "2026-09-05T13:07:59.540869+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=28782049%2C16979633%2C8655513&retmode=xml&tool=kegg-string-mcp"
+     }
+    ],
+    "resolved": {
+     "matched_by": "pubmed_search",
+     "query_translation": "\"phop\"[All Fields] AND \"phor\"[All Fields] AND \"two component\"[All Fields] AND (\"phosphotransfer\"[All Fields] OR \"phosphotransfers\"[All Fields]) AND \"Mycobacterium tuberculosis\"[All Fields]",
+     "term": "\"phoP phoR two-component phosphotransfer\" AND \"Mycobacterium tuberculosis\""
+    }
+   },
+   "tool": "pubmed_abstracts"
+  }
+ ],
+ "id": "phoP-phoR-epistasis",
+ "mode": "epistasis",
+ "organism": "mtu",
+ "summary": "## phoP (Rv0757) / phoR (Rv0758)\n\n### 1. Confound check first: both genes carry lineage-defining positions\n\nThis must be stated before any mechanism, because the pair came out of a scan over clinical isolates.\n\n- **phoP**: 1 lineage-defining position \u2014 `tbdb:851797`, lineage1.1.1.1 (Indo-Oceanic).\n- **phoR**: 2 lineage-defining positions \u2014 `tbdb:852641`, lineage1.1.3 (Indo-Oceanic); `tbdb:853469`, lineage4.3.2 (Euro-American/LAM).\n\nBoth genes contain barcode positions, and both contain a **lineage 1 (Indo-Oceanic)** marker specifically. That makes population structure a live, non-biological explanation for a statistical interaction between them: isolates sharing an L1 background will co-carry both marked alleles by descent, with no functional epistasis required. Note also that these two genes are **immediately adjacent in the genome** (Rv0757 / Rv0758, KEGG `mtu:Rv0757`, `mtu:Rv0758`), so linkage disequilibrium/haplotype structure is a second purely genetic route to an apparent interaction. Neither tool result tells you whether *your* variants are the barcode positions \u2014 compare your H37Rv coordinates against 851797, 852641 and 853469, and re-test the association conditioning on lineage in the genotype data. That test, not this annotation, decides the question.\n\n### 2. Given that, the biological prior here is unusually strong\n\nUnlike the typical scan hit, this pair has a genuine mechanistic story, and the deterministic verdict reflects it: **direct STRING interaction, combined 0.999, with `evidence_beyond_textmining: True`** (max non-textmining channel 0.817 for `83332.Rv0758`). So this edge is not carried by literature co-mention alone, even though the textmining score is also high (0.977).\n\nThe nature of the link is a **two-component signal transduction pair**, i.e. a direct physical/functional interaction rather than mere pathway co-membership:\n\n- UniProt annotates PhoP (`P71814`) as \"Possible two component system response transcriptional positive regulator PhoP\" and PhoR (`P71815`) as \"histidine kinase\" with catalytic activity \"ATP + protein L-histidine = ADP + protein N-phospho-L-histidine.\" Both entries are **unreviewed and hold no FUNCTION statement** (`has_experimental_function: false`), so these are names and a rule-level activity, not measured function for these proteins.\n- The experimental substance comes from the literature: PMID:16979633 \"PhoP and truncated PhoR sensor proteins were shown to participate in phosphotransfer reactions using conserved residues characteristic of two-component signaling systems\", and PMID:28782049 \"we demonstrated that a phoR mutant Mtb strain has phenotypes similar to those of a phoP mutant, suggesting that PhoP and PhoR work in the same pathway to regulate Mtb virulence.\"\n\n**Evidence accounting:** treat those abstracts and STRING's 0.977 textmining score as *one* line of evidence \u2014 the papers are plausibly the source of that score. The independent support is the non-textmining channel (0.817) plus the structural/biochemical work above; do not count literature twice.\n\nAn epistatic interaction between a sensor kinase and its cognate response regulator is exactly the shape of interaction you would predict *a priori*: a PhoR variant altering autophosphorylation or phosphotransfer would be expected to modify the phenotypic effect of a PhoP variant, and vice versa. That prior strength is a double-edged sword \u2014 it makes the hit interpretable, but it also means the hit is not informative unless it survives the lineage/LD control above.\n\n### 3. Shared pathways: absent from KEGG, and that is an annotation gap\n\nThe verdict records **no shared pathways**, and the underlying reason is that KEGG maps *neither* gene to any pathway: \"KEGG returned no pathway assignments for mtu:Rv0757. The gene exists in KEGG but is not mapped to any pathway in this organism\", and the same for `mtu:Rv0758`. This is missing annotation, not evidence of functional separation \u2014 do not read \"no shared pathway\" as contradicting the two-component interpretation, and equally do not upgrade it into a shared-pathway claim, since none is in the table.\n\n### 4. The shared partner\n\nThe single shared STRING partner is `83332.Rv0756c`, which UniProt records as an \"Uncharacterized protein\" (`P71813`) with no FUNCTION statement. Rv0756c is also the immediately adjacent locus, so genomic neighbourhood is a plausible contributor to both edges; I do not have the per-channel breakdown for those two partner edges, so I can't say how much of it is neighbourhood versus other evidence. Note that phoP's partner list **hit the retrieval limit (20)**, so its true degree is unknown and the shared-partner count is a floor, not a measurement.\n\n### 5. Bottom line\n\nA direct, non-textmining-supported physical/functional link exists between these two proteins, of the cognate sensor-kinase / response-regulator type. But the genes are adjacent and both carry lineage-1 barcode positions, so for a scan over clinical isolates the null of population structure plus linkage disequilibrium is not excluded by anything shown here. Report the mechanism as the plausible interpretation *conditional on* the association surviving a lineage-aware re-test; the strength of the biological prior should not be allowed to substitute for that test.",
+ "target": "phoP, phoR",
+ "turns": [
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "phoP"
+     },
+     "name": "lineage_markers"
+    },
+    {
+     "input": {
+      "gene": "phoR"
+     },
+     "name": "lineage_markers"
+    },
+    {
+     "input": {
+      "gene": "phoP"
+     },
+     "name": "kegg_pathways"
+    },
+    {
+     "input": {
+      "gene": "phoR"
+     },
+     "name": "kegg_pathways"
+    }
+   ],
+   "turn": 1
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "phoP"
+     },
+     "name": "uniprot_protein"
+    },
+    {
+     "input": {
+      "gene": "phoR"
+     },
+     "name": "uniprot_protein"
+    }
+   ],
+   "turn": 2
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "Rv0756c"
+     },
+     "name": "uniprot_protein"
+    },
+    {
+     "input": {
+      "gene": "phoP phoR two-component phosphotransfer",
+      "limit": 6
+     },
+     "name": "pubmed_abstracts"
+    }
+   ],
+   "turn": 3
+  },
+  {
+   "stop_reason": "end_turn",
+   "tools_requested": [],
+   "turn": 4
+  }
+ ]
+}

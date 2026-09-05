@@ -27,7 +27,7 @@
       },
       "name": "Phenylalanine metabolism - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu00360",
-      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu00360"
@@ -39,7 +39,7 @@
       },
       "name": "Tryptophan metabolism - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu00380",
-      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu00380"
@@ -51,7 +51,7 @@
       },
       "name": "Drug metabolism - other enzymes - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu00983",
-      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu00983"
@@ -63,7 +63,7 @@
       },
       "name": "Metabolic pathways - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu01100",
-      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu01100"
@@ -75,7 +75,7 @@
       },
       "name": "Biosynthesis of secondary metabolites - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu01110",
-      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu01110"
@@ -85,21 +85,21 @@
      {
       "cached": true,
       "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
-      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/list/mtu"
      },
      {
       "cached": true,
       "content_sha256": "84cbbd41122ec13d0ca6d80cc904bd151e174f3468aff057090dd165b2e6d590",
-      "retrieved_at": "2026-08-28T08:49:27.049413+00:00",
+      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/link/pathway/mtu:Rv1908c"
      },
      {
       "cached": true,
       "content_sha256": "fb3e52ff8b817798ee1b884c88affaf5a547b5e386c27d1afd61f0400867b648",
-      "retrieved_at": "2026-08-28T08:49:28.342942+00:00",
+      "retrieved_at": "2026-09-05T12:13:47.459642+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/list/pathway/mtu"
      }
@@ -110,6 +110,274 @@
     }
    },
    "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "katG",
+    "organism_id": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "3 UniProt entries matched gene 'katG': A0A0N7EHL5, A0A0N9DRZ6, P9WIE5. They are all returned; resolved.accession names only the first.",
+     "Statements tiered as sequence_similarity, sequence_model, automatic or imported are INFERRED -- from a rule or from homology -- not measured on this protein. They are not independent evidence about this gene, and should not be reported as though an experiment established them.",
+     "No function statement for A0A0N7EHL5, A0A0N9DRZ6 carries experimental evidence (ECO:0000269); all are inferred."
+    ],
+    "query": {
+     "gene": "katG",
+     "limit": 3,
+     "organism_id": 83332
+    },
+    "record_ids": [
+     "P9WIE5",
+     "A0A0N7EHL5",
+     "A0A0N9DRZ6"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "H2O2 + AH2 = A + 2 H2O",
+        "2 H2O2 = O2 + 2 H2O"
+       ],
+       "entry_name": "KATG_MYCTU",
+       "function_statements": [
+        {
+         "evidence_codes": [
+          "ECO:0000255",
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "10080924",
+          "15165233",
+          "18178143",
+          "8658136",
+          "9006925"
+         ],
+         "text": "Bifunctional enzyme with both catalase and broad-spectrum peroxidase activity, oxidizing various electron donors including NADP(H) (PubMed:18178143, PubMed:9006925). Protects M.tuberculosis against toxic reactive oxygen species (ROS) including hydrogen peroxide as well as organic peroxides and thus contributes to its survival within host macrophages by countering the phagocyte oxidative burst (PubMed:15165233, PubMed:8658136). Also displays efficient peroxynitritase activity, which may help the bacterium to persist in macrophages (PubMed:10080924)",
+         "tiers": [
+          "experimental",
+          "sequence_model"
+         ]
+        },
+        {
+         "evidence_codes": [
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "10463167"
+         ],
+         "text": "Might be involved in DNA repair. Partly complements recA-deficient E.coli cells exposed to UV radiation, mitomycin C or hydrogen peroxide. Increases resistance to mitomycin C in E.coli cells deficient for either uvrA, uvrB or uvrC",
+         "tiers": [
+          "experimental"
+         ]
+        },
+        {
+         "evidence_codes": [
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "16566587",
+          "18178143",
+          "24185282",
+          "9006925",
+          "9634230"
+         ],
+         "text": "Catalyzes the oxidative activation of the antitubercular pro-drug isoniazid (INH) to generate an isonicotinoyl radical that then reacts nonenzymatically with NAD to form an isonicotinoyl-NAD adduct which inhibits InhA",
+         "tiers": [
+          "experimental"
+         ]
+        }
+       ],
+       "gene_names": [
+        "katG"
+       ],
+       "has_experimental_function": true,
+       "locus_tags": [
+        "Rv1908c"
+       ],
+       "pdb": [
+        "1SJ2",
+        "2CCA",
+        "2CCD",
+        "4C50",
+        "4C51",
+        "6ZJI",
+        "7A2I",
+        "7A7A",
+        "7A7C",
+        "7A8Z",
+        "7AA3",
+        "7AG8",
+        "8CZP",
+        "8DWR",
+        "8U3P",
+        "8W1W",
+        "8W1X",
+        "8W1Y",
+        "9SGL",
+        "9SGM",
+        "9SGO",
+        "9SGP",
+        "9SGQ",
+        "9SGR",
+        "9SGS",
+        "9SGT",
+        "9SGY"
+       ],
+       "quotable_text": "Catalase-peroxidase\n\nBifunctional enzyme with both catalase and broad-spectrum peroxidase activity, oxidizing various electron donors including NADP(H) (PubMed:18178143, PubMed:9006925). Protects M.tuberculosis against toxic reactive oxygen species (ROS) including hydrogen peroxide as well as organic peroxides and thus contributes to its survival within host macrophages by countering the phagocyte oxidative burst (PubMed:15165233, PubMed:8658136). Also displays efficient peroxynitritase activity, which may help the bacterium to persist in macrophages (PubMed:10080924)\n\nMight be involved in DNA repair. Partly complements recA-deficient E.coli cells exposed to UV radiation, mitomycin C or hydrogen peroxide. Increases resistance to mitomycin C in E.coli cells deficient for either uvrA, uvrB or uvrC\n\nCatalyzes the oxidative activation of the antitubercular pro-drug isoniazid (INH) to generate an isonicotinoyl radical that then reacts nonenzymatically with NAD to form an isonicotinoyl-NAD adduct which inhibits InhA\n\nHomodimer\n\nH2O2 + AH2 = A + 2 H2O\n\n2 H2O2 = O2 + 2 H2O",
+       "reviewed": true,
+       "subunit": [
+        {
+         "evidence_codes": [
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "15231843",
+          "16566587",
+          "9006925"
+         ],
+         "text": "Homodimer",
+         "tiers": [
+          "experimental"
+         ]
+        }
+       ]
+      },
+      "name": "Catalase-peroxidase",
+      "record_id": "P9WIE5",
+      "retrieved_at": "2026-09-05T12:38:54.763197+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/P9WIE5"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "2 H2O2 = O2 + 2 H2O",
+        "H2O2 + AH2 = A + 2 H2O",
+        "NADH + O2 + H(+) = H2O2 + NAD(+)",
+        "NADPH + O2 + H(+) = H2O2 + NADP(+)"
+       ],
+       "entry_name": "A0A0N7EHL5_MYCTU",
+       "function_statements": [
+        {
+         "evidence_codes": [
+          "ECO:0000256"
+         ],
+         "experimental": false,
+         "supporting_pmids": [],
+         "text": "Bifunctional enzyme with both catalase and broad-spectrum peroxidase activity",
+         "tiers": [
+          "automatic"
+         ]
+        }
+       ],
+       "gene_names": [
+        "katG"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [],
+       "pdb": [],
+       "quotable_text": "Catalase-peroxidase\n\nBifunctional enzyme with both catalase and broad-spectrum peroxidase activity\n\nHomodimer or homotetramer\n\n2 H2O2 = O2 + 2 H2O\n\nH2O2 + AH2 = A + 2 H2O\n\nNADH + O2 + H(+) = H2O2 + NAD(+)\n\nNADPH + O2 + H(+) = H2O2 + NADP(+)",
+       "reviewed": false,
+       "subunit": [
+        {
+         "evidence_codes": [
+          "ECO:0000256"
+         ],
+         "experimental": false,
+         "supporting_pmids": [],
+         "text": "Homodimer or homotetramer",
+         "tiers": [
+          "automatic"
+         ]
+        }
+       ]
+      },
+      "name": "Catalase-peroxidase",
+      "record_id": "A0A0N7EHL5",
+      "retrieved_at": "2026-09-05T12:38:54.763197+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/A0A0N7EHL5"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "2 H2O2 = O2 + 2 H2O",
+        "H2O2 + AH2 = A + 2 H2O",
+        "NADH + O2 + H(+) = H2O2 + NAD(+)",
+        "NADPH + O2 + H(+) = H2O2 + NADP(+)"
+       ],
+       "entry_name": "A0A0N9DRZ6_MYCTU",
+       "function_statements": [
+        {
+         "evidence_codes": [
+          "ECO:0000256"
+         ],
+         "experimental": false,
+         "supporting_pmids": [],
+         "text": "Bifunctional enzyme with both catalase and broad-spectrum peroxidase activity",
+         "tiers": [
+          "automatic"
+         ]
+        }
+       ],
+       "gene_names": [
+        "katG"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [],
+       "pdb": [],
+       "quotable_text": "Catalase-peroxidase\n\nBifunctional enzyme with both catalase and broad-spectrum peroxidase activity\n\nHomodimer or homotetramer\n\n2 H2O2 = O2 + 2 H2O\n\nH2O2 + AH2 = A + 2 H2O\n\nNADH + O2 + H(+) = H2O2 + NAD(+)\n\nNADPH + O2 + H(+) = H2O2 + NADP(+)",
+       "reviewed": false,
+       "subunit": [
+        {
+         "evidence_codes": [
+          "ECO:0000256"
+         ],
+         "experimental": false,
+         "supporting_pmids": [],
+         "text": "Homodimer or homotetramer",
+         "tiers": [
+          "automatic"
+         ]
+        }
+       ]
+      },
+      "name": "Catalase-peroxidase",
+      "record_id": "A0A0N9DRZ6",
+      "retrieved_at": "2026-09-05T12:38:54.763197+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/A0A0N9DRZ6"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "44e9b0a976c9ebfa71307f4a94ee25204f6c155cfa3e3729d017b04920b3e0ac",
+      "retrieved_at": "2026-09-05T12:38:54.763197+00:00",
+      "status": 200,
+      "url": "https://rest.uniprot.org/uniprotkb/search?fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Ccc_function%2Ccc_catalytic_activity%2Ccc_subunit%2Cxref_pdb%2Cec&format=json&query=organism_id%3A83332+AND+gene%3AkatG&size=3"
+     }
+    ],
+    "resolved": {
+     "accession": "P9WIE5",
+     "matched_by": "uniprot_search",
+     "n_entries": 3,
+     "uniprot_release": "2026_03"
+    }
+   },
+   "tool": "uniprot_protein"
   },
   {
    "arguments": {
@@ -171,7 +439,7 @@
       },
       "name": "furA",
       "record_id": "83332.Rv1909c",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1909c"
@@ -195,7 +463,7 @@
       },
       "name": "sodA",
       "record_id": "83332.Rv3846",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3846"
@@ -219,7 +487,7 @@
       },
       "name": "ahpC",
       "record_id": "83332.Rv2428",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2428"
@@ -243,7 +511,7 @@
       },
       "name": "pncA",
       "record_id": "83332.Rv2043c",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2043c"
@@ -267,7 +535,7 @@
       },
       "name": "embB",
       "record_id": "83332.Rv3795",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3795"
@@ -291,7 +559,7 @@
       },
       "name": "Rv1907c",
       "record_id": "83332.Rv1907c",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1907c"
@@ -315,7 +583,7 @@
       },
       "name": "sodC",
       "record_id": "83332.Rv0432",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0432"
@@ -339,7 +607,7 @@
       },
       "name": "ndh",
       "record_id": "83332.Rv1854c",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1854c"
@@ -363,7 +631,7 @@
       },
       "name": "kasA",
       "record_id": "83332.Rv2245",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2245"
@@ -387,7 +655,7 @@
       },
       "name": "rpoB",
       "record_id": "83332.Rv0667",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0667"
@@ -411,7 +679,7 @@
       },
       "name": "gyrA",
       "record_id": "83332.Rv0006",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0006"
@@ -435,7 +703,7 @@
       },
       "name": "inhA",
       "record_id": "83332.Rv1484",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1484"
@@ -459,7 +727,7 @@
       },
       "name": "nat",
       "record_id": "83332.Rv3566c",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3566c"
@@ -483,7 +751,7 @@
       },
       "name": "hisC1",
       "record_id": "83332.Rv1600",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1600"
@@ -507,7 +775,7 @@
       },
       "name": "gyrB",
       "record_id": "83332.Rv0005",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0005"
@@ -531,7 +799,7 @@
       },
       "name": "cobC",
       "record_id": "83332.Rv2231c",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2231c"
@@ -555,7 +823,7 @@
       },
       "name": "fabG1",
       "record_id": "83332.Rv1483",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1483"
@@ -579,7 +847,7 @@
       },
       "name": "hisC2",
       "record_id": "83332.Rv3772",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3772"
@@ -603,7 +871,7 @@
       },
       "name": "embA",
       "record_id": "83332.Rv3794",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3794"
@@ -627,7 +895,7 @@
       },
       "name": "rpsL",
       "record_id": "83332.Rv0682",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0682"
@@ -637,14 +905,14 @@
      {
       "cached": true,
       "content_sha256": "9e05298cff94066fcc37b9fe7732ea3e22e56a742b0fe0301a51e596924d0c9e",
-      "retrieved_at": "2026-08-28T08:49:28.614847+00:00",
+      "retrieved_at": "2026-09-05T11:49:40.669057+00:00",
       "status": 200,
       "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=katG&limit=1&species=83332"
      },
      {
       "cached": true,
       "content_sha256": "b63e239a9155345352a48d523bbe1eeb7c01ae4ad748919af18edd5216f9bcde",
-      "retrieved_at": "2026-08-28T08:49:29.564764+00:00",
+      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
       "status": 200,
       "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv1908c&limit=20&required_score=700&species=83332"
      }
@@ -656,12 +924,2736 @@
     }
    },
    "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "katG",
+    "organism": "mtu"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "No lineage-defining position falls within katG in the tbdb barcode. 855 of 4,008 H37Rv genes carry one, so this is an informative negative."
+    ],
+    "query": {
+     "gene": "katG",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "9c05673045615483890c0e31e65ddb9175ecdce7a22ac9a6868a840ae3f2a753",
+      "retrieved_at": "2026-09-05T12:17:55.565069+00:00",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/barcode.bed"
+     },
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     }
+    ],
+    "resolved": {
+     "matched_by": "none"
+    }
+   },
+   "tool": "lineage_markers"
+  },
+  {
+   "arguments": {
+    "gene": "katG"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "katG is RESISTANCE-ASSOCIATED: 139 of its 1771 catalogued variants are graded as associated with resistance (10 Assoc w R, 129 Assoc w R - Interim). One associated variant marks the gene however many are not. This is a statement about the GENE: it does not mean a particular variant in katG confers resistance, and the catalogue explicitly grades some variants in resistance-associated genes as not associated."
+    ],
+    "query": {
+     "drug": null,
+     "gene": "katG"
+    },
+    "record_ids": [
+     "tbdb:katG:feature_ablation",
+     "tbdb:katG:transcript_ablation",
+     "tbdb:katG:feature_ablation",
+     "tbdb:katG:start_lost",
+     "tbdb:katG:stop_gained",
+     "tbdb:katG:frameshift_variant",
+     "tbdb:katG:p.Ala16fs",
+     "tbdb:katG:p.Ala202fs",
+     "tbdb:katG:p.Ala478fs",
+     "tbdb:katG:p.Ala551fs",
+     "tbdb:katG:p.Ala559fs",
+     "tbdb:katG:p.Ala585fs",
+     "tbdb:katG:p.Arg496fs",
+     "tbdb:katG:p.Asn18fs",
+     "tbdb:katG:p.Asn236fs",
+     "tbdb:katG:p.Asn35fs",
+     "tbdb:katG:p.Asn51fs",
+     "tbdb:katG:p.Asn535fs",
+     "tbdb:katG:p.Asp163fs",
+     "tbdb:katG:p.Asp240fs",
+     "tbdb:katG:p.Asp329fs",
+     "tbdb:katG:p.Asp381fs",
+     "tbdb:katG:p.Asp513fs",
+     "tbdb:katG:p.Asp56fs",
+     "tbdb:katG:p.Asp656fs",
+     "tbdb:katG:p.Asp695fs",
+     "tbdb:katG:p.Asp729fs",
+     "tbdb:katG:p.Cys171*",
+     "tbdb:katG:p.Cys20fs",
+     "tbdb:katG:p.Gln352*",
+     "tbdb:katG:p.Gln525fs",
+     "tbdb:katG:p.Gln578fs",
+     "tbdb:katG:p.Gln88*",
+     "tbdb:katG:p.Glu10fs",
+     "tbdb:katG:p.Glu208fs",
+     "tbdb:katG:p.Glu342fs",
+     "tbdb:katG:p.Glu3fs",
+     "tbdb:katG:p.Glu582fs",
+     "tbdb:katG:p.Glu588*",
+     "tbdb:katG:p.Glu607*",
+     "tbdb:katG:p.Glu623fs",
+     "tbdb:katG:p.Glu648fs",
+     "tbdb:katG:p.Glu651fs",
+     "tbdb:katG:p.Glu669fs",
+     "tbdb:katG:p.Gly124fs",
+     "tbdb:katG:p.Gly212fs",
+     "tbdb:katG:p.Gly268fs",
+     "tbdb:katG:p.Gly279fs",
+     "tbdb:katG:p.Gly34fs",
+     "tbdb:katG:p.Gly358fs",
+     "tbdb:katG:p.Gly369fs",
+     "tbdb:katG:p.Gly601fs",
+     "tbdb:katG:p.His25fs",
+     "tbdb:katG:p.His400fs",
+     "tbdb:katG:p.His561fs",
+     "tbdb:katG:p.Ile335fs",
+     "tbdb:katG:p.Ile393fs",
+     "tbdb:katG:p.Ile455fs",
+     "tbdb:katG:p.Ile536fs",
+     "tbdb:katG:p.Ile563fs",
+     "tbdb:katG:p.Ile8fs",
+     "tbdb:katG:p.Leu173fs",
+     "tbdb:katG:p.Leu382fs",
+     "tbdb:katG:p.Leu696fs",
+     "tbdb:katG:p.Lys157fs",
+     "tbdb:katG:p.Lys179fs",
+     "tbdb:katG:p.Lys200fs",
+     "tbdb:katG:p.Lys433fs",
+     "tbdb:katG:p.Lys459fs",
+     "tbdb:katG:p.Lys46fs",
+     "tbdb:katG:p.Lys557fs",
+     "tbdb:katG:p.Lys590fs",
+     "tbdb:katG:p.Met1?",
+     "tbdb:katG:p.Met26fs",
+     "tbdb:katG:p.Met624fs",
+     "tbdb:katG:p.Phe272fs",
+     "tbdb:katG:p.Pro325fs",
+     "tbdb:katG:p.Pro422fs",
+     "tbdb:katG:p.Pro429fs",
+     "tbdb:katG:p.Pro569fs",
+     "tbdb:katG:p.Pro622fs",
+     "tbdb:katG:p.Pro642fs",
+     "tbdb:katG:p.Pro6fs",
+     "tbdb:katG:p.Pro7fs",
+     "tbdb:katG:p.Ser175*",
+     "tbdb:katG:p.Ser302fs",
+     "tbdb:katG:p.Ser315Arg",
+     "tbdb:katG:p.Ser315Asn",
+     "tbdb:katG:p.Ser315Ile",
+     "tbdb:katG:p.Ser315Thr",
+     "tbdb:katG:p.Ser539fs",
+     "tbdb:katG:p.Ser650fs",
+     "tbdb:katG:p.Ser652fs",
+     "tbdb:katG:p.Ser671*",
+     "tbdb:katG:p.Thr203fs",
+     "tbdb:katG:p.Thr394fs",
+     "tbdb:katG:p.Trp107*",
+     "tbdb:katG:p.Trp149*",
+     "tbdb:katG:p.Trp161*",
+     "tbdb:katG:p.Trp198fs",
+     "tbdb:katG:p.Trp198*",
+     "tbdb:katG:p.Trp204*",
+     "tbdb:katG:p.Trp300*",
+     "tbdb:katG:p.Trp321*",
+     "tbdb:katG:p.Trp328Leu",
+     "tbdb:katG:p.Trp351fs",
+     "tbdb:katG:p.Trp351*",
+     "tbdb:katG:p.Trp397*",
+     "tbdb:katG:p.Trp39fs",
+     "tbdb:katG:p.Trp39*",
+     "tbdb:katG:p.Trp412*",
+     "tbdb:katG:p.Trp438*",
+     "tbdb:katG:p.Trp477*",
+     "tbdb:katG:p.Trp505fs",
+     "tbdb:katG:p.Trp505*",
+     "tbdb:katG:p.Trp668fs",
+     "tbdb:katG:p.Trp668*",
+     "tbdb:katG:p.Trp689fs",
+     "tbdb:katG:p.Trp689*",
+     "tbdb:katG:p.Trp728*",
+     "tbdb:katG:p.Trp90*",
+     "tbdb:katG:p.Tyr113*",
+     "tbdb:katG:p.Tyr155*",
+     "tbdb:katG:p.Tyr197fs",
+     "tbdb:katG:p.Tyr28*",
+     "tbdb:katG:p.Tyr339fs",
+     "tbdb:katG:p.Tyr413*",
+     "tbdb:katG:p.Tyr95fs",
+     "tbdb:katG:p.Val166fs",
+     "tbdb:katG:p.Val22fs",
+     "tbdb:katG:p.Val30fs",
+     "tbdb:katG:p.Val319fs",
+     "tbdb:katG:p.Val386fs",
+     "tbdb:katG:p.Val431fs",
+     "tbdb:katG:p.Val445fs",
+     "tbdb:katG:p.Val517fs",
+     "tbdb:katG:p.Val538fs",
+     "tbdb:katG:p.Val586fs",
+     "tbdb:katG:p.Val83fs"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "feature_ablation",
+       "source": "WHO catalogue v2"
+      },
+      "name": "feature_ablation -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:feature_ablation",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "transcript_ablation",
+       "source": "WHO catalogue v2"
+      },
+      "name": "transcript_ablation -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:transcript_ablation",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "feature_ablation",
+       "source": "WHO catalogue v2"
+      },
+      "name": "feature_ablation -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:feature_ablation",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "start_lost",
+       "source": "WHO catalogue v2"
+      },
+      "name": "start_lost -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:start_lost",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "stop_gained",
+       "source": "WHO catalogue v2"
+      },
+      "name": "stop_gained -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:stop_gained",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "frameshift_variant",
+       "source": "WHO catalogue v2"
+      },
+      "name": "frameshift_variant -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:frameshift_variant",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ala16fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ala16fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ala16fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ala202fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ala202fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ala202fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ala478fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ala478fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ala478fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ala551fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ala551fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ala551fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ala559fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ala559fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ala559fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ala585fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ala585fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ala585fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Arg496fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Arg496fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Arg496fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asn18fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn18fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asn18fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asn236fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn236fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asn236fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asn35fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn35fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asn35fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asn51fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn51fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asn51fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asn535fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn535fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asn535fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asp163fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp163fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asp163fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asp240fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp240fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asp240fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asp329fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp329fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asp329fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asp381fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp381fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asp381fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asp513fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp513fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asp513fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asp56fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp56fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asp56fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asp656fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp656fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asp656fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asp695fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp695fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asp695fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Asp729fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp729fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Asp729fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Cys171*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Cys171* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Cys171*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Cys20fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Cys20fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Cys20fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gln352*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln352* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gln352*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gln525fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln525fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gln525fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gln578fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln578fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gln578fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gln88*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln88* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gln88*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu10fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu10fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu10fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu208fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu208fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu208fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu342fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu342fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu342fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu3fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu3fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu3fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu582fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu582fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu582fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu588*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu588* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu588*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu607*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu607* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu607*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu623fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu623fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu623fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu648fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu648fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu648fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu651fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu651fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu651fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Glu669fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu669fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Glu669fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gly124fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly124fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gly124fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gly212fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly212fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gly212fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gly268fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly268fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gly268fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gly279fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly279fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gly279fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gly34fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly34fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gly34fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gly358fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly358fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gly358fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gly369fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly369fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gly369fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Gly601fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly601fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Gly601fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.His25fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His25fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.His25fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.His400fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His400fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.His400fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.His561fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His561fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.His561fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ile335fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ile335fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ile335fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ile393fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ile393fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ile393fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ile455fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ile455fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ile455fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ile536fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ile536fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ile536fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ile563fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ile563fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ile563fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ile8fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ile8fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ile8fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Leu173fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu173fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Leu173fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Leu382fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu382fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Leu382fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Leu696fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu696fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Leu696fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Lys157fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys157fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Lys157fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Lys179fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys179fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Lys179fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Lys200fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys200fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Lys200fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Lys433fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys433fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Lys433fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Lys459fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys459fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Lys459fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Lys46fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys46fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Lys46fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Lys557fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys557fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Lys557fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Lys590fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys590fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Lys590fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Met1?",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met1? -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:p.Met1?",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Met26fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met26fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Met26fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Met624fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met624fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Met624fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Phe272fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Phe272fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Phe272fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Pro325fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro325fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Pro325fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Pro422fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro422fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Pro422fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Pro429fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro429fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Pro429fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Pro569fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro569fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Pro569fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Pro622fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro622fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Pro622fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Pro642fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro642fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Pro642fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Pro6fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro6fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Pro6fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Pro7fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro7fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Pro7fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser175*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser175* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser175*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser302fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser302fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser302fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser315Arg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser315Arg -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser315Arg",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser315Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser315Asn -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser315Asn",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser315Ile",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser315Ile -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser315Ile",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser315Thr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser315Thr -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser315Thr",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser539fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser539fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser539fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser650fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser650fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser650fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser652fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser652fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser652fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Ser671*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser671* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Ser671*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Thr203fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr203fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Thr203fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Thr394fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr394fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Thr394fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp107*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp107* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp107*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp149*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp149* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp149*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp161*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp161* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp161*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp198fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp198fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp198fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp198*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp198* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp198*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp204*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp204* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp204*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp300*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp300* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp300*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp321*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp321* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp321*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp328Leu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp328Leu -- Assoc w R (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp328Leu",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp351fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp351fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp351fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp351*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp351* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp351*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp397*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp397* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp397*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp39fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp39fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp39fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp39*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp39* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp39*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp412*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp412* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp412*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp438*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp438* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp438*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp477*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp477* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp477*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp505fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp505fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp505fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp505*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp505* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp505*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp668fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp668fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp668fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp668*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp668* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp668*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp689fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp689fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp689fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp689*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp689* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp689*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp728*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp728* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp728*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Trp90*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Trp90* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Trp90*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Tyr113*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Tyr113* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Tyr113*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Tyr155*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Tyr155* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Tyr155*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Tyr197fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Tyr197fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Tyr197fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Tyr28*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Tyr28* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Tyr28*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Tyr339fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Tyr339fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Tyr339fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Tyr413*",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Tyr413* -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Tyr413*",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Tyr95fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Tyr95fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Tyr95fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val166fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val166fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val166fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val22fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val22fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val22fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val30fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val30fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val30fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val319fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val319fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val319fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val386fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val386fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val386fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val431fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val431fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val431fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val445fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val445fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val445fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val517fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val517fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val517fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val538fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val538fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val538fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val586fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val586fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val586fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R - Interim",
+       "drug": "isoniazid",
+       "gene": "katG",
+       "mutation": "p.Val83fs",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val83fs -- Assoc w R - Interim (isoniazid)",
+      "record_id": "tbdb:katG:p.Val83fs",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "9dcaa790ca50a921289bbb255532f44d673851926017d5769f334e67244b3d30",
+      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/mutations.csv"
+     }
+    ],
+    "resolved": {
+     "drugs": [
+      "isoniazid"
+     ],
+     "grading_counts": {
+      "(ungraded)": 135,
+      "Assoc w R": 10,
+      "Assoc w R - Interim": 129,
+      "Not assoc w R": 7,
+      "Not assoc w R - Interim": 236,
+      "Uncertain significance": 1254
+     },
+     "matched_by": "symbol",
+     "resistance_associated": true,
+     "variants_in_catalogue": 1771
+    }
+   },
+   "tool": "resistance_variants"
   }
  ],
  "id": "katG",
  "mode": "single",
  "organism": "mtu",
- "summary": "## katG (Rv1908c) \u2014 *Mycobacterium tuberculosis* H37Rv\n\nBoth structured channels resolved the identifier cleanly: KEGG resolved `katG` by symbol to **mtu:Rv1908c**, and STRING resolved it to **83332.Rv1908c** (preferred name `katG`). No resolution failures or empty-record ambiguities in either result.\n\n### Function\n\nKEGG's pathway assignments are the informative evidence here. katG is placed in **mtu00360 (Phenylalanine metabolism)** and **mtu00380 (Tryptophan metabolism)** \u2014 the pathway memberships characteristic of a **catalase-peroxidase (heme-dependent peroxidase)**, which is how KEGG maps this enzyme class into aromatic amino acid catabolism. It is also placed in **mtu00983 (Drug metabolism \u2013 other enzymes)**, consistent with its second, clinically dominant role: enzymatic activation/conversion of a drug substrate rather than a housekeeping metabolic step.\n\nSo the annotation supported by the tools is: a peroxidatic enzyme with both an oxidative-stress-detoxification/peroxidase metabolic role and a drug-metabolizing role.\n\nThe remaining two KEGG hits, **mtu01100 (Metabolic pathways)** and **mtu01110 (Biosynthesis of secondary metabolites)**, are genome-scale container maps and say essentially nothing specific about this gene; I list them only for completeness.\n\n### Interaction partners\n\nI split these by evidence class, because most of the high-scoring STRING network around katG is literature co-mention.\n\n**Partners with support beyond textmining (the substantive ones):**\n\n- **83332.Rv1909c (furA)** \u2014 combined 0.979, with a strong **neighborhood score of 0.829**. furA is the immediately adjacent gene, and conserved genomic adjacency is genuine non-literature evidence. This is the single best-supported association in the network.\n- **83332.Rv1907c** \u2014 combined 0.957, neighborhood 0.805 **and coexpression 0.731**, with only weak textmining (0.254). This is the most \"honest\" partner in the set: it is essentially unstudied in the literature yet scores highly on two independent structural/expression channels. katG sits in a conserved, co-expressed locus with Rv1907c and furA.\n- **83332.Rv3846 (sodA)** and **83332.Rv0432 (sodC)** \u2014 combined 0.973 and 0.936, each carrying a **database score of 0.5** (curated pathway co-membership) alongside high textmining. Superoxide dismutases are functional companions of a catalase-peroxidase in reactive-oxygen detoxification; the database channel supports co-membership, not physical binding.\n- **83332.Rv3566c (nat)**, **83332.Rv1600 (hisC1)**, **83332.Rv3772 (hisC2)**, **83332.Rv2231c (cobC)** \u2014 all with **database score 0.9** and negligible textmining (0.09\u20130.15). These are curated pathway co-memberships, most plausibly reflecting shared KEGG metabolic maps rather than any direct interaction. Note that hisC1/hisC2/cobC are aminotransferases, which fits co-membership in the aromatic amino acid metabolism maps above.\n\n**Partners supported essentially by textmining alone** \u2014 the tool's own notes flag these: ahpC, pncA, embB, ndh, kasA, rpoB, gyrA, inhA, gyrB, fabG1, embA, rpsL, i.e. **83332.Rv2428, 83332.Rv2043c, 83332.Rv3795, 83332.Rv1854c, 83332.Rv2245, 83332.Rv0667, 83332.Rv0006, 83332.Rv1484, 83332.Rv3566c**\u2026 (correction: nat/Rv3566c belongs to the database-supported group above) \u2026**83332.Rv0005, 83332.Rv1483, 83332.Rv3794, 83332.Rv0682**.\n\nThese score 0.89\u20130.97 combined but have max non-textmining scores of 0.04\u20130.10. That pattern is diagnostic: this is the *M. tuberculosis* drug-resistance gene panel (rpoB, gyrA/gyrB, rpsL, embA/embB, pncA, inhA/fabG1/kasA, ndh), co-mentioned with katG in resistance-genotyping papers. These are **not** evidence of functional or physical interaction \u2014 they are evidence that katG is co-reported with other resistance determinants. I would not annotate any of them as a katG partner. ahpC (83332.Rv2428) is a plausible functional relative on peroxide-detoxification grounds, but STRING gives it *no* non-textmining support (max 0.096), so on this evidence it stands as co-mention only.\n\n### Summary\n\nkatG/Rv1908c is a catalase-peroxidase acting in peroxidase-linked aromatic amino acid metabolism (mtu00360, mtu00380) and in drug metabolism (mtu00983). Its only well-supported local associations are with its genomic neighbours **furA (83332.Rv1909c)** and **83332.Rv1907c**, plus curated co-membership with the superoxide dismutases **sodA (83332.Rv3846)** and **sodC (83332.Rv0432)**. Its large high-scoring resistance-gene neighbourhood in STRING is a literature artefact and should not be read as functional interaction. I did not query PubMed, as the structured channels left no question open that literature could settle without adding noise of exactly the kind already visible in the textmining channel.",
+ "summary": "## katG (Rv1908c) \u2014 catalase-peroxidase, *M. tuberculosis* H37Rv\n\nBoth structured sources resolve this gene cleanly: KEGG as `mtu:Rv1908c` (matched by symbol), UniProt as the reviewed entry **P9WIE5** (KATG_MYCTU). Neither is silent here.\n\n### Function\n\nUniProt P9WIE5 carries **experimental** (ECO:0000269) function statements, not just inferred ones:\n\n- **Bifunctional catalase/peroxidase.** P9WIE5 \"Bifunctional enzyme with both catalase and broad-spectrum peroxidase activity, oxidizing various electron donors including NADP(H)\". Catalytic activities listed: `2 H2O2 = O2 + 2 H2O` and `H2O2 + AH2 = A + 2 H2O`.\n- **Oxidative-stress defence / intracellular survival.** P9WIE5: \"Protects M.tuberculosis against toxic reactive oxygen species (ROS) including hydrogen peroxide as well as organic peroxides and thus contributes to its survival within host macrophages by countering the phagocyte oxidative burst\", and it \"Also displays efficient peroxynitritase activity, which may help the bacterium to persist in macrophages\".\n- **Isoniazid pro-drug activation** \u2014 the basis of its clinical importance. P9WIE5: \"Catalyzes the oxidative activation of the antitubercular pro-drug isoniazid (INH) to generate an isonicotinoyl radical that then reacts nonenzymatically with NAD to form an isonicotinoyl-NAD adduct which inhibits InhA\".\n- A weaker, heterologous-system claim of a **DNA-repair role**: P9WIE5 \"Might be involved in DNA repair. Partly complements recA-deficient E.coli cells exposed to UV radiation, mitomycin C or hydrogen peroxide\" \u2014 note this was measured in *E. coli* complementation, so treat it as suggestive rather than established for M. tuberculosis physiology.\n- **Homodimer** (experimental, P9WIE5); 27 PDB structures cross-referenced, including 1SJ2, 2CCA, 4C50 and 8U3P.\n\nTwo further UniProt entries matched the symbol (A0A0N7EHL5, A0A0N9DRZ6) but the tool notes \"No function statement for A0A0N7EHL5, A0A0N9DRZ6 carries experimental evidence (ECO:0000269); all are inferred\" \u2014 they add nothing independent.\n\n### Pathways (KEGG)\n\nSpecific assignments:\n- **mtu00983** \u2014 Drug metabolism, other enzymes (the INH-activation role)\n- **mtu00360** \u2014 Phenylalanine metabolism\n- **mtu00380** \u2014 Tryptophan metabolism\n\nThe peroxidase entries in mtu00360/mtu00380 reflect KatG's broad peroxidase chemistry rather than a dedicated role in amino-acid catabolism. It is also in the two genome-scale containers **mtu01100** (Metabolic pathways) and **mtu01110** (Biosynthesis of secondary metabolites), which describe the genome rather than this gene.\n\n### Interaction partners (STRING, 83332.Rv1908c)\n\nPartners with support **beyond** the textmining channel:\n- **83332.Rv1909c (furA)**, combined 0.979 \u2014 genomic neighborhood 0.829. FurA is the immediately adjacent gene; this is a strong operonic/positional signal, the best-supported link in the network.\n- **83332.Rv1907c**, combined 0.957 \u2014 neighborhood 0.805 *and* coexpression 0.731, with only modest textmining (0.254). Also a genomic-context partner.\n- **83332.Rv3846 (sodA)** 0.973 and **83332.Rv0432 (sodC)** 0.936 \u2014 database channel 0.5 each (curated co-membership in oxidative-defence annotation), on top of high textmining.\n- **83332.Rv3566c (nat)** 0.912, **83332.Rv1600 (hisC1)** 0.910, **83332.Rv2231c (cobC)** 0.905, **83332.Rv3772 (hisC2)** 0.905 \u2014 database channel 0.9 with near-zero textmining; these look like curated pathway co-membership (consistent with the shared KEGG amino-acid/drug-metabolism maps) rather than physical interaction.\n\nPartners supported **essentially by literature co-mention alone** (`evidence_beyond_textmining: false`): **83332.Rv2428 (ahpC)** 0.968, **83332.Rv1484 (inhA)** 0.916, **83332.Rv1483 (fabG1)** 0.905, **83332.Rv1854c (ndh)** 0.933, **83332.Rv2245 (kasA)** 0.927, plus **83332.Rv2043c (pncA)**, **83332.Rv3795 (embB)**, **83332.Rv3794 (embA)**, **83332.Rv0667 (rpoB)**, **83332.Rv0006 (gyrA)**, **83332.Rv0005 (gyrB)**, **83332.Rv0682 (rpsL)**. The last group is transparently a *drug-resistance-gene co-citation* cluster, not a functional module \u2014 katG, rpoB, gyrA, embB, pncA and rpsL are co-mentioned in resistance surveys. The katG\u2013inhA link is real biology (UniProt's INH statement above describes it), but STRING and those papers are **one line of evidence, not two**: the textmining score is derived from that same literature.\n\n### Lineage-marker check\n\n**Negative.** No lineage-defining position from the TB-Profiler tbdb barcode falls within katG \u2014 the tool notes \"855 of 4,008 H37Rv genes carry one, so this is an informative negative.\" An association involving katG is therefore not obviously confounded by the barcode at this locus, though this is a lookup and not a substitute for conditioning on lineage in genotype data.\n\n### Drug-resistance catalogue\n\nkatG is **resistance-associated**, for **isoniazid**. Of 1,771 catalogued variants: 10 \"Assoc w R\", 129 \"Assoc w R - Interim\", 7 \"Not assoc w R\", 236 \"Not assoc w R - Interim\", 1,254 \"Uncertain significance\", 135 ungraded. The associated set includes loss-of-function classes (`tbdb:katG:transcript_ablation`, `tbdb:katG:frameshift_variant`, `tbdb:katG:stop_gained`, `tbdb:katG:start_lost`) and the canonical codon-315 substitutions (`tbdb:katG:p.Ser315Thr`, `tbdb:katG:p.Ser315Asn`, `tbdb:katG:p.Ser315Arg`, `tbdb:katG:p.Ser315Ile`), all commented \"High-level resistance\". This pattern fits the function: INH is a pro-drug that KatG must activate, so ablating or crippling the enzyme confers resistance.\n\nTwo cautions. The flag is a statement about the **gene**: it does not mean any given katG variant confers resistance \u2014 236 variants were assessed and graded *not* associated, and the 1,254 \"Uncertain significance\" rows are neither positive nor negative. And the majority of the catalogue for this gene is uncertain, so an uncatalogued or uncertain katG mutation found in an isolate is not interpretable from this resource alone.",
  "target": "katG",
  "turns": [
   {
@@ -677,10 +3669,30 @@
     {
      "input": {
       "gene": "katG",
+      "organism_id": 83332
+     },
+     "name": "uniprot_protein"
+    },
+    {
+     "input": {
+      "gene": "katG",
       "required_score": 700,
       "species": 83332
      },
      "name": "string_partners"
+    },
+    {
+     "input": {
+      "gene": "katG",
+      "organism": "mtu"
+     },
+     "name": "lineage_markers"
+    },
+    {
+     "input": {
+      "gene": "katG"
+     },
+     "name": "resistance_variants"
     }
    ],
    "turn": 1

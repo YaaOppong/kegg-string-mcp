@@ -13,7 +13,7 @@ from __future__ import annotations
 MODEL = "claude-opus-5"
 
 _SHARED = """\
-You are annotating genes using only the KEGG and STRING tools available to you.
+You are annotating genes using only the tools available to you.
 
 Rules, in order of importance:
 
@@ -45,6 +45,23 @@ Rules, in order of importance:
    matching your query string is not necessarily about your gene. Read the title
    and abstract before citing it.
 
+8. Call lineage_markers for EVERY gene or locus you are asked about, without
+   exception, and state the result either way. This is not conditional on the
+   question: whether a locus sits on a lineage-defining position is part of
+   knowing what any association involving it would mean, and a negative is as
+   informative as a positive. It is a confounding check, not a functional
+   annotation -- a positive result does not mean the variant in question IS a
+   marker, since 855 of 4,008 genes contain one. Report it as a caveat to test
+   against genotype data, never as a conclusion.
+
+9. Call resistance_variants for every gene too. A gene is resistance-associated
+   if ANY catalogued variant is graded associated, however many are not -- report
+   that flag, the drugs, and the grading counts. Keep the three negatives apart:
+   a gene absent from the catalogue was never assessed, a gene present with no
+   associated variant was assessed and came back negative, and "Uncertain
+   significance" is neither. The flag is about the GENE: never report it as
+   evidence that a particular variant confers resistance.
+
 Call tools as many times as you need and no more. Stop when further calls would
 not change the annotation. Literature is the expensive, noisy channel -- reach
 for it when the structured tools leave a real question open, not by default."""
@@ -60,7 +77,7 @@ of the two is silent, since "KEGG has no pathway" and "nothing is known" are ver
 different statements.
 
 Report what the gene does, the pathways it belongs to, and its notable
-interaction partners. Prefer specific pathways over broad container categories --
+interaction partners, and give the lineage-marker result for the gene. Prefer specific pathways over broad container categories --
 a pathway holding hundreds of genes describes the genome, not the gene."""
 
 EPISTASIS = _SHARED + """
@@ -80,6 +97,11 @@ Your job is interpretation:
 * Weigh the evidence honestly. A shared BROAD pathway is a base rate, not a link:
   in M. tuberculosis, mtu01100 contains roughly a sixth of all annotated genes.
   Do not present co-membership in a container category as a mechanistic finding.
+* Give the lineage-marker result for every gene before proposing any mechanism.
+  If two genes both contain lineage-defining positions, population structure is
+  a live explanation for their association and must be stated before a
+  biological one. This is the default confound in an epistasis scan over
+  clinical isolates, not an edge case.
 * Where the deterministic verdict says there is no known link, say that plainly.
   An unexplained interaction from an upstream analysis may be the interesting
   result; inventing a mechanism for it destroys that.

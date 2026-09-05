@@ -1,7 +1,7 @@
 """UniProt lookups via the REST API: gene -> curated protein function.
 
 This is the tool that covers the hole the others leave. KEGG assigns a pathway to
-only 1,171 of 4,008 M. tuberculosis genes -- 29% -- and gyrA, one of the most
+about 1,170 of 4,008 M. tuberculosis genes -- 29% -- and gyrA, one of the most
 studied genes in TB, is in the 71% with none. UniProt annotates the whole
 proteome, so "KEGG has no pathway for this gene" stops being the end of the
 answer.

@@ -28,17 +28,20 @@ RUNS_DIR = Path(__file__).resolve().parent.parent / "demo" / "runs"
 #
 # furA is first on purpose. A demo where everything passes proves nothing, so a
 # visitor who changes nothing still sees the point.
-ORDERED = ["furA", "gyrB", "katG", "gyrA", "ahpC", "rpoB", "pncA", "katG-ahpC-epistasis"]
+ORDERED = ["furA", "gyrB", "katG", "gyrA", "ahpC", "rpoB", "pncA", "phoP",
+           "katG-ahpC-epistasis", "phoP-phoR-epistasis"]
 
 LABELS = {
     "furA": "furA — a transcriptional regulator KEGG has no pathway for",
     "gyrB": "gyrB — DNA gyrase subunit B, annotated mostly from literature",
-    "katG": "katG — catalase-peroxidase, well annotated in KEGG",
+    "katG": "katG — catalase-peroxidase; resistance-associated for isoniazid",
     "gyrA": "gyrA — DNA gyrase subunit A, absent from KEGG pathways",
     "ahpC": "ahpC — alkyl hydroperoxide reductase, no KEGG pathway",
     "rpoB": "rpoB — RNA polymerase beta subunit",
     "pncA": "pncA — pyrazinamidase, three KEGG pathways",
+    "phoP": "phoP — carries a lineage marker; neither source describes its function",
     "katG-ahpC-epistasis": "katG + ahpC — looking for a mechanistic link between two genes",
+    "phoP-phoR-epistasis": "phoP + phoR — a real interaction that may still be confounded",
 }
 
 
@@ -79,8 +82,11 @@ def load(name: str, runs_dir: Path | None = None) -> Replay:
         store.tool_result(call["tool"], call["arguments"], call["result"])
 
     claimed = record["target"].strip().upper() if record["mode"] == "single" else None
+    # store.notes as well as store.records: a summary may quote a tool note
+    # verbatim, and checking only record text reported that as fabrication --
+    # which the demo would have shown a visitor as a caught failure.
     report = validate(record["summary"], store.citable_ids, store.per_target,
-                      claimed, records=store.records)
+                      claimed, records=store.records, notes=store.notes)
 
     return Replay(
         id=record["id"], mode=record["mode"], target=record["target"],
