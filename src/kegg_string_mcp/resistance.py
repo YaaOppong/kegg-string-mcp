@@ -39,6 +39,7 @@ from __future__ import annotations
 
 import csv
 import io
+import re
 from dataclasses import asdict, dataclass
 from typing import Any
 
@@ -53,6 +54,8 @@ CATALOGUE_SOURCE = "https://github.com/jodyphelan/tbdb"
 # different kind of claim, so both mark the gene -- and both are reported
 # separately so a caller can require the confident one.
 ASSOCIATED = ("Assoc w R", "Assoc w R - Interim")
+# H37Rv locus tags: Rv0678, Rv2983, Rv3197A.
+_LOCUS_TAG = re.compile(r"^Rv\d{4}[A-Za-z]?$", re.IGNORECASE)
 UNGRADED = "(ungraded)"
 
 
@@ -144,12 +147,16 @@ class ResistanceClient:
                         f"resistance-associated variants.")])
 
         found = catalogue.get(gene)
-        matched_by = "symbol"
         if found is None:
             for key, value in catalogue.items():
                 if key.lower() == gene.lower():
                     found, gene = value, key
                     break
+        # The catalogue's Gene column carries locus tags as well as symbols --
+        # Rv0678 and Rv2983 are named that way -- so reporting every match as
+        # "symbol" states something untrue about how the lookup resolved, and
+        # disagrees with lineage_markers on the same identifier.
+        matched_by = "locus_tag" if _LOCUS_TAG.match(gene) else "symbol"
         if found is None:
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none", "resistance_associated": False},

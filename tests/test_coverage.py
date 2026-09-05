@@ -301,3 +301,14 @@ def test_summary_lists_the_genes_a_human_must_check():
     assert summary["needs_review"] == {"ambig": ["Rv0169", "Rv3512"]}
     assert summary["well_covered"] == 0
     assert summary["thin"] == 0
+
+
+def test_serialised_coverage_carries_the_derived_flags():
+    """thin, functional_gap and needs_review are properties, so they exist in the
+    written artefact only because to_dict adds them."""
+    payload = classify("gyrA", 0, 6, True).to_dict()
+    assert payload["thin"] is True
+    assert payload["functional_gap"] is False
+    assert payload["needs_review"] is False
+    assert payload["reasons"] == [NO_PATHWAY]
+    assert payload["locus_candidates"] == []

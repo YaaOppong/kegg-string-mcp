@@ -16,6 +16,7 @@ from kegg_string_mcp.resistance import (
 # Real rows from tbdb/mutations.csv, including a quoted comment containing a
 # comma -- splitting on commas shifts every field after it.
 CSV = '''Gene,Mutation,type,drug,original_mutation,confidence,source,comment
+Rv0678,p.Ala59Val,who_confidence,bedaquiline,p.Ala59Val,Assoc w R,WHO catalogue v2,
 katG,p.Ser315Thr,who_confidence,isoniazid,p.Ser315Thr,Assoc w R,WHO catalogue v2,
 katG,p.Arg463Leu,who_confidence,isoniazid,p.Arg463Leu,Not assoc w R,WHO catalogue v2,
 katG,p.Gly279Asp,who_confidence,isoniazid,p.Gly279Asp,Uncertain significance,WHO catalogue v2,
@@ -149,3 +150,12 @@ def test_only_associated_variants_are_ever_returned():
     for kwargs in ({}, {"drug": "isoniazid"}):
         result = client.variants("katG", **kwargs)
         assert all(r.detail["associated"] for r in result.records)
+
+
+def test_a_locus_tag_gene_is_not_reported_as_a_symbol_match():
+    """The catalogue names Rv0678 and Rv2983 by locus tag. Calling every match a
+    symbol states something untrue in the provenance envelope, and disagreed with
+    lineage_markers on the same identifier."""
+    client = ResistanceClient(FakeHttp())
+    assert client.variants("Rv0678").resolved["matched_by"] == "locus_tag"
+    assert client.variants("katG").resolved["matched_by"] == "symbol"

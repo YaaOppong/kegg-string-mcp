@@ -115,3 +115,12 @@ def test_every_status_carries_a_note_explaining_it(status, edge):
     verdict = classify(["a", "b"], partners)[0]
     assert verdict.status == status
     assert verdict.note
+
+
+def test_serialised_verdict_shape():
+    """The independence artefact is read by scripts/residue.py."""
+    partners = _partners(a={"b": (0.9, 0.89, 0.05)}, b={})
+    payload = classify(["a", "b"], partners)[0].to_dict()
+    assert set(payload) == {"gene_a", "gene_b", "combined", "textmining",
+                            "max_non_textmining", "status", "note"}
+    assert payload["status"] == "textmining_only"

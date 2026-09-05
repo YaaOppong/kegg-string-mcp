@@ -119,3 +119,13 @@ def test_summary_of_nothing_does_not_divide_by_zero():
 def test_string_statuses_that_assert_nothing_add_no_reason(status):
     out = assess([("a", "b")], string_status={("a", "b"): {"status": status}})
     assert out[0].reasons == []
+
+
+def test_serialised_shape_is_what_downstream_reads():
+    """to_dict is the artefact format scripts/residue.py writes; a renamed or
+    dropped field would break a consumer with nothing failing here."""
+    out = assess([("katG", "ahpC")], co_mentions={("katG", "ahpC"): 2})
+    payload = out[0].to_dict()
+    assert set(payload) == {"gene_a", "gene_b", "reasons"}
+    assert payload["reasons"] == [
+        {"code": CO_MENTIONED, "detail": "2 corpus paper(s) name both genes", "value": 2.0}]
