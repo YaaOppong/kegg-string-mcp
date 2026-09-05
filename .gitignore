@@ -4,7 +4,10 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 /cache/
-/docs/
+# The demo page is a build artifact: rebuilt by demo/build_pages.py and uploaded
+# by the Pages workflow, never edited by hand. Ignoring the whole directory to
+# exclude it also swallowed hand-written documentation put beside it, silently.
+/docs/index.html
 
 # Local scratch: exploration notebooks. Notebooks carry execution state and
 # outputs, which diff badly and would drift from the code they demonstrate.
