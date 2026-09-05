@@ -7,9 +7,16 @@ store to a repo is a tutorial.
 Reproduce with:
 
 ```bash
-python scripts/build_corpus.py --extended --tag tb41
+NCBI_EMAIL=you@example.org python scripts/build_corpus.py --extended --all-genes --tag tb41
 python scripts/run_comparison.py data/corpus_tb41.json --tag tb41
 ```
+
+`--all-genes` is not optional here. In the pipeline, stage 2 runs only on genes
+whose structured annotation is thin, because covering what stage 1 already
+describes is wasted effort. A head-to-head on gene *pairs* needs every gene in
+the corpus regardless of coverage, so the measurement bypasses the routing that
+the pipeline applies. Without the flag this builds a 22-gene corpus and every
+number below changes.
 
 ## The corpus
 
@@ -64,6 +71,10 @@ Scoring relevance by whether a passage names the queried genes is close to what
 BM25 ranks on, which tilts the measurement toward the lexical arm. The fix is a
 query set chosen by something neither retriever can see: STRING.
 
+The classification below lives in `retrieval/independence.py` and is also what
+the residue gate consumes (`hypothesis/residue.py`), where it does a different
+job -- see "What the silent pairs turned out to be" at the end.
+
 Every pair is classified by one STRING call per gene (820 pairs would be 820
 requests against a service that asks for roughly one per second):
 
@@ -110,9 +121,34 @@ drug-resistance pairs and little else. Testing whether literature reaches past
 STRING needs a corpus built to find that -- topic and method queries rather than
 gene queries -- and the machinery for that measurement now exists.
 
+## What the silent pairs turned out to be
+
+The 455 STRING-silent pairs were constructed here as a de-biased query set: a
+selection neither retriever influences, used to check that the arm ranking was
+not an artefact of scoring relevance on gene names.
+
+They are also the input to hypothesis generation, and there the polarity is
+reversed. A pair no structured source connects and no paper co-mentions is not a
+disappointing query -- it is a candidate. 441 of the 455 (97%) have no paper
+naming both genes, against 83% across all 820 pairs, so the filter discriminates.
+
+This makes the collapse above read differently depending on what is being asked.
+As a retrieval measurement it says the corpus has little to offer on these pairs.
+As a discovery filter it is the expected signature of a relationship nobody has
+written down, which is the only kind worth generating a hypothesis about. Low
+co-mention is necessary and nowhere near sufficient: most gene pairs are
+unconnected because they are unrelated.
+
+Neither reading changes the arm comparison. The ranking is the same on both
+query sets.
+
 ## What is not measured
 
-No reranking, no hybrid weight tuning, no query expansion. Locus tags such as
+No reranking, no hybrid weight tuning, no query expansion. Nothing here is a
+temporal holdout: every number is measured on a corpus containing everything
+published to date, which is the right setup for comparing retrievers and the
+wrong one for judging whether a method could have found something before it was
+known. Locus tags such as
 `Rv1908c` fail in every arm because the corpus text uses symbols; the exact-term
 probe reports `in_corpus` alongside each arm's hit count so a zero is not
 ambiguous between "retrieval missed it" and "it is not there".
