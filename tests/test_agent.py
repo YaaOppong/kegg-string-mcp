@@ -5,6 +5,7 @@ from pathlib import Path
 from kegg_string_mcp.agent.evidence import all_pairs, classify_pathway, pair_evidence
 from kegg_string_mcp.agent.store import RunStore
 from kegg_string_mcp.agent.validate import (
+    check_quotes,
     extract_citations,
     extract_quotes,
     validate,
@@ -897,3 +898,55 @@ def test_a_leading_citation_outside_any_quotation_still_binds():
     """The guard must not cost the ordinary leading-citation form."""
     text = 'PMID:35919400 reported that "the isolates carried katG mutations".'
     assert extract_quotes(text) == [("35919400", "the isolates carried katG mutations")]
+
+
+# --- quoting a tool note ----------------------------------------------------
+# A note is part of what the tool said in this run, so quoting one verbatim is
+# quoting a real source. Searching only record quotable_text reported it as
+# likely fabricated.
+
+NOTE = ("No function statement for A0A0N7EHL5, A0A0N9DRZ6 carries experimental "
+        "evidence (ECO:0000269); all are inferred.")
+_SUMMARY = f'Two further entries matched (A0A0N7EHL5, A0A0N9DRZ6) but the tool notes "{NOTE}"'
+
+
+def test_a_verbatim_tool_note_is_not_a_fabrication():
+    """From a real katG run. The quote is note 3 of the UniProt result, word for
+    word, and was reported NOT_IN_SOURCE [likely_fabricated] because notes were
+    never searched -- the record has its own text, so the quote was compared
+    against the wrong source rather than found missing."""
+    records = {"A0A0N7EHL5": {"record_id": "A0A0N7EHL5",
+                              "detail": {"quotable_text": "Catalase-peroxidase."}}}
+    assert check_quotes(_SUMMARY, records)[0].status == "not_in_source"
+    checks = check_quotes(_SUMMARY, records, {"A0A0N7EHL5": [NOTE]})
+    assert [c.status for c in checks] == ["verified"]
+
+
+def test_a_note_belonging_to_another_record_does_not_verify_a_quote():
+    """The loophole to avoid: notes are searched per record, so a quote cannot
+    be verified against a note the tool returned about something else."""
+    records = {"A0A0N7EHL5": {"record_id": "A0A0N7EHL5",
+                              "detail": {"quotable_text": "Catalase-peroxidase."}}}
+    checks = check_quotes(_SUMMARY, records, {"P9WIE5": [NOTE]})
+    assert [c.status for c in checks] == ["not_in_source"]
+
+
+def test_a_genuinely_fabricated_quote_still_fails_with_notes_present():
+    """The fix must not turn the check into one that passes everything."""
+    records = {"A0A0N7EHL5": {"record_id": "A0A0N7EHL5",
+                              "detail": {"quotable_text": "Catalase-peroxidase activity."}}}
+    text = 'The entry states "this protein activates isoniazid" (A0A0N7EHL5).'
+    checks = check_quotes(text, records, {"A0A0N7EHL5": [NOTE]})
+    assert [c.status for c in checks] == ["not_in_source"]
+
+
+def test_store_keys_notes_to_the_records_of_the_same_result(tmp_path: Path):
+    store = _store(tmp_path)
+    store.tool_result("uniprot_protein", {"gene": "katG"},
+              {"records": [{"record_id": "P9WIE5", "detail": {}}],
+               "record_ids": ["P9WIE5"], "notes": ["a note about katG"]})
+    store.tool_result("kegg_pathways", {"gene": "katG"},
+              {"records": [{"record_id": "mtu00360"}], "record_ids": ["mtu00360"],
+               "notes": ["a note about pathways"]})
+    assert store.notes["P9WIE5"] == ["a note about katG"]
+    assert store.notes["mtu00360"] == ["a note about pathways"]

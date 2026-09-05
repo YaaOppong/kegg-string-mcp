@@ -113,7 +113,7 @@ async def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("run
     result = await run_loop("single", task, tools, store, schemas, client=client)
 
     report = validate(result.text, store.citable_ids, store.per_target, gene.strip().upper(),
-                      records=store.records)
+                      records=store.records, notes=store.notes)
     payload = {"mode": "single", "gene": gene, "organism": organism,
                "summary": result.text, "turns": result.turns,
                "stop_reason": result.stop_reason, "validation": report.to_dict()}
@@ -204,7 +204,8 @@ async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path
             f"Interpret these relationships. Do not contradict the deterministic verdicts.")
     result = await run_loop("epistasis", task, tools, store, schemas, client=client)
 
-    report = validate(result.text, store.citable_ids, records=store.records)
+    report = validate(result.text, store.citable_ids, records=store.records,
+                      notes=store.notes)
     payload = {"mode": "epistasis", "genes": genes, "organism": organism,
                "summary": result.text, "turns": result.turns,
                "stop_reason": result.stop_reason,

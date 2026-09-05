@@ -29,6 +29,11 @@ class RunStore:
     run_id: str
     _citable: set[str] = field(default_factory=set)
     _records: dict[str, dict[str, Any]] = field(default_factory=dict)
+    # Notes a tool returned alongside its records, keyed by record ID. A note is
+    # part of what the tool said in this run, so a summary quoting one verbatim is
+    # quoting a real source -- but only the notes from the SAME result, or a quote
+    # could be verified against a note about a different record entirely.
+    _notes: dict[str, list[str]] = field(default_factory=dict)
     _per_target: dict[str, set[str]] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
@@ -85,11 +90,15 @@ class RunStore:
                 for alias in aliases:
                     self._per_target.setdefault(alias, set()).add(resolved_id)
 
+        result_notes = [n for n in result.get("notes", []) if isinstance(n, str)]
         for record in result.get("records", []):
             rid = record.get("record_id")
             if not rid:
                 continue
             self._citable.add(rid)
+            for note in result_notes:
+                if note not in self._notes.setdefault(rid, []):
+                    self._notes[rid].append(note)
             existing = self._records.get(rid)
             if existing is None:
                 self._records[rid] = record
@@ -166,6 +175,11 @@ class RunStore:
 
     def record(self, record_id: str) -> dict[str, Any] | None:
         return self._records.get(record_id)
+
+    @property
+    def notes(self) -> dict[str, list[str]]:
+        """Tool notes, keyed by the records the same result returned."""
+        return {rid: list(values) for rid, values in self._notes.items()}
 
     def corpus_manifest(self) -> list[dict[str, Any]]:
         """Papers this run found, deduped, for a downstream full-text pipeline.

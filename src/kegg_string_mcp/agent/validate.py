@@ -319,7 +319,8 @@ def nearest_span(quote: str, source: str) -> tuple[float, str]:
     return round(best_ratio, 3), best_span
 
 
-def check_quotes(text: str, records: dict[str, dict[str, Any]]) -> list[QuoteCheck]:
+def check_quotes(text: str, records: dict[str, dict[str, Any]],
+                 notes: dict[str, list[str]] | None = None) -> list[QuoteCheck]:
     """Verify each quoted span really appears in the record it is attributed to.
 
     This is the step that upgrades validation from "the model cited a record that
@@ -331,11 +332,20 @@ def check_quotes(text: str, records: dict[str, dict[str, Any]]) -> list[QuoteChe
     fairly. A correctly quoted span can still be framed misleadingly; that is a
     harder problem and this check does not claim to solve it.
     """
+    notes = notes or {}
     checks: list[QuoteCheck] = []
     for record_id, quote in extract_quotes(text):
         record = records.get(record_id)
         source = (record or {}).get("detail", {}).get("quotable_text", "")
-        if not source:
+        # A tool NOTE is source text too. UniProt's "No function statement for
+        # A0A0N7EHL5 ..." was quoted verbatim and reported as likely fabricated,
+        # because only record quotable_text was searched -- a false accusation
+        # against correct output. Only the notes from the result that returned
+        # THIS record are searched, so a quote cannot be verified against a note
+        # about something else.
+        if any(quote_in_source(quote, note) for note in notes.get(record_id, [])):
+            checks.append(QuoteCheck(record_id, quote, "verified"))
+        elif not source:
             checks.append(QuoteCheck(record_id, quote, "no_source_text",
                                      "no retrieved text for this record to check the quote against"))
         elif quote_in_source(quote, source):
@@ -358,6 +368,7 @@ def validate(
     per_target: dict[str, set[str]] | None = None,
     claimed_target: str | None = None,
     records: dict[str, dict[str, Any]] | None = None,
+    notes: dict[str, list[str]] | None = None,
 ) -> ValidationReport:
     """Check every identifier in `text` against what the tools returned.
 
@@ -385,7 +396,7 @@ def validate(
             report.citations.append(Citation(identifier, "verified"))
 
     if records:
-        report.quotes = check_quotes(text, records)
+        report.quotes = check_quotes(text, records, notes)
 
     report.uncited_records = sorted(citable_ids - set(cited))
     return report

@@ -34,7 +34,7 @@ ORDERED = ["furA", "gyrB", "katG", "gyrA", "ahpC", "rpoB", "pncA", "phoP",
 LABELS = {
     "furA": "furA — a transcriptional regulator KEGG has no pathway for",
     "gyrB": "gyrB — DNA gyrase subunit B, annotated mostly from literature",
-    "katG": "katG — catalase-peroxidase, well annotated in KEGG",
+    "katG": "katG — catalase-peroxidase; resistance-associated for isoniazid",
     "gyrA": "gyrA — DNA gyrase subunit A, absent from KEGG pathways",
     "ahpC": "ahpC — alkyl hydroperoxide reductase, no KEGG pathway",
     "rpoB": "rpoB — RNA polymerase beta subunit",
@@ -82,8 +82,11 @@ def load(name: str, runs_dir: Path | None = None) -> Replay:
         store.tool_result(call["tool"], call["arguments"], call["result"])
 
     claimed = record["target"].strip().upper() if record["mode"] == "single" else None
+    # store.notes as well as store.records: a summary may quote a tool note
+    # verbatim, and checking only record text reported that as fabrication --
+    # which the demo would have shown a visitor as a caught failure.
     report = validate(record["summary"], store.citable_ids, store.per_target,
-                      claimed, records=store.records)
+                      claimed, records=store.records, notes=store.notes)
 
     return Replay(
         id=record["id"], mode=record["mode"], target=record["target"],
