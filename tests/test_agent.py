@@ -4,7 +4,11 @@ from pathlib import Path
 
 from kegg_string_mcp.agent.evidence import all_pairs, classify_pathway, pair_evidence
 from kegg_string_mcp.agent.store import RunStore
-from kegg_string_mcp.agent.validate import extract_citations, validate
+from kegg_string_mcp.agent.validate import (
+    extract_citations,
+    extract_quotes,
+    validate,
+)
 
 KEGG_RESULT = {
     "resolved": {"kegg_gene_id": "mtu:Rv1908c", "matched_by": "symbol"},
@@ -823,3 +827,51 @@ def test_a_fabricated_quote_on_such_a_pmid_still_fails(tmp_path):
     report = validate('PMID:18178143 "binds directly to the ribosome in vitro"',
                       store.citable_ids, store.per_target, "KATG", records=store.records)
     assert [q.status for q in report.quotes] == ["not_in_source"]
+
+
+# --- lineage-marker record IDs -------------------------------------------------
+# tbdb IDs became citable when lineage_markers joined the stage 1 tools. These
+# pin the properties that would fail silently: that they are recognised at all,
+# that a bare genome coordinate is not mistaken for one, and that they are
+# structured rather than quotable.
+
+def test_a_lineage_marker_id_is_a_citation():
+    assert extract_citations("phoR carries a lineage marker (tbdb:852641).") == ["tbdb:852641"]
+
+
+def test_several_lineage_markers_are_all_extracted():
+    text = "Two markers, tbdb:852641 and tbdb:853469, fall in phoR."
+    assert extract_citations(text) == ["tbdb:852641", "tbdb:853469"]
+
+
+def test_a_bare_genome_coordinate_is_not_a_citation():
+    """An unprefixed 7-digit H37Rv position is indistinguishable from a PMID.
+    The prefix is what stops the validator confusing a coordinate with a paper --
+    without it, "position 852641" would cite a PubMed article."""
+    assert extract_citations("Position 852641 falls inside phoR.") == []
+
+
+def test_a_lineage_marker_is_not_quotable():
+    """A marker is structured, like a KEGG pathway ID: the record means one thing
+    and there is no text to quote from it."""
+    assert extract_quotes('The gene is "described as a marker" (tbdb:852641).') == []
+
+
+def test_lineage_markers_mix_with_the_other_sources():
+    text = "See tbdb:852641, PMID:35919400 and mtu00360."
+    assert set(extract_citations(text)) == {"tbdb:852641", "35919400", "mtu00360"}
+
+
+def test_an_uncited_lineage_marker_is_caught_as_unsupported():
+    """The point of the whole layer: a marker the tools never returned must fail."""
+    report = validate("phoR is a lineage marker (tbdb:999999).",
+                      citable_ids={"tbdb:852641"})
+    assert not report.passed
+    assert [c.identifier for c in report.unsupported] == ["tbdb:999999"]
+
+
+def test_a_retrieved_lineage_marker_passes():
+    report = validate("phoR carries a lineage marker (tbdb:852641).",
+                      citable_ids={"tbdb:852641"})
+    assert report.passed
+    assert report.unsupported == []

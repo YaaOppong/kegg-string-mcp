@@ -89,6 +89,18 @@ def test_residue_is_recomputable_without_refetching():
     assert [(a.gene_a, a.gene_b) for a in residue(out, strict)] == [("pks13", "zur")]
 
 
+def test_summary_key_order_does_not_depend_on_set_iteration():
+    """Counting over a set of codes made the written JSON differ between runs by
+    key order alone -- same values, different order, which defeats diffing an
+    artefact against itself."""
+    out = assess(PAIRS, string_status={
+        ("katG", "ahpC"): {"status": "corroborating", "max_non_textmining": 0.8}},
+        pathways={"katG": {"mtu01501"}, "ahpC": {"mtu01501"}},
+        co_mentions={("katG", "ahpC"): 2})
+    counts = summarise(out)["reason_counts"]
+    assert list(counts) == sorted(counts)
+
+
 def test_summary_reports_the_configuration_it_used():
     out = assess(PAIRS, co_mentions={("katG", "ahpC"): 2})
     summary = summarise(out)

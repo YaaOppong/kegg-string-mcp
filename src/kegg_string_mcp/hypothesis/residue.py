@@ -125,13 +125,17 @@ def residue(assessments: list[PairAssessment],
 
 def summarise(assessments: list[PairAssessment],
               explaining: frozenset[str] = DEFAULT_EXPLAINING) -> dict[str, Any]:
+    # Counted over sorted codes, not raw set iteration: a set of strings iterates
+    # in an order that depends on PYTHONHASHSEED, so the written JSON differed
+    # between runs by key order alone. Identical values in a different order
+    # still breaks diffing an artefact against itself.
     counts: dict[str, int] = {}
     for assessment in assessments:
-        for code in assessment.codes():
+        for code in sorted(assessment.codes()):
             counts[code] = counts.get(code, 0) + 1
     remaining = residue(assessments, explaining)
     return {"pairs": len(assessments),
-            "reason_counts": counts,
+            "reason_counts": dict(sorted(counts.items())),
             "explaining": sorted(explaining),
             "residue": len(remaining),
             "residue_fraction": round(len(remaining) / len(assessments), 3)
