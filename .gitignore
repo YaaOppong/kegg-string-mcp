@@ -3,6 +3,8 @@ __pycache__/
 .venv/
 .pytest_cache/
 .ruff_cache/
+.coverage
+htmlcov/
 /cache/
 # The demo page is a build artifact: rebuilt by demo/build_pages.py and uploaded
 # by the Pages workflow, never edited by hand. Ignoring the whole directory to
