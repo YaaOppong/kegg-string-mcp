@@ -173,7 +173,7 @@ def uniprot_protein(gene: str, organism_id: int = 83332, limit: int = 3) -> Tool
         "(TB-Profiler tbdb, after Coll 2014 and Napier 2020). Use this when a gene comes out of "
         "a scan over clinical isolates, because an association between two lineage-marked genes "
         "can be population structure rather than biology. IMPORTANT: this is a lookup, not a "
-        "verdict. A positive result says the gene CONTAINS a lineage-defining position -- 853 of "
+        "verdict. A positive result says the gene CONTAINS a lineage-defining position -- 855 of "
         "4,008 M. tuberculosis genes do -- not that the variant you are asking about is one. "
         "Compare your variant's H37Rv coordinate against the `position` field to answer that. "
         "Whether an association survives conditioning on lineage is a question for genotype "

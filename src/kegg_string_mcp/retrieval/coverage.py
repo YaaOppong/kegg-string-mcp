@@ -15,7 +15,7 @@ Three gaps qualify, in descending severity:
   inferred from a rule or a homologue. That is not evidence about *this*
   protein, which is the distinction `uniprot.py` already draws and the same one
   STRING's textmining channel forces elsewhere in this codebase.
-* **no_pathway** -- KEGG assigns no pathway. KEGG covers 1,171 of 4,008
+* **no_pathway** -- KEGG assigns no pathway. KEGG covers roughly 1,170 of 4,008
   M. tuberculosis genes, so this is common and is the weakest of the three on its
   own: gyrA has no KEGG pathway and is one of the best-characterised genes in TB.
 

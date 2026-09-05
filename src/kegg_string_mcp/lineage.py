@@ -18,7 +18,7 @@ Like a KEGG pathway ID and unlike a PubMed abstract, a marker is **structured**:
 the record means one thing and there is nothing to quote from it. Records are
 therefore citable but not quotable, and carry no `quotable_text`.
 
-A gene-level flag is coarse: 853 of 4,008 H37Rv genes contain at least one
+A gene-level flag is coarse: 855 of 4,008 H37Rv genes contain at least one
 barcode position, so a flag says the gene can carry a marker, not that the
 variant in a given hit is one. `marks_position` answers the variant-level
 question, and every record carries its exact H37Rv position so a caller can.
@@ -38,6 +38,12 @@ KEGG_GENE_LIST = "https://rest.kegg.jp/list/{organism}"
 # The barcode has no per-position landing page, so records resolve to the file
 # itself. It is a few hundred kB of TSV and a human can find the row by position.
 BARCODE_SOURCE = "https://github.com/jodyphelan/tbdb"
+# The barcode is a list of H37Rv coordinates and nothing in the file says so.
+# Matched against another organism's gene spans it produces confident nonsense:
+# 789 of 4,639 E. coli genes "carry" a TB lineage marker by coordinate collision
+# alone. Only the organism whose coordinates the barcode is written in is
+# accepted; every other one is refused rather than answered.
+BARCODE_ORGANISM = "mtu"
 
 # KEGG location column: "1..1524", "complement(2052..3260)", "join(a..b,c..d)".
 # The outermost span is what matters for containment; strand and exon structure
@@ -101,6 +107,12 @@ def annotate(spans: list[GeneSpan], snps: list[LineageSnp]) -> dict[str, list[Li
     locus tag -- an informative-looking negative that was an indexing artefact.
     A gene therefore occupies two keys: len(index) is not a gene count.
 
+    A position inside overlapping CDSs is recorded against every gene containing
+    it, not the first one in file order. Overlapping reading frames are ordinary
+    in a compact bacterial genome -- 3 of the 1,111 barcode positions sit in two
+    genes each -- and stopping at the first match made the second gene look
+    unmarked depending on how KEGG happened to order its output.
+
     Sorted-span bisection would be faster; at 4,000 genes by 1,111 SNPs the
     quadratic form runs in well under a second and is easier to be sure of.
     """
@@ -110,7 +122,6 @@ def annotate(spans: list[GeneSpan], snps: list[LineageSnp]) -> dict[str, list[Li
             if span.start <= snp.position <= span.end:
                 for key in filter(None, (span.locus, span.symbol)):
                     index.setdefault(key, []).append(snp)
-                break
     return index
 
 
@@ -162,9 +173,20 @@ class LineageClient:
             self._traces[organism] = [_trace(barcode), _trace(genes)]
         return self._index[organism], self._traces[organism]
 
-    def markers(self, gene: str, organism: str = "mtu") -> ToolResult:
+    def markers(self, gene: str, organism: str = BARCODE_ORGANISM) -> ToolResult:
         query: dict[str, Any] = {"gene": gene, "organism": organism}
         gene = gene.strip()
+        organism = organism.strip().lower()
+
+        if organism != BARCODE_ORGANISM:
+            return ToolResult.build(
+                query, [], resolved={"matched_by": "none"},
+                notes=[(f"The lineage barcode is a list of positions in M. tuberculosis H37Rv "
+                        f"coordinates ({BARCODE_ORGANISM}), so it cannot be applied to "
+                        f"'{organism}'. No lookup was performed -- this is not evidence that "
+                        f"{gene} lacks a lineage marker. Comparing these positions against "
+                        f"another genome's gene spans matches by coordinate collision alone.")])
+
         if not gene:
             return ToolResult.build(
                 query, [], resolved={"matched_by": "none"},
@@ -215,7 +237,7 @@ class LineageClient:
                 f"compare your variant's H37Rv position against the `position` field.")
         else:
             notes.append(
-                f"No lineage-defining position falls within {gene} in the tbdb barcode. 853 of "
+                f"No lineage-defining position falls within {gene} in the tbdb barcode. 855 of "
                 f"4,008 H37Rv genes carry one, so this is an informative negative.")
         return ToolResult.build(query, records, resolved={"matched_by": matched_by},
                                 requests=traces, notes=notes)

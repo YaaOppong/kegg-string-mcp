@@ -5,6 +5,7 @@ from __future__ import annotations
 from types import SimpleNamespace
 
 from kegg_string_mcp.lineage import (
+    BARCODE_ORGANISM,
     GeneSpan,
     LineageClient,
     LineageSnp,
@@ -78,7 +79,7 @@ def test_lineages_are_deduplicated_and_sorted():
 
 
 def test_position_level_check_is_separate_from_the_gene_flag():
-    """853 of 4,008 genes carry a barcode position, so the gene flag is coarse.
+    """855 of 4,008 genes carry a barcode position, so the gene flag is coarse.
     Whether a specific hit is a lineage marker is a position question."""
     snps = [LineageSnp(1131, "lineage4.2.2.1", "Euro-American")]
     assert marks_position(snps, 1131).lineage == "lineage4.2.2.1"
@@ -145,3 +146,32 @@ def test_sources_are_fetched_once_per_client_not_once_per_gene():
     for gene in ("dnaA", "ppiA", "katG", "Rv0004"):
         client.markers(gene)
     assert len(http.seen) == 2
+
+
+def test_another_organism_is_refused_not_answered():
+    """The barcode is a list of H37Rv coordinates and the file does not say so.
+    Applied to E. coli spans it matches 789 of 4,639 genes by coordinate
+    collision -- confident nonsense with citable record IDs. A refusal is the
+    only safe answer."""
+    http = FakeHttp()
+    result = LineageClient(http).markers("recA", organism="eco")
+    assert result.records == []
+    assert http.seen == []                      # nothing was even fetched
+    assert "cannot be applied" in result.notes[0]
+    assert "not evidence" in result.notes[0]
+
+
+def test_the_barcode_organism_is_accepted_in_any_case():
+    client = LineageClient(FakeHttp())
+    assert client.markers("dnaA", organism=BARCODE_ORGANISM.upper()).records
+
+
+def test_a_position_in_overlapping_genes_is_recorded_against_both():
+    """Overlapping reading frames are ordinary in a compact bacterial genome, and
+    3 of the 1,111 barcode positions sit in two genes. Stopping at the first
+    match made the second look unmarked, depending on KEGG's output order."""
+    spans = [GeneSpan("Rv1009", "a", 100, 200), GeneSpan("Rv1010", "b", 150, 250)]
+    index = annotate(spans, [LineageSnp(175, "lineage4", "Euro-American")])
+    assert is_marker("Rv1009", index)
+    assert is_marker("Rv1010", index)
+    assert index["a"] == index["b"]
