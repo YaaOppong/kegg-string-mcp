@@ -1,14 +1,20 @@
-"""Rebuild the retrieval corpus and run the head-to-head comparison.
+"""Build the stage 2 retrieval corpus for the genes that need it.
 
-The corpus itself is not committed -- a few hundred PubMed abstracts under
-publisher copyright is bulk redistribution, and it is reproducible from here in
-one command:
+Stage 2 covers what stage 1 cannot, so by default it runs on the genes whose
+structured annotation is thin -- no UniProt function, only inferred function, or
+no KEGG pathway -- rather than on every gene given. The routing decision is
+written alongside the corpus so a later reader can see which genes were included
+and why.
 
     NCBI_EMAIL=you@example.org python scripts/build_corpus.py
 
-Both arms then search exactly the same text, retrieved the same way, so any
-difference between them is the retrieval method rather than a difference in what
-was fetched.
+Pass --all-genes to bypass routing. The retrieval-arm comparison needs it: a
+head-to-head on gene pairs requires every gene in the corpus regardless of how
+well annotated it is, and that is a measurement rather than a pipeline run.
+
+The corpus itself is not committed -- a few hundred PubMed abstracts under
+publisher copyright is bulk redistribution, and it is reproducible from here.
+Run scripts/run_comparison.py afterwards to measure the arms against each other.
 """
 
 from __future__ import annotations
@@ -37,24 +43,55 @@ EXTENDED_GENES = DEFAULT_GENES + [
     "icl1", "glpK", "pckA", "pks13", "mmpL3", "embR",
 ]
 
-EXACT_TERMS = ["katG", "Rv1908c", "ahpC", "gyrA", "pncA", "embB"]
-
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--genes", nargs="+", default=None)
     parser.add_argument("--extended", action="store_true",
                         help="use the larger gene set (robustness check)")
     parser.add_argument("--limit", type=int, default=20, help="abstracts per gene")
-    parser.add_argument("--k", type=int, default=10)
     parser.add_argument("--out", type=Path, default=Path("data"))
     parser.add_argument("--tag", default="tb", help="suffix for the output files")
+    parser.add_argument("--all-genes", action="store_true",
+                        help="skip coverage routing (needed for the arm comparison)")
+    parser.add_argument("--functional-only", action="store_true",
+                        help="route only genes with a functional gap, ignoring missing "
+                             "KEGG pathways, which say more about KEGG than about the gene")
     args = parser.parse_args()
     genes = args.genes or (EXTENDED_GENES if args.extended else DEFAULT_GENES)
 
-    from kegg_string_mcp.retrieval.compare import compare, exact_term_probe, pair_queries
+    import json
+
+    from kegg_string_mcp.cache import DiskCache
+    from kegg_string_mcp.http import PoliteClient
+    from kegg_string_mcp.kegg import KeggClient
     from kegg_string_mcp.retrieval.corpus import build, chunk
-    from kegg_string_mcp.retrieval.index import HybridIndex, KeywordIndex, VectorIndex
+    from kegg_string_mcp.retrieval.coverage import assess, route, summarise
+    from kegg_string_mcp.uniprot import UniProtClient
+
+    args.out.mkdir(parents=True, exist_ok=True)
+    if args.all_genes:
+        print(f"  routing bypassed: all {len(genes)} genes")
+    else:
+        http = PoliteClient(DiskCache())
+        coverages = assess(genes, KeggClient(http), UniProtClient(http))
+        summary = summarise(coverages)
+        (args.out / f"coverage_{args.tag}.json").write_text(
+            json.dumps({"summary": summary,
+                        "coverage": [c.to_dict() for c in coverages]}, indent=1),
+            encoding="utf-8")
+        print(f"  coverage: {summary['well_covered']} well covered, "
+              f"{summary['thin']} thin ({summary['functional_gap']} with a functional gap)")
+        for reason, n in sorted(summary["reason_counts"].items(), key=lambda kv: -kv[1]):
+            print(f"    {reason:26} {n}")
+        if summary["lookup_failed"]:
+            print("    UNANSWERED, not routed (fix the identifier or retry):")
+            for gene, sources in sorted(summary["lookup_failed"].items()):
+                print(f"      {gene:10} no answer from {', '.join(sources)}")
+        genes = route(coverages, functional_only=args.functional_only)
+        if not genes:
+            print("  nothing to retrieve: every gene is already well annotated.")
+            return 0
+        print(f"  routed to stage 2 ({len(genes)}): {', '.join(genes)}")
 
     corpus = chunk(build(genes, limit=args.limit))
     corpus_path = corpus.write(args.out / f"corpus_{args.tag}.json")
@@ -63,26 +100,8 @@ def main() -> int:
     for note in corpus.notes:
         print(f"    note: {note[:110]}")
 
-    keyword, vector = KeywordIndex(corpus), VectorIndex(corpus)
-    arms = {"keyword": keyword, "vector": vector,
-            "hybrid": HybridIndex(keyword, vector)}
-
-    queries = pair_queries(corpus.genes)
-    print(f"  {len(queries)} pair queries across {len(corpus.genes)} genes")
-    result = compare(arms, queries, k=args.k)
-    result.exact_term = exact_term_probe(arms, EXACT_TERMS, k=args.k, corpus=corpus)
-    path = result.write(args.out / f"comparison_{args.tag}.json")
-
-    data = result.to_dict()
-    print(f"\n  {data['queries']} gene-pair queries, k={data['k']}")
-    print("  mean on-target precision@k :", data["mean_on_target_precision"])
-    print("  mean papers naming both    :", data["mean_papers_naming_both"])
-    print("  mean overlap               :", data["mean_overlap"])
-    print("\n  exact-term probe (top-k passages containing the queried term):")
-    for row in data["exact_term"]:
-        cells = "  ".join(f"{a}={row[a]['containing_the_term']}/{args.k}" for a in arms)
-        print(f"    {row['term']:10} in_corpus={row['in_corpus']:<4} {cells}")
-    print(f"\n  written: {path}")
+    print("\n  next: python scripts/run_comparison.py "
+          f"{corpus_path} --tag {args.tag}")
     return 0
 
 
