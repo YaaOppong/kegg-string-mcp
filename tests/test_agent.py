@@ -950,3 +950,47 @@ def test_store_keys_notes_to_the_records_of_the_same_result(tmp_path: Path):
                "notes": ["a note about pathways"]})
     assert store.notes["P9WIE5"] == ["a note about katG"]
     assert store.notes["mtu00360"] == ["a note about pathways"]
+
+
+# --- variant record IDs at sentence edges --------------------------------------
+# The other citation patterns end in \b, which stops them consuming trailing
+# punctuation. A variant ID legitimately ends in '*' or '?', so it cannot use a
+# word boundary and is anchored on its last character instead.
+
+def test_a_variant_id_ending_a_sentence_does_not_swallow_the_full_stop():
+    """Ending a sentence on a citation is normal writing. Swallowing the stop
+    produced an ID matching nothing in the citable set, reported unsupported --
+    a false failure on a correctly cited summary."""
+    assert extract_citations("Graded in tbdb:katG:p.Ser315Thr.") == ["tbdb:katG:p.Ser315Thr"]
+
+
+def test_nonsense_and_unknown_variants_keep_their_final_character():
+    """604 catalogue variants end in '*' (p.Arg163*) and 91 in '?' (p.Met1?).
+    '?' was missing from the character class, so those could never be cited."""
+    text = "See tbdb:ahpC:p.Arg163*, tbdb:ahpC:p.Met1? and tbdb:aftB:p.Ter628Argext*?."
+    assert extract_citations(text) == [
+        "tbdb:ahpC:p.Arg163*", "tbdb:ahpC:p.Met1?", "tbdb:aftB:p.Ter628Argext*?"]
+
+
+def test_promoter_and_consequence_forms_survive_punctuation():
+    assert extract_citations("Promoter tbdb:inhA:c.-15C>T; and more.") == ["tbdb:inhA:c.-15C>T"]
+    assert extract_citations("Loss of function (tbdb:katG:frameshift_variant).") == [
+        "tbdb:katG:frameshift_variant"]
+
+
+def test_an_unbalanced_quote_does_not_silently_skip_a_quote_check():
+    """A stray quotation mark inverts left-to-right pairing, so every range after
+    it is wrong. One such range covered a legitimate leading citation and vetoed
+    its quote, which was then never checked at all. Not checking is worse than
+    the false positive the veto prevents."""
+    text = 'The 5" marker. PMID:12345678 says "the isolates carried katG mutations".'
+    assert extract_quotes(text) == [("12345678", "the isolates carried katG mutations")]
+
+
+def test_the_veto_still_applies_when_quoting_is_balanced():
+    """The P71814 case must stay fixed."""
+    text = ('The note is explicit: "UniProt holds no FUNCTION statement for P71814 - '
+            'the entry exists but its function is not described." '
+            '`has_experimental_function` is false. The name is '
+            '"Possible two component system regulator" (P71814).')
+    assert extract_quotes(text) == [("P71814", "Possible two component system regulator")]

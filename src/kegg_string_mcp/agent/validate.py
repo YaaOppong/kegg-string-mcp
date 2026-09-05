@@ -37,10 +37,21 @@ KEGG_PATHWAY = r"[a-z]{3,4}\d{5}"
 # validator that cannot tell a genome coordinate from a paper is worse than none.
 TBDB_MARKER = r"tbdb:\d{1,7}"
 # A WHO-catalogue variant, e.g. tbdb:katG:p.Ser315Thr. The gene segment starts
-# with a letter and the lineage form is all digits, so the two never collide.
+# with a letter and the lineage form is all digits, so the two cannot collide.
+#
 # Mutation strings carry HGVS punctuation (p.Ser315Thr, c.-15C>T, n.1401A>G) and
-# consequence terms (frameshift_variant), so the tail is deliberately permissive.
-TBDB_VARIANT = r"tbdb:[A-Za-z]\w*:[A-Za-z0-9_.>*-]+"
+# consequence terms (frameshift_variant), so the tail must be permissive -- but
+# it is anchored on the LAST character, which the other patterns get from a
+# closing \b they cannot use here. Without that anchor a citation ending a
+# sentence swallowed the full stop: "graded in tbdb:katG:p.Ser315Thr." extracted
+# the ID with a trailing '.', which then matched nothing in the citable set and
+# was reported unsupported -- a false failure on a correctly cited summary.
+#
+# '*' and '?' are legitimate final characters and must not be stripped: 604
+# catalogue variants are nonsense mutations ending in '*' (p.Arg163*) and 91 end
+# in '?' (p.Met1?, p.Ter628Argext*?). '?' was missing from the class entirely, so
+# those 91 could never be cited correctly. No catalogue variant ends in '.'.
+TBDB_VARIANT = r"tbdb:[A-Za-z]\w*:[A-Za-z0-9_.>*?-]*[A-Za-z0-9*?]"
 STRING_PROTEIN = r"\d{2,7}\.(?=[A-Za-z0-9_]*[A-Za-z])[A-Za-z0-9_]+"
 # PMIDs only in explicit PMID: form. A bare 8-digit number is ambiguous -- it
 # could be a coordinate, a score, a year range -- and treating every one as a
@@ -52,8 +63,9 @@ CITATION_PATTERNS = [
     re.compile(r"\b(?:" + STRING_PROTEIN + r")\b"),
     re.compile(r"\b(?:" + PMID + r")\b"),
     re.compile(r"\b(?:" + UNIPROT_ACCESSION + r")\b"),
-    # Variant before marker: both start "tbdb:", and the shorter pattern would
-    # otherwise claim the prefix of a variant ID and leave the rest dangling.
+    # The two tbdb forms are mutually exclusive -- the lineage form is all digits
+    # after the prefix and the variant form starts with a letter -- so neither can
+    # claim part of the other and the order here is presentational.
     re.compile(r"\b(?:" + TBDB_VARIANT + r")"),
     re.compile(r"\b(?:" + TBDB_MARKER + r")"),
 ]
@@ -253,6 +265,14 @@ def _quotation_ranges(text: str) -> list[tuple[int, int]]:
     that sits INSIDE a quotation from being read as introducing the NEXT one.
     """
     marks = [i for i, c in enumerate(text or "") if c in "\"\u201c\u201d"]
+    # An odd count means a mark is unpaired somewhere, and left-to-right pairing
+    # then treats a closing mark as an opening one -- inverting every range after
+    # it. Observed: a stray quote earlier in the text made the range cover a
+    # legitimate leading citation, so its quote was vetoed and never checked at
+    # all. Silently skipping a check is worse than the false positive the veto
+    # exists to prevent, so an unbalanced text gets no ranges and no veto.
+    if len(marks) % 2:
+        return []
     return [(a, b) for a, b in zip(marks[::2], marks[1::2], strict=False)]
 
 
