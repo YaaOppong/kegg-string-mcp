@@ -28,6 +28,7 @@ from mcp.types import ToolAnnotations
 from kegg_string_mcp.cache import DiskCache
 from kegg_string_mcp.http import PoliteClient
 from kegg_string_mcp.kegg import KeggClient
+from kegg_string_mcp.lineage import LineageClient
 from kegg_string_mcp.provenance import ToolResult
 from kegg_string_mcp.pubmed import DEFAULT_LIMIT, MTB_H37RV_NAME, PubMedClient
 from kegg_string_mcp.string_db import MTB_H37RV, StringClient
@@ -56,6 +57,7 @@ _http = PoliteClient(DiskCache())
 _kegg = KeggClient(_http)
 _string = StringClient(_http)
 _uniprot = UniProtClient(_http)
+_lineage = LineageClient(_http)
 _pubmed = PubMedClient(_http)
 
 READ_ONLY = ToolAnnotations(readOnlyHint=True, openWorldHint=True)
@@ -162,6 +164,31 @@ def uniprot_protein(gene: str, organism_id: int = 83332, limit: int = 3) -> Tool
         limit: Maximum UniProt entries to return.
     """
     return _uniprot.protein(gene=gene, organism_id=organism_id, limit=limit)
+
+
+@mcp.tool(
+    annotations=READ_ONLY,
+    description=(
+        "Whether a gene contains a lineage-defining SNP from the M. tuberculosis SNP barcode "
+        "(TB-Profiler tbdb, after Coll 2014 and Napier 2020). Use this when a gene comes out of "
+        "a scan over clinical isolates, because an association between two lineage-marked genes "
+        "can be population structure rather than biology. IMPORTANT: this is a lookup, not a "
+        "verdict. A positive result says the gene CONTAINS a lineage-defining position -- 853 of "
+        "4,008 M. tuberculosis genes do -- not that the variant you are asking about is one. "
+        "Compare your variant's H37Rv coordinate against the `position` field to answer that. "
+        "Whether an association survives conditioning on lineage is a question for genotype "
+        "data and this tool cannot answer it. Records are structured, so cite the record_id; "
+        "there is no text to quote."
+    ),
+)
+def lineage_markers(gene: str, organism: str = "mtu") -> ToolResult:
+    """Lineage-defining SNPs contained in one gene.
+
+    Args:
+        gene: Gene symbol or locus tag (e.g. phoP, Rv0757).
+        organism: KEGG organism code, used for the gene coordinates. Defaults to 'mtu'.
+    """
+    return _lineage.markers(gene=gene, organism=organism)
 
 
 def main() -> None:

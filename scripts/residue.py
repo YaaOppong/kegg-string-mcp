@@ -18,10 +18,9 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "src"))
 
 from kegg_string_mcp.cache import DiskCache
 from kegg_string_mcp.http import PoliteClient
-from kegg_string_mcp.hypothesis.lineage import flag_pair
-from kegg_string_mcp.hypothesis.lineage import load as load_lineage
 from kegg_string_mcp.hypothesis.residue import assess, residue, summarise
 from kegg_string_mcp.kegg import KeggClient
+from kegg_string_mcp.lineage import LineageClient
 from kegg_string_mcp.retrieval.corpus import Corpus
 
 
@@ -48,11 +47,10 @@ def main() -> int:
     for gene in corpus.genes:
         pathways[gene] = {r.record_id for r in kegg.pathways(gene).records}
 
-    # Lineage flags are not an explanation -- they do not gate the residue. They
-    # attach the null hypothesis to every surviving pair, so hypothesis
-    # generation starts with population structure already on the table rather
-    # than reaching for a mechanism first.
-    lineage_index = load_lineage(http)
+    # Lineage markers do not gate the residue. They are recorded against each
+    # surviving pair so a known marker is visible before any mechanism is
+    # proposed for it.
+    lineage = LineageClient(http)
 
     pairs = [(v["gene_a"], v["gene_b"]) for v in independence["verdicts"]]
     assessments = assess(pairs, string_status=string_status,
@@ -60,12 +58,14 @@ def main() -> int:
     summary = summarise(assessments)
 
     remaining = residue(assessments)
-    flags = {(a.gene_a, a.gene_b): flag_pair(a.gene_a, a.gene_b, lineage_index)
-             for a in remaining}
+    marked = {g: sorted({r.detail['lineage'] for r in lineage.markers(g).records})
+              for g in corpus.genes}
     out = args.data / f"residue_{args.tag}.json"
     out.write_text(json.dumps(
         {"summary": summary,
-         "residue": [dict(a.to_dict(), lineage=flags[(a.gene_a, a.gene_b)].to_dict())
+         "residue": [dict(a.to_dict(),
+                          lineage_marker={a.gene_a: marked[a.gene_a],
+                                          a.gene_b: marked[a.gene_b]})
                      for a in remaining],
          "assessments": [a.to_dict() for a in assessments]}, indent=1), encoding="utf-8")
 
@@ -75,12 +75,13 @@ def main() -> int:
         print(f"  {code:22} {n:4}{counts}")
     print(f"\nresidue: {summary['residue']} pairs "
           f"({summary['residue_fraction']:.0%}) -> {out}")
-    risks: dict[str, int] = {}
-    for flag in flags.values():
-        risks[flag.risk] = risks.get(flag.risk, 0) + 1
-    print("\nlineage confounding risk across the residue:")
-    for risk, n in sorted(risks.items(), key=lambda kv: -kv[1]):
-        print(f"  {risk:24} {n:4}")
+    both = sum(1 for a in remaining if marked[a.gene_a] and marked[a.gene_b])
+    either = sum(1 for a in remaining if marked[a.gene_a] or marked[a.gene_b])
+    flagged = sorted(g for g, lins in marked.items() if lins)
+    print(f"\nlineage markers: {len(flagged)}/{len(marked)} genes -- "
+          f"{', '.join(flagged)}")
+    print(f"  residue pairs with one marked gene : {either - both}")
+    print(f"  residue pairs with both marked     : {both}")
 
     genes_with_no_pathway = [g for g, p in pathways.items() if not p]
     if genes_with_no_pathway:

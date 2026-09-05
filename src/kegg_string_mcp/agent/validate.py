@@ -32,6 +32,10 @@ from typing import Any
 # ordinary words and gene symbols in prose are not read as citations.
 UNIPROT_ACCESSION = r"[OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9](?:[A-Z][A-Z0-9]{2}[0-9]){1,2}"
 KEGG_PATHWAY = r"[a-z]{3,4}\d{5}"
+# A lineage-marker record ID. Prefixed rather than a bare H37Rv coordinate: an
+# unprefixed 7-digit position is indistinguishable from a PMID, and a citation
+# validator that cannot tell a genome coordinate from a paper is worse than none.
+TBDB_MARKER = r"tbdb:\d{1,7}"
 STRING_PROTEIN = r"\d{2,7}\.(?=[A-Za-z0-9_]*[A-Za-z])[A-Za-z0-9_]+"
 # PMIDs only in explicit PMID: form. A bare 8-digit number is ambiguous -- it
 # could be a coordinate, a score, a year range -- and treating every one as a
@@ -43,11 +47,12 @@ CITATION_PATTERNS = [
     re.compile(r"\b(?:" + STRING_PROTEIN + r")\b"),
     re.compile(r"\b(?:" + PMID + r")\b"),
     re.compile(r"\b(?:" + UNIPROT_ACCESSION + r")\b"),
+    re.compile(r"\b(?:" + TBDB_MARKER + r")"),
 ]
 
 # Any identifier that can appear as a citation.
 CITE_TOKEN = ("(?:" + PMID + "|" + KEGG_PATHWAY + "|" + STRING_PROTEIN
-              + "|" + UNIPROT_ACCESSION + ")")
+              + "|" + UNIPROT_ACCESSION + "|" + TBDB_MARKER + ")")
 
 # Only the PROSE sources may carry a quote. A KEGG pathway ID and a STRING score
 # are structured -- the record means one thing and there is no text to quote from.
