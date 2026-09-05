@@ -70,18 +70,32 @@ def test_position_level_check_is_separate_from_the_gene_flag():
     ("lineage4", "lineage4.6", "nested"),           # every 4.6 isolate is also lineage 4
     ("lineage4.6.1", "lineage4", "nested"),         # order must not matter
     ("lineage4.6.1", "lineage4.6.1", "nested"),     # same clade
-    ("lineage4.6.1", "lineage4.6.3", "sibling"),    # sister clades; no isolate has both
-    ("lineage4.1.3", "lineage4.2.2.1", "sibling"),
-    ("lineage4.6.1", "lineage2.2.2", "unrelated"),
-    ("lineage4", "La1.8", "unrelated"),             # M. bovis labels are not lineageN
+    ("lineage4.6.1", "lineage4.6.3", "disjoint"),   # sister clades; no isolate has both
+    ("lineage4.1.3", "lineage4.2.2.1", "disjoint"),
+    # Different top-level lineages are disjoint clades too. Treating these as a
+    # separate, weaker case confused phylogenetic distance with co-segregation:
+    # an isolate is never both lineage 2 and lineage 4, so the markers exclude
+    # each other exactly as sister sublineages do.
+    ("lineage4.6.1", "lineage2.2.2", "disjoint"),
+    ("lineage4", "La1.8", "disjoint"),              # M. bovis is not within lineage 4
 ])
 def test_lineage_relations(a, b, expected):
     assert relate(a, b) == expected
 
 
+def test_only_nesting_and_disjointness_exist():
+    """Two nodes of a phylogeny are one or the other; there is no third case."""
+    labels = ["lineage1", "lineage2.2.2", "lineage4", "lineage4.6", "lineage4.6.1",
+              "La1.8", "M.canetti"]
+    seen = {relate(a, b) for a in labels for b in labels}
+    assert seen == {"nested", "disjoint"}
+
+
 def test_prefix_match_is_on_levels_not_characters():
-    """String prefixing would call lineage4 an ancestor of lineage41."""
-    assert relate("lineage4", "lineage41") == "unrelated"
+    """String prefixing would call lineage4 an ancestor of lineage41, inverting
+    the sign: a disjoint pair would be reported as positively associated."""
+    assert relate("lineage4", "lineage41") == "disjoint"
+    assert relate("lineage4", "lineage4.1") == "nested"
 
 
 def test_nested_markers_flag_a_positive_confound():
@@ -105,20 +119,25 @@ def test_one_marked_gene_is_not_a_confound():
     assert flag.relations == []
 
 
-def test_unrelated_clades_are_marked_but_not_flagged_as_confounding():
+def test_markers_on_different_lineages_still_confound_negatively():
+    """No isolate is both lineage 2 and lineage 4, so these exclude each other."""
     index = {"a": [LineageSnp(1, "lineage4.6.1", "Euro-American")],
              "b": [LineageSnp(2, "lineage2.2.2", "East-Asian")]}
-    assert flag_pair("a", "b", index).risk == "both_marked"
+    assert flag_pair("a", "b", index).risk == "confounding_negative"
 
 
-def test_nesting_wins_when_a_gene_carries_several_markers():
-    """A gene with SNPs for two clades confounds if ANY pairing is nested."""
+def test_mixed_directions_are_named_not_collapsed():
+    """The scan tests variant pairs, so one gene pair can confound both ways
+    depending on which variants were called. Reporting only the nested pairing
+    would hide the other direction."""
     index = {"a": [LineageSnp(1, "lineage2.2.2", "East-Asian"),
                    LineageSnp(2, "lineage4", "Euro-American")],
              "b": [LineageSnp(3, "lineage4.6", "Euro-American")]}
     flag = flag_pair("a", "b", index)
-    assert flag.risk == "confounding_positive"
+    assert flag.risk == "confounding_mixed"
     assert ("lineage4", "lineage4.6", "nested") in flag.relations
+    assert ("lineage2.2.2", "lineage4.6", "disjoint") in flag.relations
+    assert "position level" in flag.note
 
 
 def test_load_uses_the_caching_client_for_provenance():

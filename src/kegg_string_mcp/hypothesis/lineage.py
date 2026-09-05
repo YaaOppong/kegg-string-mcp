@@ -13,13 +13,21 @@ positions in H37Rv coordinates, each labelled with the lineage it defines. It is
 public, versioned in git, and needs no credentials. Gene spans come from KEGG's
 organism list, which the repo already fetches and caches.
 
-**Nested and sibling lineages confound in opposite directions.** A SNP defining
-lineage4 and a SNP defining lineage4.6 are both present in every 4.6 isolate, so
-they co-occur and produce a positive association. A SNP defining lineage4.6.1 and
-one defining lineage4.6.3 mark sister clades, so no isolate carries both and they
-produce a negative association. Both are population structure rather than
-biology; reporting which one applies tells you what to expect when you condition
-on lineage.
+**The direction follows from set containment, not from statistics.** A barcode
+SNP is derived inside its clade and ancestral everywhere else, so for two markers
+defining clades L_a and L_b there are only two cases -- two nodes of a phylogeny
+are either nested or disjoint, never anything else:
+
+* **nested** (L_b subset of L_a, e.g. lineage4 and lineage4.6) -- every isolate
+  carrying B also carries A, so the A-B+ cell of the 2x2 is structurally empty
+  and the pair appears positively associated;
+* **disjoint** (e.g. lineage4.6.1 and lineage4.6.3, or lineage2 and lineage4) --
+  no isolate carries both, so the A+B+ cell is structurally empty and the pair
+  appears negatively associated.
+
+Phylogenetic distance is not the axis. Sister sublineages and entirely separate
+lineages are equally disjoint and confound identically; only nesting reverses the
+sign. Both are population structure rather than biology.
 
 **A gene-level flag is a prior, not a verdict.** 853 of 4,008 H37Rv genes contain
 at least one barcode position, so a flag here says the gene is capable of
@@ -123,22 +131,19 @@ def _levels(lineage: str) -> list[str]:
 
 
 def relate(a: str, b: str) -> str:
-    """How two lineage labels co-segregate: nested | sibling | unrelated.
+    """How two lineage labels co-segregate: nested | disjoint.
 
-    `nested` means one clade contains the other, so isolates in the inner clade
-    carry both markers -- a positive association with no biology behind it.
-    `sibling` means the clades exclude each other, giving a negative one.
+    Two cases only, because two nodes of a phylogeny are either nested or
+    disjoint. An earlier version returned a third value for markers on different
+    top-level lineages, which conflated phylogenetic distance with
+    co-segregation: lineage2 and lineage4 are disjoint clades, so their markers
+    exclude each other exactly as sister sublineages do, and confound in the same
+    negative direction.
     """
-    if a == b:
-        return "nested"
     la, lb = _levels(a), _levels(b)
     shorter, longer = (la, lb) if len(la) <= len(lb) else (lb, la)
-    if longer[:len(shorter)] == shorter:
-        return "nested"
-    # Same top-level lineage but divergent below it: sister clades.
-    if la[0] == lb[0]:
-        return "sibling"
-    return "unrelated"
+    # Compared level by level, so lineage4 is not read as an ancestor of lineage41.
+    return "nested" if longer[:len(shorter)] == shorter else "disjoint"
 
 
 @dataclass
@@ -151,26 +156,34 @@ class PairLineageFlag:
 
     @property
     def risk(self) -> str:
+        """One risk per pair, but a gene can carry markers for several clades.
+
+        The scan tests variant pairs, so each (marker_a, marker_b) pairing has its
+        own direction. Reporting only the strongest would hide that a gene pair
+        can be confounded both ways depending on which variants were called, so a
+        mixed set is named rather than collapsed.
+        """
         if not self.snps_a or not self.snps_b:
             return "none"
         kinds = {rel for _, _, rel in self.relations}
-        if "nested" in kinds:
+        if kinds == {"nested"}:
             return "confounding_positive"
-        if "sibling" in kinds:
+        if kinds == {"disjoint"}:
             return "confounding_negative"
-        return "both_marked"
+        return "confounding_mixed"
 
     @property
     def note(self) -> str:
         return {
             "none": "at most one gene carries a lineage-defining SNP",
-            "both_marked": ("both genes carry lineage-defining SNPs, but for clades that neither "
-                            "contain nor exclude one another; weak prior for confounding"),
+            "confounding_mixed": ("the two genes carry markers for several clades, some nested "
+                                  "and some disjoint, so the direction depends on which variants "
+                                  "the scan called; resolve at position level before interpreting"),
             "confounding_positive": ("both genes mark nested clades, so isolates in the inner "
                                      "clade carry both variants and will appear associated "
                                      "regardless of any interaction -- condition on lineage "
                                      "before treating this pair as a finding"),
-            "confounding_negative": ("both genes mark sister clades, which no isolate shares, so "
+            "confounding_negative": ("the genes mark disjoint clades, which no isolate shares, so "
                                      "a negative association here is population structure"),
         }[self.risk]
 
