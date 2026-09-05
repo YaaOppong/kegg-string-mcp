@@ -200,25 +200,25 @@ def lineage_markers(gene: str, organism: str = "mtu") -> ToolResult:
         "(WHO catalogue of mutations v2). Returns whether the gene is resistance-associated, "
         "which drugs, and the graded variants themselves. A gene counts as "
         "resistance-associated if ANY of its variants is graded associated, however many are "
-        "not. IMPORTANT: the gene-level flag does not grade a variant. Within katG, "
-        "p.Ser315Thr is 'Assoc w R' while p.Arg463Leu, a common polymorphism, is explicitly "
-        "'Not assoc w R' -- pass `mutation` to grade a specific one. Distinguish the three "
+        "not. IMPORTANT: this takes a gene, and the flag is about the gene. It does not mean "
+        "a particular variant confers resistance -- within katG, p.Ser315Thr is 'Assoc w R' "
+        "while p.Arg463Leu, a common polymorphism, is explicitly 'Not assoc w R'. The graded "
+        "variants are returned so the detail is citable, but grading one is not something "
+        "this tool does. Distinguish the three "
         "negatives: a gene absent from the catalogue was never assessed (it covers 74 genes "
         "chosen for resistance surveillance), a gene present with no associated variant WAS "
         "assessed, and a variant graded 'Uncertain significance' -- 70% of all rows -- is "
         "neither. Records are structured, so cite the record_id; there is no text to quote."
     ),
 )
-def resistance_variants(gene: str, mutation: str | None = None,
-                        drug: str | None = None) -> ToolResult:
+def resistance_variants(gene: str, drug: str | None = None) -> ToolResult:
     """WHO-graded resistance variants for one gene.
 
     Args:
         gene: Gene symbol or locus tag as the catalogue names it (e.g. katG, Rv0678, gid).
-        mutation: Optional HGVS variant to grade specifically (e.g. p.Ser315Thr, c.-15C>T).
         drug: Optional drug name to restrict to (e.g. isoniazid, bedaquiline).
     """
-    return _resistance.variants(gene=gene, mutation=mutation, drug=drug)
+    return _resistance.variants(gene=gene, drug=drug)
 
 
 def main() -> None:

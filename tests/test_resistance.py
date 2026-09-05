@@ -79,19 +79,10 @@ def test_only_associated_variants_are_returned_by_default():
     assert [r.detail["mutation"] for r in result.records] == ["p.Ser315Thr"]
 
 
-def test_a_specific_variant_is_graded_on_its_own_terms():
-    """p.Arg463Leu is a common katG polymorphism the catalogue explicitly grades
-    against. The gene flag stays true; the variant must not inherit it."""
-    result = ResistanceClient(FakeHttp()).variants("katG", mutation="p.Arg463Leu")
-    assert result.resolved["resistance_associated"] is True      # the GENE
-    assert [r.detail["confidence"] for r in result.records] == ["Not assoc w R"]
-    assert result.records[0].detail["associated"] is False
-    assert "does not grade a variant" in result.notes[1]
-
-
-def test_filtering_never_unmarks_the_gene():
+def test_filtering_by_drug_never_unmarks_the_gene():
     """The flag is computed over every variant, not the filtered subset."""
-    result = ResistanceClient(FakeHttp()).variants("katG", mutation="p.Gly279Asp")
+    result = ResistanceClient(FakeHttp()).variants("katG", drug="bedaquiline")
+    assert result.records == []
     assert result.resolved["resistance_associated"] is True
 
 
@@ -105,12 +96,6 @@ def test_a_gene_assessed_and_negative_is_not_a_gene_never_assessed():
     assert absent.resolved["resistance_associated"] is False
     assert "not in the WHO catalogue" in absent.notes[0]
     assert "not a finding that the gene is unrelated" in absent.notes[0]
-
-
-def test_an_unlisted_mutation_says_nomenclature_may_be_why():
-    result = ResistanceClient(FakeHttp()).variants("katG", mutation="S315T")
-    assert result.records == []
-    assert "HGVS nomenclature" in result.notes[1]
 
 
 def test_record_ids_are_citable_and_name_gene_and_variant():
@@ -156,7 +141,11 @@ def test_filtering_by_drug_narrows_the_associated_set(drug, expected):
     assert all(r.detail["associated"] for r in result.records)
 
 
-def test_an_explicit_mutation_is_returned_whatever_its_grade():
-    """Asking about one variant is a different question from browsing a gene."""
-    result = ResistanceClient(FakeHttp()).variants("katG", mutation="p.Gly279Asp")
-    assert [r.detail["confidence"] for r in result.records] == ["Uncertain significance"]
+def test_only_associated_variants_are_ever_returned():
+    """The tool takes loci, not variants. No query shape surfaces a row graded
+    'Not assoc w R' or 'Uncertain significance' as though it were a finding
+    about a variant the caller asked about."""
+    client = ResistanceClient(FakeHttp())
+    for kwargs in ({}, {"drug": "isoniazid"}):
+        result = client.variants("katG", **kwargs)
+        assert all(r.detail["associated"] for r in result.records)

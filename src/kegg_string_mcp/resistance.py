@@ -21,11 +21,14 @@ association tiers are kept apart:
     Assoc w R            15 genes   the confident grade
     Assoc w R - Interim  +9 genes   associated, lower confidence
 
-A gene-level flag is not a verdict about a particular variant. Within katG,
-p.Ser315Thr is "Assoc w R" while p.Arg463Leu -- a common polymorphism -- is
-explicitly "Not assoc w R". Pass `mutation` to grade a specific variant; the
-gene-level answer cannot do it, and using it as though it could would mark a
-known benign polymorphism as a resistance variant, well-sourced and wrong.
+**This tool takes loci, never variants.** The flag says the gene has known
+resistance-associated variants, not that any particular variant in it does.
+Within katG, p.Ser315Thr is "Assoc w R" while p.Arg463Leu -- a common
+polymorphism -- is explicitly "Not assoc w R", and the gene-level answer cannot
+tell them apart. Reading the flag as a verdict on a variant would mark a known
+benign polymorphism as resistance-conferring, well-sourced and wrong. The graded
+variants are returned as records so the finer detail is visible and citable, but
+grading a specific variant is a question this tool does not answer.
 
 An explicit "Not assoc w R" is a finding rather than silence, and rarer than
 either: the catalogue graded that variant and found against it. Counts for every
@@ -125,9 +128,8 @@ class ResistanceClient:
             self._traces = [_trace(response)]
         return self._catalogue, self._traces
 
-    def variants(self, gene: str, mutation: str | None = None,
-                 drug: str | None = None) -> ToolResult:
-        query: dict[str, Any] = {"gene": gene, "mutation": mutation, "drug": drug}
+    def variants(self, gene: str, drug: str | None = None) -> ToolResult:
+        query: dict[str, Any] = {"gene": gene, "drug": drug}
         gene = gene.strip()
         if not gene:
             return ToolResult.build(query, [], resolved={"matched_by": "none"},
@@ -157,20 +159,16 @@ class ResistanceClient:
                         f"was not assessed -- it is not a finding that the gene is unrelated "
                         f"to resistance.")])
 
-        # Asking about a specific mutation returns it whatever its grade -- that
-        # is the question. Narrowing by drug alone narrows the ASSOCIATED set:
-        # every katG variant is an isoniazid row, so returning them all would
-        # bury the answer in the 1,254 graded "Uncertain significance", which is
-        # the burial the default already avoids.
-        selected = found if mutation else [v for v in found if v.associated]
+        # Records are the association-graded variants, optionally narrowed by
+        # drug. Returning every row would bury the answer: katG lists 1,771, of
+        # which 1,254 are graded "Uncertain significance".
+        selected = [v for v in found if v.associated]
         if drug:
             selected = [v for v in selected if v.drug.lower() == drug.lower()]
-        if mutation:
-            selected = [v for v in selected if v.mutation.lower() == mutation.lower()]
 
-        # The gene-level flag is computed over EVERY variant of the gene, never
-        # over the filtered subset: one associated variant marks the gene however
-        # many are not, so narrowing by drug or mutation must not unmark it.
+        # The flag is computed over EVERY variant of the gene, never over the
+        # filtered subset: one associated variant marks the gene however many are
+        # not, so narrowing by drug must not unmark it.
         associated = [v for v in found if v.associated]
         resolved = {
             "matched_by": matched_by,
@@ -195,18 +193,8 @@ class ResistanceClient:
             for v in records_for
         ]
 
-        notes = [_gene_note(gene, found, associated)]
-        if mutation and not selected:
-            notes.append(
-                f"'{mutation}' is not listed for {gene}. The catalogue uses HGVS "
-                f"nomenclature (p.Ser315Thr, c.-15C>T, n.1401A>G) plus consequence terms "
-                f"such as frameshift_variant; a variant written another way will not match "
-                f"even when the catalogue grades it.")
-        elif mutation:
-            notes.append(
-                f"A gene-level flag does not grade a variant. Within {gene} the returned "
-                f"grade applies to '{mutation}' alone.")
-        return ToolResult.build(query, records, resolved=resolved, requests=traces, notes=notes)
+        return ToolResult.build(query, records, resolved=resolved, requests=traces,
+                                notes=[_gene_note(gene, found, associated)])
 
 
 def _gene_note(gene: str, found: list[Variant], associated: list[Variant]) -> str:
@@ -215,9 +203,10 @@ def _gene_note(gene: str, found: list[Variant], associated: list[Variant]) -> st
         tiers = ", ".join(f"{c} {t}" for t, c in counts.items() if t in ASSOCIATED)
         return (f"{gene} is RESISTANCE-ASSOCIATED: {len(associated)} of its {len(found)} "
                 f"catalogued variants are graded as associated with resistance ({tiers}). "
-                f"One associated variant marks the gene however many are not. This does not "
-                f"mean a particular variant in {gene} confers resistance -- pass `mutation` "
-                f"to grade one.")
+                f"One associated variant marks the gene however many are not. This is a "
+                f"statement about the GENE: it does not mean a particular variant in {gene} "
+                f"confers resistance, and the catalogue explicitly grades some variants in "
+                f"resistance-associated genes as not associated.")
     return (f"{gene} is in the WHO catalogue with {len(found)} graded variants, none of them "
             f"associated with resistance ({', '.join(f'{c} {t}' for t, c in counts.items())}). "
             f"The gene was assessed and no variant met the association grade.")

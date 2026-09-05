@@ -35,19 +35,3 @@ been observed in practice; this is reasoning about the code, not an incident.
 
 Together these keep the fallback useful for the `dosR` / `icl1` cases it was
 built for while removing the guess.
-
-## Resistance-variant nomenclature is matched literally
-
-`resistance_variants` matches a `mutation` argument against the catalogue string
-exactly. The WHO catalogue writes three-letter HGVS -- `p.Ser315Thr`, `c.-15C>T`,
-`n.1401A>G` -- plus consequence terms such as `frameshift_variant`. A pipeline
-emitting `S315T` will match nothing, and the tool says so in a note rather than
-reporting the variant as ungraded.
-
-Normalisation is deliberately not done yet, because it is not one mapping. One-
-to three-letter amino acid codes are mechanical; numbering conventions are not.
-rpoB variants are reported in both M. tuberculosis and E. coli coordinates,
-offset by 81 -- S450L and S531L are the same variant -- and which convention a
-caller uses is not recoverable from the string. Normalising silently would
-convert a lookup miss into a confident wrong answer, so it should arrive as an
-explicit, visible step with its own tests.

@@ -59,8 +59,8 @@ Rules, in order of importance:
    that flag, the drugs, and the grading counts. Keep the three negatives apart:
    a gene absent from the catalogue was never assessed, a gene present with no
    associated variant was assessed and came back negative, and "Uncertain
-   significance" is neither. The gene flag never grades a variant; if you are
-   given a specific mutation, look that mutation up.
+   significance" is neither. The flag is about the GENE: never report it as
+   evidence that a particular variant confers resistance.
 
 Call tools as many times as you need and no more. Stop when further calls would
 not change the annotation. Literature is the expensive, noisy channel -- reach
