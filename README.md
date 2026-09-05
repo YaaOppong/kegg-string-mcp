@@ -33,8 +33,9 @@ underlying service covers.
 | `string_partners` | `gene`<br>`species` = `83332`<br>`limit` = `20`<br>`required_score` = `700` | One record per interaction partner: `record_id` (e.g. `83332.Rv1909c`), preferred name, combined score, full per-channel breakdown, `https://string-db.org/network/…` URL |
 | `pubmed_abstracts` | `gene`<br>`organism` = `Mycobacterium tuberculosis`<br>`limit` = `10` | One record per article: `record_id` (PMID, e.g. `35038342`), title, abstract, `quotable_text`, journal, year, DOI, `https://pubmed.ncbi.nlm.nih.gov/…` URL |
 | `uniprot_protein` | `gene`<br>`organism_id` = `83332`<br>`limit` = `3` | One record per UniProt entry: `record_id` (accession, e.g. `P9WG47`), protein name, function statements tiered by evidence code with supporting PMIDs, catalytic activity, PDB cross-refs, `quotable_text`, `https://www.uniprot.org/uniprotkb/…` URL |
+| `lineage_markers` | `gene`<br>`organism` = `mtu` | One record per lineage-defining SNP the gene contains: `record_id` (e.g. `tbdb:851797`), the lineage it marks, H37Rv position, allele, `https://github.com/jodyphelan/tbdb` URL |
 
-All four are annotated `readOnlyHint`, expose structured output schemas, and are
+All five are annotated `readOnlyHint`, expose structured output schemas, and are
 deterministic: same input and same cache produce the same output.
 
 ### Result envelope

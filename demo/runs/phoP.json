@@ -1,0 +1,1068 @@
+{
+ "calls": [
+  {
+   "arguments": {
+    "gene": "phoP",
+    "organism": "mtu"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "KEGG returned no pathway assignments for mtu:Rv0757. The gene exists in KEGG but is not mapped to any pathway in this organism."
+    ],
+    "query": {
+     "gene": "phoP",
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     },
+     {
+      "cached": true,
+      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "retrieved_at": "2026-09-05T12:14:18.267852+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0757"
+     }
+    ],
+    "resolved": {
+     "kegg_gene_id": "mtu:Rv0757",
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "phoP",
+    "organism_id": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "UniProt holds no FUNCTION statement for P71814 -- the entry exists but its function is not described. Nothing to quote."
+    ],
+    "query": {
+     "gene": "phoP",
+     "limit": 3,
+     "organism_id": 83332
+    },
+    "record_ids": [
+     "P71814"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [],
+       "entry_name": "P71814_MYCTU",
+       "function_statements": [],
+       "gene_names": [
+        "phoP"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [
+        "Rv0757"
+       ],
+       "pdb": [
+        "2RV8",
+        "3R0J",
+        "5ED4",
+        "9JI3",
+        "9JI4",
+        "9JI5",
+        "9KET",
+        "9KEU",
+        "9KEV"
+       ],
+       "quotable_text": "Possible two component system response transcriptional positive regulator PhoP",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "Possible two component system response transcriptional positive regulator PhoP",
+      "record_id": "P71814",
+      "retrieved_at": "2026-09-05T12:39:06.212970+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/P71814"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "a6ff960f90156d236328bd05323616a21a96b681bc518a0b0fd1e1ba981d8c7b",
+      "retrieved_at": "2026-09-05T12:39:06.212970+00:00",
+      "status": 200,
+      "url": "https://rest.uniprot.org/uniprotkb/search?fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Ccc_function%2Ccc_catalytic_activity%2Ccc_subunit%2Cxref_pdb%2Cec&format=json&query=organism_id%3A83332+AND+gene%3AphoP&size=3"
+     }
+    ],
+    "resolved": {
+     "accession": "P71814",
+     "matched_by": "uniprot_search",
+     "n_entries": 1,
+     "uniprot_release": "2026_03"
+    }
+   },
+   "tool": "uniprot_protein"
+  },
+  {
+   "arguments": {
+    "gene": "phoP",
+    "limit": 20,
+    "required_score": 700,
+    "species": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: esxA, whiB3, tatC, fadD26, devR, esxB, sigH, espR, pks2, pks4."
+    ],
+    "query": {
+     "gene": "phoP",
+     "limit": 20,
+     "required_score": 700,
+     "species": 83332
+    },
+    "record_ids": [
+     "83332.Rv0758",
+     "83332.Rv0902c",
+     "83332.Rv0490",
+     "83332.Rv3875",
+     "83332.Rv3416",
+     "83332.Rv1032c",
+     "83332.Rv0600c",
+     "83332.Rv3764c",
+     "83332.Rv2093c",
+     "83332.Rv2930",
+     "83332.Rv3133c",
+     "83332.Rv0982",
+     "83332.Rv3874",
+     "83332.Rv3245c",
+     "83332.Rv0756c",
+     "83332.Rv3223c",
+     "83332.Rv0601c",
+     "83332.Rv3849",
+     "83332.Rv3825c",
+     "83332.Rv1181"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.267,
+        "cooccurrence": 0.772,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.022,
+        "neighborhood": 0.817
+       },
+       "combined_score": 0.999,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.817,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.977
+      },
+      "name": "phoR",
+      "record_id": "83332.Rv0758",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0758"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.362,
+        "cooccurrence": 0.718,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.0,
+        "neighborhood": 0.059
+       },
+       "combined_score": 0.963,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.718,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.711
+      },
+      "name": "prrB",
+      "record_id": "83332.Rv0902c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0902c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.264,
+        "cooccurrence": 0.731,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.04,
+        "neighborhood": 0.099
+       },
+       "combined_score": 0.918,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.731,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.466
+      },
+      "name": "senX3",
+      "record_id": "83332.Rv0490",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0490"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.072,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.044
+       },
+       "combined_score": 0.913,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.072,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.91
+      },
+      "name": "esxA",
+      "record_id": "83332.Rv3875",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3875"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.055,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.903,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.055,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.901
+      },
+      "name": "whiB3",
+      "record_id": "83332.Rv3416",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3416"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.345,
+        "cooccurrence": 0.72,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.001,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.896,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.72,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.191
+      },
+      "name": "trcS",
+      "record_id": "83332.Rv1032c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1032c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.345,
+        "cooccurrence": 0.753,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.0,
+        "neighborhood": 0.059
+       },
+       "combined_score": 0.895,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.753,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.083
+      },
+      "name": "Rv0600c",
+      "record_id": "83332.Rv0600c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0600c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.349,
+        "cooccurrence": 0.702,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.012,
+        "neighborhood": 0.072
+       },
+       "combined_score": 0.881,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.702,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.123
+      },
+      "name": "tcrY",
+      "record_id": "83332.Rv3764c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3764c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.05,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.044
+       },
+       "combined_score": 0.871,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.05,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.869
+      },
+      "name": "tatC",
+      "record_id": "83332.Rv2093c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2093c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.042,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.851,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.042,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.851
+      },
+      "name": "fadD26",
+      "record_id": "83332.Rv2930",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv2930"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.057,
+        "cooccurrence": 0.153,
+        "database": 0.0,
+        "experimental": 0.143,
+        "fusion": 0.0,
+        "neighborhood": 0.043
+       },
+       "combined_score": 0.845,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.153,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.8
+      },
+      "name": "devR",
+      "record_id": "83332.Rv3133c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3133c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.36,
+        "cooccurrence": 0.62,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.0,
+        "neighborhood": 0.069
+       },
+       "combined_score": 0.843,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.62,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.076
+      },
+      "name": "mprB",
+      "record_id": "83332.Rv0982",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0982"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.067,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.046
+       },
+       "combined_score": 0.812,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.067,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.806
+      },
+      "name": "esxB",
+      "record_id": "83332.Rv3874",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3874"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.253,
+        "cooccurrence": 0.531,
+        "database": 0.0,
+        "experimental": 0.274,
+        "fusion": 0.007,
+        "neighborhood": 0.073
+       },
+       "combined_score": 0.809,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.531,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.316
+      },
+      "name": "mtrB",
+      "record_id": "83332.Rv3245c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3245c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.047,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.773
+       },
+       "combined_score": 0.783,
+       "evidence_beyond_textmining": true,
+       "max_non_textmining_score": 0.773,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.077
+      },
+      "name": "Rv0756c",
+      "record_id": "83332.Rv0756c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0756c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.052,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.76,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.052,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.757
+      },
+      "name": "sigH",
+      "record_id": "83332.Rv3223c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3223c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.353,
+        "cooccurrence": 0.353,
+        "database": 0.0,
+        "experimental": 0.366,
+        "fusion": 0.0,
+        "neighborhood": 0.059
+       },
+       "combined_score": 0.727,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.366,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.076
+      },
+      "name": "Rv0601c",
+      "record_id": "83332.Rv0601c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv0601c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.046,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.0
+       },
+       "combined_score": 0.719,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.046,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.717
+      },
+      "name": "espR",
+      "record_id": "83332.Rv3849",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3849"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.077,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.047
+       },
+       "combined_score": 0.718,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.077,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.705
+      },
+      "name": "pks2",
+      "record_id": "83332.Rv3825c",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv3825c"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "channels": {
+        "coexpression": 0.075,
+        "cooccurrence": 0.0,
+        "database": 0.0,
+        "experimental": 0.0,
+        "fusion": 0.0,
+        "neighborhood": 0.044
+       },
+       "combined_score": 0.714,
+       "evidence_beyond_textmining": false,
+       "max_non_textmining_score": 0.075,
+       "partner_of": "83332.Rv0757",
+       "textmining_score": 0.703
+      },
+      "name": "pks4",
+      "record_id": "83332.Rv1181",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "source": "string",
+      "type": "partner",
+      "url": "https://string-db.org/network/83332.Rv1181"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "66400c44367c4fe50b3181d79a1d53259f2a0e11f2bbdfb5a6322ea3b4fd5929",
+      "retrieved_at": "2026-09-05T11:50:31.112545+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=phoP&limit=1&species=83332"
+     },
+     {
+      "cached": true,
+      "content_sha256": "8e50918f878d1c6ceb657ad5a48934d2906e471c58105a6cd1b901ec3f62f0f3",
+      "retrieved_at": "2026-09-05T13:01:21.503345+00:00",
+      "status": 200,
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv0757&limit=20&required_score=700&species=83332"
+     }
+    ],
+    "resolved": {
+     "matched_by": "get_string_ids",
+     "preferred_name": "phoP",
+     "string_id": "83332.Rv0757"
+    }
+   },
+   "tool": "string_partners"
+  },
+  {
+   "arguments": {
+    "gene": "phoP",
+    "organism": "mtu"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "phoP contains 1 lineage-defining position(s). This says the gene can carry a lineage marker, not that a particular variant in it is one -- compare your variant's H37Rv position against the `position` field."
+    ],
+    "query": {
+     "gene": "phoP",
+     "organism": "mtu"
+    },
+    "record_ids": [
+     "tbdb:851797"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "allele": "A",
+       "gene": "phoP",
+       "lineage": "lineage1.1.1.1",
+       "lineage_name": "Indo-Oceanic",
+       "position": 851797
+      },
+      "name": "lineage1.1.1.1 (Indo-Oceanic)",
+      "record_id": "tbdb:851797",
+      "retrieved_at": "2026-09-05T12:17:55.565069+00:00",
+      "source": "tbdb",
+      "type": "lineage_marker",
+      "url": "https://github.com/jodyphelan/tbdb"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "9c05673045615483890c0e31e65ddb9175ecdce7a22ac9a6868a840ae3f2a753",
+      "retrieved_at": "2026-09-05T12:17:55.565069+00:00",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/barcode.bed"
+     },
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     }
+    ],
+    "resolved": {
+     "matched_by": "symbol"
+    }
+   },
+   "tool": "lineage_markers"
+  },
+  {
+   "arguments": {
+    "gene": "phoP",
+    "limit": 8,
+    "organism": "Mycobacterium tuberculosis"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "120 articles matched this query; the 8 most relevant were retrieved. A finding absent from these abstracts may still be reported in the 112 not retrieved.",
+     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
+     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+    ],
+    "query": {
+     "gene": "phoP",
+     "limit": 8,
+     "organism": "Mycobacterium tuberculosis"
+    },
+    "record_ids": [
+     "31099236",
+     "29756729",
+     "41296761",
+     "38739431",
+     "39964175",
+     "28142206",
+     "39509845",
+     "39616939"
+    ],
+    "records": [
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "MTBVAC is a live attenuated M. tuberculosis vaccine constructed by genetic deletions in the phoP and fadD26 virulence genes. The MTBVAC vaccine is currently in phase 2 clinical trials with newborns and adults in South Africa, one of the countries with the highest incidence. Although MTBVAC has been extensively characterized by genomics, transcriptomics, lipidomics, and proteomics, its metabolomic profile is yet unknown. Accordingly, in this study we aim to identify differential metabolites between M. tuberculosis and MTBVAC. To this end, an untargeted metabolomics approach based on liquid chromatography coupled to high-resolution mass spectrometry was implemented in order to explore the main metabolic differences between M. tuberculosis and MTBVAC. As an outcome, we identified a set of 34 metabolites involved in diverse bacterial biosynthetic pathways. A consistent increase in the phosphatidylinositol species was observed in the vaccine candidate relative to its parental strain. This phenotype resulted in an increased production of phosphatidylinositol mannosides, a novel PhoP-regulated phenotype in the most widespread lineages of M. tuberculosis. This study represents a step ahead in our understanding of the MTBVAC vaccine, and some of the differential metabolites identified in this work might be used as potential vaccination biomarkers.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "MTBVAC is a live attenuated M. tuberculosis vaccine constructed by genetic deletions in the phoP and fadD26 virulence genes. The MTBVAC vaccine is currently in phase 2 clinical trials with newborns and adults in South Africa, one of the countries with the highest incidence. Although MTBVAC has been extensively characterized by genomics, transcriptomics, lipidomics, and proteomics, its metabolomic profile is yet unknown. Accordingly, in this study we aim to identify differential metabolites between M. tuberculosis and MTBVAC. To this end, an untargeted metabolomics approach based on liquid chromatography coupled to high-resolution mass spectrometry was implemented in order to explore the main metabolic differences between M. tuberculosis and MTBVAC. As an outcome, we identified a set of 34 metabolites involved in diverse bacterial biosynthetic pathways. A consistent increase in the phosphatidylinositol species was observed in the vaccine candidate relative to its parental strain. This phenotype resulted in an increased production of phosphatidylinositol mannosides, a novel PhoP-regulated phenotype in the most widespread lineages of M. tuberculosis. This study represents a step ahead in our understanding of the MTBVAC vaccine, and some of the differential metabolites identified in this work might be used as potential vaccination biomarkers."
+        }
+       ],
+       "doi": "10.1021/acsinfecdis.9b00008",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "ACS infectious diseases",
+       "mentions": [
+        "phoP"
+       ],
+       "pmcid": "",
+       "quotable_text": "Comparative Metabolomics between Mycobacterium tuberculosis and the MTBVAC Vaccine Candidate.\n\nMTBVAC is a live attenuated M. tuberculosis vaccine constructed by genetic deletions in the phoP and fadD26 virulence genes. The MTBVAC vaccine is currently in phase 2 clinical trials with newborns and adults in South Africa, one of the countries with the highest incidence. Although MTBVAC has been extensively characterized by genomics, transcriptomics, lipidomics, and proteomics, its metabolomic profile is yet unknown. Accordingly, in this study we aim to identify differential metabolites between M. tuberculosis and MTBVAC. To this end, an untargeted metabolomics approach based on liquid chromatography coupled to high-resolution mass spectrometry was implemented in order to explore the main metabolic differences between M. tuberculosis and MTBVAC. As an outcome, we identified a set of 34 metabolites involved in diverse bacterial biosynthetic pathways. A consistent increase in the phosphatidylinositol species was observed in the vaccine candidate relative to its parental strain. This phenotype resulted in an increased production of phosphatidylinositol mannosides, a novel PhoP-regulated phenotype in the most widespread lineages of M. tuberculosis. This study represents a step ahead in our understanding of the MTBVAC vaccine, and some of the differential metabolites identified in this work might be used as potential vaccination biomarkers.",
+       "title": "Comparative Metabolomics between Mycobacterium tuberculosis and the MTBVAC Vaccine Candidate.",
+       "year": "2019"
+      },
+      "name": "Comparative Metabolomics between Mycobacterium tuberculosis and the MTBVAC Vaccine Candidate.",
+      "record_id": "31099236",
+      "retrieved_at": "2026-09-05T13:05:23.842659+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31099236/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "PhoPR is an important two-component regulatory system in Mycobacterium tuberculosis. PhoP is essential for virulence as a response regulator involved in cell wall lipid biosynthesis and regulation of gene expression. In this review, the structure, function and vaccine application of PhoP were summarized, as well as some questions that need to be solved.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "PhoPR is an important two-component regulatory system in Mycobacterium tuberculosis. PhoP is essential for virulence as a response regulator involved in cell wall lipid biosynthesis and regulation of gene expression. In this review, the structure, function and vaccine application of PhoP were summarized, as well as some questions that need to be solved."
+        }
+       ],
+       "doi": "",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "Wei sheng wu xue bao = Acta microbiologica Sinica",
+       "mentions": [
+        "phoP"
+       ],
+       "pmcid": "",
+       "quotable_text": "[Mycobacterium tuberculosis PhoP system].\n\nPhoPR is an important two-component regulatory system in Mycobacterium tuberculosis. PhoP is essential for virulence as a response regulator involved in cell wall lipid biosynthesis and regulation of gene expression. In this review, the structure, function and vaccine application of PhoP were summarized, as well as some questions that need to be solved.",
+       "title": "[Mycobacterium tuberculosis PhoP system].",
+       "year": "2017"
+      },
+      "name": "[Mycobacterium tuberculosis PhoP system].",
+      "record_id": "29756729",
+      "retrieved_at": "2026-09-05T13:05:23.842659+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29756729/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "During Mycobacterium tuberculosis infections bacteria are engulfed by macrophages, a main line of defense against invading pathogens. Upon activation, macrophages increase glycolysis, producing the antibacterial aldehyde methylglyoxal. To test whether bacterial methylglyoxal resistance is required for robust infections, we sought to identify M. tuberculosis defense mechanisms against methylglyoxal. We identified phoP mutants were among the most highly sensitive strains to methylglyoxal in vitro. phoP mutants are highly attenuated in mice but a phoP mutant was even more attenuated in mice that accumulate methylglyoxal. We further found phoP bacilli were more permeable to methylglyoxal and accumulated glycated proteins. Suppressor mutations in the fatty acid \u03b2-oxidation genes fadE25 or fixB restored impermeability and resistance to methylglyoxal to a phoP mutant. Together, our data show that an important role for PhoP is to provide M. tuberculosis resistance to methylglyoxal toxicity in vivo by regulating cell envelope integrity.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "During Mycobacterium tuberculosis infections bacteria are engulfed by macrophages, a main line of defense against invading pathogens. Upon activation, macrophages increase glycolysis, producing the antibacterial aldehyde methylglyoxal. To test whether bacterial methylglyoxal resistance is required for robust infections, we sought to identify M. tuberculosis defense mechanisms against methylglyoxal. We identified phoP mutants were among the most highly sensitive strains to methylglyoxal in vitro. phoP mutants are highly attenuated in mice but a phoP mutant was even more attenuated in mice that accumulate methylglyoxal. We further found phoP bacilli were more permeable to methylglyoxal and accumulated glycated proteins. Suppressor mutations in the fatty acid \u03b2-oxidation genes fadE25 or fixB restored impermeability and resistance to methylglyoxal to a phoP mutant. Together, our data show that an important role for PhoP is to provide M. tuberculosis resistance to methylglyoxal toxicity in vivo by regulating cell envelope integrity."
+        }
+       ],
+       "doi": "10.1073/pnas.2523024122",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Proceedings of the National Academy of Sciences of the United States of America",
+       "mentions": [
+        "phoP"
+       ],
+       "pmcid": "PMC12704764",
+       "quotable_text": "Cell envelope maintenance by PhoP is essential for Mycobacterium tuberculosis methylglyoxal resistance.\n\nDuring Mycobacterium tuberculosis infections bacteria are engulfed by macrophages, a main line of defense against invading pathogens. Upon activation, macrophages increase glycolysis, producing the antibacterial aldehyde methylglyoxal. To test whether bacterial methylglyoxal resistance is required for robust infections, we sought to identify M. tuberculosis defense mechanisms against methylglyoxal. We identified phoP mutants were among the most highly sensitive strains to methylglyoxal in vitro. phoP mutants are highly attenuated in mice but a phoP mutant was even more attenuated in mice that accumulate methylglyoxal. We further found phoP bacilli were more permeable to methylglyoxal and accumulated glycated proteins. Suppressor mutations in the fatty acid \u03b2-oxidation genes fadE25 or fixB restored impermeability and resistance to methylglyoxal to a phoP mutant. Together, our data show that an important role for PhoP is to provide M. tuberculosis resistance to methylglyoxal toxicity in vivo by regulating cell envelope integrity.",
+       "title": "Cell envelope maintenance by PhoP is essential for Mycobacterium tuberculosis methylglyoxal resistance.",
+       "year": "2025"
+      },
+      "name": "Cell envelope maintenance by PhoP is essential for Mycobacterium tuberculosis methylglyoxal resistance.",
+      "record_id": "41296761",
+      "retrieved_at": "2026-09-05T13:05:23.842659+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41296761/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "Survival of Mycobacterium tuberculosis within the host macrophages requires the bacterial virulence regulator PhoP, but the underlying reason remains unknown. 3',5'-Cyclic adenosine monophosphate (cAMP) is one of the most widely used second messengers, which impacts a wide range of cellular responses in microbial pathogens including M. tuberculosis. Herein, we hypothesized that intra-bacterial cAMP level could be controlled by PhoP since this major regulator plays a key role in bacterial responses against numerous stress conditions. A transcriptomic analysis reveals that PhoP functions as a repressor of cAMP-specific phosphodiesterase (PDE) Rv0805, which hydrolyzes cAMP. In keeping with these results, we find specific recruitment of the regulator within the promoter region of rv0805 PDE, and absence of phoP or ectopic expression of rv0805 independently accounts for elevated PDE synthesis, leading to the depletion of intra-bacterial cAMP level. Thus, genetic manipulation to inactivate PhoP-rv0805-cAMP pathway decreases cAMP level, stress tolerance, and intracellular survival of the bacillus.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "Survival of Mycobacterium tuberculosis within the host macrophages requires the bacterial virulence regulator PhoP, but the underlying reason remains unknown. 3',5'-Cyclic adenosine monophosphate (cAMP) is one of the most widely used second messengers, which impacts a wide range of cellular responses in microbial pathogens including M. tuberculosis. Herein, we hypothesized that intra-bacterial cAMP level could be controlled by PhoP since this major regulator plays a key role in bacterial responses against numerous stress conditions. A transcriptomic analysis reveals that PhoP functions as a repressor of cAMP-specific phosphodiesterase (PDE) Rv0805, which hydrolyzes cAMP. In keeping with these results, we find specific recruitment of the regulator within the promoter region of rv0805 PDE, and absence of phoP or ectopic expression of rv0805 independently accounts for elevated PDE synthesis, leading to the depletion of intra-bacterial cAMP level. Thus, genetic manipulation to inactivate PhoP-rv0805-cAMP pathway decreases cAMP level, stress tolerance, and intracellular survival of the bacillus."
+        }
+       ],
+       "doi": "10.7554/eLife.92136",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "eLife",
+       "mentions": [
+        "phoP"
+       ],
+       "pmcid": "PMC11090507",
+       "quotable_text": "Mycobacterium tuberculosis PhoP integrates stress response to intracellular survival by regulating cAMP level.\n\nSurvival of Mycobacterium tuberculosis within the host macrophages requires the bacterial virulence regulator PhoP, but the underlying reason remains unknown. 3',5'-Cyclic adenosine monophosphate (cAMP) is one of the most widely used second messengers, which impacts a wide range of cellular responses in microbial pathogens including M. tuberculosis. Herein, we hypothesized that intra-bacterial cAMP level could be controlled by PhoP since this major regulator plays a key role in bacterial responses against numerous stress conditions. A transcriptomic analysis reveals that PhoP functions as a repressor of cAMP-specific phosphodiesterase (PDE) Rv0805, which hydrolyzes cAMP. In keeping with these results, we find specific recruitment of the regulator within the promoter region of rv0805 PDE, and absence of phoP or ectopic expression of rv0805 independently accounts for elevated PDE synthesis, leading to the depletion of intra-bacterial cAMP level. Thus, genetic manipulation to inactivate PhoP-rv0805-cAMP pathway decreases cAMP level, stress tolerance, and intracellular survival of the bacillus.",
+       "title": "Mycobacterium tuberculosis PhoP integrates stress response to intracellular survival by regulating cAMP level.",
+       "year": "2024"
+      },
+      "name": "Mycobacterium tuberculosis PhoP integrates stress response to intracellular survival by regulating cAMP level.",
+      "record_id": "38739431",
+      "retrieved_at": "2026-09-05T13:05:23.842659+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38739431/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The Mycobacterium tuberculosis (Mtb) two-component regulatory system PhoPR is implicated in pH sensing within the macrophage because it is strongly induced by acidic pH both in vitro and the macrophage phagosome. The carbonic anhydrase (CA) inhibitor ethoxzolamide inhibits PhoPR signaling supporting the hypothesis that CO2 may also play a role in regulating PhoPR. Here, we show that increasing CO2 concentration induces PhoPR signaling, at both pH 7.0 and pH 5.7. At acidic pH 5.7, a normally strong inducer of PhoPR signaling, increasing CO2 from 0.5% to 5% further induces the pathway, showing CO2 acts synergistically with acidic pH to induce the PhoPR regulon. Based on these findings, we propose that PhoPR functions as a CO2 sensor. Mtb has three CA (CanA, CanB, and CanC), and using CRISPR interference knockdowns and gene deletion mutants, we assessed which CAs regulate PhoPR signaling and macrophage survival. We first examined if CA played a role in Mtb pathogenesis and observed that CanB was required for survival in macrophages, where the knockdown strain had ~1-log reduction in survival. To further define the interplay of CO2 and Mtb signaling, we conducted transcriptional profiling experiments at varying pH and CO2 concentrations. As hypothesized, we observed that the induction of PhoPR at acidic pH is dependent on CO2 concentration, with a subset of core PhoPR regulon genes dependent on both 5% CO2 and acidic pH for their induction, including expression of the ESX-1 secretion system. Transcriptional profiling also revealed core CO2-responsive genes that were differentially expressed independently of the PhoPR regulon or the acidic pH-inducible regulon. Notably, genes regulated by a second two-component regulatory system, TrcRS, are associated with adaptation to changes in CO2.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The Mycobacterium tuberculosis (Mtb) two-component regulatory system PhoPR is implicated in pH sensing within the macrophage because it is strongly induced by acidic pH both in vitro and the macrophage phagosome. The carbonic anhydrase (CA) inhibitor ethoxzolamide inhibits PhoPR signaling supporting the hypothesis that CO2 may also play a role in regulating PhoPR. Here, we show that increasing CO2 concentration induces PhoPR signaling, at both pH 7.0 and pH 5.7. At acidic pH 5.7, a normally strong inducer of PhoPR signaling, increasing CO2 from 0.5% to 5% further induces the pathway, showing CO2 acts synergistically with acidic pH to induce the PhoPR regulon. Based on these findings, we propose that PhoPR functions as a CO2 sensor. Mtb has three CA (CanA, CanB, and CanC), and using CRISPR interference knockdowns and gene deletion mutants, we assessed which CAs regulate PhoPR signaling and macrophage survival. We first examined if CA played a role in Mtb pathogenesis and observed that CanB was required for survival in macrophages, where the knockdown strain had ~1-log reduction in survival. To further define the interplay of CO2 and Mtb signaling, we conducted transcriptional profiling experiments at varying pH and CO2 concentrations. As hypothesized, we observed that the induction of PhoPR at acidic pH is dependent on CO2 concentration, with a subset of core PhoPR regulon genes dependent on both 5% CO2 and acidic pH for their induction, including expression of the ESX-1 secretion system. Transcriptional profiling also revealed core CO2-responsive genes that were differentially expressed independently of the PhoPR regulon or the acidic pH-inducible regulon. Notably, genes regulated by a second two-component regulatory system, TrcRS, are associated with adaptation to changes in CO2."
+        }
+       ],
+       "doi": "10.1128/iai.00568-24",
+       "has_abstract": true,
+       "in_pmc": true,
+       "journal": "Infection and immunity",
+       "mentions": [
+        "phoP"
+       ],
+       "pmcid": "PMC11895460",
+       "quotable_text": "Carbon dioxide regulates Mycobacterium tuberculosis PhoPR signaling and virulence.\n\nThe Mycobacterium tuberculosis (Mtb) two-component regulatory system PhoPR is implicated in pH sensing within the macrophage because it is strongly induced by acidic pH both in vitro and the macrophage phagosome. The carbonic anhydrase (CA) inhibitor ethoxzolamide inhibits PhoPR signaling supporting the hypothesis that CO2 may also play a role in regulating PhoPR. Here, we show that increasing CO2 concentration induces PhoPR signaling, at both pH 7.0 and pH 5.7. At acidic pH 5.7, a normally strong inducer of PhoPR signaling, increasing CO2 from 0.5% to 5% further induces the pathway, showing CO2 acts synergistically with acidic pH to induce the PhoPR regulon. Based on these findings, we propose that PhoPR functions as a CO2 sensor. Mtb has three CA (CanA, CanB, and CanC), and using CRISPR interference knockdowns and gene deletion mutants, we assessed which CAs regulate PhoPR signaling and macrophage survival. We first examined if CA played a role in Mtb pathogenesis and observed that CanB was required for survival in macrophages, where the knockdown strain had ~1-log reduction in survival. To further define the interplay of CO2 and Mtb signaling, we conducted transcriptional profiling experiments at varying pH and CO2 concentrations. As hypothesized, we observed that the induction of PhoPR at acidic pH is dependent on CO2 concentration, with a subset of core PhoPR regulon genes dependent on both 5% CO2 and acidic pH for their induction, including expression of the ESX-1 secretion system. Transcriptional profiling also revealed core CO2-responsive genes that were differentially expressed independently of the PhoPR regulon or the acidic pH-inducible regulon. Notably, genes regulated by a second two-component regulatory system, TrcRS, are associated with adaptation to changes in CO2.",
+       "title": "Carbon dioxide regulates Mycobacterium tuberculosis PhoPR signaling and virulence.",
+       "year": "2025"
+      },
+      "name": "Carbon dioxide regulates Mycobacterium tuberculosis PhoPR signaling and virulence.",
+      "record_id": "39964175",
+      "retrieved_at": "2026-09-05T13:05:23.842659+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39964175/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "The ability to sense acid stress and mount an appropriate adaptive response by Mycobacterium tuberculosis, which adapts a long-term residence in the macrophage phagosome, remains one of the critical features that defines mycobacterial physiology and its intracellular location. To understand the mechanistic basis of adaptation of the intracellular pathogen, we studied global regulation of M. tuberculosis gene expression in response to acid stress. Although recent studies indicate a role for the virulence-associated phoP locus in pH-driven adaptation, in this study, we discovered a strikingly novel regulatory mechanism, which controls acid-stress homeostasis. Using mycobacterial protein fragment complementation and in vitro interaction analyses, we demonstrate that PhoP interacts with acid-inducible extracytoplasmic SigE (one of the 13 M. tuberculosis sigma factors) to regulate a complex transcriptional program. Based on these results, we propose a model to suggest that PhoP-SigE interaction represents a major requirement for the global acid stress response, absence of which leads to strongly reduced survival of the bacilli under acidic pH conditions. These results account for the significant growth attenuation of the phoP mutant in both cellular and animal models, and unravel the underlying global mechanism of how PhoP induces an adaptive program in response to acid stress.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "The ability to sense acid stress and mount an appropriate adaptive response by Mycobacterium tuberculosis, which adapts a long-term residence in the macrophage phagosome, remains one of the critical features that defines mycobacterial physiology and its intracellular location. To understand the mechanistic basis of adaptation of the intracellular pathogen, we studied global regulation of M. tuberculosis gene expression in response to acid stress. Although recent studies indicate a role for the virulence-associated phoP locus in pH-driven adaptation, in this study, we discovered a strikingly novel regulatory mechanism, which controls acid-stress homeostasis. Using mycobacterial protein fragment complementation and in vitro interaction analyses, we demonstrate that PhoP interacts with acid-inducible extracytoplasmic SigE (one of the 13 M. tuberculosis sigma factors) to regulate a complex transcriptional program. Based on these results, we propose a model to suggest that PhoP-SigE interaction represents a major requirement for the global acid stress response, absence of which leads to strongly reduced survival of the bacilli under acidic pH conditions. These results account for the significant growth attenuation of the phoP mutant in both cellular and animal models, and unravel the underlying global mechanism of how PhoP induces an adaptive program in response to acid stress."
+        }
+       ],
+       "doi": "10.1111/mmi.13635",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "Molecular microbiology",
+       "mentions": [
+        "phoP"
+       ],
+       "pmcid": "",
+       "quotable_text": "Mycobacterium tuberculosis virulence-regulator PhoP interacts with alternative sigma factor SigE during acid-stress response.\n\nThe ability to sense acid stress and mount an appropriate adaptive response by Mycobacterium tuberculosis, which adapts a long-term residence in the macrophage phagosome, remains one of the critical features that defines mycobacterial physiology and its intracellular location. To understand the mechanistic basis of adaptation of the intracellular pathogen, we studied global regulation of M. tuberculosis gene expression in response to acid stress. Although recent studies indicate a role for the virulence-associated phoP locus in pH-driven adaptation, in this study, we discovered a strikingly novel regulatory mechanism, which controls acid-stress homeostasis. Using mycobacterial protein fragment complementation and in vitro interaction analyses, we demonstrate that PhoP interacts with acid-inducible extracytoplasmic SigE (one of the 13 M. tuberculosis sigma factors) to regulate a complex transcriptional program. Based on these results, we propose a model to suggest that PhoP-SigE interaction represents a major requirement for the global acid stress response, absence of which leads to strongly reduced survival of the bacilli under acidic pH conditions. These results account for the significant growth attenuation of the phoP mutant in both cellular and animal models, and unravel the underlying global mechanism of how PhoP induces an adaptive program in response to acid stress.",
+       "title": "Mycobacterium tuberculosis virulence-regulator PhoP interacts with alternative sigma factor SigE during acid-stress response.",
+       "year": "2017"
+      },
+      "name": "Mycobacterium tuberculosis virulence-regulator PhoP interacts with alternative sigma factor SigE during acid-stress response.",
+      "record_id": "28142206",
+      "retrieved_at": "2026-09-05T13:05:23.842659+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28142206/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "A vaccine for bovine tuberculosis is urgently needed. The BCG vaccine (the Bacille Calmette-Gu\u00e9rin), currently the only licensed vaccine for tuberculosis in humans, offers variable protection in cattle. However, BCG is a highly safe vaccine, and any alternative vaccine must not only offer greater protection than BCG but also match and improve its safety profile. Mice are the most widely used animal models in tuberculosis research, particularly for pre-clinical vaccine evaluation. In these animal models, the key indicator of infection or vaccine efficacy is the mycobacteria load in the lungs. In this study, we evaluated the long-term protection conferred by vaccinating BALB/c mice with a Mycobacterium bovis triple mutant lacking the virulence genes phoP, esxA, and esxB. Our findings showed that the triple mutant protected the lungs of mice against M. bovis challenge for up to one-year post-vaccination. However, the bacterial load in the spleens predominantly comprised the vaccine strain, and the lungs also contained some of these bacteria. These results suggest that the vaccine strain persisted in the mouse organs for at least one year, which raised concerns about its potential safety for animal vaccination.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "A vaccine for bovine tuberculosis is urgently needed. The BCG vaccine (the Bacille Calmette-Gu\u00e9rin), currently the only licensed vaccine for tuberculosis in humans, offers variable protection in cattle. However, BCG is a highly safe vaccine, and any alternative vaccine must not only offer greater protection than BCG but also match and improve its safety profile. Mice are the most widely used animal models in tuberculosis research, particularly for pre-clinical vaccine evaluation. In these animal models, the key indicator of infection or vaccine efficacy is the mycobacteria load in the lungs. In this study, we evaluated the long-term protection conferred by vaccinating BALB/c mice with a Mycobacterium bovis triple mutant lacking the virulence genes phoP, esxA, and esxB. Our findings showed that the triple mutant protected the lungs of mice against M. bovis challenge for up to one-year post-vaccination. However, the bacterial load in the spleens predominantly comprised the vaccine strain, and the lungs also contained some of these bacteria. These results suggest that the vaccine strain persisted in the mouse organs for at least one year, which raised concerns about its potential safety for animal vaccination."
+        }
+       ],
+       "doi": "10.1016/j.tube.2024.102574",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "Tuberculosis (Edinburgh, Scotland)",
+       "mentions": [
+        "phoP"
+       ],
+       "pmcid": "",
+       "quotable_text": "Mycobacterium bovis mutant in the virulence factors PhoP, ESAT-6 and CFP-10 persisted in mouse organs after a year post-vaccination.\n\nA vaccine for bovine tuberculosis is urgently needed. The BCG vaccine (the Bacille Calmette-Gu\u00e9rin), currently the only licensed vaccine for tuberculosis in humans, offers variable protection in cattle. However, BCG is a highly safe vaccine, and any alternative vaccine must not only offer greater protection than BCG but also match and improve its safety profile. Mice are the most widely used animal models in tuberculosis research, particularly for pre-clinical vaccine evaluation. In these animal models, the key indicator of infection or vaccine efficacy is the mycobacteria load in the lungs. In this study, we evaluated the long-term protection conferred by vaccinating BALB/c mice with a Mycobacterium bovis triple mutant lacking the virulence genes phoP, esxA, and esxB. Our findings showed that the triple mutant protected the lungs of mice against M. bovis challenge for up to one-year post-vaccination. However, the bacterial load in the spleens predominantly comprised the vaccine strain, and the lungs also contained some of these bacteria. These results suggest that the vaccine strain persisted in the mouse organs for at least one year, which raised concerns about its potential safety for animal vaccination.",
+       "title": "Mycobacterium bovis mutant in the virulence factors PhoP, ESAT-6 and CFP-10 persisted in mouse organs after a year post-vaccination.",
+       "year": "2024"
+      },
+      "name": "Mycobacterium bovis mutant in the virulence factors PhoP, ESAT-6 and CFP-10 persisted in mouse organs after a year post-vaccination.",
+      "record_id": "39509845",
+      "retrieved_at": "2026-09-05T13:05:23.842659+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39509845/"
+     },
+     {
+      "cached": false,
+      "detail": {
+       "abstract": "WhiB6 in pathogenic mycobacteria is highly upregulated during NO stress, hypoxia, and macrophage infection. Its expression primarily results from transcriptional control by a two-component response regulator PhoP in response to the various stresses exerted on mycobacterial cells inside phagosomes. Herein, we investigated the transcriptional and posttranscriptional regulatory mechanism of whiB6 expression. We found that PhoP binds to the PhoP-signature sequences located upstream to the core promoter region of whiB6 gene and controls its expression at the transcriptional level. Phosphorylation of PhoP is obligatory for binding to whiB6 promoter. A dormancy regulatory factor DosR, although doesn't bind to whiB6 gene, can bind to the PhoP-bound whiB6 gene implicating its potential role in whiB6 expression. A virulence-associated sRNA MTS1338 directly binds to the coding region of whiB6 gene presumably protecting it from cellular ribonucleases. Induction of MTS1338 in response to low pH and oxidative stress increases whiB6 accumulation likely through the stabilization of whiB6 transcript at the posttranscriptional level. This study substantially increases our knowledge of the regulation of whiB6 expression in M. tuberculosis.",
+       "abstract_sections": [
+        {
+         "label": "",
+         "text": "WhiB6 in pathogenic mycobacteria is highly upregulated during NO stress, hypoxia, and macrophage infection. Its expression primarily results from transcriptional control by a two-component response regulator PhoP in response to the various stresses exerted on mycobacterial cells inside phagosomes. Herein, we investigated the transcriptional and posttranscriptional regulatory mechanism of whiB6 expression. We found that PhoP binds to the PhoP-signature sequences located upstream to the core promoter region of whiB6 gene and controls its expression at the transcriptional level. Phosphorylation of PhoP is obligatory for binding to whiB6 promoter. A dormancy regulatory factor DosR, although doesn't bind to whiB6 gene, can bind to the PhoP-bound whiB6 gene implicating its potential role in whiB6 expression. A virulence-associated sRNA MTS1338 directly binds to the coding region of whiB6 gene presumably protecting it from cellular ribonucleases. Induction of MTS1338 in response to low pH and oxidative stress increases whiB6 accumulation likely through the stabilization of whiB6 transcript at the posttranscriptional level. This study substantially increases our knowledge of the regulation of whiB6 expression in M. tuberculosis."
+        }
+       ],
+       "doi": "10.1016/j.bbrc.2024.151093",
+       "has_abstract": true,
+       "in_pmc": false,
+       "journal": "Biochemical and biophysical research communications",
+       "mentions": [
+        "phoP"
+       ],
+       "pmcid": "",
+       "quotable_text": "Transcriptional and post-transcriptional regulation of whiB6 by a response regulator PhoP and a small noncoding RNA MTS1338 in Mycobacterium tuberculosis.\n\nWhiB6 in pathogenic mycobacteria is highly upregulated during NO stress, hypoxia, and macrophage infection. Its expression primarily results from transcriptional control by a two-component response regulator PhoP in response to the various stresses exerted on mycobacterial cells inside phagosomes. Herein, we investigated the transcriptional and posttranscriptional regulatory mechanism of whiB6 expression. We found that PhoP binds to the PhoP-signature sequences located upstream to the core promoter region of whiB6 gene and controls its expression at the transcriptional level. Phosphorylation of PhoP is obligatory for binding to whiB6 promoter. A dormancy regulatory factor DosR, although doesn't bind to whiB6 gene, can bind to the PhoP-bound whiB6 gene implicating its potential role in whiB6 expression. A virulence-associated sRNA MTS1338 directly binds to the coding region of whiB6 gene presumably protecting it from cellular ribonucleases. Induction of MTS1338 in response to low pH and oxidative stress increases whiB6 accumulation likely through the stabilization of whiB6 transcript at the posttranscriptional level. This study substantially increases our knowledge of the regulation of whiB6 expression in M. tuberculosis.",
+       "title": "Transcriptional and post-transcriptional regulation of whiB6 by a response regulator PhoP and a small noncoding RNA MTS1338 in Mycobacterium tuberculosis.",
+       "year": "2024"
+      },
+      "name": "Transcriptional and post-transcriptional regulation of whiB6 by a response regulator PhoP and a small noncoding RNA MTS1338 in Mycobacterium tuberculosis.",
+      "record_id": "39616939",
+      "retrieved_at": "2026-09-05T13:05:23.842659+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39616939/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": false,
+      "content_sha256": "3633125860326a74b2f2c7deeeda33dfbaef59ba052693ef759824c5dbadd6a6",
+      "retrieved_at": "2026-09-05T13:05:23.383911+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=8&retmode=json&sort=relevance&term=%22phoP%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
+     },
+     {
+      "cached": false,
+      "content_sha256": "c4395edfc6b0c15d2db54a7a138741a29972ce119ed0c97c7201404dbc65beac",
+      "retrieved_at": "2026-09-05T13:05:23.842659+00:00",
+      "status": 200,
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=31099236%2C29756729%2C41296761%2C38739431%2C39964175%2C28142206%2C39509845%2C39616939&retmode=xml&tool=kegg-string-mcp"
+     }
+    ],
+    "resolved": {
+     "matched_by": "pubmed_search",
+     "query_translation": "\"phoP\"[All Fields] AND \"Mycobacterium tuberculosis\"[All Fields]",
+     "term": "\"phoP\" AND \"Mycobacterium tuberculosis\""
+    }
+   },
+   "tool": "pubmed_abstracts"
+  }
+ ],
+ "id": "phoP",
+ "mode": "single",
+ "organism": "mtu",
+ "summary": "# phoP (Rv0757) \u2014 *Mycobacterium tuberculosis*\n\n## Identity and annotation status\n\n- **KEGG**: resolves to `mtu:Rv0757` by symbol, but returns **no pathway assignments**. Per the tool notes: \"*The gene exists in KEGG but is not mapped to any pathway in this organism.*\" So there is no KEGG pathway to cite for this gene \u2014 this is an annotation gap, not an absence of biology.\n- **UniProt** (`P71814`): the entry exists and is named \"Possible two component system response transcriptional positive regulator PhoP\", but it is **unreviewed (TrEMBL) and holds no FUNCTION statement**, no catalytic activity and no subunit description (`has_experimental_function: false`). It does list nine PDB structures (2RV8, 3R0J, 5ED4, 9JI3, 9JI4, 9JI5, 9KET, 9KEU, 9KEV), so the protein is structurally well characterised even though the curated function text is empty.\n\n**Both structured sources are therefore effectively silent on function** \u2014 which is why the substantive annotation below rests on literature, a single evidence class.\n\n## Function (from literature)\n\nPhoP is the response regulator half of the PhoPR two-component system and a master virulence regulator:\n\n- PMID:29756729 \"PhoPR is an important two-component regulatory system in Mycobacterium tuberculosis. PhoP is essential for virulence as a response regulator involved in cell wall lipid biosynthesis and regulation of gene expression.\"\n- **Signal sensed**: PMID:39964175 \"The Mycobacterium tuberculosis (Mtb) two-component regulatory system PhoPR is implicated in pH sensing within the macrophage because it is strongly induced by acidic pH both in vitro and the macrophage phagosome\", and the same work proposes an additional input \u2014 \"increasing CO2 from 0.5% to 5% further induces the pathway, showing CO2 acts synergistically with acidic pH to induce the PhoPR regulon.\"\n- **Direct DNA binding, phosphorylation-dependent**: PMID:39616939 \"We found that PhoP binds to the PhoP-signature sequences located upstream to the core promoter region of whiB6 gene and controls its expression at the transcriptional level. Phosphorylation of PhoP is obligatory for binding to whiB6 promoter.\"\n- **Acts as a repressor too**, not only a positive regulator as the UniProt name suggests: PMID:38739431 \"PhoP functions as a repressor of cAMP-specific phosphodiesterase (PDE) Rv0805, which hydrolyzes cAMP\", and \"genetic manipulation to inactivate PhoP-rv0805-cAMP pathway decreases cAMP level, stress tolerance, and intracellular survival of the bacillus.\"\n- **Cell envelope integrity / stress resistance**: PMID:41296761 \"our data show that an important role for PhoP is to provide M. tuberculosis resistance to methylglyoxal toxicity in vivo by regulating cell envelope integrity\", with \"phoP mutants are highly attenuated in mice.\"\n- **Lipid/metabolic output**: PMID:31099236 reports increased \"production of phosphatidylinositol mannosides, a novel PhoP-regulated phenotype in the most widespread lineages of M. tuberculosis.\"\n- **Applied relevance**: PMID:31099236 \"MTBVAC is a live attenuated M. tuberculosis vaccine constructed by genetic deletions in the phoP and fadD26 virulence genes.\"\n\n## Interaction partners (STRING, species 83332)\n\n**Best supported \u2014 cognate kinase and genomic neighbourhood** (evidence beyond textmining):\n\n| Partner | STRING ID | Score | Strongest non-textmining channel |\n|---|---|---|---|\n| phoR | `83332.Rv0758` | 0.999 | neighborhood 0.817, cooccurrence 0.772 |\n| Rv0756c | `83332.Rv0756c` | 0.783 | neighborhood 0.773 |\n\nphoR is the sensor kinase encoded immediately adjacent, and the genomic-context signal is independent of literature \u2014 this is the one interaction I would call solidly supported as a functional pair.\n\n**Other response-regulator/kinase pairs** with cooccurrence + weak experimental support (`evidence_beyond_textmining: true`, but driven mainly by phylogenetic cooccurrence across two-component systems rather than direct physical evidence \u2014 likely reflecting shared domain family rather than a PhoP-specific complex): prrB `83332.Rv0902c` (0.963), senX3 `83332.Rv0490` (0.918), trcS `83332.Rv1032c` (0.896), Rv0600c `83332.Rv0600c` (0.895), tcrY `83332.Rv3764c` (0.881), mprB `83332.Rv0982` (0.843), mtrB `83332.Rv3245c` (0.809).\n\n**Textmining-only partners** \u2014 STRING flags `evidence_beyond_textmining: false` for these, so they are supported essentially by literature co-mention alone, and the abstracts above are plausibly the very source of those scores. This is **one** line of evidence, not two: esxA `83332.Rv3875` (0.913), whiB3 `83332.Rv3416` (0.903), tatC `83332.Rv2093c` (0.871), fadD26 `83332.Rv2930` (0.851), devR `83332.Rv3133c` (0.845), esxB `83332.Rv3874` (0.812), sigH `83332.Rv3223c` (0.760), Rv0601c `83332.Rv0601c` (0.727), espR `83332.Rv3849` (0.719), pks2 `83332.Rv3825c` (0.718), pks4 `83332.Rv1181` (0.714).\n\nTwo of these have literature consistent with a *regulatory* (not necessarily physical) relationship: the ESX-1 substrates esxA/esxB \u2014 PMID:39964175 \"a subset of core PhoPR regulon genes dependent on both 5% CO2 and acidic pH for their induction, including expression of the ESX-1 secretion system\"; and fadD26, the co-deleted gene in MTBVAC (PMID:31099236, quoted above). Note a documented physical partner, SigE, does **not** appear in this STRING list \u2014 PMID:28142206 \"we demonstrate that PhoP interacts with acid-inducible extracytoplasmic SigE (one of the 13 M. tuberculosis sigma factors) to regulate a complex transcriptional program.\"\n\n## Lineage-marker check\n\n**Positive.** phoP contains one lineage-defining position: `tbdb:851797` \u2014 H37Rv position 851,797, allele A, marking **lineage1.1.1.1 (Indo-Oceanic)**.\n\nCaveat, not a conclusion: 855 of 4,008 M. tuberculosis genes carry such a position, and this result does **not** mean any particular phoP variant is that marker. If phoP came out of a scan over clinical isolates, compare your variant's H37Rv coordinate against 851,797, and treat any association as potentially confounded by population structure until it is conditioned on lineage in genotype data \u2014 a test this tool cannot perform.",
+ "target": "phoP",
+ "turns": [
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "phoP",
+      "organism": "mtu"
+     },
+     "name": "kegg_pathways"
+    },
+    {
+     "input": {
+      "gene": "phoP",
+      "organism_id": 83332
+     },
+     "name": "uniprot_protein"
+    },
+    {
+     "input": {
+      "gene": "phoP",
+      "limit": 20,
+      "required_score": 700,
+      "species": 83332
+     },
+     "name": "string_partners"
+    },
+    {
+     "input": {
+      "gene": "phoP",
+      "organism": "mtu"
+     },
+     "name": "lineage_markers"
+    }
+   ],
+   "turn": 1
+  },
+  {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "gene": "phoP",
+      "limit": 8,
+      "organism": "Mycobacterium tuberculosis"
+     },
+     "name": "pubmed_abstracts"
+    }
+   ],
+   "turn": 2
+  },
+  {
+   "stop_reason": "end_turn",
+   "tools_requested": [],
+   "turn": 3
+  }
+ ]
+}
