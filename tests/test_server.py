@@ -9,7 +9,8 @@ def _tools():
 
 def test_all_tools_are_registered():
     assert set(_tools()) == {"kegg_pathways", "string_partners", "pubmed_abstracts",
-                             "uniprot_protein", "lineage_markers"}
+                             "uniprot_protein", "lineage_markers",
+                             "resistance_variants"}
 
 
 def test_tools_declare_read_only():
@@ -75,6 +76,7 @@ TOOL_CUES = {
     "pubmed_abstracts": "abstract",
     "uniprot_protein": "UniProt",
     "lineage_markers": "lineage_markers",
+    "resistance_variants": "resistance_variants",
 }
 
 

@@ -54,6 +54,14 @@ Rules, in order of importance:
    marker, since 855 of 4,008 genes contain one. Report it as a caveat to test
    against genotype data, never as a conclusion.
 
+9. Call resistance_variants for every gene too. A gene is resistance-associated
+   if ANY catalogued variant is graded associated, however many are not -- report
+   that flag, the drugs, and the grading counts. Keep the three negatives apart:
+   a gene absent from the catalogue was never assessed, a gene present with no
+   associated variant was assessed and came back negative, and "Uncertain
+   significance" is neither. The gene flag never grades a variant; if you are
+   given a specific mutation, look that mutation up.
+
 Call tools as many times as you need and no more. Stop when further calls would
 not change the annotation. Literature is the expensive, noisy channel -- reach
 for it when the structured tools leave a real question open, not by default."""

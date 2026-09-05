@@ -36,6 +36,11 @@ KEGG_PATHWAY = r"[a-z]{3,4}\d{5}"
 # unprefixed 7-digit position is indistinguishable from a PMID, and a citation
 # validator that cannot tell a genome coordinate from a paper is worse than none.
 TBDB_MARKER = r"tbdb:\d{1,7}"
+# A WHO-catalogue variant, e.g. tbdb:katG:p.Ser315Thr. The gene segment starts
+# with a letter and the lineage form is all digits, so the two never collide.
+# Mutation strings carry HGVS punctuation (p.Ser315Thr, c.-15C>T, n.1401A>G) and
+# consequence terms (frameshift_variant), so the tail is deliberately permissive.
+TBDB_VARIANT = r"tbdb:[A-Za-z]\w*:[A-Za-z0-9_.>*-]+"
 STRING_PROTEIN = r"\d{2,7}\.(?=[A-Za-z0-9_]*[A-Za-z])[A-Za-z0-9_]+"
 # PMIDs only in explicit PMID: form. A bare 8-digit number is ambiguous -- it
 # could be a coordinate, a score, a year range -- and treating every one as a
@@ -47,12 +52,16 @@ CITATION_PATTERNS = [
     re.compile(r"\b(?:" + STRING_PROTEIN + r")\b"),
     re.compile(r"\b(?:" + PMID + r")\b"),
     re.compile(r"\b(?:" + UNIPROT_ACCESSION + r")\b"),
+    # Variant before marker: both start "tbdb:", and the shorter pattern would
+    # otherwise claim the prefix of a variant ID and leave the rest dangling.
+    re.compile(r"\b(?:" + TBDB_VARIANT + r")"),
     re.compile(r"\b(?:" + TBDB_MARKER + r")"),
 ]
 
 # Any identifier that can appear as a citation.
 CITE_TOKEN = ("(?:" + PMID + "|" + KEGG_PATHWAY + "|" + STRING_PROTEIN
-              + "|" + UNIPROT_ACCESSION + "|" + TBDB_MARKER + ")")
+              + "|" + UNIPROT_ACCESSION + "|" + TBDB_VARIANT
+              + "|" + TBDB_MARKER + ")")
 
 # Only the PROSE sources may carry a quote. A KEGG pathway ID and a STRING score
 # are structured -- the record means one thing and there is no text to quote from.

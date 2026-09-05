@@ -36,21 +36,18 @@ been observed in practice; this is reasoning about the code, not an incident.
 Together these keep the fallback useful for the `dosR` / `icl1` cases it was
 built for while removing the guess.
 
-## No resistance-variant annotation
+## Resistance-variant nomenclature is matched literally
 
-`lineage_markers` covers `tbdb/barcode.bed`: lineage-specific SNPs, positions
-whose allele marks a clade of the M. tuberculosis phylogeny. That is the
-confounding check -- two genes carrying markers of the same clade appear
-associated in a scan over clinical isolates whether or not any biology connects
-them.
+`resistance_variants` matches a `mutation` argument against the catalogue string
+exactly. The WHO catalogue writes three-letter HGVS -- `p.Ser315Thr`, `c.-15C>T`,
+`n.1401A>G` -- plus consequence terms such as `frameshift_variant`. A pipeline
+emitting `S315T` will match nothing, and the tool says so in a note rather than
+reporting the variant as ungraded.
 
-TB-Profiler also ships **resistance-conferring** mutations, graded against the
-WHO catalogue of mutations. Nothing here reads them. That is a separate dataset
-rather than a different view of this one: a gene can carry a lineage marker with
-no resistance relevance, and a resistance mutation is usually not
-lineage-defining.
-
-A `resistance_variants` tool over that file would fit the existing shape --
-citable `record_id` per variant, WHO confidence grading in `detail`, same polite
-client and cache. Worth doing if variant-level resistance evidence is wanted
-alongside the lineage check; it is a second tool, not a change to this one.
+Normalisation is deliberately not done yet, because it is not one mapping. One-
+to three-letter amino acid codes are mechanical; numbering conventions are not.
+rpoB variants are reported in both M. tuberculosis and E. coli coordinates,
+offset by 81 -- S450L and S531L are the same variant -- and which convention a
+caller uses is not recoverable from the string. Normalising silently would
+convert a lookup miss into a confident wrong answer, so it should arrive as an
+explicit, visible step with its own tests.
