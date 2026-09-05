@@ -112,9 +112,16 @@ class Comparison:
         return path
 
 
+PAIR_QUERY = "What is the relationship between {a} and {b} in Mycobacterium tuberculosis?"
+
+
+def queries_for_pairs(pairs: list[tuple[str, str]]) -> list[tuple[str, list[str]]]:
+    """One query per pair, phrased identically so the arms see the same input."""
+    return [(PAIR_QUERY.format(a=a, b=b), [a, b]) for a, b in pairs]
+
+
 def pair_queries(genes: list[str]) -> list[tuple[str, list[str]]]:
-    return [(f"What is the relationship between {a} and {b} in Mycobacterium tuberculosis?",
-             [a, b]) for a, b in combinations(genes, 2)]
+    return queries_for_pairs(list(combinations(genes, 2)))
 
 
 def compare(arms: dict[str, Any], queries: list[tuple[str, list[str]]],
