@@ -223,3 +223,27 @@ def test_caller_identity_is_never_written_to_disk(tmp_path, monkeypatch):
     c.get("https://string-db.org/api/json/x", {"q": "katG", "caller_identity": "alice@example.com"})
     on_disk = "".join(p.read_text() for p in tmp_path.rglob("*.json"))
     assert "alice@example.com" not in on_disk
+
+
+def test_a_personal_email_is_redacted_from_the_audit_url():
+    """NCBI asks callers to send an email so it can contact whoever is hammering
+    the service. That address travelled into the audit URL on every live fetch,
+    into the run store, into demo runs committed to a public repository, and into
+    the demo page built from them. IDENTITY_PARAMS kept it out of the cache key
+    but not out of provenance."""
+    _, cache_key, audit = PoliteClient()._urls(
+        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+        {"db": "pubmed", "email": "someone@example.org", "term": "katG"})
+    assert "someone@example.org" not in audit
+    assert "email=REDACTED" in audit
+    assert "email" not in cache_key          # already true, and stays true
+    assert "term=katG" in audit              # the checkable part survives
+
+
+def test_the_request_still_carries_the_email():
+    """Redaction is for what gets written down, not for what gets sent -- NCBI's
+    terms ask for the address."""
+    request_url, _, _ = PoliteClient()._urls(
+        "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi",
+        {"db": "pubmed", "email": "someone@example.org"})
+    assert "someone%40example.org" in request_url or "someone@example.org" in request_url

@@ -54,6 +54,21 @@ IDENTITY_PARAMS = {"caller_identity", "tool", "email", "api_key"}
 # be written down anywhere, so it is scrubbed before provenance ever sees it.
 SECRET_PARAMS = {"api_key"}
 
+# Identifies a person rather than authenticating one. NCBI asks callers to send
+# an email so it can contact whoever is hammering the service; that address then
+# travelled into the audit URL on every live fetch, into ToolResult.requests,
+# into the run store, into the demo runs committed to a public repository, and
+# into the published demo page built from them. Redacted from the audit URL for
+# the same reason as a credential: a provenance trail is written down and shared,
+# and a URL a reader can check does not need the operator's address in it. The
+# request still carries it -- NCBI's terms ask for that -- and it is already
+# absent from the cache key via IDENTITY_PARAMS.
+PERSONAL_PARAMS = {"email"}
+
+# Everything redacted before provenance sees it, as opposed to merely dropped
+# from the cache key.
+REDACTED_IN_AUDIT = SECRET_PARAMS | PERSONAL_PARAMS
+
 # Response headers kept as provenance. Deliberately a whitelist: response headers
 # can carry cookies and tokens, and everything here lands in the run store on disk.
 CAPTURED_HEADERS = {"x-uniprot-release", "x-uniprot-release-date"}
@@ -114,7 +129,7 @@ class PoliteClient:
         request_url = f"{url}?{urlencode(items)}"
         keyed = [(k, v) for k, v in items if k not in IDENTITY_PARAMS]
         cache_key = f"{url}?{urlencode(keyed)}" if keyed else url
-        scrubbed = [(k, REDACTED if k in SECRET_PARAMS else v) for k, v in items]
+        scrubbed = [(k, REDACTED if k in REDACTED_IN_AUDIT else v) for k, v in items]
         audit_url = f"{url}?{urlencode(scrubbed)}"
         return request_url, cache_key, audit_url
 
