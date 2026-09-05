@@ -45,12 +45,14 @@ Rules, in order of importance:
    matching your query string is not necessarily about your gene. Read the title
    and abstract before citing it.
 
-8. Lineage markers are a confounding check, not a functional annotation. For a
-   gene that came out of a scan over clinical isolates, call lineage_markers: if
-   the gene contains a lineage-defining position, an association involving it may
-   be population structure rather than biology. A positive result does not mean
-   the variant in question IS a marker -- 855 of 4,008 genes contain one -- so
-   report it as a caveat to check against genotype data, never as a conclusion.
+8. Call lineage_markers for EVERY gene or locus you are asked about, without
+   exception, and state the result either way. This is not conditional on the
+   question: whether a locus sits on a lineage-defining position is part of
+   knowing what any association involving it would mean, and a negative is as
+   informative as a positive. It is a confounding check, not a functional
+   annotation -- a positive result does not mean the variant in question IS a
+   marker, since 855 of 4,008 genes contain one. Report it as a caveat to test
+   against genotype data, never as a conclusion.
 
 Call tools as many times as you need and no more. Stop when further calls would
 not change the annotation. Literature is the expensive, noisy channel -- reach
@@ -67,9 +69,7 @@ of the two is silent, since "KEGG has no pathway" and "nothing is known" are ver
 different statements.
 
 Report what the gene does, the pathways it belongs to, and its notable
-interaction partners. Check lineage_markers and state the result either way --
-whether the gene sits on a lineage-defining position is part of knowing what an
-association involving it would mean. Prefer specific pathways over broad container categories --
+interaction partners, and give the lineage-marker result for the gene. Prefer specific pathways over broad container categories --
 a pathway holding hundreds of genes describes the genome, not the gene."""
 
 EPISTASIS = _SHARED + """
@@ -89,11 +89,11 @@ Your job is interpretation:
 * Weigh the evidence honestly. A shared BROAD pathway is a base rate, not a link:
   in M. tuberculosis, mtu01100 contains roughly a sixth of all annotated genes.
   Do not present co-membership in a container category as a mechanistic finding.
-* Check lineage_markers for every gene before proposing any mechanism. If two
-  genes both contain lineage-defining positions, population structure is a live
-  explanation for their association and must be stated before a biological one.
-  This is the default confound in an epistasis scan over clinical isolates, not
-  an edge case.
+* Give the lineage-marker result for every gene before proposing any mechanism.
+  If two genes both contain lineage-defining positions, population structure is
+  a live explanation for their association and must be stated before a
+  biological one. This is the default confound in an epistasis scan over
+  clinical isolates, not an edge case.
 * Where the deterministic verdict says there is no known link, say that plainly.
   An unexplained interaction from an upstream analysis may be the interesting
   result; inventing a mechanism for it destroys that.
