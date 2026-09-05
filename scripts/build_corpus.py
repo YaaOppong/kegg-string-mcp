@@ -83,6 +83,10 @@ def main() -> int:
               f"{summary['thin']} thin ({summary['functional_gap']} with a functional gap)")
         for reason, n in sorted(summary["reason_counts"].items(), key=lambda kv: -kv[1]):
             print(f"    {reason:26} {n}")
+        if summary["needs_review"]:
+            print("    NEEDS REVIEW, not routed (a human must pick the locus tag):")
+            for gene, candidates in sorted(summary["needs_review"].items()):
+                print(f"      {gene:10} candidates: {', '.join(candidates)}")
         if summary["lookup_failed"]:
             print("    UNANSWERED, not routed (fix the identifier or retry):")
             for gene, sources in sorted(summary["lookup_failed"].items()):

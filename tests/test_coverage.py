@@ -45,12 +45,20 @@ class FakeKegg:
 
 
 class FakeUniProt:
-    def __init__(self, data, traced=True, unresolved=(), locus=None):
+    def __init__(self, data, traced=True, unresolved=(), locus=None, entries=None):
         self.data, self.traced, self.unresolved = data, traced, set(unresolved)
-        self.locus, self.asked = locus, []
+        self.locus, self.asked, self.entries = locus, [], entries
 
     def protein(self, gene, organism_id=83332):
         self.asked.append(gene)
+        if self.entries is not None:
+            # entries: [(locus_tag, reviewed), ...] -- a symbol matching several
+            # UniProt records, which is the ordinary case for a TB gene symbol.
+            records = [SimpleNamespace(detail={"locus_tags": [tag], "reviewed": rev,
+                                               "function_statements": [{}],
+                                               "has_experimental_function": True})
+                       for tag, rev in self.entries]
+            return _result(records, traced=self.traced, matched_by="uniprot_search")
         statements, experimental = self.data.get(gene, (0, False))
         result = _protein(statements, experimental, traced=self.traced,
                           resolved=gene not in self.unresolved)
@@ -229,3 +237,67 @@ def test_an_unresolvable_gene_still_reports_unknown():
     coverage = assess(["nosuchgene"], kegg, uniprot)[0]
     assert coverage.unknown == ["uniprot", "kegg"]
     assert not coverage.thin
+
+
+# --- ambiguous locus tags ------------------------------------------------------
+# A symbol search matches several UniProt entries. Taking the first record's tag
+# would let an unreviewed fragment or a paralogue redirect the retry to a
+# different gene, so the reviewed entry breaks the tie and an unbroken tie is
+# refused and flagged rather than guessed.
+
+def test_untagged_entries_do_not_create_ambiguity():
+    """The ordinary case: katG returns three entries and only the reviewed one
+    carries Rv1908c, so there is nothing to disambiguate."""
+    kegg = KeggWithLocus("Rv1908c", pathways=2)
+    uniprot = FakeUniProt({}, entries=[("Rv1908c", True)])
+    coverage = assess(["katG"], kegg, uniprot)[0]
+    assert coverage.locus_candidates == []
+    assert not coverage.needs_review
+
+
+def test_the_reviewed_entry_breaks_a_tie():
+    """SwissProt versus TrEMBL is exactly this distinction."""
+    kegg = KeggWithLocus("Rv1908c", pathways=2)
+    uniprot = FakeUniProt({}, entries=[("Rv9999", False), ("Rv1908c", True)])
+    coverage = assess(["katG"], kegg, uniprot)[0]
+    assert coverage.locus_candidates == []
+    assert kegg.asked == ["katG", "Rv1908c"]      # retried with the reviewed tag
+
+
+def test_an_unbroken_tie_is_flagged_not_guessed():
+    """Two reviewed entries with different tags: the code cannot tell which gene
+    was meant, and a coverage verdict about the wrong gene is worse than none."""
+    kegg = KeggWithLocus("Rv1908c", pathways=2)
+    uniprot = FakeUniProt({}, entries=[("Rv0169", True), ("Rv3512", True)])
+    coverage = assess(["ambig"], kegg, uniprot)[0]
+    assert coverage.needs_review
+    assert coverage.locus_candidates == ["Rv0169", "Rv3512"]
+    assert coverage.resolved_via == ""
+    assert kegg.asked == ["ambig"]                # no retry on a guess
+
+
+def test_an_ambiguous_gene_is_routed_nowhere():
+    kegg = KeggWithLocus("Rv1908c", pathways=2)
+    uniprot = FakeUniProt({}, entries=[("Rv0169", True), ("Rv3512", True)])
+    coverages = assess(["ambig"], kegg, uniprot)
+    assert not coverages[0].thin
+    assert not coverages[0].functional_gap
+    assert route(coverages) == []
+
+
+def test_zero_unreviewed_candidates_still_resolve_when_they_agree():
+    """Several records naming the SAME tag is not a tie."""
+    kegg = KeggWithLocus("Rv1908c", pathways=2)
+    uniprot = FakeUniProt({}, entries=[("Rv1908c", False), ("Rv1908c", False)])
+    coverage = assess(["katG"], kegg, uniprot)[0]
+    assert coverage.locus_candidates == []
+    assert coverage.resolved_via == "Rv1908c"
+
+
+def test_summary_lists_the_genes_a_human_must_check():
+    kegg = KeggWithLocus("Rv1908c", pathways=2)
+    uniprot = FakeUniProt({}, entries=[("Rv0169", True), ("Rv3512", True)])
+    summary = summarise(assess(["ambig"], kegg, uniprot))
+    assert summary["needs_review"] == {"ambig": ["Rv0169", "Rv3512"]}
+    assert summary["well_covered"] == 0
+    assert summary["thin"] == 0
