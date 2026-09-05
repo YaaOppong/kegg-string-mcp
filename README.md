@@ -150,7 +150,7 @@ in the retrieved text, not the genes queried.
 ## Evaluation
 
 **The reference is incomplete, and that is the point.** KEGG assigns a pathway to just
-**1,171 of 4,008** *M. tuberculosis* genes — 29%. `gyrA`, one of the most studied genes
+**about 1,170 of 4,008** *M. tuberculosis* genes — 29%. `gyrA`, one of the most studied genes
 in TB, has none. So the gold set has two classes:
 
 - **positive controls** — KEGG assigns pathways. Measures whether the pipeline
