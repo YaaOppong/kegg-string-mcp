@@ -875,3 +875,25 @@ def test_a_retrieved_lineage_marker_passes():
                       citable_ids={"tbdb:852641"})
     assert report.passed
     assert report.unsupported == []
+
+
+def test_a_citation_inside_a_quotation_does_not_bind_the_next_span():
+    """From a real run. Quoting a tool note that names its own record put an
+    accession inside the quotation with no citation after the closing mark. The
+    leading-citation pattern ran from that accession, across a closing mark it
+    could not tell from an opening one, and bound the model's own prose as a
+    quotation -- which then failed as "not in source". A false accusation of
+    fabrication against correct output is the one failure a validator must not
+    have."""
+    text = ('The note is explicit: "UniProt holds no FUNCTION statement for P71814 - '
+            'the entry exists but its function is not described." '
+            '`has_experimental_function` is false, and there is no subunit annotation '
+            'to quote. The name is "Possible two component system regulator" (P71814).')
+    quotes = extract_quotes(text)
+    assert quotes == [("P71814", "Possible two component system regulator")]
+
+
+def test_a_leading_citation_outside_any_quotation_still_binds():
+    """The guard must not cost the ordinary leading-citation form."""
+    text = 'PMID:35919400 reported that "the isolates carried katG mutations".'
+    assert extract_quotes(text) == [("35919400", "the isolates carried katG mutations")]

@@ -236,6 +236,17 @@ def extract_citations(text: str) -> list[str]:
     return found
 
 
+def _quotation_ranges(text: str) -> list[tuple[int, int]]:
+    """Character ranges enclosed by quotation marks, paired left to right.
+
+    Straight quotes carry no direction, so a regex cannot tell an opening mark
+    from a closing one; pairing them in order can. This is what stops a citation
+    that sits INSIDE a quotation from being read as introducing the NEXT one.
+    """
+    marks = [i for i, c in enumerate(text or "") if c in "\"\u201c\u201d"]
+    return [(a, b) for a, b in zip(marks[::2], marks[1::2], strict=False)]
+
+
 def extract_quotes(text: str) -> list[tuple[str, str]]:
     """(record_id, quoted span) pairs, in either written order.
 
@@ -244,13 +255,28 @@ def extract_quotes(text: str) -> list[tuple[str, str]]:
     the natural way to write this -- and the leading-citation pattern would reach
     forward across the sentence boundary and bind the second quote to the first
     PMID as well, failing a correctly-cited summary.
+
+    A leading citation that sits INSIDE a quotation is ignored for the same
+    reason. Quoting a tool note that happens to name its own record --
+    `"UniProt holds no FUNCTION statement for P71814 -- ..."` -- put an accession
+    inside the quotation with no citation after the closing mark. The
+    leading-citation pattern then ran from that accession, over the closing mark
+    it could not recognise as closing, and bound the model's own following prose
+    as a quotation attributed to the record. It failed as "not in source": a
+    false accusation of fabrication against correct output, which is the one
+    failure a validator must not have.
     """
     pairs: list[tuple[str, str]] = []
     claimed: set[str] = set()
     for span, token in QUOTE_THEN_CITE.findall(text or ""):
         pairs.append((as_record_id(token), span))
         claimed.add(span)
-    for token, span in CITE_THEN_QUOTE.findall(text or ""):
+    inside = _quotation_ranges(text)
+    for match in CITE_THEN_QUOTE.finditer(text or ""):
+        token, span = match.group(1), match.group(2)
+        start = match.start(1)
+        if any(open_at < start < close_at for open_at, close_at in inside):
+            continue
         record_id = as_record_id(token)
         if span not in claimed and (record_id, span) not in pairs:
             pairs.append((record_id, span))
