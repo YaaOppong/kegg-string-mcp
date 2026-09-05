@@ -19,10 +19,22 @@ fragments, or genuine paralogues sharing a symbol. If a fragment sorts first, th
 retry runs against the wrong locus tag and the coverage verdict describes a
 different gene.
 
-**Exposure is narrow.** The fallback only fires when a source failed to resolve,
-so it never overrides a lookup that worked, and `resolved_via` records the tag
-used — a wrong answer is traceable after the fact rather than silent. No case has
-been observed in practice; this is reasoning about the code, not an incident.
+**Exposure is narrower than it looks, and was measured.** `_locus()` skips
+records carrying no locus tag, and the unreviewed TrEMBL entries that pad a
+symbol search almost always have none: katG returns three UniProt entries and
+only the reviewed P9WIE5 carries `Rv1908c`, so the fallback lands on the right
+one by construction. Across 17 genes checked — including paralogue-prone
+families (esxA, esxB, mce1A, PE_PGRS56, mmpL9) — **zero** had more than one
+record carrying a locus tag, so the ambiguity the code would have to resolve did
+not arise once.
+
+The fallback also only fires when a source failed to resolve, so it never
+overrides a lookup that worked, and `resolved_via` records the tag used — a
+wrong answer is traceable after the fact rather than silent.
+
+This is therefore a latent risk rather than an observed one. It needs UniProt to
+return two tagged entries for one symbol, which is possible in principle and did
+not happen in the sample. Priority accordingly low.
 
 **The fix, when it is worth doing.** Two parts:
 
