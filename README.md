@@ -3,10 +3,15 @@
 [![LLM Gene Annotation Demo](https://img.shields.io/badge/demo-LLM%20Gene%20Annotation-2ea44f)](https://yaaoppong.github.io/kegg-string-mcp/)
 [![CI](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/YaaOppong/kegg-string-mcp/actions/workflows/ci.yml)
 
-An [MCP](https://modelcontextprotocol.io) server exposing **KEGG**, **STRING**, **UniProt** and
-**PubMed** as model-callable tools for gene annotation. Every record returned carries a
+An [MCP](https://modelcontextprotocol.io) server exposing **KEGG**, **STRING**, **UniProt**,
+**PubMed**, the **M. tuberculosis lineage barcode** and the **WHO catalogue of resistance
+mutations** as model-callable tools for gene annotation. Every record returned carries a
 stable ID and a resolvable URL, so a downstream agent's citations can be checked
 programmatically against what was retrieved.
+
+Alongside the tools, a **literature retrieval arm** — BM25, dense embeddings and their
+fusion — measured head to head on the same corpus and queries, with the numbers and their
+limits in [docs/RETRIEVAL.md](docs/RETRIEVAL.md).
 
 **▶ [Try it in your browser](https://yaaoppong.github.io/kegg-string-mcp/)** — pick a
 gene, watch the model call tools, then watch its citations get checked. It opens on a run
@@ -183,12 +188,60 @@ furA scored a correct annotation as a fabrication.
 
 Citation and quote precision are the numbers worth trusting — computed, not judged.
 
+## Literature retrieval
+
+The tools above answer what a curated source records. For a gene they do not describe,
+the answer has to come from papers — so there is a second retrieval path, with three arms
+measured against each other on the same corpus and the same queries.
+
+| Arm | Mechanism | precision@10 |
+|---|---|---|
+| `hybrid` | reciprocal rank fusion of the two below | **0.917** |
+| `lexical` | BM25 over tokens | 0.844 |
+| `dense` | MiniLM embeddings in Chroma, cosine | 0.739 |
+
+Measured over 41 genes, 676 papers, 1,350 chunked passages, 820 gene-pair queries.
+Relevance is scored deterministically — does the retrieved passage name the gene asked
+about — so it is reproducible and cannot be tuned after the fact. The ranking holds when
+the query set is restricted to pairs STRING has no edge for, which removes the
+circularity in scoring relevance by gene names.
+
+The dense arm is the least precise and retrieves the most different papers (Jaccard 0.158
+against lexical), which is the case for keeping it and the case against replacing BM25
+with it. [docs/RETRIEVAL.md](docs/RETRIEVAL.md) has the full result and, more usefully,
+what it does not show.
+
+```bash
+python scripts/build_corpus.py --extended --all-genes --tag tb41   # build the corpus
+python scripts/run_comparison.py data/corpus_tb41.json --tag tb41  # measure the arms
+python scripts/residue.py --tag tb41                               # what stays unexplained
+```
+
+Corpora are gitignored: a few hundred PubMed abstracts under publisher copyright is bulk
+redistribution. Every command above rebuilds from the tools in this repo.
+
+**Retrieval is routed, not run on everything.** Literature is the expensive, noisy
+channel, so `build_corpus.py` runs it only on genes whose structured annotation is thin —
+no UniProt function, only inferred function, or no KEGG pathway — and writes the routing
+decision beside the corpus so a reader can see why an annotation rested on papers. On the
+41-gene set that is 22 of 41. `--all-genes` bypasses it, which the arm comparison needs
+because a head-to-head on gene *pairs* wants every gene regardless of coverage.
+
 ## Install
 
 ```bash
 conda create -n kegg-string-mcp python=3.11 -y && conda activate kegg-string-mcp
 pip install -e ".[dev]"
 pytest
+```
+
+The server and the annotation pipeline need nothing beyond the base install. The
+retrieval arm is a separate extra, kept out of the default so the MCP server does not
+carry a vector store it never uses:
+
+```bash
+pip install -e ".[dev,vector]"     # chromadb, rank-bm25, langgraph
+pip install -e ".[dev,demo]"       # gradio, for running the demo locally
 ```
 
 ## Running the MCP server
@@ -229,7 +282,7 @@ Wire into an MCP client:
 
 ## Tests
 
-249 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
+396 tests. **The suite never touches the network** — `tests/conftest.py` swaps in a fake
 HTTP client that replays saved responses from `tests/fixtures/`, so the suite runs in
 under four seconds, gives the same answer every time, works offline and in CI, and does
 not hammer a free academic service. A red test means this code broke, not that an
@@ -249,8 +302,13 @@ passed. The trade-off is that fixtures cannot detect an upstream format *change*
 needs an occasional live check.
 
 ```bash
-pytest -q
+pytest -q                                                        # everything
+pytest -q --ignore=tests/test_retrieval.py --ignore=tests/test_app.py   # base install only
 ```
+
+323 of the 396 run with no optional extras installed at all, which is what CI checks on
+every supported Python: importing the library must not require the vector stack. The
+remaining tests belong to the `vector` and `demo` extras and run in their own CI jobs.
 
 ## Licence
 
@@ -258,11 +316,21 @@ This project is MIT licensed — see [LICENSE](LICENSE).
 
 ### Upstream data
 
-This server queries public APIs on the caller's behalf and caches responses locally;
-it redistributes no third-party data. Terms remain the caller's responsibility:
+This server queries public sources on the caller's behalf and caches responses locally.
+It redistributes no bulk data; the exceptions are small and named below. Terms remain the
+caller's responsibility:
 
 - **KEGG** — free for academic use; commercial use requires a licence from Pathway Solutions.
 - **STRING** — CC BY 4.0, free for academic and commercial use, attribution required.
+- **UniProt** — CC BY 4.0, attribution required.
+- **TB-Profiler / tbdb** ([jodyphelan/tbdb](https://github.com/jodyphelan/tbdb), LGPL-3.0)
+  — source of the lineage barcode (`barcode.bed`, after Coll 2014 and Napier 2020) and the
+  resistance catalogue (`mutations.csv`, derived from the WHO catalogue of mutations in
+  *M. tuberculosis complex*). Neither file is committed; both are fetched and cached at
+  run time. A small number of *derived records* are committed in `demo/runs/` so the demo
+  can replay offline — 139 resistance-variant rows and 4 lineage-marker rows, each a
+  gene, position or variant with its WHO grading. Anyone using the underlying catalogues
+  should take them from tbdb and the WHO publication directly and check their terms.
 - **PubMed** — records are US government works and free to use; the abstracts themselves
   are frequently under publisher copyright. The server retrieves them per query and caches
   locally for the caller. A small number of abstracts *are* committed, in `demo/runs/` and
@@ -275,7 +343,8 @@ it redistributes no third-party data. Terms remain the caller's responsibility:
 
 ## Status
 
-MCP server, annotation pipeline and evaluation all working on `main`.
-Ongoing work happens on `develop`.
+MCP server, annotation pipeline, evaluation and the retrieval arm are all on `main`.
 
-Design rationale: [docs/DESIGN.md](docs/DESIGN.md).
+- Design rationale: [docs/DESIGN.md](docs/DESIGN.md)
+- Retrieval comparison, and what it does not show: [docs/RETRIEVAL.md](docs/RETRIEVAL.md)
+- Found, understood, not fixed: [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md)
