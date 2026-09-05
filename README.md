@@ -36,7 +36,7 @@ underlying service covers.
 | `lineage_markers` | `gene`<br>`organism` = `mtu` | One record per lineage-defining SNP the gene contains: `record_id` (e.g. `tbdb:851797`), the lineage it marks, H37Rv position, allele, `https://github.com/jodyphelan/tbdb` URL |
 | `resistance_variants` | `gene`<br>`drug` (optional) | Whether the gene is resistance-associated, the drugs, and per-grade counts; one record per resistance-associated variant: `record_id` (e.g. `tbdb:katG:p.Ser315Thr`), WHO grading, drug, source |
 
-All five are annotated `readOnlyHint`, expose structured output schemas, and are
+All six are annotated `readOnlyHint`, expose structured output schemas, and are
 deterministic: same input and same cache produce the same output.
 
 ### Result envelope
