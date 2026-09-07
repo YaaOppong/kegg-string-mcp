@@ -994,3 +994,28 @@ def test_the_veto_still_applies_when_quoting_is_balanced():
             '`has_experimental_function` is false. The name is '
             '"Possible two component system regulator" (P71814).')
     assert extract_quotes(text) == [("P71814", "Possible two component system regulator")]
+
+
+def test_every_server_environment_variable_is_forwarded_to_the_child():
+    """The child process receives FORWARDED_ENV and nothing else, so a variable the
+    server reads but this omits makes a tool silently inert: registered, called,
+    and reporting "not configured" from inside a process nobody told. corpus_search
+    shipped that way -- KEGG_STRING_MCP_CORPUS was set in the shell, read by the
+    server, and never forwarded.
+    """
+    import re
+
+    from kegg_string_mcp.agent.mcp_tools import FORWARDED_ENV
+
+    read_by_server = set()
+    for module in ("cache", "http", "corpus_search", "pubmed", "server"):
+        source = (Path(__file__).parent.parent / "src" / "kegg_string_mcp"
+                  / f"{module}.py").read_text()
+        read_by_server |= set(re.findall(r"environ(?:\.get)?[\[(]\s*[\"']([A-Z_]+)[\"']",
+                                         source))
+        read_by_server |= set(re.findall(r"^([A-Z_]*ENV)\s*=\s*[\"']([A-Z_]+)[\"']",
+                                         source, re.MULTILINE) and
+                              re.findall(r"^[A-Z_]*ENV\s*=\s*[\"']([A-Z_]+)[\"']",
+                                         source, re.MULTILINE))
+    missing = sorted(read_by_server - set(FORWARDED_ENV))
+    assert not missing, f"server reads these but the child never receives them: {missing}"

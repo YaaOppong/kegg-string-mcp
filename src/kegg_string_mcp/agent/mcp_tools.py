@@ -30,8 +30,14 @@ from mcp.client.stdio import stdio_client
 
 # Passed through to the child. The server needs these to identify itself to NCBI
 # and STRING, and to share the caller's cache rather than starting cold.
+# Every variable the SERVER reads must appear here, because the child gets this
+# and nothing else. A variable the server honours but this omits produces the
+# worst kind of failure: the tool is registered, the model calls it, and it
+# reports "not configured" from inside a process that was never told. That is how
+# corpus_search shipped inert -- KEGG_STRING_MCP_CORPUS was set in the shell, read
+# by the server class, and never forwarded.
 FORWARDED_ENV = (
-    "KEGG_STRING_MCP_CACHE", "KEGG_STRING_MCP_USER_AGENT",
+    "KEGG_STRING_MCP_CACHE", "KEGG_STRING_MCP_USER_AGENT", "KEGG_STRING_MCP_CORPUS",
     "STRING_CALLER_IDENTITY", "NCBI_EMAIL", "NCBI_API_KEY", "NCBI_TOOL",
 )
 

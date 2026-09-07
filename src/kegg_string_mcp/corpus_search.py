@@ -56,7 +56,10 @@ class CorpusSearchClient:
 
     def __init__(self, corpus_path: str | Path | None = None):
         self._configured = corpus_path or os.environ.get(CORPUS_ENV) or None
-        self._path = Path(self._configured) if self._configured else None
+        # expanduser: the value arrives from an environment variable, where a
+        # leading ~ is a literal character and not the shell's home directory.
+        self._path = (Path(self._configured).expanduser()
+                      if self._configured else None)
         self._index: Any = None
         self._corpus: Any = None
         self._fingerprint = ""
