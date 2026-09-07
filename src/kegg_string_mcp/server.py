@@ -26,6 +26,8 @@ from mcp.server import MCPServer
 from mcp.types import ToolAnnotations
 
 from kegg_string_mcp.cache import DiskCache
+from kegg_string_mcp.corpus_search import DEFAULT_LIMIT as CORPUS_LIMIT
+from kegg_string_mcp.corpus_search import CorpusSearchClient
 from kegg_string_mcp.http import PoliteClient
 from kegg_string_mcp.kegg import KeggClient
 from kegg_string_mcp.lineage import LineageClient
@@ -60,6 +62,8 @@ _string = StringClient(_http)
 _uniprot = UniProtClient(_http)
 _lineage = LineageClient(_http)
 _resistance = ResistanceClient(_http)
+# Reads no corpus and imports no vector dependency until a query arrives.
+_corpus_search = CorpusSearchClient()
 _pubmed = PubMedClient(_http)
 
 READ_ONLY = ToolAnnotations(readOnlyHint=True, openWorldHint=True)
@@ -219,6 +223,33 @@ def resistance_variants(gene: str, drug: str | None = None) -> ToolResult:
         drug: Optional drug name to restrict to (e.g. isoniazid, bedaquiline).
     """
     return _resistance.variants(gene=gene, drug=drug)
+
+
+@mcp.tool(
+    annotations=READ_ONLY,
+    description=(
+        "Search a locally built literature corpus, ranked by the retrieval method measured "
+        "best on it: BM25 fused with dense embeddings, 0.917 precision@10 against 0.844 for "
+        "keyword alone. Prefer this over pubmed_abstracts when the genes you are asking "
+        "about are in the corpus, because the ranking is better over what has been "
+        "gathered. It covers only a prebuilt gene set, and says which genes those are -- "
+        "for anything outside it, or when no corpus is configured, the result is empty with "
+        "a note saying so and pubmed_abstracts is the tool to use instead. An empty result "
+        "means the corpus does not cover the query, never that no literature exists. "
+        "`quotable_text` is the whole abstract, so quote from anywhere in it; "
+        "`matched_passage` is only the span that ranked."
+    ),
+)
+def corpus_search(query: str, limit: int = CORPUS_LIMIT) -> ToolResult:
+    """Retrieve abstracts from a prebuilt corpus by hybrid search.
+
+    Args:
+        query: A natural-language question or topic, not just a gene symbol -- the
+            dense half of the ranking is what handles phrasing that shares no words
+            with the text.
+        limit: Maximum papers to return.
+    """
+    return _corpus_search.search(query=query, limit=limit)
 
 
 def main() -> None:

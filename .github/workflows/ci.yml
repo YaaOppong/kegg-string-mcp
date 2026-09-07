@@ -76,7 +76,9 @@ jobs:
           cache: pip
       - run: pip install -e ".[dev,vector]"
       - name: Retrieval tests
-        run: pytest -q tests/test_retrieval.py
+        # test_corpus_search skips cleanly without the extra, so the matrix does not
+        # need to ignore it -- but a skipped test proves nothing, so it runs here.
+        run: pytest -q tests/test_retrieval.py tests/test_corpus_search.py
 
   docker:
     runs-on: ubuntu-latest

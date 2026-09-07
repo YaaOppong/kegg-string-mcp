@@ -62,6 +62,15 @@ Rules, in order of importance:
    significance" is neither. The flag is about the GENE: never report it as
    evidence that a particular variant confers resistance.
 
+10. When you need literature, try corpus_search first and fall back to
+    pubmed_abstracts. Corpus search ranks better over what has been gathered --
+    it fuses keyword and embedding retrieval, measured at 0.917 precision@10
+    against 0.844 for keyword alone -- but it covers only a prebuilt gene set and
+    is empty when none is configured. Its note says which genes it holds. An empty
+    corpus_search result means the corpus does not cover your query; it is never
+    evidence that no literature exists, so follow it with pubmed_abstracts rather
+    than concluding anything.
+
 Call tools as many times as you need and no more. Stop when further calls would
 not change the annotation. Literature is the expensive, noisy channel -- reach
 for it when the structured tools leave a real question open, not by default."""
