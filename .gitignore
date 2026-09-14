@@ -19,3 +19,10 @@ htmlcov/
 # abstracts under publisher copyright; it is rebuildable via scripts/build_corpus.py
 # in one command, so it is not redistributed here.
 /data/
+
+# Local secrets. The Anthropic SDK reads ANTHROPIC_API_KEY from the environment,
+# so a key only ever lives in a shell or a .env here, never in the source. Ignored
+# by pattern so `git add .` cannot stage one; the example file stays tracked.
+.env
+.env.*
+!.env.example
