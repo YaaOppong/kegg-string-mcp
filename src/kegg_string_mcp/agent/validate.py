@@ -276,6 +276,24 @@ def _quotation_ranges(text: str) -> list[tuple[int, int]]:
     return [(a, b) for a, b in zip(marks[::2], marks[1::2], strict=False)]
 
 
+def _annotates_previous_quotation(text: str, token_start: int, token_end: int) -> bool:
+    """True when a citation sits in a closed parenthetical hung off the quotation
+    before it: `"A" (supporting PMID 1), with the activity "B"`.
+
+    Such a citation belongs to A. Read as a leading citation it bound B to PMID 1,
+    and B -- quoted verbatim from a UniProt record -- failed as likely fabricated
+    against a UniProt function statement. Narrow on purpose: a parenthetical that
+    follows prose rather than a quotation (`Smith et al. (PMID:1) reported "B"`)
+    still introduces B, so B is still checked.
+    """
+    if not re.match(r"[^\"“”()\[\]]*[)\]]", text[token_end:]):
+        return False
+    opening = max(text.rfind("(", 0, token_start), text.rfind("[", 0, token_start))
+    if opening < 0 or re.search(r"[\"“”)\]]", text[opening + 1:token_start]):
+        return False
+    return text[:opening].rstrip().endswith(("\"", "”"))
+
+
 def extract_quotes(text: str) -> list[tuple[str, str]]:
     """(record_id, quoted span) pairs, in either written order.
 
@@ -305,6 +323,8 @@ def extract_quotes(text: str) -> list[tuple[str, str]]:
         token, span = match.group(1), match.group(2)
         start = match.start(1)
         if any(open_at < start < close_at for open_at, close_at in inside):
+            continue
+        if _annotates_previous_quotation(text, start, match.end(1)):
             continue
         record_id = as_record_id(token)
         if span not in claimed and (record_id, span) not in pairs:

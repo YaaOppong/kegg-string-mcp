@@ -102,6 +102,13 @@ class RunStore:
             existing = self._records.get(rid)
             if existing is None:
                 self._records[rid] = record
+            elif existing.get("type") == "cited_by_uniprot":
+                # A stand-in holding UniProt's sentence, registered because a
+                # statement cited this PMID before the article was retrieved. The
+                # article has now arrived, so it replaces the stand-in: keeping the
+                # stand-in checked every quote from the real abstract against
+                # UniProt's wording and reported correct quotes as fabricated.
+                self._records[rid] = record
             else:
                 # Merge, do not overwrite. The same PMID returned for two genes was
                 # keeping only the last record -- and `mentions` with it -- so a paper
@@ -112,8 +119,14 @@ class RunStore:
                 if merged:
                     existing.setdefault("detail", {})["mentions"] = sorted(merged)
             # A literature record knows which genes it actually names; that is a
-            # better attribution than the query that happened to find it.
-            for gene in record.get("detail", {}).get("mentions", []):
+            # better attribution than the query that happened to find it. For
+            # pubmed_abstracts that is `mentions`. corpus_search's `mentions` is
+            # the corpus-build query instead, and `genes_named` is what the text
+            # names: reading only `mentions` flagged a katG run for citing
+            # "Regulation of catalase-peroxidase (KatG) expression ... by furA",
+            # because the corpus had fetched that paper for furA.
+            detail = record.get("detail", {})
+            for gene in [*detail.get("mentions", []), *detail.get("genes_named", [])]:
                 self._per_target.setdefault(str(gene).strip().upper(), set()).add(rid)
             # A UniProt function statement names the PMIDs that evidence it, and the
             # tool description advertises them. Without this, a model citing one --
