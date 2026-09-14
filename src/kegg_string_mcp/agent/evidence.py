@@ -53,6 +53,10 @@ class PairEvidence:
     gene_a: str
     gene_b: str
     direct_interaction: DirectInteraction | None = None
+    # Was the pair itself put to STRING (via /network), or only inferred from two
+    # ranked partner lists? Only the first can support "no direct interaction".
+    checked_directly: bool = False
+    unresolved: list[str] = field(default_factory=list)   # genes STRING never resolved
     shared_pathways: list[SharedPathway] = field(default_factory=list)
     shared_partners: list[dict[str, Any]] = field(default_factory=list)
     # NOT network degree: the number of partners RETRIEVED, which `limit` caps.
@@ -93,9 +97,24 @@ def pair_evidence(
     pathway_sizes: dict[str, int],
     genome_size: int,
     partner_limit: int | None = None,
+    edges: dict[tuple[str, str], dict[str, Any]] | None = None,
+    unresolved: set[str] | frozenset[str] | None = None,
 ) -> PairEvidence:
-    """Assemble everything known about ONE pair. Pure function of tool output."""
+    """Assemble everything known about ONE pair. Pure function of tool output.
+
+    `edges` holds the pair-level STRING answer (from `StringClient.network`),
+    keyed by the unordered pair of gene names as given. It is authoritative:
+    partner lists are ranked and truncated, so the absence of B from A's top 20 is
+    not the absence of an edge. katG/rpoC scores 0.823 at rank 24 of 31 and was
+    reported as "No direct interaction" until the pair itself was queried.
+
+    `unresolved` names the genes STRING could not resolve. Their pairs get no
+    verdict about interaction at all -- the tool already says a resolution failure
+    is not evidence of no partners, and this is that rule applied downstream.
+    """
     ev = PairEvidence(gene_a=gene_a, gene_b=gene_b)
+    unresolved = set(unresolved or ())
+    ev.unresolved = [g for g in (gene_a, gene_b) if g in unresolved]
 
     a_partners = partners.get(gene_a, [])
     b_partners = partners.get(gene_b, [])
@@ -104,8 +123,21 @@ def pair_evidence(
         ev.truncated = [g for g, p in ((gene_a, a_partners), (gene_b, b_partners))
                         if len(p) >= partner_limit]
 
+    edge = (edges or {}).get(_pair_key(gene_a, gene_b))
+    if edges is not None and not ev.unresolved:
+        # The pair was asked about directly, so "no edge" is now a real answer.
+        ev.checked_directly = True
+    if edge:
+        ev.direct_interaction = DirectInteraction(
+            partner_id=edge.get("record_id", ""),
+            partner_name=edge.get("name", ""),
+            combined_score=edge.get("combined_score", 0.0),
+            textmining_score=edge.get("textmining_score", 0.0),
+            max_non_textmining_score=edge.get("max_non_textmining_score", 0.0),
+            evidence_beyond_textmining=edge.get("evidence_beyond_textmining", False))
+
     # Direct interaction: is B in A's partner list (or vice versa)?
-    for record in a_partners + b_partners:
+    for record in [] if ev.direct_interaction else a_partners + b_partners:
         name = (record.get("name") or "").upper()
         rid = (record.get("record_id") or "").upper()
         other = gene_b.upper() if record in a_partners else gene_a.upper()
@@ -145,15 +177,23 @@ def _verdict(ev: PairEvidence) -> str:
     specific = [p for p in ev.shared_pathways if p.specificity == "specific"]
     broad_only = ev.shared_pathways and not specific
 
+    if ev.unresolved and not ev.direct_interaction:
+        # Say what is missing rather than what is absent. The epistasis prompt
+        # tells the model not to contradict this line, so a verdict of "no known
+        # link" built on a failed lookup propagates into the summary as fact.
+        return (f"STRING could not resolve {', '.join(ev.unresolved)}, so no interaction "
+                f"evidence was retrieved for this pair. This is a resolution failure, not "
+                f"evidence of no link; the KEGG evidence below stands on its own.")
     if ev.direct_interaction:
         di = ev.direct_interaction
         support = ("supported beyond literature co-mention"
                    if di.evidence_beyond_textmining else
                    "supported essentially only by literature co-mention")
         return f"Direct STRING interaction (combined {di.combined_score}), {support}."
+    direct = _no_direct_phrase(ev)
     if specific:
         names = ", ".join(f"{p.pathway_id} ({p.size} genes)" for p in specific)
-        return f"No direct interaction. Share specific pathway(s): {names}."
+        return f"{direct}. Share specific pathway(s): {names}."
     if ev.shared_partners:
         caveat = ""
         if ev.truncated:
@@ -162,12 +202,35 @@ def _verdict(ev: PairEvidence) -> str:
             caveat = (f" Partner lists for {', '.join(ev.truncated)} hit the retrieval limit, so "
                       f"true network degree is unknown and this overlap cannot be distinguished "
                       f"from what any two well-connected proteins would share.")
-        return (f"No direct interaction and no specific shared pathway, but "
+        return (f"{direct} and no specific shared pathway, but "
                 f"{len(ev.shared_partners)} shared network partner(s).{caveat}")
     if broad_only:
-        return ("No direct interaction. Shared pathways are broad container categories "
-                "only, which is not evidence of a mechanistic link.")
+        return (f"{direct}. Shared pathways are broad container categories "
+                f"only, which is not evidence of a mechanistic link.")
+    if len(ev.truncated) == 2:
+        # The only case where "no known link" would be a claim about the genes
+        # rather than about the query: both lists were full, so an edge between
+        # them could sit below both cuts and was never seen.
+        return (f"{direct}, and no shared pathway. Absence of an edge here is a limit of the "
+                f"retrieval, not a negative result.")
     return "No known link in KEGG or STRING at the thresholds queried."
+
+
+def _no_direct_phrase(ev: PairEvidence) -> str:
+    """How far "no direct interaction" can honestly be pushed.
+
+    Three different facts wore the same words. Only a pair queried directly
+    supports "no interaction"; two truncated partner lists support nothing at all,
+    because the edge can sit below both cuts -- which is how rpoB/rpsC, STRING
+    0.991, was reported as having none.
+    """
+    if ev.checked_directly:
+        return "No direct STRING interaction at the threshold queried"
+    if len(ev.truncated) == 2:
+        limit = min(ev.partners_retrieved.values(), default=0)
+        return (f"Direct interaction NOT CHECKED beyond the top {limit} partners of each gene, "
+                f"and both lists were full")
+    return "No direct interaction in the partner lists retrieved"
 
 
 def all_pairs(
@@ -177,8 +240,37 @@ def all_pairs(
     pathway_sizes: dict[str, int],
     genome_size: int,
     partner_limit: int | None = None,
+    edges: dict[tuple[str, str], dict[str, Any]] | None = None,
+    unresolved: set[str] | frozenset[str] | None = None,
 ) -> list[PairEvidence]:
     return [
-        pair_evidence(a, b, pathways, partners, pathway_sizes, genome_size, partner_limit)
+        pair_evidence(a, b, pathways, partners, pathway_sizes, genome_size, partner_limit,
+                      edges=edges, unresolved=unresolved)
         for a, b in combinations(genes, 2)
     ]
+
+
+def _pair_key(a: str, b: str) -> tuple[str, str]:
+    """Unordered, case-insensitive. Callers build pair keys from different sources."""
+    return tuple(sorted((a.strip().lower(), b.strip().lower())))  # type: ignore[return-value]
+
+
+def edge_index(network_result: dict[str, Any], identities: Any,
+               genes: list[str]) -> dict[tuple[str, str], dict[str, Any]]:
+    """Map a `string_partners`-style network result onto the caller's gene names.
+
+    The model and the upstream analysis speak in whatever spelling they were given;
+    STRING answers in protein IDs. Translating once, here, is what keeps
+    `pair_evidence` a pure function of names.
+    """
+    by_id = {identities.string_id(g): g for g in genes if identities.string_id(g)}
+    out: dict[tuple[str, str], dict[str, Any]] = {}
+    for record in network_result.get("records", []):
+        detail = record.get("detail", {})
+        gene_a = by_id.get(detail.get("string_id_a", ""))
+        gene_b = by_id.get(detail.get("string_id_b", ""))
+        if not gene_a or not gene_b:
+            continue
+        out[_pair_key(gene_a, gene_b)] = dict(detail) | {
+            "record_id": record.get("record_id", ""), "name": record.get("name", "")}
+    return out

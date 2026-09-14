@@ -60,6 +60,8 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from kegg_string_mcp.provenance import answered as _answered
+
 NO_PATHWAY = "no_pathway"
 NO_FUNCTION = "no_function"
 NO_EXPERIMENTAL = "no_experimental_function"
@@ -208,15 +210,6 @@ def _locus(result: Any) -> tuple[str, list[str]]:
     return "", distinct
 
 
-def _answered(result: Any) -> bool:
-    """Did the source actually speak about this gene?
-
-    Empty records alone do not settle it: "resolved, and holds nothing" is a
-    finding, while "never resolved" is not.
-    """
-    if not result.requests:
-        return False
-    return bool(result.records) or result.resolved.get("matched_by") not in (None, "none")
 
 
 def route(coverages: list[Coverage], functional_only: bool = False) -> list[str]:

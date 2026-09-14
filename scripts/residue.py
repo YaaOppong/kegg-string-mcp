@@ -18,9 +18,10 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "src"))
 
 from kegg_string_mcp.cache import DiskCache
 from kegg_string_mcp.http import PoliteClient
-from kegg_string_mcp.hypothesis.residue import assess, residue, summarise
+from kegg_string_mcp.hypothesis.residue import assess, residue, summarise, undetermined
 from kegg_string_mcp.kegg import KeggClient
 from kegg_string_mcp.lineage import LineageClient
+from kegg_string_mcp.provenance import answered
 from kegg_string_mcp.retrieval.corpus import Corpus
 
 
@@ -44,8 +45,15 @@ def main() -> int:
     http = PoliteClient(DiskCache())
     kegg = KeggClient(http)
     pathways: dict[str, set[str]] = {}
+    # "KEGG holds no pathway for this gene" and "KEGG never answered about this
+    # gene" are different facts, and only the first says anything about the gene.
+    # `answered` is the same discriminator retrieval/coverage.py uses.
+    unanswered: dict[str, list[str]] = {}
     for gene in corpus.genes:
-        pathways[gene] = {r.record_id for r in kegg.pathways(gene).records}
+        result = kegg.pathways(gene)
+        pathways[gene] = {r.record_id for r in result.records}
+        if not answered(result):
+            unanswered.setdefault(gene, []).append("kegg")
 
     # Lineage markers do not gate the residue. They are recorded against each
     # surviving pair so a known marker is visible before any mechanism is
@@ -54,15 +62,18 @@ def main() -> int:
 
     pairs = [(v["gene_a"], v["gene_b"]) for v in independence["verdicts"]]
     assessments = assess(pairs, string_status=string_status,
-                         pathways=pathways, co_mentions=co_mentions)
+                         pathways=pathways, co_mentions=co_mentions,
+                         unanswered=unanswered)
     summary = summarise(assessments)
 
     remaining = residue(assessments)
+    unknown = undetermined(assessments)
     marked = {g: sorted({r.detail['lineage'] for r in lineage.markers(g).records})
               for g in corpus.genes}
     out = args.data / f"residue_{args.tag}.json"
     out.write_text(json.dumps(
         {"summary": summary,
+         "undetermined": [a.to_dict() for a in unknown],
          "residue": [dict(a.to_dict(),
                           lineage_marker={a.gene_a: marked[a.gene_a],
                                           a.gene_b: marked[a.gene_b]})
@@ -73,7 +84,17 @@ def main() -> int:
     for code, n in sorted(summary["reason_counts"].items(), key=lambda kv: -kv[1]):
         counts = " (counts as explained)" if code in summary["explaining"] else ""
         print(f"  {code:22} {n:4}{counts}")
-    print(f"\nresidue: {summary['residue']} pairs "
+    undetermined_genes = sorted({g for a in unknown for g in (a.gene_a, a.gene_b)
+                                 if g in unanswered
+                                 or any(v.get("status") in ("unresolved", "truncated")
+                                        for k, v in string_status.items() if g in k)})
+    if summary["undetermined"]:
+        # Reported, never counted: dropping these silently would understate
+        # coverage, and leaving them in the residue would overstate novelty.
+        print(f"  {'undetermined':22} {summary['undetermined']:4} (not assessable; "
+              f"excluded from the residue and its denominator)")
+        print(f"  {'':22} genes involved: {', '.join(undetermined_genes)}")
+    print(f"\nresidue: {summary['residue']} of {summary['assessable']} assessable pairs "
           f"({summary['residue_fraction']:.0%}) -> {out}")
     both = sum(1 for a in remaining if marked[a.gene_a] and marked[a.gene_b])
     either = sum(1 for a in remaining if marked[a.gene_a] or marked[a.gene_b])
@@ -83,10 +104,15 @@ def main() -> int:
     print(f"  residue pairs with one marked gene : {either - both}")
     print(f"  residue pairs with both marked     : {both}")
 
-    genes_with_no_pathway = [g for g, p in pathways.items() if not p]
+    # Genes KEGG never answered about are listed apart: printing them as "no KEGG
+    # pathway" is the same conflation the residue itself no longer makes.
+    genes_with_no_pathway = [g for g, p in pathways.items() if not p and g not in unanswered]
     if genes_with_no_pathway:
         print(f"\nno KEGG pathway ({len(genes_with_no_pathway)}): "
               f"{', '.join(sorted(genes_with_no_pathway))}")
+    if unanswered:
+        print(f"\nKEGG never answered ({len(unanswered)}), so nothing is claimed about them: "
+              f"{', '.join(sorted(unanswered))}")
     return 0
 
 

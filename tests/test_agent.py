@@ -1019,3 +1019,82 @@ def test_every_server_environment_variable_is_forwarded_to_the_child():
                                          source, re.MULTILINE))
     missing = sorted(read_by_server - set(FORWARDED_ENV))
     assert not missing, f"server reads these but the child never receives them: {missing}"
+
+
+# -- the pair query: a truncated list is not a negative result -----------------
+
+
+def _edge(a, b, combined=0.823, textmining=0.1, max_non_tm=0.6):
+    return {(a.lower(), b.lower()): {
+        "record_id": f"83332.{a}|83332.{b}", "name": f"{a}--{b}",
+        "combined_score": combined, "textmining_score": textmining,
+        "max_non_textmining_score": max_non_tm,
+        "evidence_beyond_textmining": max_non_tm >= 0.4}}
+
+
+def test_a_direct_edge_is_found_even_when_both_partner_lists_are_full():
+    """katG/rpoC scores 0.823 at rank 24 of katG's 31 partners, so with limit=20
+    neither list contains the other and the verdict said 'No direct interaction'.
+    The prompt forbids contradicting the verdict, so it propagated."""
+    from kegg_string_mcp.agent.evidence import pair_evidence
+
+    ev = pair_evidence("katG", "rpoC", pathways={}, partners={
+        "katG": _partners(20, "X"), "rpoC": _partners(20, "Y")},
+        pathway_sizes={}, genome_size=4008, partner_limit=20,
+        edges=_edge("katG", "rpoC"))
+    assert ev.direct_interaction.combined_score == 0.823
+    assert ev.checked_directly
+    assert ev.verdict.startswith("Direct STRING interaction")
+
+
+def test_without_a_pair_query_two_full_lists_say_not_checked():
+    """The fallback must not claim what it cannot see: an edge can sit below the
+    cut of both lists."""
+    from kegg_string_mcp.agent.evidence import pair_evidence
+
+    ev = pair_evidence("katG", "rpoC", pathways={}, partners={
+        "katG": _partners(20, "X"), "rpoC": _partners(20, "Y")},
+        pathway_sizes={}, genome_size=4008, partner_limit=20)
+    assert not ev.checked_directly
+    assert "NOT CHECKED beyond the top 20" in ev.verdict
+    assert "not a negative result" in ev.verdict
+
+
+def test_a_queried_pair_with_no_edge_is_an_honest_negative():
+    from kegg_string_mcp.agent.evidence import pair_evidence
+
+    ev = pair_evidence("katG", "gyrA", pathways={}, partners={"katG": [], "gyrA": []},
+                       pathway_sizes={}, genome_size=4008, partner_limit=20, edges={})
+    assert ev.checked_directly
+    assert ev.verdict.startswith("No known link")
+
+
+def test_an_unresolved_gene_does_not_become_a_negative_verdict():
+    """`string_partners` says a resolution failure is not evidence of no partners;
+    the verdict said 'No known link in KEGG or STRING' anyway."""
+    from kegg_string_mcp.agent.evidence import pair_evidence
+
+    ev = pair_evidence("katG", "fakeGene1", pathways={}, partners={"katG": [], "fakeGene1": []},
+                       pathway_sizes={}, genome_size=4008, partner_limit=20,
+                       edges={}, unresolved={"fakeGene1"})
+    assert ev.unresolved == ["fakeGene1"]
+    assert not ev.checked_directly
+    assert "could not resolve fakeGene1" in ev.verdict
+    assert "not" in ev.verdict and "evidence of no link" in ev.verdict
+
+
+def test_the_pair_query_is_mapped_back_onto_the_callers_gene_names():
+    """STRING answers in protein IDs; the model and the upstream analysis speak in
+    whatever spelling they were given."""
+    from kegg_string_mcp.agent.evidence import edge_index
+    from kegg_string_mcp.identity import GeneIdentity, IdentitySet
+
+    identities = IdentitySet(identities={
+        "Rv0678": GeneIdentity(query="Rv0678", string_id="83332.Rv0678", aliases=["Rv0678"]),
+        "Rv0676c": GeneIdentity(query="Rv0676c", string_id="83332.Rv0676c", aliases=["Rv0676c"])})
+    result = {"records": [{"record_id": "83332.Rv0676c|83332.Rv0678", "name": "mmpR5--mmpL5",
+                           "detail": {"string_id_a": "83332.Rv0678",
+                                      "string_id_b": "83332.Rv0676c",
+                                      "combined_score": 0.989}}]}
+    index = edge_index(result, identities, ["Rv0678", "Rv0676c"])
+    assert index[("rv0676c", "rv0678")]["combined_score"] == 0.989
