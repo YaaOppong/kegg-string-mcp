@@ -1,0 +1,33 @@
+kegg-string-mcp
+Copyright (c) 2026 Yaa Oppong
+
+The MIT licence in LICENSE applies to the source code of this project. It does not
+apply to third-party data committed alongside that code, which remains under its
+owners' terms:
+
+  demo/runs/          Replayed runs. Contain KEGG pathway records, STRING interaction
+                      records, PubMed titles and abstracts, WHO-graded resistance
+                      variants (via TB-Profiler/tbdb) and lineage-barcode markers.
+  tests/fixtures/     Recorded API responses from KEGG, STRING, UniProt and PubMed,
+                      and a small PubMed abstract corpus (corpus_small.json).
+
+Sources and terms:
+
+  KEGG           Kanehisa Laboratories. KEGG API use is restricted to academic use by
+                 academic users; see https://www.kegg.jp/kegg/legal.html
+  STRING         CC BY 4.0. Szklarczyk D et al. The STRING database in 2023.
+                 Nucleic Acids Res 51(D1):D638-D646 (2023). doi:10.1093/nar/gkac1000
+  UniProt        CC BY 4.0. The UniProt Consortium. UniProt: the Universal Protein
+                 Knowledgebase in 2025. Nucleic Acids Res 53(D1):D609-D617 (2025).
+                 doi:10.1093/nar/gkae1010
+  WHO catalogue  CC BY-NC-SA 3.0 IGO. World Health Organization. Catalogue of mutations
+                 in Mycobacterium tuberculosis complex and their association with drug
+                 resistance, 2nd ed. Geneva: WHO; 2023. Non-commercial use only;
+                 adaptations must be shared under the same licence.
+  TB-Profiler    tbdb (https://github.com/jodyphelan/tbdb), LGPL-3.0.
+  PubMed         Citation metadata from NLM. Abstract text remains under the copyright
+                 of the respective publishers and is included for non-commercial
+                 research and teaching only.
+
+Anyone reusing these files should take the data from the original source and check its
+terms. See README.md, section "Upstream data", for detail.

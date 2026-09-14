@@ -9,10 +9,11 @@ cached, and the match type is always reported.
 
 Getting that list parsed correctly is subtler than it looks -- see `gene_index`.
 
-Licence note: KEGG is free for academic use; commercial use requires a licence
-from Pathway Solutions. This tool does not redistribute KEGG content -- it fetches
-per query and caches locally for the caller -- but a commercial deployment is the
-caller's responsibility, and the README says so.
+Licence note: the KEGG API is provided only for academic use by academic users.
+Academics running a service on KEGG need an academic service provider licence, and
+non-academic use needs a commercial licence from Pathway Solutions. This tool does
+not redistribute KEGG content -- it fetches per query and caches locally for the
+caller -- so meeting those terms is the caller's responsibility, and the README says so.
 """
 
 from __future__ import annotations

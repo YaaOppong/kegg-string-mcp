@@ -77,7 +77,7 @@ READ_ONLY = ToolAnnotations(readOnlyHint=True, openWorldHint=True)
         "against the organism's gene list, never fuzzily. Returns one record per pathway with "
         "its KEGG pathway ID as record_id. If `records` is empty, check `notes`: it "
         "distinguishes 'identifier did not resolve' from 'gene exists but maps to no pathway'. "
-        "KEGG is free for academic use; commercial use requires a licence from Pathway Solutions."
+        "The KEGG API is for academic use by academic users; other use requires a licence."
     ),
 )
 def kegg_pathways(gene: str, organism: str = "mtu") -> ToolResult:

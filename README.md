@@ -27,8 +27,8 @@ underlying service covers.
 > resistance loci `katG`, `inhA`, `rpoB`, `pncA` and `embB`; resistance interpretation
 > for clinical purposes requires validated methods and expert review. Outputs are
 > generated in part by a language model and require verification against the cited
-> primary sources. Provided under the MIT licence, without warranty — see
-> [LICENSE](LICENSE).
+> primary sources. Code provided under the MIT licence, without warranty — see
+> [LICENSE](LICENSE); committed third-party data keeps its own terms — see [Licence](#licence).
 
 ## Tools
 
@@ -321,32 +321,49 @@ remaining tests belong to the `vector` and `demo` extras and run in their own CI
 
 ## Licence
 
-This project is MIT licensed — see [LICENSE](LICENSE).
+The source code is MIT licensed — see [LICENSE](LICENSE). The MIT licence does not cover
+the third-party data committed in `demo/runs/` and `tests/fixtures/`, which stays under
+its owners' terms, listed below and in [NOTICE](NOTICE).
 
 ### Upstream data
 
 This server queries public sources on the caller's behalf and caches responses locally.
-It redistributes no bulk data; the exceptions are small and named below. Terms remain the
-caller's responsibility:
+It redistributes no bulk data; the exceptions are small, committed so the demo can replay
+and the tests can run offline, and named below. Terms for anything the server fetches
+remain the caller's responsibility:
 
-- **KEGG** — free for academic use; commercial use requires a licence from Pathway Solutions.
-- **STRING** — CC BY 4.0, free for academic and commercial use, attribution required.
-- **UniProt** — CC BY 4.0, attribution required.
+- **KEGG** — the KEGG API is provided only for academic use by academic users. Academics
+  who use KEGG to provide a service need an academic service provider licence; non-academic
+  use needs a commercial licence from Pathway Solutions
+  ([terms](https://www.kegg.jp/kegg/legal.html)). Committed: KEGG gene and pathway lists in
+  `tests/fixtures/kegg_*.tsv` (about 550 lines) and the pathway records in `demo/runs/`.
+- **STRING** — [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Committed: API
+  responses in `tests/fixtures/string_*.json` and the interaction records in `demo/runs/`.
+  Cite: Szklarczyk D *et al.* The STRING database in 2023. *Nucleic Acids Res*
+  51(D1):D638–D646 (2023). [doi:10.1093/nar/gkac1000](https://doi.org/10.1093/nar/gkac1000)
+- **UniProt** — [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Committed: API
+  responses in `tests/fixtures/uniprot_*.json`. Cite: The UniProt Consortium. UniProt: the
+  Universal Protein Knowledgebase in 2025. *Nucleic Acids Res* 53(D1):D609–D617 (2025).
+  [doi:10.1093/nar/gkae1010](https://doi.org/10.1093/nar/gkae1010)
 - **TB-Profiler / tbdb** ([jodyphelan/tbdb](https://github.com/jodyphelan/tbdb), LGPL-3.0)
   — source of the lineage barcode (`barcode.bed`, after Coll 2014 and Napier 2020) and the
-  resistance catalogue (`mutations.csv`, derived from the WHO catalogue of mutations in
-  *M. tuberculosis complex*). Neither file is committed; both are fetched and cached at
-  run time. A small number of *derived records* are committed in `demo/runs/` so the demo
-  can replay offline — 139 resistance-variant rows and 4 lineage-marker rows, each a
-  gene, position or variant with its WHO grading. Anyone using the underlying catalogues
-  should take them from tbdb and the WHO publication directly and check their terms.
-- **PubMed** — records are US government works and free to use; the abstracts themselves
-  are frequently under publisher copyright. The server retrieves them per query and caches
-  locally for the caller. A small number of abstracts *are* committed, in `demo/runs/` and
-  `tests/fixtures/`, because the demo cannot show quote-checking without the text it checks
-  against and the tests cannot run offline without it — roughly 40 records, retained for
-  research and educational use. Larger corpora built by the retrieval arm are **not**
-  committed. Respect NCBI's
+  resistance catalogue (`mutations.csv`). Neither file is committed; both are fetched and
+  cached at run time. Committed: 4 lineage-marker rows in `demo/runs/`.
+- **WHO catalogue of mutations** — the resistance catalogue in tbdb is derived from WHO,
+  *Catalogue of mutations in* Mycobacterium tuberculosis *complex and their association
+  with drug resistance*, 2nd ed. (2023), licensed
+  [CC BY-NC-SA 3.0 IGO](https://creativecommons.org/licenses/by-nc-sa/3.0/igo/):
+  non-commercial use only, and adaptations must be shared under the same licence.
+  Committed: 139 resistance-variant rows in `demo/runs/katG.json`, each a gene, position
+  or variant with its WHO grading. These rows are not MIT licensed. Anyone using the
+  catalogue should take it from the WHO publication directly.
+- **PubMed** — citation metadata comes from NLM; abstract text remains under the copyright
+  of the respective publishers. The server retrieves abstracts per query and caches them
+  locally for the caller. Committed: 49 abstracts, in `demo/runs/`,
+  `tests/fixtures/corpus_small.json` and `tests/fixtures/pubmed_efetch_*.xml`, because
+  the demo cannot show quote-checking without the text it checks against. They are
+  included for non-commercial research and teaching only. Larger corpora built by the
+  retrieval arm are **not** committed. Respect NCBI's
   [E-utilities usage policy](https://www.ncbi.nlm.nih.gov/books/NBK25497/) — set
   `NCBI_EMAIL`.
 
