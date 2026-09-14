@@ -206,3 +206,102 @@ def test_synonym_warning_survives_a_fetch_error_too(string):
     notes = " ".join(string.partners("catalase-peroxidase").notes)
     assert "synonym matching" in notes
     assert "HTTP 500" in notes
+
+
+# -- /network: the pair query -------------------------------------------------
+#
+# Served from the captured interaction_partners fixture rather than a new file:
+# the two endpoints return the same row schema, and these tests are about what
+# this module does with the rows, not about parsing a second format.
+
+import json as _json
+import pathlib as _pathlib
+
+_ROWS = _json.loads((_pathlib.Path(__file__).parent / "fixtures"
+                     / "string_interaction_partners_Rv1908c.json").read_text())
+
+
+def _serving_network(string, rows):
+    """Point /network at `rows`, leaving every other route on its fixture."""
+    from kegg_string_mcp.cache import CachedResponse
+    from kegg_string_mcp.provenance import sha256
+
+    original = string.http.get
+
+    def get(url, params=None):
+        if "/json/network" in url:
+            body = _json.dumps(rows)
+            string.http.calls.append(url)
+            return CachedResponse(url=url, status=200, body=body,
+                                  fetched_at="2026-08-27T09:00:00+00:00",
+                                  content_sha256=sha256(body), cached=False)
+        return original(url, params)
+
+    string.http.get = get
+    return string
+
+
+def test_network_returns_one_record_per_edge(string):
+    result = _serving_network(string, _ROWS).network(["83332.Rv1908c", "83332.Rv1909c"])
+    assert len(result.records) == len(_ROWS)
+    edge = next(r for r in result.records if r.detail["preferred_name_b"] == "furA")
+    assert edge.detail["combined_score"] == 0.979
+    assert edge.detail["channels"]["neighborhood"] == 0.829
+    assert edge.detail["evidence_beyond_textmining"] is True
+
+
+def test_network_edge_ids_are_order_independent(string):
+    """An undirected edge must have one ID whichever way STRING reports it, or a
+    caller keying on it counts the same interaction twice."""
+    flipped = [dict(row, stringId_A=row["stringId_B"], stringId_B=row["stringId_A"],
+                    preferredName_A=row["preferredName_B"],
+                    preferredName_B=row["preferredName_A"]) for row in _ROWS]
+    forward = _serving_network(string, _ROWS).network(["83332.Rv1908c", "83332.Rv1909c"])
+    backward = _serving_network(string, flipped).network(["83332.Rv1908c", "83332.Rv1909c"])
+    assert sorted(r.record_id for r in forward.records) == \
+           sorted(r.record_id for r in backward.records)
+
+
+def test_network_says_that_an_absent_pair_is_below_threshold(string):
+    """The whole point of the endpoint: a missing pair is a threshold statement,
+    not the absence of a relationship."""
+    notes = " ".join(_serving_network(string, []).network(["a", "b"], required_score=700).notes)
+    assert "below that threshold" in notes
+    assert "not untested" in notes
+
+
+def test_network_needs_two_identifiers(string):
+    result = string.network(["83332.Rv1908c"])
+    assert result.records == []
+    joined = " ".join(result.notes)
+    assert "Invalid argument" in joined
+    assert "does NOT mean the proteins do not interact" in joined
+
+
+def test_network_failure_is_a_note_not_an_exception(string):
+    from kegg_string_mcp.http import FetchError
+
+    original = string.http.get
+
+    def get(url, params=None):
+        if "/json/network" in url:
+            raise FetchError(url, 503, "")
+        return original(url, params)
+
+    string.http.get = get
+    result = string.network(["83332.Rv1908c", "83332.Rv1909c"])
+    joined = " ".join(result.notes)
+    assert result.records == []
+    assert "HTTP 503" in joined
+    assert "not evidence of no interaction" in joined
+
+
+def test_network_batches_long_identifier_lists(string):
+    """A URL long enough for an intermediary to truncate returns fewer edges,
+    which reads exactly like 'those pairs do not interact'."""
+    from kegg_string_mcp.string_db import NETWORK_BATCH
+
+    identifiers = [f"83332.G{i}" for i in range(NETWORK_BATCH * 2 + 1)]
+    _serving_network(string, []).network(identifiers)
+    calls = [c for c in string.http.calls if "/json/network" in c]
+    assert len(calls) == 3
