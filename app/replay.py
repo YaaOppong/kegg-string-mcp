@@ -27,13 +27,17 @@ RUNS_DIR = Path(__file__).resolve().parent.parent / "demo" / "runs"
 # catches something -- can be tested without installing a web framework.
 #
 # furA is first on purpose. A demo where everything passes proves nothing, so a
-# visitor who changes nothing still sees the point.
-ORDERED = ["furA", "gyrB", "katG", "gyrA", "ahpC", "rpoB", "pncA", "phoP",
+# visitor who changes nothing still sees the point. It is an earlier capture: every
+# run re-captured on the current pipeline passed, including furA itself, so the
+# caught misattribution is kept and the re-run sits beside it rather than replacing
+# it. Same gene, same tools, one run wrong and one right.
+ORDERED = ["furA", "furA-rerun", "gyrB", "katG", "gyrA", "ahpC", "rpoB", "pncA", "phoP",
            "katG-ahpC-epistasis", "phoP-phoR-epistasis"]
 
 LABELS = {
-    "furA": "furA — a transcriptional regulator KEGG has no pathway for",
-    "gyrB": "gyrB — DNA gyrase subunit B, annotated mostly from literature",
+    "furA": "furA — a transcriptional regulator KEGG has no pathway for (earlier capture)",
+    "furA-rerun": "furA — the same gene re-run on the current pipeline",
+    "gyrB": "gyrB — DNA gyrase subunit B; resistance-associated, no KEGG pathway",
     "katG": "katG — catalase-peroxidase; resistance-associated for isoniazid",
     "gyrA": "gyrA — DNA gyrase subunit A, absent from KEGG pathways",
     "ahpC": "ahpC — alkyl hydroperoxide reductase, no KEGG pathway",

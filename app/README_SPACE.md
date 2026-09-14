@@ -6,7 +6,7 @@ colorTo: green
 sdk: gradio
 app_file: app/space.py
 pinned: false
-license: mit
+license: other
 short_description: Watch an LLM annotate a TB gene, then watch its citations get checked
 ---
 
@@ -39,3 +39,10 @@ GitHub Pages build; see `demo/build_pages.py`.
 
 No secrets are required. The demo makes no API calls: it replays runs committed in
 `demo/runs/` and re-runs the validator over them.
+
+## Licence
+
+The code is MIT licensed. The replayed runs contain third-party data — KEGG, STRING,
+PubMed abstracts and WHO catalogue records (CC BY-NC-SA 3.0 IGO, non-commercial) — that
+keeps its owners' terms. See `NOTICE` and the "Upstream data" section of the project
+README.

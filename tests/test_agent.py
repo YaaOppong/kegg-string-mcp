@@ -830,6 +830,70 @@ def test_a_fabricated_quote_on_such_a_pmid_still_fails(tmp_path):
     assert [q.status for q in report.quotes] == ["not_in_source"]
 
 
+def test_a_citation_annotating_one_quote_does_not_introduce_the_next():
+    """From a real rpoB run: the second quote is UniProt's catalytic activity, and
+    the PMID in parentheses belongs to the first. Binding the second to the PMID
+    reported a verbatim UniProt quote as likely fabricated."""
+    text = ('P9WGY9 carries a statement: "DNA-dependent RNA polymerase catalyzes '
+            'transcription" (supporting PMID 22570422), with the catalytic activity '
+            '"RNA(n) + a ribonucleoside 5\'-triphosphate = RNA(n+1) + diphosphate".')
+    assert all("RNA(n+1)" not in span for _, span in extract_quotes(text))
+
+
+def test_a_leading_parenthetical_citation_still_introduces_its_quote():
+    """The rule above must not switch the check off where the parenthetical
+    follows prose rather than a quotation."""
+    pairs = extract_quotes('Pym et al. (PMID:11401695) reported "katG was upregulated".')
+    assert pairs == [("11401695", "katG was upregulated")]
+
+
+def test_a_corpus_paper_is_attributed_to_the_genes_it_names(tmp_path):
+    """corpus_search's `mentions` is the query the corpus was built with, so a
+    paper about katG fetched for furA carried mentions=['furA'] and a katG run
+    citing it was flagged cross-target. `genes_named` is what the text says."""
+    from kegg_string_mcp.agent.validate import validate
+
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("corpus_search", {"query": "furA regulation of katG"}, {
+        "record_ids": ["11401695"],
+        "records": [{"record_id": "11401695", "type": "article", "name": "n", "url": "u",
+                     "detail": {"quotable_text": "Regulation of KatG expression by furA.",
+                                "mentions": ["furA"], "genes_named": ["katG", "furA"]}}],
+    })
+    report = validate("katG is regulated by FurA (PMID:11401695).",
+                      store.citable_ids, store.per_target, "KATG", records=store.records)
+    assert [c.status for c in report.citations] == ["verified"]
+
+
+def test_the_abstract_replaces_uniprots_stand_in_when_it_arrives(tmp_path):
+    """UniProt runs first and registers a stand-in holding its own sentence; the
+    literature search then returns the same PMID's abstract. Keeping the stand-in
+    checked correct quotes from the abstract against UniProt's wording, and a real
+    furA run reported three of them as likely fabricated."""
+    from kegg_string_mcp.agent.validate import validate
+
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("uniprot_protein", {"gene": "furA"}, {
+        "resolved": {}, "record_ids": ["P9WN85"],
+        "records": [{"record_id": "P9WN85", "type": "protein", "name": "n", "url": "u",
+                     "detail": {"quotable_text": "Represses transcription of katG",
+                                "function_statements": [
+                                    {"text": "Represses transcription of katG",
+                                     "supporting_pmids": ["11401695"]}]}}],
+    })
+    abstract = "In the absence of furA, katG was upregulated."
+    store.tool_result("corpus_search", {"query": "furA katG"}, {
+        "record_ids": ["11401695"],
+        "records": [{"record_id": "11401695", "type": "article", "name": "n", "url": "u",
+                     "detail": {"quotable_text": abstract, "mentions": ["furA", "katG"]}}],
+    })
+
+    assert store.records["11401695"]["type"] == "article"
+    report = validate(f'PMID:11401695 "{abstract}"',
+                      store.citable_ids, store.per_target, "FURA", records=store.records)
+    assert [q.status for q in report.quotes] == ["verified"]
+
+
 # --- lineage-marker record IDs -------------------------------------------------
 # tbdb IDs became citable when lineage_markers joined the stage 1 tools. These
 # pin the properties that would fail silently: that they are recognised at all,

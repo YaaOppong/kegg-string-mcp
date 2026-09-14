@@ -20,14 +20,14 @@
      {
       "cached": true,
       "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
-      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "retrieved_at": "2026-08-28T13:00:27.870904+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/list/mtu"
      },
      {
-      "cached": false,
+      "cached": true,
       "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-      "retrieved_at": "2026-08-28T10:29:23.550221+00:00",
+      "retrieved_at": "2026-09-14T11:08:58.429368+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0006"
      }
@@ -38,6 +38,192 @@
     }
    },
    "tool": "kegg_pathways"
+  },
+  {
+   "arguments": {
+    "gene": "gyrA",
+    "organism_id": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "3 UniProt entries matched gene 'gyrA': F2X2D0, M4PN16, P9WG47. They are all returned; resolved.accession names only the first.",
+     "UniProt holds no FUNCTION statement for M4PN16, F2X2D0 -- the entry exists but its function is not described. Nothing to quote."
+    ],
+    "query": {
+     "gene": "gyrA",
+     "limit": 3,
+     "organism_id": 83332
+    },
+    "record_ids": [
+     "P9WG47",
+     "M4PN16",
+     "F2X2D0"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "ATP-dependent breakage, passage and rejoining of double-stranded DNA."
+       ],
+       "entry_name": "GYRA_MYCTU",
+       "function_statements": [
+        {
+         "evidence_codes": [
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "15047530",
+          "16377674",
+          "16876125",
+          "17015625",
+          "18426901",
+          "19060136",
+          "20805881",
+          "22457352",
+          "22844097",
+          "23869946"
+         ],
+         "text": "A type II topoisomerase that negatively supercoils closed circular double-stranded (ds) DNA in an ATP-dependent manner to maintain chromosomes in an underwound state, while in the absence of ATP it relaxes supercoiled dsDNA (PubMed:15047530, PubMed:16377674, PubMed:16876125, PubMed:17015625, PubMed:18426901, PubMed:19060136, PubMed:20805881, PubMed:22844097). Also catalyzes the interconversion of other topological isomers of dsDNA rings, including catenanes (PubMed:16876125, PubMed:19060136, PubMed:22457352). Gyrase from M.tuberculosis has higher decatenation than supercoiling activity compared to E.coli; as M.tuberculosis only has 1 type II topoisomerase, gyrase has to fulfill the decatenation function of topoisomerase IV as well (PubMed:16876125, PubMed:22457352, PubMed:23869946). At comparable concentrations M.tuberculosis gyrase cannot introduce as many negative supercoils into DNA as the E.coli enzyme, and its ATPase activity is lower, perhaps because it does not couple DNA wrapping and ATP binding as well as E.coli (PubMed:22457352)",
+         "tiers": [
+          "experimental"
+         ]
+        },
+        {
+         "evidence_codes": [],
+         "experimental": false,
+         "supporting_pmids": [],
+         "text": "Negative supercoiling favors strand separation, and DNA replication, transcription, recombination and repair, all of which involve strand separation. Type II topoisomerases break and join 2 DNA strands simultaneously in an ATP-dependent manner",
+         "tiers": [
+          "unstated"
+         ]
+        }
+       ],
+       "gene_names": [
+        "gyrA"
+       ],
+       "has_experimental_function": true,
+       "locus_tags": [
+        "Rv0006"
+       ],
+       "pdb": [
+        "3IFZ",
+        "3ILW",
+        "3UC1",
+        "4G3N",
+        "5BS8",
+        "5BTA",
+        "5BTC",
+        "5BTD",
+        "5BTF",
+        "5BTG",
+        "5BTI",
+        "5BTL",
+        "5BTN",
+        "6GAU",
+        "6GAV",
+        "7UGW",
+        "8S7K",
+        "8S7O",
+        "9FOY"
+       ],
+       "quotable_text": "DNA gyrase subunit A\n\nA type II topoisomerase that negatively supercoils closed circular double-stranded (ds) DNA in an ATP-dependent manner to maintain chromosomes in an underwound state, while in the absence of ATP it relaxes supercoiled dsDNA (PubMed:15047530, PubMed:16377674, PubMed:16876125, PubMed:17015625, PubMed:18426901, PubMed:19060136, PubMed:20805881, PubMed:22844097). Also catalyzes the interconversion of other topological isomers of dsDNA rings, including catenanes (PubMed:16876125, PubMed:19060136, PubMed:22457352). Gyrase from M.tuberculosis has higher decatenation than supercoiling activity compared to E.coli; as M.tuberculosis only has 1 type II topoisomerase, gyrase has to fulfill the decatenation function of topoisomerase IV as well (PubMed:16876125, PubMed:22457352, PubMed:23869946). At comparable concentrations M.tuberculosis gyrase cannot introduce as many negative supercoils into DNA as the E.coli enzyme, and its ATPase activity is lower, perhaps because it does not couple DNA wrapping and ATP binding as well as E.coli (PubMed:22457352)\n\nNegative supercoiling favors strand separation, and DNA replication, transcription, recombination and repair, all of which involve strand separation. Type II topoisomerases break and join 2 DNA strands simultaneously in an ATP-dependent manner\n\nHeterotetramer, composed of two GyrA and two GyrB chains. In the heterotetramer, GyrA contains the active site tyrosine that forms a transient covalent intermediate with DNA, while GyrB binds cofactors and catalyzes ATP hydrolysis (PubMed:15047530)\n\nATP-dependent breakage, passage and rejoining of double-stranded DNA.",
+       "reviewed": true,
+       "subunit": [
+        {
+         "evidence_codes": [
+          "ECO:0000255",
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "15047530"
+         ],
+         "text": "Heterotetramer, composed of two GyrA and two GyrB chains. In the heterotetramer, GyrA contains the active site tyrosine that forms a transient covalent intermediate with DNA, while GyrB binds cofactors and catalyzes ATP hydrolysis (PubMed:15047530)",
+         "tiers": [
+          "experimental",
+          "sequence_model"
+         ]
+        }
+       ]
+      },
+      "name": "DNA gyrase subunit A",
+      "record_id": "P9WG47",
+      "retrieved_at": "2026-09-14T11:08:57.182609+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/P9WG47"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "ATP-dependent breakage, passage and rejoining of double-stranded DNA."
+       ],
+       "entry_name": "M4PN16_MYCTU",
+       "function_statements": [],
+       "gene_names": [
+        "gyrA"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [],
+       "pdb": [],
+       "quotable_text": "DNA gyrase subunit A\n\nATP-dependent breakage, passage and rejoining of double-stranded DNA.",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "DNA gyrase subunit A",
+      "record_id": "M4PN16",
+      "retrieved_at": "2026-09-14T11:08:57.182609+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/M4PN16"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "ATP-dependent breakage, passage and rejoining of double-stranded DNA."
+       ],
+       "entry_name": "F2X2D0_MYCTU",
+       "function_statements": [],
+       "gene_names": [
+        "gyrA"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [],
+       "pdb": [],
+       "quotable_text": "DNA gyrase A\n\nATP-dependent breakage, passage and rejoining of double-stranded DNA.",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "DNA gyrase A",
+      "record_id": "F2X2D0",
+      "retrieved_at": "2026-09-14T11:08:57.182609+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/F2X2D0"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "f0c252d4bfd6a3c94ab46070fa9c4f7a1b98df3e0d6e6dab70cf5428cc64120a",
+      "retrieved_at": "2026-09-14T11:08:57.182609+00:00",
+      "status": 200,
+      "url": "https://rest.uniprot.org/uniprotkb/search?fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Ccc_function%2Ccc_catalytic_activity%2Ccc_subunit%2Cxref_pdb%2Cec&format=json&query=organism_id%3A83332+AND+gene%3AgyrA&size=3"
+     }
+    ],
+    "resolved": {
+     "accession": "P9WG47",
+     "matched_by": "uniprot_search",
+     "n_entries": 3,
+     "uniprot_release": "2026_03"
+    }
+   },
+   "tool": "uniprot_protein"
   },
   {
    "arguments": {
@@ -81,7 +267,7 @@
     ],
     "records": [
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.941,
@@ -99,13 +285,13 @@
       },
       "name": "gyrB",
       "record_id": "83332.Rv0005",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0005"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.455,
@@ -123,13 +309,13 @@
       },
       "name": "rpoB",
       "record_id": "83332.Rv0667",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0667"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.101,
@@ -147,13 +333,13 @@
       },
       "name": "inhA",
       "record_id": "83332.Rv1484",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1484"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.046,
@@ -171,13 +357,13 @@
       },
       "name": "pncA",
       "record_id": "83332.Rv2043c",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2043c"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.051,
@@ -195,13 +381,13 @@
       },
       "name": "embB",
       "record_id": "83332.Rv3795",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3795"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.38,
@@ -219,13 +405,13 @@
       },
       "name": "rpsL",
       "record_id": "83332.Rv0682",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0682"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.206,
@@ -243,13 +429,13 @@
       },
       "name": "rpoC",
       "record_id": "83332.Rv0668",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0668"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.077,
@@ -267,13 +453,13 @@
       },
       "name": "tlyA",
       "record_id": "83332.Rv1694",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1694"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.757,
@@ -291,13 +477,13 @@
       },
       "name": "Rv0007",
       "record_id": "83332.Rv0007",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0007"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.536,
@@ -315,13 +501,13 @@
       },
       "name": "rpoA",
       "record_id": "83332.Rv3457c",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3457c"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.082,
@@ -339,13 +525,13 @@
       },
       "name": "gid",
       "record_id": "83332.Rv3919c",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3919c"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.059,
@@ -363,13 +549,13 @@
       },
       "name": "katG",
       "record_id": "83332.Rv1908c",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1908c"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.052,
@@ -387,13 +573,13 @@
       },
       "name": "embA",
       "record_id": "83332.Rv3794",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3794"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.138,
@@ -411,13 +597,13 @@
       },
       "name": "recA",
       "record_id": "83332.Rv2737c",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2737c"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.066,
@@ -435,13 +621,13 @@
       },
       "name": "dnaN",
       "record_id": "83332.Rv0002",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0002"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.463,
@@ -459,13 +645,13 @@
       },
       "name": "tuf",
       "record_id": "83332.Rv0685",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0685"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.07,
@@ -483,13 +669,13 @@
       },
       "name": "ftsZ",
       "record_id": "83332.Rv2150c",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2150c"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.047,
@@ -507,13 +693,13 @@
       },
       "name": "eis",
       "record_id": "83332.Rv2416c",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2416c"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.087,
@@ -531,13 +717,13 @@
       },
       "name": "recF",
       "record_id": "83332.Rv0003",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0003"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "channels": {
         "coexpression": 0.448,
@@ -555,7 +741,7 @@
       },
       "name": "fusA1",
       "record_id": "83332.Rv0684",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0684"
@@ -563,18 +749,18 @@
     ],
     "requests": [
      {
-      "cached": false,
+      "cached": true,
       "content_sha256": "1bcfa968345f9fb25bf76565e113f19fd60ec6170d9bbcb0250d7122e1aa64ed",
-      "retrieved_at": "2026-08-28T10:29:23.827819+00:00",
+      "retrieved_at": "2026-09-14T11:08:58.574579+00:00",
       "status": 200,
-      "url": "https://string-db.org/api/json/get_string_ids?caller_identity=kegg-string-mcp&echo_query=1&identifiers=gyrA&limit=1&species=83332"
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=gyrA&limit=1&species=83332"
      },
      {
-      "cached": false,
+      "cached": true,
       "content_sha256": "1e364b3d02a5f16ac5b3b6c879fde467c136dd25d8cfd1b028f343258df67a46",
-      "retrieved_at": "2026-08-28T10:29:24.999263+00:00",
+      "retrieved_at": "2026-09-14T11:08:59.720782+00:00",
       "status": 200,
-      "url": "https://string-db.org/api/json/interaction_partners?caller_identity=kegg-string-mcp&identifiers=83332.Rv0006&limit=20&required_score=700&species=83332"
+      "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv0006&limit=20&required_score=700&species=83332"
      }
     ],
     "resolved": {
@@ -587,16 +773,16 @@
   },
   {
    "arguments": {
-    "gene": "gyrB",
+    "gene": "gyrA",
     "organism": "mtu"
    },
-   "origin": "turn 2",
+   "origin": "turn 1",
    "result": {
     "notes": [
-     "KEGG returned no pathway assignments for mtu:Rv0005. The gene exists in KEGG but is not mapped to any pathway in this organism."
+     "No lineage-defining position falls within gyrA in the tbdb barcode. 855 of 4,008 H37Rv genes carry one, so this is an informative negative."
     ],
     "query": {
-     "gene": "gyrB",
+     "gene": "gyrA",
      "organism": "mtu"
     },
     "record_ids": [],
@@ -604,297 +790,456 @@
     "requests": [
      {
       "cached": true,
-      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
-      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "content_sha256": "9c05673045615483890c0e31e65ddb9175ecdce7a22ac9a6868a840ae3f2a753",
+      "retrieved_at": "2026-09-14T11:08:37.431048+00:00",
       "status": 200,
-      "url": "https://rest.kegg.jp/list/mtu"
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/barcode.bed"
      },
      {
-      "cached": false,
-      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-      "retrieved_at": "2026-08-28T10:29:38.231747+00:00",
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T13:00:27.870904+00:00",
       "status": 200,
-      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0005"
+      "url": "https://rest.kegg.jp/list/mtu"
      }
     ],
     "resolved": {
-     "kegg_gene_id": "mtu:Rv0005",
-     "matched_by": "symbol"
+     "matched_by": "none"
     }
    },
-   "tool": "kegg_pathways"
+   "tool": "lineage_markers"
   },
   {
    "arguments": {
-    "gene": "gyrA",
-    "limit": 6,
-    "organism": "Mycobacterium tuberculosis"
+    "gene": "gyrA"
    },
-   "origin": "turn 2",
+   "origin": "turn 1",
    "result": {
     "notes": [
-     "540 articles matched this query; the 6 most relevant were retrieved. A finding absent from these abstracts may still be reported in the 534 not retrieved.",
-     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
-     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+     "gyrA is RESISTANCE-ASSOCIATED: 20 of its 1607 catalogued variants are graded as associated with resistance (18 Assoc w R, 2 Assoc w R - Interim). One associated variant marks the gene however many are not. This is a statement about the GENE: it does not mean a particular variant in gyrA confers resistance, and the catalogue explicitly grades some variants in resistance-associated genes as not associated."
     ],
     "query": {
-     "gene": "gyrA",
-     "limit": 6,
-     "organism": "Mycobacterium tuberculosis"
+     "drug": null,
+     "gene": "gyrA"
     },
     "record_ids": [
-     "36915970",
-     "40459255",
-     "39353459",
-     "37721235",
-     "25816236",
-     "37187254"
+     "tbdb:gyrA:p.Ala90Val",
+     "tbdb:gyrA:p.Asp89Asn",
+     "tbdb:gyrA:p.Asp94Ala",
+     "tbdb:gyrA:p.Asp94Asn",
+     "tbdb:gyrA:p.Asp94Gly",
+     "tbdb:gyrA:p.Asp94His",
+     "tbdb:gyrA:p.Asp94Tyr",
+     "tbdb:gyrA:p.Gly88Ala",
+     "tbdb:gyrA:p.Gly88Cys",
+     "tbdb:gyrA:p.Ser91Pro",
+     "tbdb:gyrA:p.Ala90Val",
+     "tbdb:gyrA:p.Asp89Asn",
+     "tbdb:gyrA:p.Asp94Ala",
+     "tbdb:gyrA:p.Asp94Asn",
+     "tbdb:gyrA:p.Asp94Gly",
+     "tbdb:gyrA:p.Asp94His",
+     "tbdb:gyrA:p.Asp94Tyr",
+     "tbdb:gyrA:p.Gly88Ala",
+     "tbdb:gyrA:p.Gly88Cys",
+     "tbdb:gyrA:p.Ser91Pro"
     ],
     "records": [
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "Tuberculosis (TB) is an ancient infectious disease. Before the availability of effective drug therapy, it had high morbidity and mortality. In the past 100 years, the discovery of revolutionary anti-TB drugs such as streptomycin, isoniazid, pyrazinamide, ethambutol and rifampicin, along with drug combination treatment, has greatly improved TB control globally. As anti-TB drugs were widely used, multidrug-resistant (MDR) and extensively drug-resistant (XDR) strains of Mycobacterium tuberculosis emerged due to acquired genetic mutations, and this now presents a major problem for effective treatment. Genes associated with drug resistance have been identified, including katG mutations in isoniazid resistance, rpoB mutations in rifampin resistance, pncA mutations in pyrazinamide resistance, and gyrA mutations in quinolone resistance. The major mechanisms of drug resistance include loss of enzyme activity in prodrug activation, drug target alteration, overexpression of drug target, and overexpression of the efflux pump. During the disease process, Mycobacterium tuberculosis may reside in different microenvironments where it is expose to acidic pH, low oxygen, reactive oxygen species and anti-TB drugs, which can facilitate the development of non-replicating persisters and promote bacterial survival. The mechanisms of persister formation may include toxin-antitoxin (TA) modules, DNA protection and repair, protein degradation such as trans-translation, efflux, and altered metabolism. In recent years, the use of new anti-TB drugs, repurposed drugs, and their drug combinations has greatly improved treatment outcomes in patients with both drug-susceptible TB and MDR/XDR-TB. The importance of developing more effective drugs targeting persisters of Mycobacterium tuberculosis is emphasized. In addition, host-directed therapeutics using both conventional drugs and herbal medicines for more effective TB treatment should also be explored. In this article, we review historical aspects of the research on anti-TB drugs and discuss the current understanding and treatments of drug resistant and persistent tuberculosis to inform future therapeutic development.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "Tuberculosis (TB) is an ancient infectious disease. Before the availability of effective drug therapy, it had high morbidity and mortality. In the past 100 years, the discovery of revolutionary anti-TB drugs such as streptomycin, isoniazid, pyrazinamide, ethambutol and rifampicin, along with drug combination treatment, has greatly improved TB control globally. As anti-TB drugs were widely used, multidrug-resistant (MDR) and extensively drug-resistant (XDR) strains of Mycobacterium tuberculosis emerged due to acquired genetic mutations, and this now presents a major problem for effective treatment. Genes associated with drug resistance have been identified, including katG mutations in isoniazid resistance, rpoB mutations in rifampin resistance, pncA mutations in pyrazinamide resistance, and gyrA mutations in quinolone resistance. The major mechanisms of drug resistance include loss of enzyme activity in prodrug activation, drug target alteration, overexpression of drug target, and overexpression of the efflux pump. During the disease process, Mycobacterium tuberculosis may reside in different microenvironments where it is expose to acidic pH, low oxygen, reactive oxygen species and anti-TB drugs, which can facilitate the development of non-replicating persisters and promote bacterial survival. The mechanisms of persister formation may include toxin-antitoxin (TA) modules, DNA protection and repair, protein degradation such as trans-translation, efflux, and altered metabolism. In recent years, the use of new anti-TB drugs, repurposed drugs, and their drug combinations has greatly improved treatment outcomes in patients with both drug-susceptible TB and MDR/XDR-TB. The importance of developing more effective drugs targeting persisters of Mycobacterium tuberculosis is emphasized. In addition, host-directed therapeutics using both conventional drugs and herbal medicines for more effective TB treatment should also be explored. In this article, we review historical aspects of the research on anti-TB drugs and discuss the current understanding and treatments of drug resistant and persistent tuberculosis to inform future therapeutic development."
-        }
-       ],
-       "doi": "10.3724/zdxbyxb-2022-0454",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "Zhejiang da xue xue bao. Yi xue ban = Journal of Zhejiang University. Medical sciences",
-       "mentions": [
-        "gyrA"
-       ],
-       "pmcid": "PMC10262004",
-       "quotable_text": "The past, present and future of tuberculosis treatment.\n\nTuberculosis (TB) is an ancient infectious disease. Before the availability of effective drug therapy, it had high morbidity and mortality. In the past 100 years, the discovery of revolutionary anti-TB drugs such as streptomycin, isoniazid, pyrazinamide, ethambutol and rifampicin, along with drug combination treatment, has greatly improved TB control globally. As anti-TB drugs were widely used, multidrug-resistant (MDR) and extensively drug-resistant (XDR) strains of Mycobacterium tuberculosis emerged due to acquired genetic mutations, and this now presents a major problem for effective treatment. Genes associated with drug resistance have been identified, including katG mutations in isoniazid resistance, rpoB mutations in rifampin resistance, pncA mutations in pyrazinamide resistance, and gyrA mutations in quinolone resistance. The major mechanisms of drug resistance include loss of enzyme activity in prodrug activation, drug target alteration, overexpression of drug target, and overexpression of the efflux pump. During the disease process, Mycobacterium tuberculosis may reside in different microenvironments where it is expose to acidic pH, low oxygen, reactive oxygen species and anti-TB drugs, which can facilitate the development of non-replicating persisters and promote bacterial survival. The mechanisms of persister formation may include toxin-antitoxin (TA) modules, DNA protection and repair, protein degradation such as trans-translation, efflux, and altered metabolism. In recent years, the use of new anti-TB drugs, repurposed drugs, and their drug combinations has greatly improved treatment outcomes in patients with both drug-susceptible TB and MDR/XDR-TB. The importance of developing more effective drugs targeting persisters of Mycobacterium tuberculosis is emphasized. In addition, host-directed therapeutics using both conventional drugs and herbal medicines for more effective TB treatment should also be explored. In this article, we review historical aspects of the research on anti-TB drugs and discuss the current understanding and treatments of drug resistant and persistent tuberculosis to inform future therapeutic development.",
-       "title": "The past, present and future of tuberculosis treatment.",
-       "year": "2022"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Ala90Val",
+       "source": "WHO catalogue v2"
       },
-      "name": "The past, present and future of tuberculosis treatment.",
-      "record_id": "36915970",
-      "retrieved_at": "2026-08-28T10:29:39.064749+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/36915970/"
+      "name": "p.Ala90Val -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Ala90Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "Fluoroquinolones (FQs) resistance in Mycobacterium tuberculosis (MTB), primarily driven by mutations in the quinolone resistance-determining region (QRDR) of gyrA, poses a major concern in treating for multidrug-resistant tuberculosis (MDR-TB). These QRDR mutations are known to confer varying levels of resistance, leading to differences in treatment outcomes. Here, we introduced the MeltArray MTB/FQs assay, a multiplex PCR method that detected 11 gyrA-QRDR mutations and quantified their fractions via a polynomial regression algorithm-based formula, enabling mutation identification and quantification within 3 h in one reaction. This assay, with a limit of detection (LOD) of 50 copies/reaction, could identify mixtures containing 5% mutant gDNA across 50 to 50,000 copies/reaction. Clinical evaluation of 442 culture samples displayed 95.23% sensitivity and 99.32% specificity compared with phenotypic antimicrobial susceptibility testing (pAST). Evaluation of 121 paired sputum-culture samples revealed sensitivities of 90.32% in sputum samples and 95.24% in culture samples, both with specificities of 100%, when compared with pAST. Further evaluation of 285 sputum samples showed 93.75% positive percent agreement (PPA) and 98.10% negative percent agreement (NPA) in comparison with the MeltPro MTB/FQs kit (Zeesan Biotech, China). All mutant samples identified by MeltArray MTB/FQs but classified as susceptible by pAST or as wild type by MeltPro MTB/FQs were confirmed through Sanger sequencing and droplet digital PCR (ddPCR). The formula for predicting mutation fraction (MUT%) showed accuracy rates of 88.00%, 88.89%, and 83.33% in the training, validation, and test data sets, respectively, when compared with ddPCR results. Overall, MeltArray MTB/FQs assay offers an upgraded alternative for routine FQs resistance monitoring.IMPORTANCERising FQs resistance has driven the spread of pre-extensively drug-resistant tuberculosis (pre-XDR-TB), challenging global tuberculosis (TB) control efforts. Conventional molecular assays for FQs resistance often cannot distinguish between low-level and high-level resistance mutations or detect low-fraction heteroresistant populations. In this study, we established a MeltArray MTB/FQs assay that can identify all the 11 critical mutations in the gyrA-QRDR with a LOD of 50 copies/reaction, enabling direct, culture-independent analysis of sputum samples. By using an algorithm to quantify mutations at levels as low as 5% in mixtures, MeltArray achieved both mutation identification and quantification within 3 h in a reaction, thus providing a powerful tool for early detection and precise management of pre-XDR-TB.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "Fluoroquinolones (FQs) resistance in Mycobacterium tuberculosis (MTB), primarily driven by mutations in the quinolone resistance-determining region (QRDR) of gyrA, poses a major concern in treating for multidrug-resistant tuberculosis (MDR-TB). These QRDR mutations are known to confer varying levels of resistance, leading to differences in treatment outcomes. Here, we introduced the MeltArray MTB/FQs assay, a multiplex PCR method that detected 11 gyrA-QRDR mutations and quantified their fractions via a polynomial regression algorithm-based formula, enabling mutation identification and quantification within 3 h in one reaction. This assay, with a limit of detection (LOD) of 50 copies/reaction, could identify mixtures containing 5% mutant gDNA across 50 to 50,000 copies/reaction. Clinical evaluation of 442 culture samples displayed 95.23% sensitivity and 99.32% specificity compared with phenotypic antimicrobial susceptibility testing (pAST). Evaluation of 121 paired sputum-culture samples revealed sensitivities of 90.32% in sputum samples and 95.24% in culture samples, both with specificities of 100%, when compared with pAST. Further evaluation of 285 sputum samples showed 93.75% positive percent agreement (PPA) and 98.10% negative percent agreement (NPA) in comparison with the MeltPro MTB/FQs kit (Zeesan Biotech, China). All mutant samples identified by MeltArray MTB/FQs but classified as susceptible by pAST or as wild type by MeltPro MTB/FQs were confirmed through Sanger sequencing and droplet digital PCR (ddPCR). The formula for predicting mutation fraction (MUT%) showed accuracy rates of 88.00%, 88.89%, and 83.33% in the training, validation, and test data sets, respectively, when compared with ddPCR results. Overall, MeltArray MTB/FQs assay offers an upgraded alternative for routine FQs resistance monitoring.IMPORTANCERising FQs resistance has driven the spread of pre-extensively drug-resistant tuberculosis (pre-XDR-TB), challenging global tuberculosis (TB) control efforts. Conventional molecular assays for FQs resistance often cannot distinguish between low-level and high-level resistance mutations or detect low-fraction heteroresistant populations. In this study, we established a MeltArray MTB/FQs assay that can identify all the 11 critical mutations in the gyrA-QRDR with a LOD of 50 copies/reaction, enabling direct, culture-independent analysis of sputum samples. By using an algorithm to quantify mutations at levels as low as 5% in mixtures, MeltArray achieved both mutation identification and quantification within 3 h in a reaction, thus providing a powerful tool for early detection and precise management of pre-XDR-TB."
-        }
-       ],
-       "doi": "10.1128/jcm.00146-25",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "Journal of clinical microbiology",
-       "mentions": [
-        "gyrA"
-       ],
-       "pmcid": "PMC12239727",
-       "quotable_text": "Identification and quantification of gyrA variants in fluoroquinolone-resistant Mycobacterium tuberculosis in a MeltArray reaction.\n\nFluoroquinolones (FQs) resistance in Mycobacterium tuberculosis (MTB), primarily driven by mutations in the quinolone resistance-determining region (QRDR) of gyrA, poses a major concern in treating for multidrug-resistant tuberculosis (MDR-TB). These QRDR mutations are known to confer varying levels of resistance, leading to differences in treatment outcomes. Here, we introduced the MeltArray MTB/FQs assay, a multiplex PCR method that detected 11 gyrA-QRDR mutations and quantified their fractions via a polynomial regression algorithm-based formula, enabling mutation identification and quantification within 3 h in one reaction. This assay, with a limit of detection (LOD) of 50 copies/reaction, could identify mixtures containing 5% mutant gDNA across 50 to 50,000 copies/reaction. Clinical evaluation of 442 culture samples displayed 95.23% sensitivity and 99.32% specificity compared with phenotypic antimicrobial susceptibility testing (pAST). Evaluation of 121 paired sputum-culture samples revealed sensitivities of 90.32% in sputum samples and 95.24% in culture samples, both with specificities of 100%, when compared with pAST. Further evaluation of 285 sputum samples showed 93.75% positive percent agreement (PPA) and 98.10% negative percent agreement (NPA) in comparison with the MeltPro MTB/FQs kit (Zeesan Biotech, China). All mutant samples identified by MeltArray MTB/FQs but classified as susceptible by pAST or as wild type by MeltPro MTB/FQs were confirmed through Sanger sequencing and droplet digital PCR (ddPCR). The formula for predicting mutation fraction (MUT%) showed accuracy rates of 88.00%, 88.89%, and 83.33% in the training, validation, and test data sets, respectively, when compared with ddPCR results. Overall, MeltArray MTB/FQs assay offers an upgraded alternative for routine FQs resistance monitoring.IMPORTANCERising FQs resistance has driven the spread of pre-extensively drug-resistant tuberculosis (pre-XDR-TB), challenging global tuberculosis (TB) control efforts. Conventional molecular assays for FQs resistance often cannot distinguish between low-level and high-level resistance mutations or detect low-fraction heteroresistant populations. In this study, we established a MeltArray MTB/FQs assay that can identify all the 11 critical mutations in the gyrA-QRDR with a LOD of 50 copies/reaction, enabling direct, culture-independent analysis of sputum samples. By using an algorithm to quantify mutations at levels as low as 5% in mixtures, MeltArray achieved both mutation identification and quantification within 3 h in a reaction, thus providing a powerful tool for early detection and precise management of pre-XDR-TB.",
-       "title": "Identification and quantification of gyrA variants in fluoroquinolone-resistant Mycobacterium tuberculosis in a MeltArray reaction.",
-       "year": "2025"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp89Asn",
+       "source": "WHO catalogue v2"
       },
-      "name": "Identification and quantification of gyrA variants in fluoroquinolone-resistant Mycobacterium tuberculosis in a MeltArray reaction.",
-      "record_id": "40459255",
-      "retrieved_at": "2026-08-28T10:29:39.064749+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/40459255/"
+      "name": "p.Asp89Asn -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp89Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "BACKGROUND: WHO issued the first edition catalogue of Mycobacterium tuberculosis complex (MTBC) mutations associated with drug resistance in 2021. However, country-specific issues might lead to arising complex and additional drug-resistant mutations. We aimed to fully reflect the characteristics of drug resistance mutations in China.\n\nMETHODS: We analysed MTBC isolates from the nationwide drug-resistant tuberculosis surveillance with 70 counties in 31 provinces, municipalities, and autonomous regions in China. Three types of MYCOTB plates were used to perform drug susceptibility testing for 12 antibiotics (rifampicin, isoniazid, ethambutol, levofloxacin, moxifloxacin, amikacin, kanamycin, ethionamide, clofazimine, linezolid, delamanid, and bedaquiline). Mutations were divided into five groups according to their odds ratios, positive predictive values, false discovery rate-corrected p values, and 95% CIs: (1) associated with resistance; (2) associated with resistance-interim; (3) uncertain significance; (4) not associated with resistance-interim; and (5) not associated with resistance. The Wilcoxon rank-sum and Kruskal-Wallis tests were used to quantify the association between mutations and minimum inhibitory concentrations (MICs). Our dataset was compared with the first edition of the WHO catalogue.\n\nFINDINGS: We analysed 10 146 MTBC isolates, of which 9071 (89\u00b74%) isolates were included in the final analysis. 744 (8\u00b72%) isolates were resistant to rifampicin and 1339 (14\u00b78%) to isoniazid. 208 (1\u00b79%) of 11 065 mutations were classified as associated with resistance or associated with resistance-interim. 33 (97\u00b71%) of 34 mutations in group 1 and 92 (52\u00b79%) of 174 in group 2 also appeared in groups 1 or 2 of the WHO catalogue. Of 81 indel mutations in group 2, 15 (18\u00b75%) were in the WHO catalogue. The newly discovered mutation gyrA_Ala288Asp was associated with levofloxacin resistance. MIC values for rifampicin, isoniazid, moxifloxacin, and levofloxacin corresponding to resistance mutations in group 1 were significantly different (p<0\u00b70001), and 12 high-level resistance mutations were detected. 61 mutations in group 3 occurred as solo in at least five phenotypically susceptible isolates, but with MIC values moderately higher than other susceptible isolates. Among 945 phenotypically resistant but genotypically susceptible isolates, 433 (45\u00b78%) were mutated for at least one efflux pump gene.\n\nINTERPRETATION: Our analysis reflects the complexity of drug resistance mutations in China and suggests that indel mutations, efflux pump genes, protein structure, and MICs should be fully considered in the WHO catalogue, especially in countries with a high tuberculosis burden.\n\nFUNDING: National Key Research and Development Program of China and the Science and Technology Major Project of Tibetan Autonomous Region of China.",
-       "abstract_sections": [
-        {
-         "label": "BACKGROUND",
-         "text": "WHO issued the first edition catalogue of Mycobacterium tuberculosis complex (MTBC) mutations associated with drug resistance in 2021. However, country-specific issues might lead to arising complex and additional drug-resistant mutations. We aimed to fully reflect the characteristics of drug resistance mutations in China."
-        },
-        {
-         "label": "METHODS",
-         "text": "We analysed MTBC isolates from the nationwide drug-resistant tuberculosis surveillance with 70 counties in 31 provinces, municipalities, and autonomous regions in China. Three types of MYCOTB plates were used to perform drug susceptibility testing for 12 antibiotics (rifampicin, isoniazid, ethambutol, levofloxacin, moxifloxacin, amikacin, kanamycin, ethionamide, clofazimine, linezolid, delamanid, and bedaquiline). Mutations were divided into five groups according to their odds ratios, positive predictive values, false discovery rate-corrected p values, and 95% CIs: (1) associated with resistance; (2) associated with resistance-interim; (3) uncertain significance; (4) not associated with resistance-interim; and (5) not associated with resistance. The Wilcoxon rank-sum and Kruskal-Wallis tests were used to quantify the association between mutations and minimum inhibitory concentrations (MICs). Our dataset was compared with the first edition of the WHO catalogue."
-        },
-        {
-         "label": "FINDINGS",
-         "text": "We analysed 10 146 MTBC isolates, of which 9071 (89\u00b74%) isolates were included in the final analysis. 744 (8\u00b72%) isolates were resistant to rifampicin and 1339 (14\u00b78%) to isoniazid. 208 (1\u00b79%) of 11 065 mutations were classified as associated with resistance or associated with resistance-interim. 33 (97\u00b71%) of 34 mutations in group 1 and 92 (52\u00b79%) of 174 in group 2 also appeared in groups 1 or 2 of the WHO catalogue. Of 81 indel mutations in group 2, 15 (18\u00b75%) were in the WHO catalogue. The newly discovered mutation gyrA_Ala288Asp was associated with levofloxacin resistance. MIC values for rifampicin, isoniazid, moxifloxacin, and levofloxacin corresponding to resistance mutations in group 1 were significantly different (p<0\u00b70001), and 12 high-level resistance mutations were detected. 61 mutations in group 3 occurred as solo in at least five phenotypically susceptible isolates, but with MIC values moderately higher than other susceptible isolates. Among 945 phenotypically resistant but genotypically susceptible isolates, 433 (45\u00b78%) were mutated for at least one efflux pump gene."
-        },
-        {
-         "label": "INTERPRETATION",
-         "text": "Our analysis reflects the complexity of drug resistance mutations in China and suggests that indel mutations, efflux pump genes, protein structure, and MICs should be fully considered in the WHO catalogue, especially in countries with a high tuberculosis burden."
-        },
-        {
-         "label": "FUNDING",
-         "text": "National Key Research and Development Program of China and the Science and Technology Major Project of Tibetan Autonomous Region of China."
-        }
-       ],
-       "doi": "10.1016/S2666-5247(24)00131-9",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "The Lancet. Microbe",
-       "mentions": [
-        "gyrA"
-       ],
-       "pmcid": "PMC11543636",
-       "quotable_text": "The catalogue of Mycobacterium tuberculosis mutations associated with drug resistance to 12 drugs in China from a nationwide survey: a genomic analysis.\n\nBACKGROUND: WHO issued the first edition catalogue of Mycobacterium tuberculosis complex (MTBC) mutations associated with drug resistance in 2021. However, country-specific issues might lead to arising complex and additional drug-resistant mutations. We aimed to fully reflect the characteristics of drug resistance mutations in China.\n\nMETHODS: We analysed MTBC isolates from the nationwide drug-resistant tuberculosis surveillance with 70 counties in 31 provinces, municipalities, and autonomous regions in China. Three types of MYCOTB plates were used to perform drug susceptibility testing for 12 antibiotics (rifampicin, isoniazid, ethambutol, levofloxacin, moxifloxacin, amikacin, kanamycin, ethionamide, clofazimine, linezolid, delamanid, and bedaquiline). Mutations were divided into five groups according to their odds ratios, positive predictive values, false discovery rate-corrected p values, and 95% CIs: (1) associated with resistance; (2) associated with resistance-interim; (3) uncertain significance; (4) not associated with resistance-interim; and (5) not associated with resistance. The Wilcoxon rank-sum and Kruskal-Wallis tests were used to quantify the association between mutations and minimum inhibitory concentrations (MICs). Our dataset was compared with the first edition of the WHO catalogue.\n\nFINDINGS: We analysed 10 146 MTBC isolates, of which 9071 (89\u00b74%) isolates were included in the final analysis. 744 (8\u00b72%) isolates were resistant to rifampicin and 1339 (14\u00b78%) to isoniazid. 208 (1\u00b79%) of 11 065 mutations were classified as associated with resistance or associated with resistance-interim. 33 (97\u00b71%) of 34 mutations in group 1 and 92 (52\u00b79%) of 174 in group 2 also appeared in groups 1 or 2 of the WHO catalogue. Of 81 indel mutations in group 2, 15 (18\u00b75%) were in the WHO catalogue. The newly discovered mutation gyrA_Ala288Asp was associated with levofloxacin resistance. MIC values for rifampicin, isoniazid, moxifloxacin, and levofloxacin corresponding to resistance mutations in group 1 were significantly different (p<0\u00b70001), and 12 high-level resistance mutations were detected. 61 mutations in group 3 occurred as solo in at least five phenotypically susceptible isolates, but with MIC values moderately higher than other susceptible isolates. Among 945 phenotypically resistant but genotypically susceptible isolates, 433 (45\u00b78%) were mutated for at least one efflux pump gene.\n\nINTERPRETATION: Our analysis reflects the complexity of drug resistance mutations in China and suggests that indel mutations, efflux pump genes, protein structure, and MICs should be fully considered in the WHO catalogue, especially in countries with a high tuberculosis burden.\n\nFUNDING: National Key Research and Development Program of China and the Science and Technology Major Project of Tibetan Autonomous Region of China.",
-       "title": "The catalogue of Mycobacterium tuberculosis mutations associated with drug resistance to 12 drugs in China from a nationwide survey: a genomic analysis.",
-       "year": "2024"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94Ala",
+       "source": "WHO catalogue v2"
       },
-      "name": "The catalogue of Mycobacterium tuberculosis mutations associated with drug resistance to 12 drugs in China from a nationwide survey: a genomic analysis.",
-      "record_id": "39353459",
-      "retrieved_at": "2026-08-28T10:29:39.064749+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/39353459/"
+      "name": "p.Asp94Ala -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94Ala",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "BACKGROUND: Fluoroquinolone (FQ) antibiotics are among the most potent second-line antitubercular drugs these days. The aim of the study was to analyze the frequency and pattern of genetic mutation in preextensive (pre-XDR) and extensively drug-resistant Mycobacterium tuberculosis using second-line line probe assay (LPA) and to compare drug-resistant mutations with different treatment outcomes.\n\nMETHODS: Sputum, lymph node aspirate, and cold accesses from patients with rifampicin-resistant Tuberculosis (TB) were subjected to first-line and second-line LPA (Genotype MTBDRsl by Hain Life Science, Germany) to assess additional drug resistance to fluoroquinolones (levofloxacin and moxifloxacin). Final treatment outcomes as per the National TB Elimination Program were assessed and compared with the mutation profile.\n\nRESULTS: One hundred and fifty subjects were observed to have mutations associated with resistance to FQs and constituted the final study population. The most frequent mutation observed among GyrA drug resistance mutation was D94G (Gyr A MUT3C, 44/150, 66%) corresponding to high-level resistance to levofloxacin and moxifloxacin. The same mutation was associated with poor treatment outcome as died or treatment failure (odds ratio 2.50, relative risk 1.67, P = 0.043). The most common hetero-resistance mutation pattern observed in GyrA gene was wild type plus Asp94Gly mutation in 24.6% of isolates.\n\nCONCLUSIONS: GyrA MUT3C hybridization corresponding to single-point mutation of aspartic acid to glycine at codon 94 constitutes the most common mutation in GyrA gene locus in M. tuberculosis with significant association with treatment outcome as died compared to those with treatment outcome as cured.",
-       "abstract_sections": [
-        {
-         "label": "BACKGROUND",
-         "text": "Fluoroquinolone (FQ) antibiotics are among the most potent second-line antitubercular drugs these days. The aim of the study was to analyze the frequency and pattern of genetic mutation in preextensive (pre-XDR) and extensively drug-resistant Mycobacterium tuberculosis using second-line line probe assay (LPA) and to compare drug-resistant mutations with different treatment outcomes."
-        },
-        {
-         "label": "METHODS",
-         "text": "Sputum, lymph node aspirate, and cold accesses from patients with rifampicin-resistant Tuberculosis (TB) were subjected to first-line and second-line LPA (Genotype MTBDRsl by Hain Life Science, Germany) to assess additional drug resistance to fluoroquinolones (levofloxacin and moxifloxacin). Final treatment outcomes as per the National TB Elimination Program were assessed and compared with the mutation profile."
-        },
-        {
-         "label": "RESULTS",
-         "text": "One hundred and fifty subjects were observed to have mutations associated with resistance to FQs and constituted the final study population. The most frequent mutation observed among GyrA drug resistance mutation was D94G (Gyr A MUT3C, 44/150, 66%) corresponding to high-level resistance to levofloxacin and moxifloxacin. The same mutation was associated with poor treatment outcome as died or treatment failure (odds ratio 2.50, relative risk 1.67, P = 0.043). The most common hetero-resistance mutation pattern observed in GyrA gene was wild type plus Asp94Gly mutation in 24.6% of isolates."
-        },
-        {
-         "label": "CONCLUSIONS",
-         "text": "GyrA MUT3C hybridization corresponding to single-point mutation of aspartic acid to glycine at codon 94 constitutes the most common mutation in GyrA gene locus in M. tuberculosis with significant association with treatment outcome as died compared to those with treatment outcome as cured."
-        }
-       ],
-       "doi": "10.4103/ijmy.ijmy_116_23",
-       "has_abstract": true,
-       "in_pmc": false,
-       "journal": "International journal of mycobacteriology",
-       "mentions": [
-        "gyrA"
-       ],
-       "pmcid": "",
-       "quotable_text": "Fluoroquinolone resistance mutations among Mycobacterium tuberculosis and their interconnection with treatment outcome.\n\nBACKGROUND: Fluoroquinolone (FQ) antibiotics are among the most potent second-line antitubercular drugs these days. The aim of the study was to analyze the frequency and pattern of genetic mutation in preextensive (pre-XDR) and extensively drug-resistant Mycobacterium tuberculosis using second-line line probe assay (LPA) and to compare drug-resistant mutations with different treatment outcomes.\n\nMETHODS: Sputum, lymph node aspirate, and cold accesses from patients with rifampicin-resistant Tuberculosis (TB) were subjected to first-line and second-line LPA (Genotype MTBDRsl by Hain Life Science, Germany) to assess additional drug resistance to fluoroquinolones (levofloxacin and moxifloxacin). Final treatment outcomes as per the National TB Elimination Program were assessed and compared with the mutation profile.\n\nRESULTS: One hundred and fifty subjects were observed to have mutations associated with resistance to FQs and constituted the final study population. The most frequent mutation observed among GyrA drug resistance mutation was D94G (Gyr A MUT3C, 44/150, 66%) corresponding to high-level resistance to levofloxacin and moxifloxacin. The same mutation was associated with poor treatment outcome as died or treatment failure (odds ratio 2.50, relative risk 1.67, P = 0.043). The most common hetero-resistance mutation pattern observed in GyrA gene was wild type plus Asp94Gly mutation in 24.6% of isolates.\n\nCONCLUSIONS: GyrA MUT3C hybridization corresponding to single-point mutation of aspartic acid to glycine at codon 94 constitutes the most common mutation in GyrA gene locus in M. tuberculosis with significant association with treatment outcome as died compared to those with treatment outcome as cured.",
-       "title": "Fluoroquinolone resistance mutations among Mycobacterium tuberculosis and their interconnection with treatment outcome.",
-       "year": "2023"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94Asn",
+       "source": "WHO catalogue v2"
       },
-      "name": "Fluoroquinolone resistance mutations among Mycobacterium tuberculosis and their interconnection with treatment outcome.",
-      "record_id": "37721235",
-      "retrieved_at": "2026-08-28T10:29:39.064749+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/37721235/"
+      "name": "p.Asp94Asn -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "BACKGROUND: The detection of mutations in the gyrA and gyrB genes in the Mycobacterium tuberculosis genome that have been demonstrated to confer phenotypic resistance to fluoroquinolones is the most promising technology for rapid diagnosis of fluoroquinolone resistance.\n\nMETHODS: In order to characterize the diversity and frequency of gyrA and gyrB mutations and to describe the global distribution of these mutations, we conducted a systematic review, from May 1996 to April 2013, of all published studies evaluating Mycobacterium tuberculosis mutations associated with resistance to fluoroquinolones. The overall goal of the study was to determine the potential utility and reliability of these mutations as diagnostic markers to detect phenotypic fluoroquinolone resistance in Mycobacterium tuberculosis and to describe their geographic distribution.\n\nRESULTS: Forty-six studies, covering four continents and 18 countries, provided mutation data for 3,846 unique clinical isolates with phenotypic resistance profiles to fluoroquinolones. The gyrA mutations occurring most frequently in fluoroquinolone-resistant isolates, ranged from 21-32% for D94G and 13-20% for A90V, by drug. Eighty seven percent of all strains that were phenotypically resistant to moxifloxacin and 83% of ofloxacin resistant isolates contained mutations in gyrA. Additionally we found that 83% and 80% of moxifloxacin and ofloxacin resistant strains respectively, were observed to have mutations in the gyrA codons interrogated by the existing MTBDRsl line probe assay. In China and Russia, 83% and 84% of fluoroquinolone resistant strains respectively, were observed to have gyrA mutations in the gene regions covered by the MTBDRsl assay.\n\nCONCLUSIONS: Molecular diagnostics, specifically the Genotype MTBDRsl assay, focusing on codons 88-94 should have moderate to high sensitivity in most countries. While we did observe geographic differences in the frequencies of single gyrA mutations across countries, molecular diagnostics based on detection of all gyrA mutations demonstrated to confer resistance should have broad and global utility.",
-       "abstract_sections": [
-        {
-         "label": "BACKGROUND",
-         "text": "The detection of mutations in the gyrA and gyrB genes in the Mycobacterium tuberculosis genome that have been demonstrated to confer phenotypic resistance to fluoroquinolones is the most promising technology for rapid diagnosis of fluoroquinolone resistance."
-        },
-        {
-         "label": "METHODS",
-         "text": "In order to characterize the diversity and frequency of gyrA and gyrB mutations and to describe the global distribution of these mutations, we conducted a systematic review, from May 1996 to April 2013, of all published studies evaluating Mycobacterium tuberculosis mutations associated with resistance to fluoroquinolones. The overall goal of the study was to determine the potential utility and reliability of these mutations as diagnostic markers to detect phenotypic fluoroquinolone resistance in Mycobacterium tuberculosis and to describe their geographic distribution."
-        },
-        {
-         "label": "RESULTS",
-         "text": "Forty-six studies, covering four continents and 18 countries, provided mutation data for 3,846 unique clinical isolates with phenotypic resistance profiles to fluoroquinolones. The gyrA mutations occurring most frequently in fluoroquinolone-resistant isolates, ranged from 21-32% for D94G and 13-20% for A90V, by drug. Eighty seven percent of all strains that were phenotypically resistant to moxifloxacin and 83% of ofloxacin resistant isolates contained mutations in gyrA. Additionally we found that 83% and 80% of moxifloxacin and ofloxacin resistant strains respectively, were observed to have mutations in the gyrA codons interrogated by the existing MTBDRsl line probe assay. In China and Russia, 83% and 84% of fluoroquinolone resistant strains respectively, were observed to have gyrA mutations in the gene regions covered by the MTBDRsl assay."
-        },
-        {
-         "label": "CONCLUSIONS",
-         "text": "Molecular diagnostics, specifically the Genotype MTBDRsl assay, focusing on codons 88-94 should have moderate to high sensitivity in most countries. While we did observe geographic differences in the frequencies of single gyrA mutations across countries, molecular diagnostics based on detection of all gyrA mutations demonstrated to confer resistance should have broad and global utility."
-        }
-       ],
-       "doi": "10.1371/journal.pone.0120470",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "PloS one",
-       "mentions": [
-        "gyrA"
-       ],
-       "pmcid": "PMC4376704",
-       "quotable_text": "Frequency and geographic distribution of gyrA and gyrB mutations associated with fluoroquinolone resistance in clinical Mycobacterium tuberculosis isolates: a systematic review.\n\nBACKGROUND: The detection of mutations in the gyrA and gyrB genes in the Mycobacterium tuberculosis genome that have been demonstrated to confer phenotypic resistance to fluoroquinolones is the most promising technology for rapid diagnosis of fluoroquinolone resistance.\n\nMETHODS: In order to characterize the diversity and frequency of gyrA and gyrB mutations and to describe the global distribution of these mutations, we conducted a systematic review, from May 1996 to April 2013, of all published studies evaluating Mycobacterium tuberculosis mutations associated with resistance to fluoroquinolones. The overall goal of the study was to determine the potential utility and reliability of these mutations as diagnostic markers to detect phenotypic fluoroquinolone resistance in Mycobacterium tuberculosis and to describe their geographic distribution.\n\nRESULTS: Forty-six studies, covering four continents and 18 countries, provided mutation data for 3,846 unique clinical isolates with phenotypic resistance profiles to fluoroquinolones. The gyrA mutations occurring most frequently in fluoroquinolone-resistant isolates, ranged from 21-32% for D94G and 13-20% for A90V, by drug. Eighty seven percent of all strains that were phenotypically resistant to moxifloxacin and 83% of ofloxacin resistant isolates contained mutations in gyrA. Additionally we found that 83% and 80% of moxifloxacin and ofloxacin resistant strains respectively, were observed to have mutations in the gyrA codons interrogated by the existing MTBDRsl line probe assay. In China and Russia, 83% and 84% of fluoroquinolone resistant strains respectively, were observed to have gyrA mutations in the gene regions covered by the MTBDRsl assay.\n\nCONCLUSIONS: Molecular diagnostics, specifically the Genotype MTBDRsl assay, focusing on codons 88-94 should have moderate to high sensitivity in most countries. While we did observe geographic differences in the frequencies of single gyrA mutations across countries, molecular diagnostics based on detection of all gyrA mutations demonstrated to confer resistance should have broad and global utility.",
-       "title": "Frequency and geographic distribution of gyrA and gyrB mutations associated with fluoroquinolone resistance in clinical Mycobacterium tuberculosis isolates: a systematic review.",
-       "year": "2015"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94Gly",
+       "source": "WHO catalogue v2"
       },
-      "name": "Frequency and geographic distribution of gyrA and gyrB mutations associated with fluoroquinolone resistance in clinical Mycobacterium tuberculosis isolates: a systematic review.",
-      "record_id": "25816236",
-      "retrieved_at": "2026-08-28T10:29:39.064749+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/25816236/"
+      "name": "p.Asp94Gly -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94Gly",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "Understanding the emergence and evolution of drug resistance can inform public health intervention to combat tuberculosis (TB). In this prospective molecular epidemiological surveillance study from 2015 to 2021 in eastern China, we prospectively collected whole-genome sequencing and epidemiological data on TB patients. We dissect the ordering of drug resistance mutation acquisition for nine commonly used anti-TB drugs, and we found that the katG S315T mutation first appeared around 1959, followed by rpoB S450L (1969), rpsL L43A (1972), embB M306V (1978), rrs 1401 (1981), fabG1 (1982), pncA (1985) and folC (1988) mutations. GyrA gene mutations appeared after the year of 2000. We observed that the first expansion of Mycobacterium tuberculosis (M.tb) resistance population among eastern China appeared after the introduction of isoniazid, streptomycin and para-amino salicylic acid, and the second expansion after the ethambutol, rifampicin, pyrazinamide, ethionamide and aminoglycosides. We speculate these two expansions are linked with population shift historically. By geospatial analysis, we found drug-resistant isolates migrated within eastern China. With epidemiological data of clonal strains, we observed some strains can evolve continuously in individuals and transmit readily in a population. In conclusion, this study mirrored the emergence and evolution of drug-resistant M.tb in eastern China were linked to the sequence and timing of introduction of anti-TB drugs, and multiple factors may contribute to the resistant population enlarged. To resolve the epidemic of drug-resistant TB, it requires applying anti-TB drugs carefully and/or identifying resistant patients timely to prevent them from developing high-level resistance and transmitting to others.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "Understanding the emergence and evolution of drug resistance can inform public health intervention to combat tuberculosis (TB). In this prospective molecular epidemiological surveillance study from 2015 to 2021 in eastern China, we prospectively collected whole-genome sequencing and epidemiological data on TB patients. We dissect the ordering of drug resistance mutation acquisition for nine commonly used anti-TB drugs, and we found that the katG S315T mutation first appeared around 1959, followed by rpoB S450L (1969), rpsL L43A (1972), embB M306V (1978), rrs 1401 (1981), fabG1 (1982), pncA (1985) and folC (1988) mutations. GyrA gene mutations appeared after the year of 2000. We observed that the first expansion of Mycobacterium tuberculosis (M.tb) resistance population among eastern China appeared after the introduction of isoniazid, streptomycin and para-amino salicylic acid, and the second expansion after the ethambutol, rifampicin, pyrazinamide, ethionamide and aminoglycosides. We speculate these two expansions are linked with population shift historically. By geospatial analysis, we found drug-resistant isolates migrated within eastern China. With epidemiological data of clonal strains, we observed some strains can evolve continuously in individuals and transmit readily in a population. In conclusion, this study mirrored the emergence and evolution of drug-resistant M.tb in eastern China were linked to the sequence and timing of introduction of anti-TB drugs, and multiple factors may contribute to the resistant population enlarged. To resolve the epidemic of drug-resistant TB, it requires applying anti-TB drugs carefully and/or identifying resistant patients timely to prevent them from developing high-level resistance and transmitting to others."
-        }
-       ],
-       "doi": "10.1016/j.ygeno.2023.110640",
-       "has_abstract": true,
-       "in_pmc": false,
-       "journal": "Genomics",
-       "mentions": [
-        "gyrA"
-       ],
-       "pmcid": "",
-       "quotable_text": "Emergence and evolution of drug-resistant Mycobacterium tuberculosis in eastern China: A six-year prospective study.\n\nUnderstanding the emergence and evolution of drug resistance can inform public health intervention to combat tuberculosis (TB). In this prospective molecular epidemiological surveillance study from 2015 to 2021 in eastern China, we prospectively collected whole-genome sequencing and epidemiological data on TB patients. We dissect the ordering of drug resistance mutation acquisition for nine commonly used anti-TB drugs, and we found that the katG S315T mutation first appeared around 1959, followed by rpoB S450L (1969), rpsL L43A (1972), embB M306V (1978), rrs 1401 (1981), fabG1 (1982), pncA (1985) and folC (1988) mutations. GyrA gene mutations appeared after the year of 2000. We observed that the first expansion of Mycobacterium tuberculosis (M.tb) resistance population among eastern China appeared after the introduction of isoniazid, streptomycin and para-amino salicylic acid, and the second expansion after the ethambutol, rifampicin, pyrazinamide, ethionamide and aminoglycosides. We speculate these two expansions are linked with population shift historically. By geospatial analysis, we found drug-resistant isolates migrated within eastern China. With epidemiological data of clonal strains, we observed some strains can evolve continuously in individuals and transmit readily in a population. In conclusion, this study mirrored the emergence and evolution of drug-resistant M.tb in eastern China were linked to the sequence and timing of introduction of anti-TB drugs, and multiple factors may contribute to the resistant population enlarged. To resolve the epidemic of drug-resistant TB, it requires applying anti-TB drugs carefully and/or identifying resistant patients timely to prevent them from developing high-level resistance and transmitting to others.",
-       "title": "Emergence and evolution of drug-resistant Mycobacterium tuberculosis in eastern China: A six-year prospective study.",
-       "year": "2023"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94His",
+       "source": "WHO catalogue v2"
       },
-      "name": "Emergence and evolution of drug-resistant Mycobacterium tuberculosis in eastern China: A six-year prospective study.",
-      "record_id": "37187254",
-      "retrieved_at": "2026-08-28T10:29:39.064749+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/37187254/"
+      "name": "p.Asp94His -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94His",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94Tyr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp94Tyr -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94Tyr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Gly88Ala",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly88Ala -- Assoc w R - Interim (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Gly88Ala",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Gly88Cys",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly88Cys -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Gly88Cys",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Ser91Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser91Pro -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrA:p.Ser91Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Ala90Val",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ala90Val -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Ala90Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp89Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp89Asn -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp89Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94Ala",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp94Ala -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94Ala",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp94Asn -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94Gly",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp94Gly -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94Gly",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94His",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp94His -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94His",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Asp94Tyr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp94Tyr -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Asp94Tyr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R - Interim",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Gly88Ala",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly88Ala -- Assoc w R - Interim (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Gly88Ala",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "High-level resistance",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Gly88Cys",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly88Cys -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Gly88Cys",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrA",
+       "mutation": "p.Ser91Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser91Pro -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrA:p.Ser91Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      }
     ],
     "requests": [
      {
-      "cached": false,
-      "content_sha256": "3304fa8048f8f0f7e4ac4b0168898ce74e295a9565b5acf9a4ae8929e5d711d0",
-      "retrieved_at": "2026-08-28T10:29:38.585355+00:00",
+      "cached": true,
+      "content_sha256": "9dcaa790ca50a921289bbb255532f44d673851926017d5769f334e67244b3d30",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "status": 200,
-      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=6&retmode=json&sort=relevance&term=%22gyrA%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
-     },
-     {
-      "cached": false,
-      "content_sha256": "a9a406b9ac3af1b296b4c0fa62d57cf31a0ff5ad2e80ddaf2c69e788a7d8c02f",
-      "retrieved_at": "2026-08-28T10:29:39.064749+00:00",
-      "status": 200,
-      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=36915970%2C40459255%2C39353459%2C37721235%2C25816236%2C37187254&retmode=xml&tool=kegg-string-mcp"
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/mutations.csv"
      }
     ],
     "resolved": {
-     "matched_by": "pubmed_search",
-     "query_translation": "\"gyrA\"[All Fields] AND \"Mycobacterium tuberculosis\"[All Fields]",
-     "term": "\"gyrA\" AND \"Mycobacterium tuberculosis\""
+     "drugs": [
+      "levofloxacin",
+      "moxifloxacin"
+     ],
+     "grading_counts": {
+      "(ungraded)": 10,
+      "Assoc w R": 18,
+      "Assoc w R - Interim": 2,
+      "Not assoc w R": 23,
+      "Not assoc w R - Interim": 721,
+      "Uncertain significance": 833
+     },
+     "matched_by": "symbol",
+     "resistance_associated": true,
+     "variants_in_catalogue": 1607
     }
    },
-   "tool": "pubmed_abstracts"
+   "tool": "resistance_variants"
   }
  ],
  "id": "gyrA",
  "mode": "single",
  "organism": "mtu",
- "summary": "# gyrA \u2014 *Mycobacterium tuberculosis* (KEGG `mtu:Rv0006`, STRING `83332.Rv0006`)\n\n## Identifier resolution\nThe symbol `gyrA` resolved cleanly in both structured resources: KEGG by symbol to **mtu:Rv0006**, STRING to **83332.Rv0006** (preferred name `gyrA`). There is no ambiguity about which locus is being annotated.\n\n## Pathways \u2014 a genuine negative\n**KEGG assigns Rv0006 to no pathway at all.** The tool note is explicit that this is a real absence, not a lookup failure: \"*KEGG returned no pathway assignments for mtu:Rv0006. The gene exists in KEGG but is not mapped to any pathway in this organism.*\"\n\nI checked whether this is gene-specific or a property of the gyrase locus: its partner **gyrB (mtu:Rv0005)** returns the same result \u2014 resolves in KEGG, mapped to zero pathways. So the whole DNA gyrase pair sits outside KEGG's `mtu` pathway maps. I have **no KEGG pathway IDs to cite for this gene**, and I will not substitute a plausible one.\n\n## Function\nThe structured tools do not deliver a functional statement directly \u2014 KEGG gave no pathway, and STRING gives topology rather than mechanism. What the structured data does establish is the **gyrA\u2013gyrB partnership**, which is the single strongest signal in the whole network (below), and which is consistent with the two subunits of a heterotetrameric DNA gyrase (type II topoisomerase).\n\nFor the drug-target role, literature is the only channel here, and it is one line of evidence:\n- gyrA is the fluoroquinolone target: PMID:36915970 \"*gyrA mutations in quinolone resistance*\"; PMID:40459255 \"*Fluoroquinolones (FQs) resistance in Mycobacterium tuberculosis (MTB), primarily driven by mutations in the quinolone resistance-determining region (QRDR) of gyrA*\".\n- The resistance mutations cluster in a defined region of the protein: PMID:25816236 \"*The gyrA mutations occurring most frequently in fluoroquinolone-resistant isolates, ranged from 21-32% for D94G and 13-20% for A90V, by drug*\" and \"*focusing on codons 88-94 should have moderate to high sensitivity in most countries*\". PMID:37721235 reports D94G as \"*corresponding to high-level resistance to levofloxacin and moxifloxacin*\".\n\nNote these abstracts are almost certainly part of the source of the textmining scores discussed below \u2014 they are not independent of them.\n\n## Interaction partners (STRING, \u22650.700)\n\n**Genuinely supported beyond textmining:**\n- **83332.Rv0005 (gyrB)** \u2014 combined 0.999, and strong across essentially every channel: experimental 0.981, coexpression 0.941, neighborhood 0.830, cooccurrence 0.773. This is the functional partner, and the only high-confidence partner with direct experimental support. Everything about its evidence profile (adjacent genes, co-evolution, co-expression, experiment) fits an obligate two-subunit complex.\n- **83332.Rv0007** \u2014 combined 0.946, driven by genomic neighborhood 0.774 and coexpression 0.757 with negligible textmining (0.094). An uncharacterized gene immediately downstream; the signal is operon-structural, not functional evidence of a physical interaction.\n- **83332.Rv0002 (dnaN)** (neighborhood 0.604) and **83332.Rv0003 (recF)** (neighborhood 0.524) \u2014 the classic *dnaA-dnaN-recF-gyrB-gyrA* chromosomal-replication gene cluster at the origin. Again this is synteny, i.e. shared genomic context, not demonstrated protein contact.\n- **83332.Rv3457c (rpoA)**, **83332.Rv0685 (tuf)**, **83332.Rv0684 (fusA1)**, **83332.Rv0667 (rpoB)** \u2014 pass the threshold only via moderate coexpression (0.536, 0.463, 0.448, 0.455 respectively), which is weak and typical of co-regulated housekeeping/growth-rate-associated genes.\n\n**Textmining-only \u2014 one line of evidence (literature co-mention), not experimental support.** STRING's own note flags these: inhA (83332.Rv1484), pncA (83332.Rv2043c), embB (83332.Rv3795), rpsL (83332.Rv0682), rpoC (83332.Rv0668), tlyA (83332.Rv1694), gid (83332.Rv3919c), katG (83332.Rv1908c), embA (83332.Rv3794), recA (83332.Rv2737c), ftsZ (83332.Rv2150c), eis (83332.Rv2416c).\n\nThis block is easy to misread. Every one of these is a **drug-resistance determinant for a different antibiotic**, and PMID:36915970 shows exactly why they co-occur in text: \"*katG mutations in isoniazid resistance, rpoB mutations in rifampin resistance, pncA mutations in pyrazinamide resistance, and gyrA mutations in quinolone resistance*.\" These genes are listed together in resistance-catalogue papers, so they co-mention constantly. That is a **bibliographic artifact of drug-resistance surveillance, not a biological network** \u2014 gyrA has no functional relationship to embB or pncA. This is the clearest case in the network where a high combined score (0.965 for both inhA and pncA) means nothing mechanistically.\n\n## Summary\ngyrA (Rv0006) encodes the A subunit of DNA gyrase, evidenced structurally by its near-maximal, experimentally-supported, syntenic and co-evolving association with gyrB (83332.Rv0005), and it sits in the origin-proximal replication gene cluster with dnaN (83332.Rv0002) and recF (83332.Rv0003). **KEGG assigns it no pathway in mtu** \u2014 a confirmed absence, shared with gyrB. Its clinical prominence as the fluoroquinolone target rests on literature; most of its high-scoring STRING partners are drug-resistance genes linked to it only by co-mention.",
+ "summary": "## gyrA (Rv0006) \u2014 DNA gyrase subunit A\n\n**Identity.** KEGG resolved `gyrA` to **mtu:Rv0006** by symbol. UniProt reviewed entry **P9WG47** (GYRA_MYCTU, locus tag Rv0006); two further unreviewed entries matched the symbol, **M4PN16** and **F2X2D0**, both with no FUNCTION statement (per the tool notes, \"the entry exists but its function is not described\").\n\n**Function (experimental, UniProt P9WG47).** The reviewed entry carries an experimentally supported FUNCTION statement: \"A type II topoisomerase that negatively supercoils closed circular double-stranded (ds) DNA in an ATP-dependent manner to maintain chromosomes in an underwound state, while in the absence of ATP it relaxes supercoiled dsDNA\", and it \"Also catalyzes the interconversion of other topological isomers of dsDNA rings, including catenanes\". A mycobacterium-specific point is explicit in the same record: \"Gyrase from M.tuberculosis has higher decatenation than supercoiling activity compared to E.coli; as M.tuberculosis only has 1 type II topoisomerase, gyrase has to fulfill the decatenation function of topoisomerase IV as well\" \u2014 i.e. this single enzyme covers both the supercoiling and the chromosome-decatenation duties that are split between two enzymes in E. coli. Quantitatively it is the weaker enzyme: \"At comparable concentrations M.tuberculosis gyrase cannot introduce as many negative supercoils into DNA as the E.coli enzyme, and its ATPase activity is lower\". Catalytic activity is listed as \"ATP-dependent breakage, passage and rejoining of double-stranded DNA.\" UniProt cites PMIDs 15047530, 16377674, 16876125, 17015625, 18426901, 19060136, 20805881, 22457352, 22844097 and 23869946 as the experimental support (that is UniProt's curated evidence, not literature I retrieved here).\n\n**Complex.** Experimentally supported subunit statement in P9WG47: \"Heterotetramer, composed of two GyrA and two GyrB chains. In the heterotetramer, GyrA contains the active site tyrosine that forms a transient covalent intermediate with DNA, while GyrB binds cofactors and catalyzes ATP hydrolysis\". The entry is extensively structurally characterised \u2014 19 PDB entries, including 3IFZ, 5BS8, 6GAU and 9FOY.\n\n**Pathways.** KEGG is the silent source here, not biology: `mtu:Rv0006` exists in KEGG but \"is not mapped to any pathway in this organism.\" UniProt supplies the functional placement instead (type II topoisomerase activity on the chromosome). Note that the second, untiered UniProt statement linking supercoiling to \"DNA replication, transcription, recombination and repair\" carries no evidence code and should be read as generic topoisomerase background, not a measurement on this protein.\n\n**Notable interaction partners (STRING, species 83332, score \u2265700).**\n- **83332.Rv0005 (gyrB)** \u2014 combined 0.999, and the only partner with strong non-textmining support in every relevant channel (experimental 0.981, coexpression 0.941, neighbourhood 0.830, cooccurrence 0.773). This is the genuine physical partner and matches the UniProt heterotetramer statement.\n- **83332.Rv0007** \u2014 combined 0.946, driven by genomic neighbourhood (0.774) and coexpression (0.757) with negligible textmining (0.094); an operonic/context-based association, not a literature artefact.\n- **83332.Rv0002 (dnaN)** 0.887 and **83332.Rv0003 (recF)** 0.861 \u2014 both mainly neighbourhood (0.604, 0.524), consistent with the conserved *gyrB\u2013gyrA\u2013recF\u2013dnaN* chromosomal region rather than demonstrated complex formation.\n- Transcription/translation machinery links \u2014 **83332.Rv0667 (rpoB)** 0.980, **83332.Rv3457c (rpoA)** 0.941, **83332.Rv0685 (tuf)** 0.873, **83332.Rv0684 (fusA1)** 0.859 \u2014 pass the non-textmining threshold only on coexpression (0.455, 0.536, 0.463, 0.448); their scores are dominated by textmining.\n- **Drug-resistance co-mention cluster, textmining only:** 83332.Rv1484 (inhA), 83332.Rv2043c (pncA), 83332.Rv3795 (embB), 83332.Rv3794 (embA), 83332.Rv0682 (rpsL), 83332.Rv0668 (rpoC), 83332.Rv1694 (tlyA), 83332.Rv3919c (gid), 83332.Rv1908c (katG), 83332.Rv2737c (recA), 83332.Rv2150c (ftsZ), 83332.Rv2416c (eis) all have `evidence_beyond_textmining: false`. These are co-mentions in resistance-genotyping papers \u2014 one line of evidence, literature \u2014 and should not be read as functional or physical interactions.\n\n**Lineage marker.** `lineage_markers` returned no records: \"No lineage-defining position falls within gyrA in the tbdb barcode.\" The tool notes this as an informative negative (855 of 4,008 H37Rv genes carry one). So gyrA variants are not, by this barcode, confounded by lineage structure at the gene level \u2014 though any specific association should still be checked against genotype data, which this lookup cannot do.\n\n**Drug-resistance catalogue.** gyrA **is resistance-associated** (WHO catalogue v2 via tbdb), for **levofloxacin and moxifloxacin**. Of 1,607 catalogued variants: 18 \"Assoc w R\", 2 \"Assoc w R - Interim\", 23 \"Not assoc w R\", 721 \"Not assoc w R - Interim\", 833 \"Uncertain significance\", 10 ungraded. The associated variants cluster in the quinolone-resistance region: `tbdb:gyrA:p.Gly88Cys`, `tbdb:gyrA:p.Gly88Ala` (interim), `tbdb:gyrA:p.Asp89Asn`, `tbdb:gyrA:p.Ala90Val`, `tbdb:gyrA:p.Ser91Pro`, and `tbdb:gyrA:p.Asp94Ala`/`Asn`/`Gly`/`His`/`Tyr`, with moxifloxacin records distinguishing high-level (e.g. `tbdb:gyrA:p.Asp94Gly`, comment \"High-level resistance\") from low-level (e.g. `tbdb:gyrA:p.Ala90Val`). This flag is a property of the gene: most gyrA variants are graded uncertain or not associated, so it is not evidence that any given gyrA mutation confers resistance.\n\n**Bottom line.** gyrA encodes the DNA-cleaving subunit of the sole M. tuberculosis type II topoisomerase, acting as a GyrA\u2082GyrB\u2082 heterotetramer that supercoils and decatenates the chromosome; its one well-supported protein partner is GyrB, its other high-scoring STRING links are genomic-context (Rv0007, dnaN, recF) or literature co-mention; KEGG has no pathway for it while UniProt is rich; and it carries no lineage-defining barcode position.",
  "target": "gyrA",
  "turns": [
   {
@@ -910,39 +1255,38 @@
     {
      "input": {
       "gene": "gyrA",
+      "organism_id": 83332
+     },
+     "name": "uniprot_protein"
+    },
+    {
+     "input": {
+      "gene": "gyrA",
       "required_score": 700,
       "species": 83332
      },
      "name": "string_partners"
+    },
+    {
+     "input": {
+      "gene": "gyrA",
+      "organism": "mtu"
+     },
+     "name": "lineage_markers"
+    },
+    {
+     "input": {
+      "gene": "gyrA"
+     },
+     "name": "resistance_variants"
     }
    ],
    "turn": 1
   },
   {
-   "stop_reason": "tool_use",
-   "tools_requested": [
-    {
-     "input": {
-      "gene": "gyrB",
-      "organism": "mtu"
-     },
-     "name": "kegg_pathways"
-    },
-    {
-     "input": {
-      "gene": "gyrA",
-      "limit": 6,
-      "organism": "Mycobacterium tuberculosis"
-     },
-     "name": "pubmed_abstracts"
-    }
-   ],
-   "turn": 2
-  },
-  {
    "stop_reason": "end_turn",
    "tools_requested": [],
-   "turn": 3
+   "turn": 2
   }
  ]
 }
