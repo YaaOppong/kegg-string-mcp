@@ -48,6 +48,14 @@ records which *queried* terms appear -- a passage retrieved for katG names ahpC
 whether or not ahpC was asked for. Conflating the two undercounted pair evidence
 by a factor of three before it was caught.
 
+A gene is named by any of its **aliases**, not only by the spelling the corpus
+was built with: a paper saying `mmpR5` is a paper about `Rv0678`. The alias set
+comes from `kegg_string_mcp.identity` (UniProt gene names and locus tags, the
+KEGG symbol table, STRING's preferred name), and a symbol KEGG records for more
+than one gene is refused rather than matched -- a wrong co-mention makes a pair
+look explained, which is worse than missing a synonym. `named_via` records which
+spelling actually matched, so a count can be audited back to its text.
+
 So "did this return papers that discuss the gene asked about?" has an exact
 answer, reproducible and impossible to tune after the fact. It is weaker than
 human judgement -- a gene can be named in passing -- but it costs nothing.
@@ -61,7 +69,7 @@ human judgement -- a gene can be named in passing -- but it costs nothing.
 | dense | 0.739 | 0.15 |
 
 Arm overlap (Jaccard over returned PMIDs): dense/lexical 0.158, hybrid/lexical
-0.433, hybrid/dense 0.423. The dense arm is retrieving substantially different
+0.433, hybrid/dense 0.424. The dense arm is retrieving substantially different
 papers, which is the case for keeping it; it is also the least precise, which is
 the case against replacing BM25 with it.
 
@@ -75,16 +83,27 @@ The classification below lives in `retrieval/independence.py` and is also what
 the residue gate consumes (`hypothesis/residue.py`), where it does a different
 job -- see "What the silent pairs turned out to be" at the end.
 
-Every pair is classified by one STRING call per gene (820 pairs would be 820
-requests against a service that asks for roughly one per second):
+Every pair is classified by one STRING `/network` call for the whole gene set,
+which returns the edges *between* the proteins asked about:
 
 | Status | Pairs | What literature adds |
 |---|---|---|
-| `silent` | 455 (55%) | everything -- STRING returns no edge |
-| `textmining_only` | 326 (40%) | nothing new; STRING's score came from this literature |
-| `corroborating` | 39 (5%) | confirmation of an experimental or database channel |
+| `textmining_only` | 401 (49%) | nothing new; STRING's score came from this literature |
+| `silent` | 379 (46%) | everything -- the pair was queried and STRING holds no edge |
+| `corroborating` | 40 (5%) | confirmation of an experimental or database channel |
+| `unresolved` | 0 | nothing was asked -- a gene did not resolve to a STRING protein |
+| `truncated` | 0 | nothing was settled -- reachable only on the `partner_edges` fallback |
 
-The middle row is the one to sit with. For 40% of pairs STRING reports a high
+The last two rows are empty here and are still reported. Both used to collapse
+into `silent`, so a lookup that failed arrived downstream as evidence of no
+interaction. Silence now means *asked, and no edge*.
+
+This replaces one `partners()` call per gene. Those lists are ranked and capped,
+so when both hit the cap an edge could sit below both cuts and be reported as no
+edge: katG/rpoC scores 0.823 at rank 24 of katG's 31 partners, rpoB/rpsC scores
+0.991 at rank 23. 76 pairs were classified `silent` for that reason alone.
+
+The top row is the one to sit with. For 49% of pairs STRING reports a high
 combined score -- katG/pncA at 0.965 -- built almost entirely from textmining,
 with every other channel below 0.11. Presenting both STRING's score and the
 retrieved abstracts as evidence is one line of evidence counted twice. The repo
@@ -94,22 +113,22 @@ this applies the same rule to the retrieval comparison.
 28% of the corpus postdates the STRING v12.0 release, so those papers cannot be
 in any channel, textmining included.
 
-## Result: the 455 pairs STRING is silent on
+## Result: the 379 pairs STRING is silent on
 
 | Arm | precision@10 | papers naming both genes |
 |---|---|---|
-| hybrid | **0.908** | 0.04 |
-| lexical | 0.854 | **0.05** |
-| dense | 0.714 | 0.02 |
+| hybrid | **0.905** | 0.03 |
+| lexical | 0.851 | **0.04** |
+| dense | 0.708 | 0.02 |
 
 Two findings, one comfortable and one not.
 
 The arm ranking is unchanged. Hybrid leads on precision, lexical on joint
-evidence, dense trails on both, and overlaps move by less than 0.005. The
+evidence, dense trails on both, and overlaps move by less than 0.006. The
 comparison survives removing the circularity, which is the result it needed to
 survive.
 
-Joint evidence collapses -- 0.39 papers per query to 0.05 for the lexical arm.
+Joint evidence collapses -- 0.39 papers per query to 0.04 for the lexical arm.
 The pairs STRING is silent on are largely pairs this corpus is silent on too.
 Almost all co-mention evidence sits on pairs STRING already scores, and most of
 those scores are textmining. On this corpus, the literature arm is mostly
@@ -123,13 +142,13 @@ gene queries -- and the machinery for that measurement now exists.
 
 ## What the silent pairs turned out to be
 
-The 455 STRING-silent pairs were constructed here as a de-biased query set: a
+The 379 STRING-silent pairs were constructed here as a de-biased query set: a
 selection neither retriever influences, used to check that the arm ranking was
 not an artefact of scoring relevance on gene names.
 
 They are also the input to hypothesis generation, and there the polarity is
 reversed. A pair no structured source connects and no paper co-mentions is not a
-disappointing query -- it is a candidate. 441 of the 455 (97%) have no paper
+disappointing query -- it is a candidate. 369 of the 379 (97%) have no paper
 naming both genes, against 83% across all 820 pairs, so the filter discriminates.
 
 This makes the collapse above read differently depending on what is being asked.

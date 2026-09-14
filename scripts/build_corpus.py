@@ -63,9 +63,11 @@ def main() -> int:
 
     from kegg_string_mcp.cache import DiskCache
     from kegg_string_mcp.http import PoliteClient
+    from kegg_string_mcp.identity import resolve
     from kegg_string_mcp.kegg import KeggClient
     from kegg_string_mcp.retrieval.corpus import build, chunk
     from kegg_string_mcp.retrieval.coverage import assess, route, summarise
+    from kegg_string_mcp.string_db import StringClient
     from kegg_string_mcp.uniprot import UniProtClient
 
     args.out.mkdir(parents=True, exist_ok=True)
@@ -97,7 +99,20 @@ def main() -> int:
             return 0
         print(f"  routed to stage 2 ({len(genes)}): {', '.join(genes)}")
 
-    corpus = chunk(build(genes, limit=args.limit))
+    # Resolve before retrieving, so "does this passage name the gene?" is asked
+    # of every spelling the gene has rather than of the one the caller typed. A
+    # paper saying "mmpR5" is a paper about Rv0678, and counting it otherwise
+    # undercounts co-mention -- which the residue reads as novelty.
+    http = PoliteClient(DiskCache())
+    identities = resolve(genes, string=StringClient(http), kegg=KeggClient(http),
+                         uniprot=UniProtClient(http))
+    aliases = identities.alias_map()
+    synonyms = sum(len(v) - 1 for v in aliases.values())
+    print(f"  identity: {synonyms} synonym(s) across {len(genes)} genes")
+    for alias, claimants in sorted(identities.ambiguous.items()):
+        print(f"    refused '{alias}': names {', '.join(claimants)}")
+
+    corpus = chunk(build(genes, limit=args.limit, aliases=aliases))
     corpus_path = corpus.write(args.out / f"corpus_{args.tag}.json")
     chars = sum(len(p.text) for p in corpus.passages)
     print(f"  corpus: {len(corpus.passages)} passages, {chars:,} chars -> {corpus_path}")

@@ -82,3 +82,24 @@ class ToolResult(BaseModel):
     @classmethod
     def build(cls, query: dict[str, Any], records: list[Record], **kw: Any) -> ToolResult:
         return cls(query=query, records=records, record_ids=[r.record_id for r in records], **kw)
+
+
+def answered(result: ToolResult | Any) -> bool:
+    """Did the source actually speak about the thing asked for?
+
+    Empty `records` alone does not settle it: "resolved, and holds nothing" is a
+    finding, while "never resolved" is not. Two discriminators, one per failure
+    mode -- a fetch failure leaves no request trace, because those paths return
+    before any trace is appended, and a failed identifier resolution leaves
+    `resolved.matched_by == "none"`, which is how every client in this package
+    reports matching nothing.
+
+    Lives here rather than in one consumer because every consumer needs it:
+    `retrieval/coverage.py` implemented this rule correctly while the pair
+    verdicts, the independence classifier and the residue each read an absent
+    answer as a negative one.
+    """
+    if not getattr(result, "requests", None):
+        return False
+    resolved = getattr(result, "resolved", {}) or {}
+    return bool(getattr(result, "records", None)) or resolved.get("matched_by") not in (None, "none")

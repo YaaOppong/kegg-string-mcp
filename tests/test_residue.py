@@ -13,6 +13,7 @@ from kegg_string_mcp.hypothesis.residue import (
     assess,
     residue,
     summarise,
+    undetermined,
 )
 
 PAIRS = [("katG", "ahpC"), ("rpoB", "rpoC"), ("pks13", "zur")]
@@ -126,6 +127,60 @@ def test_serialised_shape_is_what_downstream_reads():
     dropped field would break a consumer with nothing failing here."""
     out = assess([("katG", "ahpC")], co_mentions={("katG", "ahpC"): 2})
     payload = out[0].to_dict()
-    assert set(payload) == {"gene_a", "gene_b", "reasons"}
+    assert set(payload) == {"gene_a", "gene_b", "reasons", "undetermined"}
     assert payload["reasons"] == [
         {"code": CO_MENTIONED, "detail": "2 corpus paper(s) name both genes", "value": 2.0}]
+
+
+# -- the third answer: pairs nothing could speak to ---------------------------
+
+
+def test_an_unresolved_pair_is_undetermined_not_a_candidate():
+    """`classify()` used to call a resolution failure 'silent', which produced no
+    reasons here, which promoted the pair to novel candidate -- the strongest
+    claim in the pipeline, made from a failed lookup."""
+    status = {("katG", "fakeGene1"): {"status": "unresolved",
+                                      "note": "fakeGene1 did not resolve"}}
+    out = assess([("katG", "fakeGene1")], string_status=status)
+    assert out[0].is_undetermined()
+    assert not out[0].is_residue()
+    assert undetermined(out) == out
+
+
+def test_a_truncated_lookup_is_undetermined_too():
+    status = {("hubA", "hubB"): {"status": "truncated", "note": "both lists were full"}}
+    assert assess([("hubA", "hubB")], string_status=status)[0].is_undetermined()
+
+
+def test_a_source_that_never_answered_makes_the_pair_undetermined():
+    out = assess([("katG", "ahpC")], unanswered={"ahpC": ["kegg", "uniprot"]})
+    assert out[0].is_undetermined()
+    assert "never answered for ahpC" in out[0].undetermined[0].detail
+
+
+def test_an_explained_pair_stays_explained_even_if_another_source_failed():
+    """Undetermined is about what is unknown; it does not erase what is known."""
+    out = assess([("katG", "ahpC")], co_mentions={("katG", "ahpC"): 7},
+                 unanswered={"ahpC": ["kegg"]})
+    assert out[0].codes() == {CO_MENTIONED}
+    assert out[0].is_undetermined()
+    assert not out[0].is_residue()
+
+
+def test_undetermined_pairs_are_kept_out_of_the_residue_fraction():
+    """A residue fraction computed over pairs nobody could assess measures the
+    outage, not the biology."""
+    out = assess([("a", "b"), ("c", "d"), ("e", "f")],
+                 string_status={("a", "b"): {"status": "unresolved"}},
+                 co_mentions={("c", "d"): 3})
+    summary = summarise(out)
+    assert summary["pairs"] == 3
+    assert summary["undetermined"] == 1
+    assert summary["assessable"] == 2
+    assert summary["residue"] == 1
+    assert summary["residue_fraction"] == 0.5
+
+
+def test_summary_of_nothing_assessable_does_not_divide_by_zero():
+    out = assess([("a", "b")], string_status={("a", "b"): {"status": "unresolved"}})
+    assert summarise(out)["residue_fraction"] == 0.0

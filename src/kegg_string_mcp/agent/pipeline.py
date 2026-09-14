@@ -19,7 +19,8 @@ import json
 from pathlib import Path
 from typing import Any
 
-from kegg_string_mcp.agent.evidence import all_pairs
+from kegg_string_mcp import identity
+from kegg_string_mcp.agent.evidence import all_pairs, edge_index
 from kegg_string_mcp.agent.loop import new_store, run_loop
 from kegg_string_mcp.agent.store import RunStore
 from kegg_string_mcp.agent.validate import validate
@@ -121,6 +122,10 @@ async def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("run
 
 
 PARTNER_LIMIT = 20
+# The pair query is asked at STRING's low-confidence band rather than at the
+# partner-list threshold: the verdict reports the score it found, and a weak edge
+# stated with its score is more use than a missing one the reader must interpret.
+PAIR_MIN_SCORE = 150
 
 
 async def _call(tools: Any, name: str, arguments: dict[str, Any]) -> dict[str, Any]:
@@ -132,7 +137,8 @@ async def _call(tools: Any, name: str, arguments: dict[str, Any]) -> dict[str, A
 async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path = Path("runs"),
                              tools: Any | None = None, client: Any | None = None,
                              tool_schemas: list[dict[str, Any]] | None = None,
-                             kegg: KeggClient | None = None) -> dict[str, Any]:
+                             kegg: KeggClient | None = None,
+                             string: StringClient | None = None) -> dict[str, Any]:
     """Pre-compute every pairwise relationship, then let the model interpret it.
 
     The set intersections are done here rather than by the model: a model doing
@@ -177,7 +183,28 @@ async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path
     store.derived("pathway_sizes", {"organism": organism, "n_pathways": len(sizes),
                                     "genome_size": genome_size})
 
-    pairs = all_pairs(genes, pathways, partners, sizes, genome_size, PARTNER_LIMIT)
+    # The pair-level STRING query. Partner lists are ranked and capped at
+    # PARTNER_LIMIT, so "B is not in A's top 20" is not "A and B do not interact":
+    # katG/rpoC (0.823, rank 24) and rpoB/rpsC (0.991, rank 23) both read as no
+    # interaction until the pair itself was asked about. One /network call covers
+    # every pair, and a failure here degrades to the partner-list answer with the
+    # truncation said out loud rather than taking the run down.
+    string = string or getattr(tools, "string", None) or StringClient(PoliteClient(DiskCache()))
+    identities = identity.resolve(genes, string=string)
+    unresolved = set(identities.unresolved("string"))
+    edges: dict[tuple[str, str], dict[str, Any]] | None = None
+    resolved_ids = [identities.string_id(g) for g in genes if identities.string_id(g)]
+    if len(resolved_ids) >= 2:
+        try:
+            network = string.network(resolved_ids, required_score=PAIR_MIN_SCORE).model_dump()
+            store.tool_result("string_network", {"identifiers": resolved_ids}, network)
+            edges = edge_index(network, identities, genes)
+        except (FetchError, ValueError) as exc:
+            store.derived("string_network_failed", {"error": str(exc)})
+    store.derived("identities", identities.to_dict())
+
+    pairs = all_pairs(genes, pathways, partners, sizes, genome_size, PARTNER_LIMIT,
+                      edges=edges, unresolved=unresolved)
     store.derived("pair_evidence", {"pairs": [p.to_dict() for p in pairs]})
 
     table = "\n\n".join(
@@ -186,8 +213,13 @@ async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path
         f"  partners retrieved: {p.partners_retrieved}"
         + (f" (LIMIT REACHED for {', '.join(p.truncated)}; true degree unknown)"
            if p.truncated else "") + "\n"
-        f"  direct interaction: {p.direct_interaction}\n"
-        f"  shared pathways: " + (", ".join(
+        f"  direct interaction: {p.direct_interaction}"
+        + ("" if p.checked_directly else
+           " (pair NOT queried directly; partner lists only)")
+        + (f"\n  UNRESOLVED IN STRING: {', '.join(p.unresolved)} -- no interaction evidence "
+           f"was retrieved for this pair, which is not evidence of no interaction"
+           if p.unresolved else "") + "\n"
+        "  shared pathways: " + (", ".join(
             f"{sp.pathway_id} '{sp.name}' [{sp.specificity}, {sp.size} genes]"
             for sp in p.shared_pathways) or "none") + "\n"
         "  shared partners: " + (", ".join(
@@ -207,6 +239,10 @@ async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path
     report = validate(result.text, store.citable_ids, records=store.records,
                       notes=store.notes)
     payload = {"mode": "epistasis", "genes": genes, "organism": organism,
+               # Step 8 reads this: a gene that resolved nowhere contributed no
+               # interaction evidence, and the caller must be able to see that
+               # without parsing verdict prose.
+               "unresolved": sorted(unresolved),
                "summary": result.text, "turns": result.turns,
                "stop_reason": result.stop_reason,
                "pairs": [p.to_dict() for p in pairs],

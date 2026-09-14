@@ -387,3 +387,66 @@ def test_empty_corpus_returns_nothing_rather_than_raising():
     from kegg_string_mcp.retrieval.index import VectorIndex
 
     assert VectorIndex(Corpus(genes=[], passages=[])).search("anything", k=5) == []
+
+
+# -- aliases: a paper naming mmpR5 is a paper about Rv0678 --------------------
+
+
+def test_a_synonym_counts_as_naming_the_gene():
+    """`annotate_genes_named` matched the literal query string, so a corpus built
+    on locus tags scored zero co-mentions for papers that use symbols -- which
+    undercounts the retrieval judge and inflates the residue."""
+    from kegg_string_mcp.retrieval.corpus import Corpus, annotate_genes_named
+
+    corpus = Corpus(genes=["Rv0678", "Rv0676c"],
+                    aliases={"Rv0678": ["Rv0678", "mmpR5"], "Rv0676c": ["Rv0676c", "mmpL5"]},
+                    passages=[passage("1", "Mutations in mmpR5 derepress the mmpL5 efflux pump.")])
+    annotate_genes_named(corpus)
+    assert sorted(corpus.passages[0].genes_named) == ["Rv0676c", "Rv0678"]
+
+
+def test_the_matching_alias_is_recorded():
+    """An alias map that silently changes counts is not auditable, and the counts
+    feed the residue."""
+    from kegg_string_mcp.retrieval.corpus import Corpus, annotate_genes_named
+
+    corpus = Corpus(genes=["Rv0678"], aliases={"Rv0678": ["Rv0678", "mmpR5"]},
+                    passages=[passage("1", "mmpR5 mutations confer bedaquiline resistance")])
+    annotate_genes_named(corpus)
+    assert corpus.passages[0].named_via == {"Rv0678": ["mmpR5"]}
+
+
+def test_aliases_still_match_on_word_boundaries():
+    """The boundary rule is what keeps `embB` out of another token; adding
+    aliases must not relax it."""
+    from kegg_string_mcp.retrieval.corpus import Corpus, annotate_genes_named
+
+    corpus = Corpus(genes=["Rv0678"], aliases={"Rv0678": ["Rv0678", "mmpR5"]},
+                    passages=[passage("1", "the mmpR5X protein is unrelated")])
+    annotate_genes_named(corpus)
+    assert corpus.passages[0].genes_named == []
+
+
+def test_a_corpus_without_aliases_behaves_as_before():
+    from kegg_string_mcp.retrieval.corpus import Corpus, annotate_genes_named
+
+    corpus = Corpus(genes=["katG"], passages=[passage("1", "katG encodes a catalase")])
+    annotate_genes_named(corpus)
+    assert corpus.passages[0].genes_named == ["katG"]
+    assert corpus.passages[0].named_via == {"katG": ["katG"]}
+
+
+def test_aliases_survive_chunking_and_a_write_read_round_trip(tmp_path):
+    """Chunking rebuilds every passage and the corpus is re-read by later stages;
+    an alias map lost in either place changes the counts between runs."""
+    from kegg_string_mcp.retrieval.corpus import Corpus, chunk
+
+    long_text = " ".join(["mmpR5 efflux"] * 200)
+    corpus = Corpus(genes=["Rv0678"], aliases={"Rv0678": ["Rv0678", "mmpR5"]},
+                    passages=[passage("1", long_text)])
+    chunked = chunk(corpus)
+    assert len(chunked.passages) > 1
+    assert all(p.genes_named == ["Rv0678"] for p in chunked.passages)
+
+    path = chunked.write(tmp_path / "corpus.json")
+    assert Corpus.read(path).aliases == {"Rv0678": ["Rv0678", "mmpR5"]}

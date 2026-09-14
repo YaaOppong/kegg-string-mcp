@@ -5,6 +5,13 @@ generation. Stages 1 and 2 explain what they can; whatever survives is the input
 to stage 3, and is worth an LLM's attention precisely because nothing cheaper
 accounted for it.
 
+**Three answers, not two.** A pair is explained, unexplained, or *undetermined* --
+the sources that would have settled it never answered. The gate previously had
+only the first two, so a gene STRING could not resolve produced no reasons and
+was promoted to novel candidate: the strongest possible claim, made from a
+failed lookup. `undetermined` pairs are reported in full and counted out of the
+residue denominator, so an outage shows up as an outage.
+
 Every pair carries the reasons it was explained, and every reason is recorded
 whether or not it counts. Nothing is silently dropped: the residue is a filter
 you can re-run with a different definition of "explained" without refetching
@@ -41,6 +48,11 @@ CO_MENTIONED = "co_mentioned"                 # a corpus paper names both
 # tuberculosis drug resistance (mtu01501)" does not answer it.
 DEFAULT_EXPLAINING = frozenset({STRING_EXPERIMENTAL, CO_MENTIONED})
 
+# Why a pair could not be assessed. Not reasons it is explained, and not reasons
+# it is novel -- the third answer the gate previously lacked.
+STRING_UNDETERMINED = "string_not_checked"    # unresolved gene, or a truncated lookup
+SOURCE_UNANSWERED = "source_unanswered"       # a source never spoke about a gene
+
 
 @dataclass
 class Reason:
@@ -57,40 +69,67 @@ class PairAssessment:
     gene_a: str
     gene_b: str
     reasons: list[Reason] = field(default_factory=list)
+    # Why this pair could not be assessed at all. Separate from `reasons`: a
+    # source that failed to answer has told us nothing either way, and counting
+    # its silence as "no explanation found" is how a resolution failure became a
+    # novel candidate.
+    undetermined: list[Reason] = field(default_factory=list)
 
     def codes(self) -> set[str]:
         return {r.code for r in self.reasons}
 
+    def is_undetermined(self) -> bool:
+        return bool(self.undetermined)
+
     def is_residue(self, explaining: frozenset[str] = DEFAULT_EXPLAINING) -> bool:
-        return not (self.codes() & explaining)
+        return not (self.codes() & explaining) and not self.undetermined
 
     def to_dict(self) -> dict[str, Any]:
         return {"gene_a": self.gene_a, "gene_b": self.gene_b,
-                "reasons": [r.to_dict() for r in self.reasons]}
+                "reasons": [r.to_dict() for r in self.reasons],
+                "undetermined": [r.to_dict() for r in self.undetermined]}
 
 
 def assess(pairs: list[tuple[str, str]],
            string_status: dict[tuple[str, str], dict] | None = None,
            pathways: dict[str, set[str]] | None = None,
-           co_mentions: dict[tuple[str, str], int] | None = None) -> list[PairAssessment]:
+           co_mentions: dict[tuple[str, str], int] | None = None,
+           unanswered: dict[str, list[str]] | None = None) -> list[PairAssessment]:
     """Attach every applicable reason to every pair. Pure -- no network.
 
     Inputs are keyed by unordered pair, so callers need not agree on gene order:
     `_key` sorts before lookup.
+
+    `unanswered` maps a gene to the sources that never spoke about it (a failed
+    resolution, a failed request). Those pairs come back `undetermined`: nothing
+    is known about them, which is neither an explanation nor a candidate.
     """
     string_status = _normalise(string_status or {})
     co_mentions = _normalise(co_mentions or {})
     pathways = pathways or {}
+    unanswered = {g.lower(): v for g, v in (unanswered or {}).items() if v}
 
     out: list[PairAssessment] = []
     for a, b in pairs:
         assessment = PairAssessment(gene_a=a, gene_b=b)
         key = _key(a, b)
 
+        for gene in (a, b):
+            sources = unanswered.get(gene.lower())
+            if sources:
+                assessment.undetermined.append(Reason(
+                    SOURCE_UNANSWERED,
+                    f"{', '.join(sorted(sources))} never answered for {gene}, so this pair "
+                    f"cannot be called explained or novel", float(len(sources))))
+
         edge = string_status.get(key)
         if edge:
             status = edge.get("status")
-            if status == "corroborating":
+            if status in ("unresolved", "truncated"):
+                assessment.undetermined.append(Reason(
+                    STRING_UNDETERMINED,
+                    edge.get("note") or f"STRING result for this pair is {status}"))
+            elif status == "corroborating":
                 assessment.reasons.append(Reason(
                     STRING_EXPERIMENTAL,
                     "STRING asserts this pair on a non-textmining channel",
@@ -120,7 +159,18 @@ def assess(pairs: list[tuple[str, str]],
 
 def residue(assessments: list[PairAssessment],
             explaining: frozenset[str] = DEFAULT_EXPLAINING) -> list[PairAssessment]:
+    """Pairs nothing accounted for. Excludes pairs nothing could speak to at all."""
     return [a for a in assessments if a.is_residue(explaining)]
+
+
+def undetermined(assessments: list[PairAssessment]) -> list[PairAssessment]:
+    """Pairs a source failed on. Reported, never counted as candidates.
+
+    Dropping them silently would understate coverage; leaving them in the residue
+    would overstate novelty. Both are visible instead, so a run can say how many
+    pairs it could not assess.
+    """
+    return [a for a in assessments if a.is_undetermined()]
 
 
 def summarise(assessments: list[PairAssessment],
@@ -134,12 +184,17 @@ def summarise(assessments: list[PairAssessment],
         for code in sorted(assessment.codes()):
             counts[code] = counts.get(code, 0) + 1
     remaining = residue(assessments, explaining)
+    unknown = undetermined(assessments)
+    # Denominator excludes the undetermined pairs. A residue fraction over pairs
+    # nobody could assess measures the outage, not the biology.
+    assessable = len(assessments) - len(unknown)
     return {"pairs": len(assessments),
             "reason_counts": dict(sorted(counts.items())),
             "explaining": sorted(explaining),
             "residue": len(remaining),
-            "residue_fraction": round(len(remaining) / len(assessments), 3)
-            if assessments else 0.0}
+            "undetermined": len(unknown),
+            "assessable": assessable,
+            "residue_fraction": round(len(remaining) / assessable, 3) if assessable else 0.0}
 
 
 def _key(a: str, b: str) -> tuple[str, str]:

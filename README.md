@@ -221,6 +221,14 @@ python scripts/residue.py --tag tb41                               # what stays 
 Corpora are gitignored: a few hundred PubMed abstracts under publisher copyright is bulk
 redistribution. Every command above rebuilds from the tools in this repo.
 
+**One gene, one identity.** `Rv0678` and `mmpR5` are the same protein, and every stage
+resolves that once, in `kegg_string_mcp/identity.py`, rather than matching whatever string
+it was handed. Before it, the STRING edge between Rv0678 and Rv0676c scored 0.989 under
+their symbols and read as silent under their locus tags. The same module supplies the
+alias set the corpus matches on, and records which sources failed to resolve a gene — so a
+failed lookup is reported as **undetermined** rather than counted as an absence of
+evidence, which would make the pair look novel. See [docs/TODO.md](docs/TODO.md).
+
 **Retrieval is routed, not run on everything.** Literature is the expensive, noisy
 channel, so `build_corpus.py` runs it only on genes whose structured annotation is thin —
 no UniProt function, only inferred function, or no KEGG pathway — and writes the routing
