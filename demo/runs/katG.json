@@ -27,7 +27,7 @@
       },
       "name": "Phenylalanine metabolism - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu00360",
-      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
+      "retrieved_at": "2026-08-28T13:00:31.278299+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu00360"
@@ -39,7 +39,7 @@
       },
       "name": "Tryptophan metabolism - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu00380",
-      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
+      "retrieved_at": "2026-08-28T13:00:31.278299+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu00380"
@@ -51,7 +51,7 @@
       },
       "name": "Drug metabolism - other enzymes - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu00983",
-      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
+      "retrieved_at": "2026-08-28T13:00:31.278299+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu00983"
@@ -63,7 +63,7 @@
       },
       "name": "Metabolic pathways - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu01100",
-      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
+      "retrieved_at": "2026-08-28T13:00:31.278299+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu01100"
@@ -75,7 +75,7 @@
       },
       "name": "Biosynthesis of secondary metabolites - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu01110",
-      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
+      "retrieved_at": "2026-08-28T13:00:31.278299+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu01110"
@@ -85,21 +85,21 @@
      {
       "cached": true,
       "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
-      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "retrieved_at": "2026-08-28T13:00:27.870904+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/list/mtu"
      },
      {
       "cached": true,
       "content_sha256": "84cbbd41122ec13d0ca6d80cc904bd151e174f3468aff057090dd165b2e6d590",
-      "retrieved_at": "2026-09-05T12:13:46.129349+00:00",
+      "retrieved_at": "2026-08-28T13:00:31.278299+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/link/pathway/mtu:Rv1908c"
      },
      {
       "cached": true,
       "content_sha256": "fb3e52ff8b817798ee1b884c88affaf5a547b5e386c27d1afd61f0400867b648",
-      "retrieved_at": "2026-09-05T12:13:47.459642+00:00",
+      "retrieved_at": "2026-08-28T13:00:36.207228+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/list/pathway/mtu"
      }
@@ -251,7 +251,7 @@
       },
       "name": "Catalase-peroxidase",
       "record_id": "P9WIE5",
-      "retrieved_at": "2026-09-05T12:38:54.763197+00:00",
+      "retrieved_at": "2026-09-14T11:08:32.682149+00:00",
       "source": "uniprot",
       "type": "protein",
       "url": "https://www.uniprot.org/uniprotkb/P9WIE5"
@@ -303,7 +303,7 @@
       },
       "name": "Catalase-peroxidase",
       "record_id": "A0A0N7EHL5",
-      "retrieved_at": "2026-09-05T12:38:54.763197+00:00",
+      "retrieved_at": "2026-09-14T11:08:32.682149+00:00",
       "source": "uniprot",
       "type": "protein",
       "url": "https://www.uniprot.org/uniprotkb/A0A0N7EHL5"
@@ -355,7 +355,7 @@
       },
       "name": "Catalase-peroxidase",
       "record_id": "A0A0N9DRZ6",
-      "retrieved_at": "2026-09-05T12:38:54.763197+00:00",
+      "retrieved_at": "2026-09-14T11:08:32.682149+00:00",
       "source": "uniprot",
       "type": "protein",
       "url": "https://www.uniprot.org/uniprotkb/A0A0N9DRZ6"
@@ -365,7 +365,7 @@
      {
       "cached": true,
       "content_sha256": "44e9b0a976c9ebfa71307f4a94ee25204f6c155cfa3e3729d017b04920b3e0ac",
-      "retrieved_at": "2026-09-05T12:38:54.763197+00:00",
+      "retrieved_at": "2026-09-14T11:08:32.682149+00:00",
       "status": 200,
       "url": "https://rest.uniprot.org/uniprotkb/search?fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Ccc_function%2Ccc_catalytic_activity%2Ccc_subunit%2Cxref_pdb%2Cec&format=json&query=organism_id%3A83332+AND+gene%3AkatG&size=3"
      }
@@ -439,7 +439,7 @@
       },
       "name": "furA",
       "record_id": "83332.Rv1909c",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1909c"
@@ -463,7 +463,7 @@
       },
       "name": "sodA",
       "record_id": "83332.Rv3846",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3846"
@@ -487,7 +487,7 @@
       },
       "name": "ahpC",
       "record_id": "83332.Rv2428",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2428"
@@ -511,7 +511,7 @@
       },
       "name": "pncA",
       "record_id": "83332.Rv2043c",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2043c"
@@ -535,7 +535,7 @@
       },
       "name": "embB",
       "record_id": "83332.Rv3795",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3795"
@@ -559,7 +559,7 @@
       },
       "name": "Rv1907c",
       "record_id": "83332.Rv1907c",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1907c"
@@ -583,7 +583,7 @@
       },
       "name": "sodC",
       "record_id": "83332.Rv0432",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0432"
@@ -607,7 +607,7 @@
       },
       "name": "ndh",
       "record_id": "83332.Rv1854c",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1854c"
@@ -631,7 +631,7 @@
       },
       "name": "kasA",
       "record_id": "83332.Rv2245",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2245"
@@ -655,7 +655,7 @@
       },
       "name": "rpoB",
       "record_id": "83332.Rv0667",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0667"
@@ -679,7 +679,7 @@
       },
       "name": "gyrA",
       "record_id": "83332.Rv0006",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0006"
@@ -703,7 +703,7 @@
       },
       "name": "inhA",
       "record_id": "83332.Rv1484",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1484"
@@ -727,7 +727,7 @@
       },
       "name": "nat",
       "record_id": "83332.Rv3566c",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3566c"
@@ -751,7 +751,7 @@
       },
       "name": "hisC1",
       "record_id": "83332.Rv1600",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1600"
@@ -775,7 +775,7 @@
       },
       "name": "gyrB",
       "record_id": "83332.Rv0005",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0005"
@@ -799,7 +799,7 @@
       },
       "name": "cobC",
       "record_id": "83332.Rv2231c",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2231c"
@@ -823,7 +823,7 @@
       },
       "name": "fabG1",
       "record_id": "83332.Rv1483",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1483"
@@ -847,7 +847,7 @@
       },
       "name": "hisC2",
       "record_id": "83332.Rv3772",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3772"
@@ -871,7 +871,7 @@
       },
       "name": "embA",
       "record_id": "83332.Rv3794",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3794"
@@ -895,7 +895,7 @@
       },
       "name": "rpsL",
       "record_id": "83332.Rv0682",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0682"
@@ -905,14 +905,14 @@
      {
       "cached": true,
       "content_sha256": "9e05298cff94066fcc37b9fe7732ea3e22e56a742b0fe0301a51e596924d0c9e",
-      "retrieved_at": "2026-09-05T11:49:40.669057+00:00",
+      "retrieved_at": "2026-09-14T11:08:36.052866+00:00",
       "status": 200,
       "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=katG&limit=1&species=83332"
      },
      {
       "cached": true,
       "content_sha256": "b63e239a9155345352a48d523bbe1eeb7c01ae4ad748919af18edd5216f9bcde",
-      "retrieved_at": "2026-09-05T13:20:39.759961+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.169293+00:00",
       "status": 200,
       "url": "https://string-db.org/api/json/interaction_partners?identifiers=83332.Rv1908c&limit=20&required_score=700&species=83332"
      }
@@ -945,14 +945,14 @@
      {
       "cached": true,
       "content_sha256": "9c05673045615483890c0e31e65ddb9175ecdce7a22ac9a6868a840ae3f2a753",
-      "retrieved_at": "2026-09-05T12:17:55.565069+00:00",
+      "retrieved_at": "2026-09-14T11:08:37.431048+00:00",
       "status": 200,
       "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/barcode.bed"
      },
      {
       "cached": true,
       "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
-      "retrieved_at": "2026-09-05T12:13:44.559718+00:00",
+      "retrieved_at": "2026-08-28T13:00:27.870904+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/list/mtu"
      }
@@ -1131,7 +1131,7 @@
       },
       "name": "feature_ablation -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:feature_ablation",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1149,7 +1149,7 @@
       },
       "name": "transcript_ablation -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:transcript_ablation",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1167,7 +1167,7 @@
       },
       "name": "feature_ablation -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:feature_ablation",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1185,7 +1185,7 @@
       },
       "name": "start_lost -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:start_lost",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1203,7 +1203,7 @@
       },
       "name": "stop_gained -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:stop_gained",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1221,7 +1221,7 @@
       },
       "name": "frameshift_variant -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:frameshift_variant",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1239,7 +1239,7 @@
       },
       "name": "p.Ala16fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ala16fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1257,7 +1257,7 @@
       },
       "name": "p.Ala202fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ala202fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1275,7 +1275,7 @@
       },
       "name": "p.Ala478fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ala478fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1293,7 +1293,7 @@
       },
       "name": "p.Ala551fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ala551fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1311,7 +1311,7 @@
       },
       "name": "p.Ala559fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ala559fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1329,7 +1329,7 @@
       },
       "name": "p.Ala585fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ala585fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1347,7 +1347,7 @@
       },
       "name": "p.Arg496fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Arg496fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1365,7 +1365,7 @@
       },
       "name": "p.Asn18fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asn18fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1383,7 +1383,7 @@
       },
       "name": "p.Asn236fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asn236fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1401,7 +1401,7 @@
       },
       "name": "p.Asn35fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asn35fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1419,7 +1419,7 @@
       },
       "name": "p.Asn51fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asn51fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1437,7 +1437,7 @@
       },
       "name": "p.Asn535fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asn535fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1455,7 +1455,7 @@
       },
       "name": "p.Asp163fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asp163fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1473,7 +1473,7 @@
       },
       "name": "p.Asp240fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asp240fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1491,7 +1491,7 @@
       },
       "name": "p.Asp329fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asp329fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1509,7 +1509,7 @@
       },
       "name": "p.Asp381fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asp381fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1527,7 +1527,7 @@
       },
       "name": "p.Asp513fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asp513fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1545,7 +1545,7 @@
       },
       "name": "p.Asp56fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asp56fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1563,7 +1563,7 @@
       },
       "name": "p.Asp656fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asp656fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1581,7 +1581,7 @@
       },
       "name": "p.Asp695fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asp695fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1599,7 +1599,7 @@
       },
       "name": "p.Asp729fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Asp729fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1617,7 +1617,7 @@
       },
       "name": "p.Cys171* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Cys171*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1635,7 +1635,7 @@
       },
       "name": "p.Cys20fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Cys20fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1653,7 +1653,7 @@
       },
       "name": "p.Gln352* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gln352*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1671,7 +1671,7 @@
       },
       "name": "p.Gln525fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gln525fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1689,7 +1689,7 @@
       },
       "name": "p.Gln578fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gln578fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1707,7 +1707,7 @@
       },
       "name": "p.Gln88* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gln88*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1725,7 +1725,7 @@
       },
       "name": "p.Glu10fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu10fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1743,7 +1743,7 @@
       },
       "name": "p.Glu208fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu208fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1761,7 +1761,7 @@
       },
       "name": "p.Glu342fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu342fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1779,7 +1779,7 @@
       },
       "name": "p.Glu3fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu3fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1797,7 +1797,7 @@
       },
       "name": "p.Glu582fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu582fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1815,7 +1815,7 @@
       },
       "name": "p.Glu588* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu588*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1833,7 +1833,7 @@
       },
       "name": "p.Glu607* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu607*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1851,7 +1851,7 @@
       },
       "name": "p.Glu623fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu623fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1869,7 +1869,7 @@
       },
       "name": "p.Glu648fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu648fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1887,7 +1887,7 @@
       },
       "name": "p.Glu651fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu651fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1905,7 +1905,7 @@
       },
       "name": "p.Glu669fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Glu669fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1923,7 +1923,7 @@
       },
       "name": "p.Gly124fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gly124fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1941,7 +1941,7 @@
       },
       "name": "p.Gly212fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gly212fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1959,7 +1959,7 @@
       },
       "name": "p.Gly268fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gly268fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1977,7 +1977,7 @@
       },
       "name": "p.Gly279fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gly279fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -1995,7 +1995,7 @@
       },
       "name": "p.Gly34fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gly34fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2013,7 +2013,7 @@
       },
       "name": "p.Gly358fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gly358fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2031,7 +2031,7 @@
       },
       "name": "p.Gly369fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gly369fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2049,7 +2049,7 @@
       },
       "name": "p.Gly601fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Gly601fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2067,7 +2067,7 @@
       },
       "name": "p.His25fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.His25fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2085,7 +2085,7 @@
       },
       "name": "p.His400fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.His400fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2103,7 +2103,7 @@
       },
       "name": "p.His561fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.His561fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2121,7 +2121,7 @@
       },
       "name": "p.Ile335fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ile335fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2139,7 +2139,7 @@
       },
       "name": "p.Ile393fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ile393fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2157,7 +2157,7 @@
       },
       "name": "p.Ile455fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ile455fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2175,7 +2175,7 @@
       },
       "name": "p.Ile536fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ile536fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2193,7 +2193,7 @@
       },
       "name": "p.Ile563fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ile563fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2211,7 +2211,7 @@
       },
       "name": "p.Ile8fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ile8fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2229,7 +2229,7 @@
       },
       "name": "p.Leu173fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Leu173fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2247,7 +2247,7 @@
       },
       "name": "p.Leu382fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Leu382fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2265,7 +2265,7 @@
       },
       "name": "p.Leu696fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Leu696fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2283,7 +2283,7 @@
       },
       "name": "p.Lys157fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Lys157fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2301,7 +2301,7 @@
       },
       "name": "p.Lys179fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Lys179fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2319,7 +2319,7 @@
       },
       "name": "p.Lys200fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Lys200fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2337,7 +2337,7 @@
       },
       "name": "p.Lys433fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Lys433fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2355,7 +2355,7 @@
       },
       "name": "p.Lys459fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Lys459fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2373,7 +2373,7 @@
       },
       "name": "p.Lys46fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Lys46fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2391,7 +2391,7 @@
       },
       "name": "p.Lys557fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Lys557fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2409,7 +2409,7 @@
       },
       "name": "p.Lys590fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Lys590fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2427,7 +2427,7 @@
       },
       "name": "p.Met1? -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:p.Met1?",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2445,7 +2445,7 @@
       },
       "name": "p.Met26fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Met26fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2463,7 +2463,7 @@
       },
       "name": "p.Met624fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Met624fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2481,7 +2481,7 @@
       },
       "name": "p.Phe272fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Phe272fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2499,7 +2499,7 @@
       },
       "name": "p.Pro325fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Pro325fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2517,7 +2517,7 @@
       },
       "name": "p.Pro422fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Pro422fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2535,7 +2535,7 @@
       },
       "name": "p.Pro429fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Pro429fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2553,7 +2553,7 @@
       },
       "name": "p.Pro569fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Pro569fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2571,7 +2571,7 @@
       },
       "name": "p.Pro622fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Pro622fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2589,7 +2589,7 @@
       },
       "name": "p.Pro642fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Pro642fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2607,7 +2607,7 @@
       },
       "name": "p.Pro6fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Pro6fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2625,7 +2625,7 @@
       },
       "name": "p.Pro7fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Pro7fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2643,7 +2643,7 @@
       },
       "name": "p.Ser175* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ser175*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2661,7 +2661,7 @@
       },
       "name": "p.Ser302fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ser302fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2679,7 +2679,7 @@
       },
       "name": "p.Ser315Arg -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:p.Ser315Arg",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2697,7 +2697,7 @@
       },
       "name": "p.Ser315Asn -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:p.Ser315Asn",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2715,7 +2715,7 @@
       },
       "name": "p.Ser315Ile -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ser315Ile",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2733,7 +2733,7 @@
       },
       "name": "p.Ser315Thr -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:p.Ser315Thr",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2751,7 +2751,7 @@
       },
       "name": "p.Ser539fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ser539fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2769,7 +2769,7 @@
       },
       "name": "p.Ser650fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ser650fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2787,7 +2787,7 @@
       },
       "name": "p.Ser652fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ser652fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2805,7 +2805,7 @@
       },
       "name": "p.Ser671* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Ser671*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2823,7 +2823,7 @@
       },
       "name": "p.Thr203fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Thr203fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2841,7 +2841,7 @@
       },
       "name": "p.Thr394fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Thr394fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2859,7 +2859,7 @@
       },
       "name": "p.Trp107* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp107*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2877,7 +2877,7 @@
       },
       "name": "p.Trp149* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp149*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2895,7 +2895,7 @@
       },
       "name": "p.Trp161* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp161*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2913,7 +2913,7 @@
       },
       "name": "p.Trp198fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp198fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2931,7 +2931,7 @@
       },
       "name": "p.Trp198* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp198*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2949,7 +2949,7 @@
       },
       "name": "p.Trp204* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp204*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2967,7 +2967,7 @@
       },
       "name": "p.Trp300* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp300*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -2985,7 +2985,7 @@
       },
       "name": "p.Trp321* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp321*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3003,7 +3003,7 @@
       },
       "name": "p.Trp328Leu -- Assoc w R (isoniazid)",
       "record_id": "tbdb:katG:p.Trp328Leu",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3021,7 +3021,7 @@
       },
       "name": "p.Trp351fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp351fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3039,7 +3039,7 @@
       },
       "name": "p.Trp351* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp351*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3057,7 +3057,7 @@
       },
       "name": "p.Trp397* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp397*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3075,7 +3075,7 @@
       },
       "name": "p.Trp39fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp39fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3093,7 +3093,7 @@
       },
       "name": "p.Trp39* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp39*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3111,7 +3111,7 @@
       },
       "name": "p.Trp412* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp412*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3129,7 +3129,7 @@
       },
       "name": "p.Trp438* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp438*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3147,7 +3147,7 @@
       },
       "name": "p.Trp477* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp477*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3165,7 +3165,7 @@
       },
       "name": "p.Trp505fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp505fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3183,7 +3183,7 @@
       },
       "name": "p.Trp505* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp505*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3201,7 +3201,7 @@
       },
       "name": "p.Trp668fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp668fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3219,7 +3219,7 @@
       },
       "name": "p.Trp668* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp668*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3237,7 +3237,7 @@
       },
       "name": "p.Trp689fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp689fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3255,7 +3255,7 @@
       },
       "name": "p.Trp689* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp689*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3273,7 +3273,7 @@
       },
       "name": "p.Trp728* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp728*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3291,7 +3291,7 @@
       },
       "name": "p.Trp90* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Trp90*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3309,7 +3309,7 @@
       },
       "name": "p.Tyr113* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Tyr113*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3327,7 +3327,7 @@
       },
       "name": "p.Tyr155* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Tyr155*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3345,7 +3345,7 @@
       },
       "name": "p.Tyr197fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Tyr197fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3363,7 +3363,7 @@
       },
       "name": "p.Tyr28* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Tyr28*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3381,7 +3381,7 @@
       },
       "name": "p.Tyr339fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Tyr339fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3399,7 +3399,7 @@
       },
       "name": "p.Tyr413* -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Tyr413*",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3417,7 +3417,7 @@
       },
       "name": "p.Tyr95fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Tyr95fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3435,7 +3435,7 @@
       },
       "name": "p.Val166fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val166fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3453,7 +3453,7 @@
       },
       "name": "p.Val22fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val22fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3471,7 +3471,7 @@
       },
       "name": "p.Val30fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val30fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3489,7 +3489,7 @@
       },
       "name": "p.Val319fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val319fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3507,7 +3507,7 @@
       },
       "name": "p.Val386fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val386fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3525,7 +3525,7 @@
       },
       "name": "p.Val431fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val431fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3543,7 +3543,7 @@
       },
       "name": "p.Val445fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val445fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3561,7 +3561,7 @@
       },
       "name": "p.Val517fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val517fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3579,7 +3579,7 @@
       },
       "name": "p.Val538fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val538fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3597,7 +3597,7 @@
       },
       "name": "p.Val586fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val586fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3615,7 +3615,7 @@
       },
       "name": "p.Val83fs -- Assoc w R - Interim (isoniazid)",
       "record_id": "tbdb:katG:p.Val83fs",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "source": "tbdb",
       "type": "resistance_variant",
       "url": "https://github.com/jodyphelan/tbdb"
@@ -3625,7 +3625,7 @@
      {
       "cached": true,
       "content_sha256": "9dcaa790ca50a921289bbb255532f44d673851926017d5769f334e67244b3d30",
-      "retrieved_at": "2026-09-05T13:37:03.100410+00:00",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "status": 200,
       "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/mutations.csv"
      }
@@ -3648,12 +3648,167 @@
     }
    },
    "tool": "resistance_variants"
+  },
+  {
+   "arguments": {
+    "limit": 5,
+    "query": "furA regulation of katG catalase-peroxidase Mycobacterium tuberculosis oxidative stress"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "Ranked by the hybrid arm (BM25 fused with dense embeddings), which measured 0.917 precision@10 on this corpus against 0.844 lexical and 0.739 dense. `quotable_text` is the whole abstract; `matched_passage` is the span that ranked.",
+     "This corpus holds 1350 passages from 676 papers, gathered for: katG, inhA, rpoB, embB, pncA, fabG1, gyrA, gyrB, ahpC, furA, pknB, sodA .... A gene outside that set will retrieve nothing relevant however it is queried -- use pubmed_abstracts for those."
+    ],
+    "query": {
+     "limit": 5,
+     "query": "furA regulation of katG catalase-peroxidase Mycobacterium tuberculosis oxidative stress"
+    },
+    "record_ids": [
+     "11698368",
+     "11401695",
+     "12949087",
+     "21851232",
+     "37358434"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "katG",
+        "furA"
+       ],
+       "matched_passage": "Transcriptional regulation of furA and katG upon oxidative stress in Mycobacterium smegmatis. The DNA region upstream of katG in Mycobacterium smegmatis was cloned and sequenced. The furA gene, highly homologous to Mycobacterium tuberculosis furA, mapped in this region. The furA-katG organization appears to be conserved among several mycobacteria. The transcription pattern of furA and katG in M. smegmatis upon oxidative stress was analyzed by Northern blotting and primer extension. Although transcription of both furA and katG was induced upon oxidative stress, transcripts covering both genes could not be identified either by Northern blotting or by reverse transcriptase PCR. Specific transcripts and 5' ends were identified for furA and katG, respectively. By cloning M. smegmatis and M. tuberculosis DNA regions upstream of a reporter gene, we demonstrated the presence of two promoters, pfurA, located immediately upstream of the furA gene, and pkatG, located within the terminal part of the furA coding sequence. Transcription from pfurA was induced upon oxidative stress. A 23-bp sequence overlapping the pfurA -35 region is highly conserved among mycobacteria and streptomycetes and might be involved in controlling",
+       "mentions": [
+        "furA"
+       ],
+       "passages_in_corpus": 2,
+       "quotable_text": "Transcriptional regulation of furA and katG upon oxidative stress in Mycobacterium smegmatis. The DNA region upstream of katG in Mycobacterium smegmatis was cloned and sequenced. The furA gene, highly homologous to Mycobacterium tuberculosis furA, mapped in this region. The furA-katG organization appears to be conserved among several mycobacteria. The transcription pattern of furA and katG in M. smegmatis upon oxidative stress was analyzed by Northern blotting and primer extension. Although transcription of both furA and katG was induced upon oxidative stress, transcripts covering both genes could not be identified either by Northern blotting or by reverse transcriptase PCR. Specific transcripts and 5' ends were identified for furA and katG, respectively. By cloning M. smegmatis and M. tuberculosis DNA regions upstream of a reporter gene, we demonstrated the presence of two promoters, pfurA, located immediately upstream of the furA gene, and pkatG, located within the terminal part of the furA coding sequence. Transcription from pfurA was induced upon oxidative stress. A 23-bp sequence overlapping the pfurA -35 region is highly conserved among mycobacteria and streptomycetes and might be involved in controlling pkatG, located within the terminal part of the furA coding sequence. Transcription from pfurA was induced upon oxidative stress. A 23-bp sequence overlapping the pfurA -35 region is highly conserved among mycobacteria and streptomycetes and might be involved in controlling pfurA activity. Transcription from a cloned pkatG, lacking the upstream pfurA region, was not induced upon oxidative stress, suggesting a cis-acting regulatory role of this region.",
+       "rank": 1,
+       "score": 0.0325
+      },
+      "name": "Transcriptional regulation of furA and katG upon oxidative stress in Mycobacterium smegmatis.",
+      "record_id": "11698368",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11698368/"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "katG",
+        "furA"
+       ],
+       "matched_passage": "Regulation of catalase-peroxidase (KatG) expression, isoniazid sensitivity and virulence by furA of Mycobacterium tuberculosis. Mycobacterium tuberculosis has two genes for ferric uptake regulator orthologues, one of which, furA, is situated immediately upstream of katG encoding catalase-peroxidase, a major virulence factor that also activates the prodrug isoniazid. This association suggested that furA might regulate katG and other genes involved in pathogenesis. Transcript mapping showed katG to be expressed from a strong promoter, with consensus -10 and -35 elements, preceding furA. No promoter activity was demonstrated downstream of the furA start codon, using different gene reporter systems, indicating that furA and katG are co-transcribed from a common regulatory region. The respective roles of these two genes in the isoniazid susceptibility and virulence of M. tuberculosis were assessed by combinatorial complementation of a Delta(furA-katG) strain that is heavily attenuated in a mouse model of tuberculosis. In the absence of furA, katG was upregulated, cells became hypersensitive to isoniazid, and full virulence was restored, indicating that furA regulates the transcription of both genes. When furA alone was introduced into the Delta(furA-katG) mutant, survival in",
+       "mentions": [
+        "furA",
+        "sodA"
+       ],
+       "passages_in_corpus": 2,
+       "quotable_text": "Regulation of catalase-peroxidase (KatG) expression, isoniazid sensitivity and virulence by furA of Mycobacterium tuberculosis. Mycobacterium tuberculosis has two genes for ferric uptake regulator orthologues, one of which, furA, is situated immediately upstream of katG encoding catalase-peroxidase, a major virulence factor that also activates the prodrug isoniazid. This association suggested that furA might regulate katG and other genes involved in pathogenesis. Transcript mapping showed katG to be expressed from a strong promoter, with consensus -10 and -35 elements, preceding furA. No promoter activity was demonstrated downstream of the furA start codon, using different gene reporter systems, indicating that furA and katG are co-transcribed from a common regulatory region. The respective roles of these two genes in the isoniazid susceptibility and virulence of M. tuberculosis were assessed by combinatorial complementation of a Delta(furA-katG) strain that is heavily attenuated in a mouse model of tuberculosis. In the absence of furA, katG was upregulated, cells became hypersensitive to isoniazid, and full virulence was restored, indicating that furA regulates the transcription of both genes. When furA alone was introduced into the Delta(furA-katG) mutant, survival in of tuberculosis. In the absence of furA, katG was upregulated, cells became hypersensitive to isoniazid, and full virulence was restored, indicating that furA regulates the transcription of both genes. When furA alone was introduced into the Delta(furA-katG) mutant, survival in mouse lungs was moderately increased, suggesting that FurA could regulate genes, other than katG, that are involved in pathogenesis. These do not include the oxidative stress genes ahpC and sodA, or those for siderophore production.",
+       "rank": 2,
+       "score": 0.0325
+      },
+      "name": "Regulation of catalase-peroxidase (KatG) expression, isoniazid sensitivity and virulence by furA of Mycobacterium tuberculosis.",
+      "record_id": "11401695",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/11401695/"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "katG",
+        "furA"
+       ],
+       "matched_passage": "Mycobacterium tuberculosis FurA autoregulates its own expression. The furA-katG region of Mycobacterium tuberculosis, encoding a Fur-like protein and the catalase-peroxidase, is highly conserved among mycobacteria. Both genes are induced upon oxidative stress. In this work we analyzed the M. tuberculosis furA promoter region. DNA fragments were cloned upstream of the luciferase reporter gene, and promoter activity in Mycobacterium smegmatis was measured in both the presence and absence of oxidative stress. The shortest fragment containing an inducible promoter extends 45 bp upstream of furA. In this region, -35 and -10 promoter consensus sequences can be identified, as well as a 23-bp AT-rich sequence that is conserved in the nonpathogenic but closely related M. smegmatis. M. tuberculosis FurA was purified and found to bind upstream of furA by gel shift analysis. A ca. 30-bp DNA sequence, centered on the AT-rich region, was essential for FurA binding and protected by FurA in footprinting analysis. Peroxide treatment of FurA abolished DNA binding. Three different AT-rich sequences mutagenized by site-directed mutagenesis were constructed. In each mutant, both M. tuberculosis FurA binding in vitro and pfurA",
+       "mentions": [
+        "furA"
+       ],
+       "passages_in_corpus": 2,
+       "quotable_text": "Mycobacterium tuberculosis FurA autoregulates its own expression. The furA-katG region of Mycobacterium tuberculosis, encoding a Fur-like protein and the catalase-peroxidase, is highly conserved among mycobacteria. Both genes are induced upon oxidative stress. In this work we analyzed the M. tuberculosis furA promoter region. DNA fragments were cloned upstream of the luciferase reporter gene, and promoter activity in Mycobacterium smegmatis was measured in both the presence and absence of oxidative stress. The shortest fragment containing an inducible promoter extends 45 bp upstream of furA. In this region, -35 and -10 promoter consensus sequences can be identified, as well as a 23-bp AT-rich sequence that is conserved in the nonpathogenic but closely related M. smegmatis. M. tuberculosis FurA was purified and found to bind upstream of furA by gel shift analysis. A ca. 30-bp DNA sequence, centered on the AT-rich region, was essential for FurA binding and protected by FurA in footprinting analysis. Peroxide treatment of FurA abolished DNA binding. Three different AT-rich sequences mutagenized by site-directed mutagenesis were constructed. In each mutant, both M. tuberculosis FurA binding in vitro and pfurA essential for FurA binding and protected by FurA in footprinting analysis. Peroxide treatment of FurA abolished DNA binding. Three different AT-rich sequences mutagenized by site-directed mutagenesis were constructed. In each mutant, both M. tuberculosis FurA binding in vitro and pfurA regulation upon oxidative-stress in M. smegmatis were abolished. Thus, pfurA is an oxidative stress-responsive promoter controlled by the FurA protein.",
+       "rank": 3,
+       "score": 0.0313
+      },
+      "name": "Mycobacterium tuberculosis FurA autoregulates its own expression.",
+      "record_id": "12949087",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12949087/"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "katG",
+        "furA"
+       ],
+       "matched_passage": "Expression of Mycobacterium tuberculosis ferric uptake regulator A gene in Escherichia coli and generation of monoclonal antibodies to FurA. Ferric uptake regulator A of Mycobacterium tuberculosis (MTB), which belongs to the Fur superfamily, is situated immediately upstream of katG encoding catalase-peroxidase, a major virulence factor that also activates the pro-drug isoniazid. The feature and role of FurA in oxidative stress contribute to research on the pathogenesis of mycobacteria. In this study, four novel mouse monoclonal antibodies were generated using the prokaryotically expressed FurA protein as immunogen. The furA gene of M. tuberculosis H37Rv was inserted into a bacterial expression vector of pRSET-A and effectively expressed in Escherichia coli BL21(DE3). The expressed fusion protein existed as soluble form in cell lysates and was purified via Ni-NTA purification system. Using the fusion protein to immunize BALB/c mice, four monoclonal antibodies (H9H6, H9E12, H10H6, and H10H8) were produced. As shown by Western blot analysis and cell fluorescence microscopy assay, the four antibodies could recognize the FurA protein, respectively. Then we assessed the effect of iron on the expression of FurA in MTB H37Rv",
+       "mentions": [
+        "furA"
+       ],
+       "passages_in_corpus": 2,
+       "quotable_text": "Expression of Mycobacterium tuberculosis ferric uptake regulator A gene in Escherichia coli and generation of monoclonal antibodies to FurA. Ferric uptake regulator A of Mycobacterium tuberculosis (MTB), which belongs to the Fur superfamily, is situated immediately upstream of katG encoding catalase-peroxidase, a major virulence factor that also activates the pro-drug isoniazid. The feature and role of FurA in oxidative stress contribute to research on the pathogenesis of mycobacteria. In this study, four novel mouse monoclonal antibodies were generated using the prokaryotically expressed FurA protein as immunogen. The furA gene of M. tuberculosis H37Rv was inserted into a bacterial expression vector of pRSET-A and effectively expressed in Escherichia coli BL21(DE3). The expressed fusion protein existed as soluble form in cell lysates and was purified via Ni-NTA purification system. Using the fusion protein to immunize BALB/c mice, four monoclonal antibodies (H9H6, H9E12, H10H6, and H10H8) were produced. As shown by Western blot analysis and cell fluorescence microscopy assay, the four antibodies could recognize the FurA protein, respectively. Then we assessed the effect of iron on the expression of FurA in MTB H37Rv H10H6, and H10H8) were produced. As shown by Western blot analysis and cell fluorescence microscopy assay, the four antibodies could recognize the FurA protein, respectively. Then we assessed the effect of iron on the expression of FurA in MTB H37Rv and we concluded that iron does not affect FurA expression. These results suggest that the antibodies against FurA may provide a powerful tool for elucidating FurA biofunctions and regulation mechanism in the pathogenesis of tuberculosis.",
+       "rank": 4,
+       "score": 0.031
+      },
+      "name": "Expression of Mycobacterium tuberculosis ferric uptake regulator A gene in Escherichia coli and generation of monoclonal antibodies to FurA.",
+      "record_id": "21851232",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21851232/"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "katG",
+        "furA"
+       ],
+       "matched_passage": "of KatG, a catalase-peroxidase to detoxify ROS. Complementation of mc2114 with a wild-type furA gene reversed lethality and hyper-inflammatory response in mice with rescued overexpression of KatG and inflammatory cytokines, whereas NOX2, ROS, IFN-\u03b3, and macrophage apoptosis remained reduced. The results indicate that although FurA regulates KatG expression, it does not contribute significantly to the restriction of ROS response. Instead, FurA deficiency is responsible for the detrimental pulmonary inflammation that contributes to the severity of the infection, a previously nonrecognized function of FurA in mycobacterial pathogenesis. The study also indicates that mycobacterial resistance to oxidative burst results from complex mechanisms involving adaptive genetic changes in multiple genes. IMPORTANCE Mycobacterium tuberculosis (Mtb) causes human tuberculosis (TB), which has killed more people in human history than any other microorganism. However, the mechanisms underlying Mtb pathogenesis and related genes have not yet been fully elucidated, which impedes the development of effective strategies for containing and eradicating TB. In the study, we generated a mutant of M. smegmatis (mc2114) with multiple mutations by an adaptive evolutionary screen with H2O2. One of the mutations in",
+       "mentions": [
+        "furA"
+       ],
+       "passages_in_corpus": 3,
+       "quotable_text": "Coevolution of furA-Regulated Hyper-Inflammation and Mycobacterial Resistance to Oxidative Killing through Adaptation to Hydrogen Peroxide. Mycobacterium tuberculosis (Mtb) is highly resistant to host oxidative killing. We hypothesized that the evolutionary adaptation of M. smegmatis to hydrogen peroxide (H2O2) would endow the nonpathogenic Mycobacterium persistent in a host. In the study, we screened a highly H2O2-resistant strain (mc2114) via evolutionary H2O2 adaptation in vitro. The MIC of mc2114 to H2O2 is 320 times that of wild-type mc2155. Mouse infection experiments showed that mc2114, similar to Mtb, was persistent in the lungs and caused high lethality in mice with restricted responses of NOX2, ROS, IFN-\u03b3, decreased macrophage apoptosis, and overexpressed inflammatory cytokines in the lungs. Whole-genome sequencing analysis revealed that mc2114 harbored 29 single nucleotide polymorphisms in multiple genes; one of them was on the furA gene that caused FurA deficiency-mediated overexpression of KatG, a catalase-peroxidase to detoxify ROS. Complementation of mc2114 with a wild-type furA gene reversed lethality and hyper-inflammatory response in mice with rescued overexpression of KatG and inflammatory cytokines, whereas NOX2, ROS, IFN-\u03b3, and macrophage apoptosis remained reduced. The of KatG, a catalase-peroxidase to detoxify ROS. Complementation of mc2114 with a wild-type furA gene reversed lethality and hyper-inflammatory response in mice with rescued overexpression of KatG and inflammatory cytokines, whereas NOX2, ROS, IFN-\u03b3, and macrophage apoptosis remained reduced. The results indicate that although FurA regulates KatG expression, it does not contribute significantly to the restriction of ROS response. Instead, FurA deficiency is responsible for the detrimental pulmonary inflammation that contributes to the severity of the infection, a previously nonrecognized function of FurA in mycobacterial pathogenesis. The study also indicates that mycobacterial resistance to oxidative burst results from complex mechanisms involving adaptive genetic changes in multiple genes. IMPORTANCE Mycobacterium tuberculosis (Mtb) causes human tuberculosis (TB), which has killed more people in human history than any other microorganism. However, the mechanisms underlying Mtb pathogenesis and related genes have not yet been fully elucidated, which impedes the development of effective strategies for containing and eradicating TB. In the study, we generated a mutant of M. smegmatis (mc2114) with multiple mutations by an adaptive evolutionary screen with H2O2. One of the mutations in fully elucidated, which impedes the development of effective strategies for containing and eradicating TB. In the study, we generated a mutant of M. smegmatis (mc2114) with multiple mutations by an adaptive evolutionary screen with H2O2. One of the mutations in furA caused a deficiency of FurA, which mediated severe inflammatory lung injury and higher lethality in mice by overexpression of inflammatory cytokines. Our results indicate that FurA-regulated pulmonary inflammation plays a critical role in mycobacterial pathogenesis in addition to the known downregulation of NOX2, ROS, IFN-\u03b3 responses, and macrophage apoptosis. Further analysis of the mutations in mc2114 would identify more genes related to the increased pathogenicity and help in devising new strategies for containing and eradicating TB.",
+       "rank": 5,
+       "score": 0.0308
+      },
+      "name": "Coevolution of furA-Regulated Hyper-Inflammation and Mycobacterial Resistance to Oxidative Killing through Adaptation to Hydrogen Peroxide.",
+      "record_id": "37358434",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37358434/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "2d4662956315555b49c301627428ec08ac66067aae71c2b3622ba0ac154ba1a5",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "status": 200,
+      "url": "file:///Users/yaa/kegg-string-mcp/data/corpus_tb41.json"
+     }
+    ],
+    "resolved": {
+     "matched_by": "corpus_search"
+    }
+   },
+   "tool": "corpus_search"
   }
  ],
  "id": "katG",
  "mode": "single",
  "organism": "mtu",
- "summary": "## katG (Rv1908c) \u2014 catalase-peroxidase, *M. tuberculosis* H37Rv\n\nBoth structured sources resolve this gene cleanly: KEGG as `mtu:Rv1908c` (matched by symbol), UniProt as the reviewed entry **P9WIE5** (KATG_MYCTU). Neither is silent here.\n\n### Function\n\nUniProt P9WIE5 carries **experimental** (ECO:0000269) function statements, not just inferred ones:\n\n- **Bifunctional catalase/peroxidase.** P9WIE5 \"Bifunctional enzyme with both catalase and broad-spectrum peroxidase activity, oxidizing various electron donors including NADP(H)\". Catalytic activities listed: `2 H2O2 = O2 + 2 H2O` and `H2O2 + AH2 = A + 2 H2O`.\n- **Oxidative-stress defence / intracellular survival.** P9WIE5: \"Protects M.tuberculosis against toxic reactive oxygen species (ROS) including hydrogen peroxide as well as organic peroxides and thus contributes to its survival within host macrophages by countering the phagocyte oxidative burst\", and it \"Also displays efficient peroxynitritase activity, which may help the bacterium to persist in macrophages\".\n- **Isoniazid pro-drug activation** \u2014 the basis of its clinical importance. P9WIE5: \"Catalyzes the oxidative activation of the antitubercular pro-drug isoniazid (INH) to generate an isonicotinoyl radical that then reacts nonenzymatically with NAD to form an isonicotinoyl-NAD adduct which inhibits InhA\".\n- A weaker, heterologous-system claim of a **DNA-repair role**: P9WIE5 \"Might be involved in DNA repair. Partly complements recA-deficient E.coli cells exposed to UV radiation, mitomycin C or hydrogen peroxide\" \u2014 note this was measured in *E. coli* complementation, so treat it as suggestive rather than established for M. tuberculosis physiology.\n- **Homodimer** (experimental, P9WIE5); 27 PDB structures cross-referenced, including 1SJ2, 2CCA, 4C50 and 8U3P.\n\nTwo further UniProt entries matched the symbol (A0A0N7EHL5, A0A0N9DRZ6) but the tool notes \"No function statement for A0A0N7EHL5, A0A0N9DRZ6 carries experimental evidence (ECO:0000269); all are inferred\" \u2014 they add nothing independent.\n\n### Pathways (KEGG)\n\nSpecific assignments:\n- **mtu00983** \u2014 Drug metabolism, other enzymes (the INH-activation role)\n- **mtu00360** \u2014 Phenylalanine metabolism\n- **mtu00380** \u2014 Tryptophan metabolism\n\nThe peroxidase entries in mtu00360/mtu00380 reflect KatG's broad peroxidase chemistry rather than a dedicated role in amino-acid catabolism. It is also in the two genome-scale containers **mtu01100** (Metabolic pathways) and **mtu01110** (Biosynthesis of secondary metabolites), which describe the genome rather than this gene.\n\n### Interaction partners (STRING, 83332.Rv1908c)\n\nPartners with support **beyond** the textmining channel:\n- **83332.Rv1909c (furA)**, combined 0.979 \u2014 genomic neighborhood 0.829. FurA is the immediately adjacent gene; this is a strong operonic/positional signal, the best-supported link in the network.\n- **83332.Rv1907c**, combined 0.957 \u2014 neighborhood 0.805 *and* coexpression 0.731, with only modest textmining (0.254). Also a genomic-context partner.\n- **83332.Rv3846 (sodA)** 0.973 and **83332.Rv0432 (sodC)** 0.936 \u2014 database channel 0.5 each (curated co-membership in oxidative-defence annotation), on top of high textmining.\n- **83332.Rv3566c (nat)** 0.912, **83332.Rv1600 (hisC1)** 0.910, **83332.Rv2231c (cobC)** 0.905, **83332.Rv3772 (hisC2)** 0.905 \u2014 database channel 0.9 with near-zero textmining; these look like curated pathway co-membership (consistent with the shared KEGG amino-acid/drug-metabolism maps) rather than physical interaction.\n\nPartners supported **essentially by literature co-mention alone** (`evidence_beyond_textmining: false`): **83332.Rv2428 (ahpC)** 0.968, **83332.Rv1484 (inhA)** 0.916, **83332.Rv1483 (fabG1)** 0.905, **83332.Rv1854c (ndh)** 0.933, **83332.Rv2245 (kasA)** 0.927, plus **83332.Rv2043c (pncA)**, **83332.Rv3795 (embB)**, **83332.Rv3794 (embA)**, **83332.Rv0667 (rpoB)**, **83332.Rv0006 (gyrA)**, **83332.Rv0005 (gyrB)**, **83332.Rv0682 (rpsL)**. The last group is transparently a *drug-resistance-gene co-citation* cluster, not a functional module \u2014 katG, rpoB, gyrA, embB, pncA and rpsL are co-mentioned in resistance surveys. The katG\u2013inhA link is real biology (UniProt's INH statement above describes it), but STRING and those papers are **one line of evidence, not two**: the textmining score is derived from that same literature.\n\n### Lineage-marker check\n\n**Negative.** No lineage-defining position from the TB-Profiler tbdb barcode falls within katG \u2014 the tool notes \"855 of 4,008 H37Rv genes carry one, so this is an informative negative.\" An association involving katG is therefore not obviously confounded by the barcode at this locus, though this is a lookup and not a substitute for conditioning on lineage in genotype data.\n\n### Drug-resistance catalogue\n\nkatG is **resistance-associated**, for **isoniazid**. Of 1,771 catalogued variants: 10 \"Assoc w R\", 129 \"Assoc w R - Interim\", 7 \"Not assoc w R\", 236 \"Not assoc w R - Interim\", 1,254 \"Uncertain significance\", 135 ungraded. The associated set includes loss-of-function classes (`tbdb:katG:transcript_ablation`, `tbdb:katG:frameshift_variant`, `tbdb:katG:stop_gained`, `tbdb:katG:start_lost`) and the canonical codon-315 substitutions (`tbdb:katG:p.Ser315Thr`, `tbdb:katG:p.Ser315Asn`, `tbdb:katG:p.Ser315Arg`, `tbdb:katG:p.Ser315Ile`), all commented \"High-level resistance\". This pattern fits the function: INH is a pro-drug that KatG must activate, so ablating or crippling the enzyme confers resistance.\n\nTwo cautions. The flag is a statement about the **gene**: it does not mean any given katG variant confers resistance \u2014 236 variants were assessed and graded *not* associated, and the 1,254 \"Uncertain significance\" rows are neither positive nor negative. And the majority of the catalogue for this gene is uncertain, so an uncatalogued or uncertain katG mutation found in an isolate is not interpretable from this resource alone.",
+ "summary": "# katG (Rv1908c) \u2014 catalase-peroxidase, *M. tuberculosis* H37Rv\n\n## Identity and function\n\nKEGG resolves the symbol `katG` to **mtu:Rv1908c**; UniProt's reviewed entry is **P9WIE5** (KATG_MYCTU), \"Catalase-peroxidase\". The reviewed entry carries **experimental** (ECO:0000269) function statements, not inferred ones:\n\n- **Bifunctional catalase/peroxidase.** P9WIE5: \"Bifunctional enzyme with both catalase and broad-spectrum peroxidase activity, oxidizing various electron donors including NADP(H)\". Catalytic activities listed: `2 H2O2 = O2 + 2 H2O` and `H2O2 + AH2 = A + 2 H2O`.\n- **Oxidative/nitrosative defence in the macrophage.** P9WIE5: \"Protects M.tuberculosis against toxic reactive oxygen species (ROS) including hydrogen peroxide as well as organic peroxides and thus contributes to its survival within host macrophages by countering the phagocyte oxidative burst\", and \"Also displays efficient peroxynitritase activity, which may help the bacterium to persist in macrophages\".\n- **Isoniazid pro-drug activation.** P9WIE5: \"Catalyzes the oxidative activation of the antitubercular pro-drug isoniazid (INH) to generate an isonicotinoyl radical that then reacts nonenzymatically with NAD to form an isonicotinoyl-NAD adduct which inhibits InhA\".\n- **Possible DNA-repair role**, stated more tentatively: P9WIE5: \"Might be involved in DNA repair. Partly complements recA-deficient E.coli cells exposed to UV radiation, mitomycin C or hydrogen peroxide.\"\n- **Quaternary structure:** \"Homodimer\" (experimental). Extensive structural coverage, e.g. PDB 1SJ2, 2CCA, 4C50, 6ZJI.\n\nNote: two further UniProt entries, A0A0N7EHL5 and A0A0N9DRZ6, also match `katG` but are unreviewed and, per the tool note, \"No function statement for A0A0N7EHL5, A0A0N9DRZ6 carries experimental evidence\"; they add nothing independent.\n\n## Pathways (KEGG, mtu:Rv1908c)\n\nKEGG is *not* silent here. The specific assignments are:\n\n- **mtu00983** \u2014 Drug metabolism, other enzymes (the informative one: INH activation)\n- **mtu00360** \u2014 Phenylalanine metabolism\n- **mtu00380** \u2014 Tryptophan metabolism (both reflect generic peroxidase chemistry on aromatic donors)\n\nAlso returned but uninformative as gene-level annotation, being genome-scale containers: mtu01100 (Metabolic pathways) and mtu01110 (Biosynthesis of secondary metabolites).\n\n## Interaction partners (STRING, 83332.Rv1908c)\n\nThe network is dominated by literature co-mention. Only five partners have `evidence_beyond_textmining: true`:\n\n| Partner | STRING ID | Combined | Non-textmining basis |\n|---|---|---|---|\n| furA | 83332.Rv1909c | 0.979 | neighborhood 0.829 |\n| Rv1907c | 83332.Rv1907c | 0.957 | neighborhood 0.805, coexpression 0.731 |\n| nat | 83332.Rv3566c | 0.912 | database 0.9 |\n| hisC1 | 83332.Rv1600 | 0.910 | database 0.9 |\n| cobC | 83332.Rv2231c | 0.905 | database 0.9 |\n| sodA | 83332.Rv3846 | 0.973 | database 0.5 |\n| sodC | 83332.Rv0432 | 0.936 | database 0.5 |\n\n**furA (83332.Rv1909c)** is the biologically meaningful one: genomic-neighborhood evidence plus a coherent regulatory literature. PMID:11401695 \"furA, is situated immediately upstream of katG encoding catalase-peroxidase\" and \"In the absence of furA, katG was upregulated, cells became hypersensitive to isoniazid, and full virulence was restored, indicating that furA regulates the transcription of both genes\". PMID:37358434 reports a *furA* mutation \"that caused FurA deficiency-mediated overexpression of KatG, a catalase-peroxidase to detoxify ROS\". In *M. smegmatis*, PMID:11698368 found \"transcription of both furA and katG was induced upon oxidative stress\" with \"two promoters, pfurA... and pkatG, located within the terminal part of the furA coding sequence\" \u2014 note this is a conservation-based inference from *M. smegmatis*, and the two papers differ on whether the genes are co-transcribed. **Rv1907c (83332.Rv1907c)** is the other flank of the locus; its score rests on genomic context and coexpression, with no functional claim I can support.\n\nBy contrast, **ahpC (83332.Rv2428), inhA (83332.Rv1484), ndh (83332.Rv1854c), kasA (83332.Rv2245), fabG1 (83332.Rv1483), pncA (83332.Rv2043c), embA/embB (83332.Rv3794 / 83332.Rv3795), rpoB (83332.Rv0667), gyrA/gyrB (83332.Rv0006 / 83332.Rv0005) and rpsL (83332.Rv0682)** all carry `evidence_beyond_textmining: false` \u2014 their high combined scores are essentially textmining alone. These are the canonical drug-resistance genes, so the scores plausibly reflect co-listing in resistance papers rather than physical or functional interaction. The InhA link is real biochemistry per UniProt (the INH\u2013NAD adduct inhibits InhA), but that is enzymatic action on a drug, not a KatG\u2013InhA protein complex, and it is one line of evidence (literature), not two. sodA/sodC carry a database channel at 0.5, i.e. curated pathway co-membership in oxidative-stress defence rather than binding.\n\n## Lineage marker\n\n**Negative.** No lineage-defining position from the TB-Profiler/tbdb barcode falls within katG. The tool notes \"855 of 4,008 H37Rv genes carry one, so this is an informative negative\" \u2014 any association involving katG is therefore less likely to be driven by this particular confounder, though that must still be tested against genotype data.\n\n## Drug-resistance catalogue\n\nkatG is **resistance-associated, for isoniazid**. Of 1,771 catalogued variants: 10 graded \"Assoc w R\", 129 \"Assoc w R - Interim\", 7 \"Not assoc w R\", 236 \"Not assoc w R - Interim\", **1,254 \"Uncertain significance\"**, 135 ungraded. The flag is a statement about the gene, not about any given variant \u2014 the large majority of catalogued katG variants are of uncertain significance and some are graded not associated. Loss-of-function classes are graded associated (`tbdb:katG:frameshift_variant`, `tbdb:katG:stop_gained`, `tbdb:katG:start_lost`, `tbdb:katG:transcript_ablation`), consistent with the UniProt mechanism: abolishing the activating enzyme abolishes pro-drug conversion. `tbdb:katG:p.Ser315Thr` is graded \"Assoc w R\", as are `tbdb:katG:p.Ser315Asn`, `tbdb:katG:p.Ser315Arg` and `tbdb:katG:p.Trp328Leu`.\n\n## Summary\n\nkatG is a heme catalase-peroxidase that detoxifies H\u2082O\u2082, organic peroxides and peroxynitrite, supporting intramacrophage survival, and that fortuitously activates isoniazid. Its transcription is controlled from the adjacent furA locus. Its only well-supported non-literature interaction evidence is genomic context with furA and Rv1907c plus curated co-membership with sodA/sodC; the resistance-gene cluster in its STRING neighbourhood is textmining artefact. It contains no lineage-defining barcode position.",
  "target": "katG",
  "turns": [
   {
@@ -3698,9 +3853,22 @@
    "turn": 1
   },
   {
+   "stop_reason": "tool_use",
+   "tools_requested": [
+    {
+     "input": {
+      "limit": 5,
+      "query": "furA regulation of katG catalase-peroxidase Mycobacterium tuberculosis oxidative stress"
+     },
+     "name": "corpus_search"
+    }
+   ],
+   "turn": 2
+  },
+  {
    "stop_reason": "end_turn",
    "tools_requested": [],
-   "turn": 2
+   "turn": 3
   }
  ]
 }

@@ -17,13 +17,13 @@
     ],
     "records": [
      {
-      "cached": false,
+      "cached": true,
       "detail": {
        "kegg_gene_id": "mtu:Rv0667"
       },
       "name": "RNA polymerase - Mycobacterium tuberculosis H37Rv",
       "record_id": "mtu03020",
-      "retrieved_at": "2026-08-28T10:26:47.352250+00:00",
+      "retrieved_at": "2026-09-14T11:08:41.832835+00:00",
       "source": "kegg",
       "type": "pathway",
       "url": "https://www.kegg.jp/entry/mtu03020"
@@ -33,21 +33,21 @@
      {
       "cached": true,
       "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
-      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "retrieved_at": "2026-08-28T13:00:27.870904+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/list/mtu"
      },
      {
-      "cached": false,
+      "cached": true,
       "content_sha256": "826ed8c9641e6e6a65b341bd7e6e8fb82d7a1bea21f33c21142138a75b662ca1",
-      "retrieved_at": "2026-08-28T10:26:47.352250+00:00",
+      "retrieved_at": "2026-09-14T11:08:41.832835+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0667"
      },
      {
       "cached": true,
       "content_sha256": "fb3e52ff8b817798ee1b884c88affaf5a547b5e386c27d1afd61f0400867b648",
-      "retrieved_at": "2026-08-28T08:49:28.342942+00:00",
+      "retrieved_at": "2026-08-28T13:00:36.207228+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/list/pathway/mtu"
      }
@@ -62,8 +62,248 @@
   {
    "arguments": {
     "gene": "rpoB",
-    "limit": 20,
-    "required_score": 700,
+    "organism_id": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "3 UniProt entries matched gene 'rpoB': M4PJD1, P9WGY9, Q840J2. They are all returned; resolved.accession names only the first.",
+     "Statements tiered as sequence_similarity, sequence_model, automatic or imported are INFERRED -- from a rule or from homology -- not measured on this protein. They are not independent evidence about this gene, and should not be reported as though an experiment established them.",
+     "UniProt holds no FUNCTION statement for M4PJD1, Q840J2 -- the entry exists but its function is not described. Nothing to quote."
+    ],
+    "query": {
+     "gene": "rpoB",
+     "limit": 3,
+     "organism_id": 83332
+    },
+    "record_ids": [
+     "P9WGY9",
+     "M4PJD1",
+     "Q840J2"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "RNA(n) + a ribonucleoside 5'-triphosphate = RNA(n+1) + diphosphate"
+       ],
+       "entry_name": "RPOB_MYCTU",
+       "function_statements": [
+        {
+         "evidence_codes": [
+          "ECO:0000255",
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "22570422"
+         ],
+         "text": "DNA-dependent RNA polymerase catalyzes the transcription of DNA into RNA using the four ribonucleoside triphosphates as substrates",
+         "tiers": [
+          "experimental",
+          "sequence_model"
+         ]
+        }
+       ],
+       "gene_names": [
+        "rpoB"
+       ],
+       "has_experimental_function": true,
+       "locus_tags": [
+        "Rv0667"
+       ],
+       "pdb": [
+        "4KBJ",
+        "4KBM",
+        "5UH5",
+        "5UH6",
+        "5UH8",
+        "5UH9",
+        "5UHA",
+        "5UHB",
+        "5UHC",
+        "5UHD",
+        "5UHE",
+        "5UHF",
+        "5UHG",
+        "5ZX2",
+        "5ZX3",
+        "6BZO",
+        "6C04",
+        "6C05",
+        "6C06",
+        "6DV9",
+        "6DVB",
+        "6DVC",
+        "6DVD",
+        "6DVE",
+        "6EDT",
+        "6EE8",
+        "6EEC",
+        "6FBV",
+        "6JCX",
+        "6JCY",
+        "6KON",
+        "6KOO",
+        "6KOP",
+        "6KOQ",
+        "6M7J",
+        "6TYE",
+        "6TYF",
+        "6TYG",
+        "6VVX",
+        "6VVY",
+        "6VVZ",
+        "6VW0",
+        "7KIF",
+        "7KIM",
+        "7KIN",
+        "7KUF",
+        "7KUG",
+        "7PP4",
+        "7Q4U",
+        "7Q59",
+        "7RWI",
+        "7U22",
+        "7Z8Q",
+        "7ZF2",
+        "8CWR",
+        "8CWT",
+        "8CYF",
+        "8D5V",
+        "8E74",
+        "8E79",
+        "8E82",
+        "8E8M",
+        "8E95",
+        "8EHQ",
+        "8EJ3",
+        "8EOE",
+        "8EOF",
+        "8EOS",
+        "8EOT",
+        "8EXY",
+        "8HIH",
+        "9E7V",
+        "9E7Y",
+        "9E84",
+        "9E85",
+        "9E86",
+        "9E87",
+        "9E88",
+        "9FJP",
+        "9FJR",
+        "9FJS",
+        "9JI2",
+        "9JI3",
+        "9JI4",
+        "9JI5",
+        "9KET",
+        "9KEU",
+        "9KEV",
+        "9M98",
+        "9M9D",
+        "9M9E",
+        "9MRQ"
+       ],
+       "quotable_text": "DNA-directed RNA polymerase subunit beta\n\nDNA-dependent RNA polymerase catalyzes the transcription of DNA into RNA using the four ribonucleoside triphosphates as substrates\n\nThe RNAP catalytic core consists of 2 alpha, 1 beta, 1 beta' and 1 omega subunit. When a sigma factor is associated with the core the holoenzyme is formed, which can initiate transcription. Interacts with CarD, TRCF (Mfd) and RbpA\n\nRNA(n) + a ribonucleoside 5'-triphosphate = RNA(n+1) + diphosphate",
+       "reviewed": true,
+       "subunit": [
+        {
+         "evidence_codes": [
+          "ECO:0000255",
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "22570422",
+          "22904282"
+         ],
+         "text": "The RNAP catalytic core consists of 2 alpha, 1 beta, 1 beta' and 1 omega subunit. When a sigma factor is associated with the core the holoenzyme is formed, which can initiate transcription. Interacts with CarD, TRCF (Mfd) and RbpA",
+         "tiers": [
+          "experimental",
+          "sequence_model"
+         ]
+        }
+       ]
+      },
+      "name": "DNA-directed RNA polymerase subunit beta",
+      "record_id": "P9WGY9",
+      "retrieved_at": "2026-09-14T11:08:40.617726+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/P9WGY9"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [],
+       "entry_name": "M4PJD1_MYCTU",
+       "function_statements": [],
+       "gene_names": [
+        "rpoB"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [],
+       "pdb": [],
+       "quotable_text": "DNA-directed RNA polymerase",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "DNA-directed RNA polymerase",
+      "record_id": "M4PJD1",
+      "retrieved_at": "2026-09-14T11:08:40.617726+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/M4PJD1"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [],
+       "entry_name": "Q840J2_MYCTU",
+       "function_statements": [],
+       "gene_names": [
+        "rpoB"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [],
+       "pdb": [],
+       "quotable_text": "RNA polymerase beta subunit",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "RNA polymerase beta subunit",
+      "record_id": "Q840J2",
+      "retrieved_at": "2026-09-14T11:08:40.617726+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/Q840J2"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "8c30d015e9a2c61e652aedbd54b7c2b513ef7d9b235dea3c81ba21d910157dbe",
+      "retrieved_at": "2026-09-14T11:08:40.617726+00:00",
+      "status": 200,
+      "url": "https://rest.uniprot.org/uniprotkb/search?fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Ccc_function%2Ccc_catalytic_activity%2Ccc_subunit%2Cxref_pdb%2Cec&format=json&query=organism_id%3A83332+AND+gene%3ArpoB&size=3"
+     }
+    ],
+    "resolved": {
+     "accession": "P9WGY9",
+     "matched_by": "uniprot_search",
+     "n_entries": 3,
+     "uniprot_release": "2026_03"
+    }
+   },
+   "tool": "uniprot_protein"
+  },
+  {
+   "arguments": {
+    "gene": "rpoB",
+    "limit": 15,
     "species": 83332
    },
    "origin": "turn 1",
@@ -73,7 +313,7 @@
     ],
     "query": {
      "gene": "rpoB",
-     "limit": 20,
+     "limit": 15,
      "required_score": 700,
      "species": 83332
     },
@@ -92,12 +332,7 @@
      "83332.Rv0682",
      "83332.Rv0700",
      "83332.Rv0719",
-     "83332.Rv0721",
-     "83332.Rv0705",
-     "83332.Rv0706",
-     "83332.Rv0702",
-     "83332.Rv0684",
-     "83332.Rv1630"
+     "83332.Rv0721"
     ],
     "records": [
      {
@@ -119,7 +354,7 @@
       },
       "name": "sigL",
       "record_id": "83332.Rv0735",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0735"
@@ -143,7 +378,7 @@
       },
       "name": "rpoC",
       "record_id": "83332.Rv0668",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0668"
@@ -167,7 +402,7 @@
       },
       "name": "rpoA",
       "record_id": "83332.Rv3457c",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3457c"
@@ -191,7 +426,7 @@
       },
       "name": "carD",
       "record_id": "83332.Rv3583c",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3583c"
@@ -215,7 +450,7 @@
       },
       "name": "sigA",
       "record_id": "83332.Rv2703",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2703"
@@ -239,7 +474,7 @@
       },
       "name": "rpoZ",
       "record_id": "83332.Rv1390",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1390"
@@ -263,7 +498,7 @@
       },
       "name": "sigH",
       "record_id": "83332.Rv3223c",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3223c"
@@ -287,7 +522,7 @@
       },
       "name": "sigB",
       "record_id": "83332.Rv2710",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2710"
@@ -311,7 +546,7 @@
       },
       "name": "rplK",
       "record_id": "83332.Rv0640",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0640"
@@ -335,7 +570,7 @@
       },
       "name": "rplC",
       "record_id": "83332.Rv0701",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0701"
@@ -359,7 +594,7 @@
       },
       "name": "rplB",
       "record_id": "83332.Rv0704",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0704"
@@ -383,7 +618,7 @@
       },
       "name": "rpsL",
       "record_id": "83332.Rv0682",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0682"
@@ -407,7 +642,7 @@
       },
       "name": "rpsJ",
       "record_id": "83332.Rv0700",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0700"
@@ -431,7 +666,7 @@
       },
       "name": "rplF",
       "record_id": "83332.Rv0719",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0719"
@@ -455,146 +690,26 @@
       },
       "name": "rpsE",
       "record_id": "83332.Rv0721",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0721"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.957,
-        "cooccurrence": 0.15,
-        "database": 0.0,
-        "experimental": 0.79,
-        "fusion": 0.0,
-        "neighborhood": 0.114
-       },
-       "combined_score": 0.995,
-       "evidence_beyond_textmining": true,
-       "max_non_textmining_score": 0.957,
-       "partner_of": "83332.Rv0667",
-       "textmining_score": 0.471
-      },
-      "name": "rpsS",
-      "record_id": "83332.Rv0705",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv0705"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.958,
-        "cooccurrence": 0.202,
-        "database": 0.0,
-        "experimental": 0.785,
-        "fusion": 0.0,
-        "neighborhood": 0.114
-       },
-       "combined_score": 0.994,
-       "evidence_beyond_textmining": true,
-       "max_non_textmining_score": 0.958,
-       "partner_of": "83332.Rv0667",
-       "textmining_score": 0.278
-      },
-      "name": "rplV",
-      "record_id": "83332.Rv0706",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv0706"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.967,
-        "cooccurrence": 0.21,
-        "database": 0.0,
-        "experimental": 0.498,
-        "fusion": 0.0,
-        "neighborhood": 0.114
-       },
-       "combined_score": 0.994,
-       "evidence_beyond_textmining": true,
-       "max_non_textmining_score": 0.967,
-       "partner_of": "83332.Rv0667",
-       "textmining_score": 0.601
-      },
-      "name": "rplD",
-      "record_id": "83332.Rv0702",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv0702"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.923,
-        "cooccurrence": 0.466,
-        "database": 0.0,
-        "experimental": 0.147,
-        "fusion": 0.0,
-        "neighborhood": 0.172
-       },
-       "combined_score": 0.992,
-       "evidence_beyond_textmining": true,
-       "max_non_textmining_score": 0.923,
-       "partner_of": "83332.Rv0667",
-       "textmining_score": 0.783
-      },
-      "name": "fusA1",
-      "record_id": "83332.Rv0684",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv0684"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.891,
-        "cooccurrence": 0.168,
-        "database": 0.0,
-        "experimental": 0.773,
-        "fusion": 0.0,
-        "neighborhood": 0.0
-       },
-       "combined_score": 0.992,
-       "evidence_beyond_textmining": true,
-       "max_non_textmining_score": 0.891,
-       "partner_of": "83332.Rv0667",
-       "textmining_score": 0.656
-      },
-      "name": "rpsA",
-      "record_id": "83332.Rv1630",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv1630"
      }
     ],
     "requests": [
      {
-      "cached": false,
+      "cached": true,
       "content_sha256": "cb16832bdea15b7d48dc0cfc78b5a20743e9c54b551f06b79fa6c5c287b21bdc",
-      "retrieved_at": "2026-08-28T10:26:47.625804+00:00",
+      "retrieved_at": "2026-09-14T11:08:42.122846+00:00",
       "status": 200,
-      "url": "https://string-db.org/api/json/get_string_ids?caller_identity=kegg-string-mcp&echo_query=1&identifiers=rpoB&limit=1&species=83332"
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=rpoB&limit=1&species=83332"
      },
      {
       "cached": false,
-      "content_sha256": "ca6d188eeafa3a9c89419417169ac24efa3e1ac0608fd992b58dd998e7aba7e6",
-      "retrieved_at": "2026-08-28T10:26:48.743150+00:00",
+      "content_sha256": "26f5b44e3009e7d094ea84214d0010c1dd5a6703e1dd0dfc252404cb42987e0e",
+      "retrieved_at": "2026-09-14T19:00:13.019747+00:00",
       "status": 200,
-      "url": "https://string-db.org/api/json/interaction_partners?caller_identity=kegg-string-mcp&identifiers=83332.Rv0667&limit=20&required_score=700&species=83332"
+      "url": "https://string-db.org/api/json/interaction_partners?caller_identity=kegg-string-mcp&identifiers=83332.Rv0667&limit=15&required_score=700&species=83332"
      }
     ],
     "resolved": {
@@ -607,241 +722,2770 @@
   },
   {
    "arguments": {
-    "gene": "rpoB",
-    "limit": 5,
-    "organism": "Mycobacterium tuberculosis"
+    "gene": "rpoB"
    },
-   "origin": "turn 2",
+   "origin": "turn 1",
    "result": {
     "notes": [
-     "1637 articles matched this query; the 5 most relevant were retrieved. A finding absent from these abstracts may still be reported in the 1632 not retrieved.",
-     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
-     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+     "No lineage-defining position falls within rpoB in the tbdb barcode. 855 of 4,008 H37Rv genes carry one, so this is an informative negative."
     ],
     "query": {
      "gene": "rpoB",
-     "limit": 5,
-     "organism": "Mycobacterium tuberculosis"
+     "organism": "mtu"
+    },
+    "record_ids": [],
+    "records": [],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "9c05673045615483890c0e31e65ddb9175ecdce7a22ac9a6868a840ae3f2a753",
+      "retrieved_at": "2026-09-14T11:08:37.431048+00:00",
+      "status": 200,
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/barcode.bed"
+     },
+     {
+      "cached": true,
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T13:00:27.870904+00:00",
+      "status": 200,
+      "url": "https://rest.kegg.jp/list/mtu"
+     }
+    ],
+    "resolved": {
+     "matched_by": "none"
+    }
+   },
+   "tool": "lineage_markers"
+  },
+  {
+   "arguments": {
+    "gene": "rpoB"
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "rpoB is RESISTANCE-ASSOCIATED: 141 of its 1599 catalogued variants are graded as associated with resistance (26 Assoc w R, 115 Assoc w R - Interim). One associated variant marks the gene however many are not. This is a statement about the GENE: it does not mean a particular variant in rpoB confers resistance, and the catalogue explicitly grades some variants in resistance-associated genes as not associated."
+    ],
+    "query": {
+     "drug": null,
+     "gene": "rpoB"
     },
     "record_ids": [
-     "33846134",
-     "34675557",
-     "41599000",
-     "30793747",
-     "40887591"
+     "tbdb:rpoB:p.Ala451Gly",
+     "tbdb:rpoB:p.Ala451Val",
+     "tbdb:rpoB:p.Arg448Gln",
+     "tbdb:rpoB:p.Arg448Leu",
+     "tbdb:rpoB:p.Arg448Lys",
+     "tbdb:rpoB:p.Asn437_Asn438del",
+     "tbdb:rpoB:p.Asn437Asp",
+     "tbdb:rpoB:p.Asn437His",
+     "tbdb:rpoB:p.Asn437Ile",
+     "tbdb:rpoB:p.Asn437Ser",
+     "tbdb:rpoB:p.Asn437Tyr",
+     "tbdb:rpoB:p.Asn438del",
+     "tbdb:rpoB:p.Asn438His",
+     "tbdb:rpoB:p.Asp435_Gln436del",
+     "tbdb:rpoB:p.Asp435_Gln436delinsGlu",
+     "tbdb:rpoB:p.Asp435Ala",
+     "tbdb:rpoB:p.Asp435Asn",
+     "tbdb:rpoB:p.Asp435del",
+     "tbdb:rpoB:p.Asp435Glu",
+     "tbdb:rpoB:p.Asp435Gly",
+     "tbdb:rpoB:p.Asp435His",
+     "tbdb:rpoB:p.Asp435Leu",
+     "tbdb:rpoB:p.Asp435Phe",
+     "tbdb:rpoB:p.Asp435Tyr",
+     "tbdb:rpoB:p.Asp435Val",
+     "tbdb:rpoB:p.Gln429His",
+     "tbdb:rpoB:p.Gln429Leu",
+     "tbdb:rpoB:p.Gln429Pro",
+     "tbdb:rpoB:p.Gln432_Asp435delinsHis",
+     "tbdb:rpoB:p.Gln432_Met434del",
+     "tbdb:rpoB:p.Gln432_Met434delinsLeu",
+     "tbdb:rpoB:p.Gln432_Phe433del",
+     "tbdb:rpoB:p.Gln432Asn",
+     "tbdb:rpoB:p.Gln432del",
+     "tbdb:rpoB:p.Gln432Glu",
+     "tbdb:rpoB:p.Gln432His",
+     "tbdb:rpoB:p.Gln432Leu",
+     "tbdb:rpoB:p.Gln432Lys",
+     "tbdb:rpoB:p.Gln432Pro",
+     "tbdb:rpoB:p.Gln436_Asn437del",
+     "tbdb:rpoB:p.Gln436Arg",
+     "tbdb:rpoB:p.Gln436Asn",
+     "tbdb:rpoB:p.Gln436del",
+     "tbdb:rpoB:p.Gln436Pro",
+     "tbdb:rpoB:p.Gly426_Thr427del",
+     "tbdb:rpoB:p.Gly426Ser",
+     "tbdb:rpoB:p.Gly442Glu",
+     "tbdb:rpoB:p.His445_Lys446del",
+     "tbdb:rpoB:p.His445_Lys446delinsGln",
+     "tbdb:rpoB:p.His445Arg",
+     "tbdb:rpoB:p.His445Asn",
+     "tbdb:rpoB:p.His445Asp",
+     "tbdb:rpoB:p.His445Cys",
+     "tbdb:rpoB:p.His445Gln",
+     "tbdb:rpoB:p.His445Gly",
+     "tbdb:rpoB:p.His445Leu",
+     "tbdb:rpoB:p.His445Phe",
+     "tbdb:rpoB:p.His445Pro",
+     "tbdb:rpoB:p.His445Ser",
+     "tbdb:rpoB:p.His445Thr",
+     "tbdb:rpoB:p.His445Tyr",
+     "tbdb:rpoB:p.Ile491Phe",
+     "tbdb:rpoB:p.Leu430_Gln432del",
+     "tbdb:rpoB:p.Leu430_Ser431insArg",
+     "tbdb:rpoB:p.Leu430Arg",
+     "tbdb:rpoB:p.Leu430Pro",
+     "tbdb:rpoB:p.Leu443_Lys446delinsProGln",
+     "tbdb:rpoB:p.Leu443Phe",
+     "tbdb:rpoB:p.Leu443Ser",
+     "tbdb:rpoB:p.Leu443Trp",
+     "tbdb:rpoB:p.Leu449Met",
+     "tbdb:rpoB:p.Leu452Met",
+     "tbdb:rpoB:p.Leu452Pro",
+     "tbdb:rpoB:p.Leu452Val",
+     "tbdb:rpoB:p.Lys446Arg",
+     "tbdb:rpoB:p.Lys446Gln",
+     "tbdb:rpoB:p.Lys446Glu",
+     "tbdb:rpoB:p.Lys446Thr",
+     "tbdb:rpoB:p.Met434_Asn437delinsIle",
+     "tbdb:rpoB:p.Met434_Asp435del",
+     "tbdb:rpoB:p.Met434_Asp435insVal",
+     "tbdb:rpoB:p.Met434Arg",
+     "tbdb:rpoB:p.Met434Ile",
+     "tbdb:rpoB:p.Met434Leu",
+     "tbdb:rpoB:p.Met434Thr",
+     "tbdb:rpoB:p.Met434Val",
+     "tbdb:rpoB:p.Phe425_Gly426del",
+     "tbdb:rpoB:p.Phe433_Asp435del",
+     "tbdb:rpoB:p.Phe433_Gln436del",
+     "tbdb:rpoB:p.Phe433dup",
+     "tbdb:rpoB:p.Pro439Ala",
+     "tbdb:rpoB:p.Pro439Leu",
+     "tbdb:rpoB:p.Pro439Ser",
+     "tbdb:rpoB:p.Ser428Arg",
+     "tbdb:rpoB:p.Ser428Gly",
+     "tbdb:rpoB:p.Ser428Ile",
+     "tbdb:rpoB:p.Ser428Thr",
+     "tbdb:rpoB:p.Ser431_Gln432insArg",
+     "tbdb:rpoB:p.Ser431_Gln432insHis",
+     "tbdb:rpoB:p.Ser431_Met434del",
+     "tbdb:rpoB:p.Ser431Arg",
+     "tbdb:rpoB:p.Ser431Asn",
+     "tbdb:rpoB:p.Ser431Gly",
+     "tbdb:rpoB:p.Ser431Thr",
+     "tbdb:rpoB:p.Ser441Ala",
+     "tbdb:rpoB:p.Ser441Gln",
+     "tbdb:rpoB:p.Ser441Leu",
+     "tbdb:rpoB:p.Ser441Lys",
+     "tbdb:rpoB:p.Ser441Met",
+     "tbdb:rpoB:p.Ser441Trp",
+     "tbdb:rpoB:p.Ser441Val",
+     "tbdb:rpoB:p.Ser450_Leu452del",
+     "tbdb:rpoB:p.Ser450Ala",
+     "tbdb:rpoB:p.Ser450Cys",
+     "tbdb:rpoB:p.Ser450Gln",
+     "tbdb:rpoB:p.Ser450Gly",
+     "tbdb:rpoB:p.Ser450Leu",
+     "tbdb:rpoB:p.Ser450Met",
+     "tbdb:rpoB:p.Ser450Phe",
+     "tbdb:rpoB:p.Ser450Trp",
+     "tbdb:rpoB:p.Ser450Tyr",
+     "tbdb:rpoB:p.Ser450Val",
+     "tbdb:rpoB:p.Thr427_Gln429del",
+     "tbdb:rpoB:p.Thr427_Gln429delinsLys",
+     "tbdb:rpoB:p.Thr427_Ser428del",
+     "tbdb:rpoB:p.Thr427Ala",
+     "tbdb:rpoB:p.Thr427Asn",
+     "tbdb:rpoB:p.Thr427Gly",
+     "tbdb:rpoB:p.Thr427Ile",
+     "tbdb:rpoB:p.Thr427Pro",
+     "tbdb:rpoB:p.Thr427Ser",
+     "tbdb:rpoB:p.Thr444dup",
+     "tbdb:rpoB:p.Thr444Ile",
+     "tbdb:rpoB:p.Thr444Pro",
+     "tbdb:rpoB:p.Thr444Ser",
+     "tbdb:rpoB:p.Val170Phe",
+     "tbdb:rpoB:missense_variant_p.426_452",
+     "tbdb:rpoB:conservative_inframe_deletion_c.1276_1356",
+     "tbdb:rpoB:disruptive_inframe_deletion_c.1276_1356",
+     "tbdb:rpoB:conservative_inframe_insertion_c.1276_1356",
+     "tbdb:rpoB:disruptive_inframe_insertion_c.1276_1356"
     ],
     "records": [
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "Discordant results between genotypic drug susceptibility testing (gDST) and phenotypic DST (pDST) for Mycobacterium tuberculosis isolates with disputed (discordance between gDST and pDST results) mutations affect rifampin (RIF)-resistant (RR) and multidrug-resistant (MDR) tuberculosis (TB) treatments due to a lack of practical clinical guidelines. To investigate the role of disputed rpoB mutations in M. tuberculosis and TB treatment outcomes, initial isolates of 837 clinical RR- or MDR-TB cases confirmed during 2014 to 2018 were retested using agar-based RIF pDST and rpoB gene sequencing. MICs were determined for isolates with disputed rpoB mutations. Disputed rpoB mutations were identified in 77 (9.2%) M. tuberculosis isolates, including 50 (64.9%) and 14 (18.2%) phenotypically RIF- and rifabutin (RFB)-resistant isolates, respectively. The predominant single mutations were those encoding L533P (a change of L to P at position 533) (44.2%) and L511P (20.8%). Most of the isolates harboring mutations encoding L511P (87.5%), H526N (100%), D516Y (70.0%), and L533P (63.6%) had MICs of \u22641 mg/liter, whereas isolates harboring the mutation encoding H526L (75%) had a MIC of >1 mg/liter. Of the 63 cases with treatment outcomes available, 11 (17.5%) cases died, 1 (1.6%) case transferred out, and 51 (81%) cases had favorable outcomes, including 8 and 20 cases treated with standard-dose RIF- and RFB-containing regimens, respectively. Excluding cases that transferred out or received no or 1-day treatment, we observed statistically significant differences between the outcomes using active and inactive fluoroquinolones (FQs) (P = 0.008, odds ratio = 0.05 [95% confidence interval, 0.01 to 0.38]) in 57 cases (where active means a case susceptible to the drug and inactive means a case resistant to the drug or drug not used). We concluded that disputed rpoB mutations are not rare. Depending on the resources available, sequencing and/or MIC testing is recommended for better management of RR- and MDR-TB cases.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "Discordant results between genotypic drug susceptibility testing (gDST) and phenotypic DST (pDST) for Mycobacterium tuberculosis isolates with disputed (discordance between gDST and pDST results) mutations affect rifampin (RIF)-resistant (RR) and multidrug-resistant (MDR) tuberculosis (TB) treatments due to a lack of practical clinical guidelines. To investigate the role of disputed rpoB mutations in M. tuberculosis and TB treatment outcomes, initial isolates of 837 clinical RR- or MDR-TB cases confirmed during 2014 to 2018 were retested using agar-based RIF pDST and rpoB gene sequencing. MICs were determined for isolates with disputed rpoB mutations. Disputed rpoB mutations were identified in 77 (9.2%) M. tuberculosis isolates, including 50 (64.9%) and 14 (18.2%) phenotypically RIF- and rifabutin (RFB)-resistant isolates, respectively. The predominant single mutations were those encoding L533P (a change of L to P at position 533) (44.2%) and L511P (20.8%). Most of the isolates harboring mutations encoding L511P (87.5%), H526N (100%), D516Y (70.0%), and L533P (63.6%) had MICs of \u22641 mg/liter, whereas isolates harboring the mutation encoding H526L (75%) had a MIC of >1 mg/liter. Of the 63 cases with treatment outcomes available, 11 (17.5%) cases died, 1 (1.6%) case transferred out, and 51 (81%) cases had favorable outcomes, including 8 and 20 cases treated with standard-dose RIF- and RFB-containing regimens, respectively. Excluding cases that transferred out or received no or 1-day treatment, we observed statistically significant differences between the outcomes using active and inactive fluoroquinolones (FQs) (P = 0.008, odds ratio = 0.05 [95% confidence interval, 0.01 to 0.38]) in 57 cases (where active means a case susceptible to the drug and inactive means a case resistant to the drug or drug not used). We concluded that disputed rpoB mutations are not rare. Depending on the resources available, sequencing and/or MIC testing is recommended for better management of RR- and MDR-TB cases."
-        }
-       ],
-       "doi": "10.1128/AAC.01573-20",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "Antimicrobial agents and chemotherapy",
-       "mentions": [
-        "rpoB"
-       ],
-       "pmcid": "PMC8218645",
-       "quotable_text": "Disputed rpoB Mutations in Mycobacterium tuberculosis and Tuberculosis Treatment Outcomes.\n\nDiscordant results between genotypic drug susceptibility testing (gDST) and phenotypic DST (pDST) for Mycobacterium tuberculosis isolates with disputed (discordance between gDST and pDST results) mutations affect rifampin (RIF)-resistant (RR) and multidrug-resistant (MDR) tuberculosis (TB) treatments due to a lack of practical clinical guidelines. To investigate the role of disputed rpoB mutations in M. tuberculosis and TB treatment outcomes, initial isolates of 837 clinical RR- or MDR-TB cases confirmed during 2014 to 2018 were retested using agar-based RIF pDST and rpoB gene sequencing. MICs were determined for isolates with disputed rpoB mutations. Disputed rpoB mutations were identified in 77 (9.2%) M. tuberculosis isolates, including 50 (64.9%) and 14 (18.2%) phenotypically RIF- and rifabutin (RFB)-resistant isolates, respectively. The predominant single mutations were those encoding L533P (a change of L to P at position 533) (44.2%) and L511P (20.8%). Most of the isolates harboring mutations encoding L511P (87.5%), H526N (100%), D516Y (70.0%), and L533P (63.6%) had MICs of \u22641 mg/liter, whereas isolates harboring the mutation encoding H526L (75%) had a MIC of >1 mg/liter. Of the 63 cases with treatment outcomes available, 11 (17.5%) cases died, 1 (1.6%) case transferred out, and 51 (81%) cases had favorable outcomes, including 8 and 20 cases treated with standard-dose RIF- and RFB-containing regimens, respectively. Excluding cases that transferred out or received no or 1-day treatment, we observed statistically significant differences between the outcomes using active and inactive fluoroquinolones (FQs) (P = 0.008, odds ratio = 0.05 [95% confidence interval, 0.01 to 0.38]) in 57 cases (where active means a case susceptible to the drug and inactive means a case resistant to the drug or drug not used). We concluded that disputed rpoB mutations are not rare. Depending on the resources available, sequencing and/or MIC testing is recommended for better management of RR- and MDR-TB cases.",
-       "title": "Disputed rpoB Mutations in Mycobacterium tuberculosis and Tuberculosis Treatment Outcomes.",
-       "year": "2021"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ala451Gly",
+       "source": "WHO catalogue v2"
       },
-      "name": "Disputed rpoB Mutations in Mycobacterium tuberculosis and Tuberculosis Treatment Outcomes.",
-      "record_id": "33846134",
-      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/33846134/"
+      "name": "p.Ala451Gly -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ala451Gly",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "OBJECTIVE: To investigate the mutations within the whole rpoB gene of Mycobacterium tuberculosis and analyze their effects on rifampin (RIF) resistance based on crystal structure.\n\nMETHODS: We sequenced the entire rpoB gene in 175 tuberculosis isolates and quantified their minimum inhibitory concentrations using microplate-based assays. Additionally, the structural interactions between wild-type/mutant RpoB and RIF were also analyzed.\n\nRESULTS: Results revealed that a total of 34 mutations distributed across 17 different sites within the whole rpoB gene were identified. Of the 34 mutations, 25 could alter the structural interaction between RpoB and RIF and contribute to RIF resistance. Statistical analysis showed that S450L, H445D, H445Y and H445R mutations were associated with high-level RIF resistance, while D435V was associated with moderate-level RIF resistance.\n\nCONCLUSION: Some mutations within the rpoB gene could affect the interaction between RpoB and RIF and thus are associated with RIF resistance. These findings could be helpful to design new antibiotics and develop novel diagnostic tools for drug resistance in TB.",
-       "abstract_sections": [
-        {
-         "label": "OBJECTIVE",
-         "text": "To investigate the mutations within the whole rpoB gene of Mycobacterium tuberculosis and analyze their effects on rifampin (RIF) resistance based on crystal structure."
-        },
-        {
-         "label": "METHODS",
-         "text": "We sequenced the entire rpoB gene in 175 tuberculosis isolates and quantified their minimum inhibitory concentrations using microplate-based assays. Additionally, the structural interactions between wild-type/mutant RpoB and RIF were also analyzed."
-        },
-        {
-         "label": "RESULTS",
-         "text": "Results revealed that a total of 34 mutations distributed across 17 different sites within the whole rpoB gene were identified. Of the 34 mutations, 25 could alter the structural interaction between RpoB and RIF and contribute to RIF resistance. Statistical analysis showed that S450L, H445D, H445Y and H445R mutations were associated with high-level RIF resistance, while D435V was associated with moderate-level RIF resistance."
-        },
-        {
-         "label": "CONCLUSION",
-         "text": "Some mutations within the rpoB gene could affect the interaction between RpoB and RIF and thus are associated with RIF resistance. These findings could be helpful to design new antibiotics and develop novel diagnostic tools for drug resistance in TB."
-        }
-       ],
-       "doi": "10.2147/IDR.S333433",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "Infection and drug resistance",
-       "mentions": [
-        "rpoB"
-       ],
-       "pmcid": "PMC8502021",
-       "quotable_text": "rpoB Mutations and Effects on Rifampin Resistance in Mycobacterium tuberculosis.\n\nOBJECTIVE: To investigate the mutations within the whole rpoB gene of Mycobacterium tuberculosis and analyze their effects on rifampin (RIF) resistance based on crystal structure.\n\nMETHODS: We sequenced the entire rpoB gene in 175 tuberculosis isolates and quantified their minimum inhibitory concentrations using microplate-based assays. Additionally, the structural interactions between wild-type/mutant RpoB and RIF were also analyzed.\n\nRESULTS: Results revealed that a total of 34 mutations distributed across 17 different sites within the whole rpoB gene were identified. Of the 34 mutations, 25 could alter the structural interaction between RpoB and RIF and contribute to RIF resistance. Statistical analysis showed that S450L, H445D, H445Y and H445R mutations were associated with high-level RIF resistance, while D435V was associated with moderate-level RIF resistance.\n\nCONCLUSION: Some mutations within the rpoB gene could affect the interaction between RpoB and RIF and thus are associated with RIF resistance. These findings could be helpful to design new antibiotics and develop novel diagnostic tools for drug resistance in TB.",
-       "title": "rpoB Mutations and Effects on Rifampin Resistance in Mycobacterium tuberculosis.",
-       "year": "2021"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ala451Val",
+       "source": "WHO catalogue v2"
       },
-      "name": "rpoB Mutations and Effects on Rifampin Resistance in Mycobacterium tuberculosis.",
-      "record_id": "34675557",
-      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/34675557/"
+      "name": "p.Ala451Val -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ala451Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "Rifampicin-resistant tuberculosis (RR-TB) remains a major threat to global TB control, primarily driven by mutations in the rpoB gene of Mycobacterium tuberculosis (Mtb). Most resistance-conferring mutations occur within the 81-base pair RIF resistance determining region (RRDR), particularly at codons S450L, H445Y/D, and D435V, which are strongly associated with high level resistance. However, increasing evidence of low-frequency and disputed variants both within and beyond the RRDR reveals a broader genetic spectrum that contributes to diagnostic uncertainty and variable phenotypic outcomes. This review summarizes current knowledge of high frequency, low frequency, and disputed rpoB mutations and their implications for molecular detection of RIF resistance. Structural analyses show that specific amino acid substitutions alter key hydrogen bonds or create steric hindrance in the RIF-binding pocket, leading to diverse resistance levels. Despite the success of molecular platforms such as Xpert MTB/RIF and line probe assays, their hotspot-based detection limits sensitivity to noncanonical variants. Lowering the minimum inhibitory concentration (MIC) breakpoint and integrating sequencing-based approaches, such as targeted and whole-genome sequencing, can enhance detection accuracy. A combined genomic and phenotypic framework will be essential to close existing diagnostic gaps and advance precision guided management of RIF-resistant and multidrug-resistant tuberculosis.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "Rifampicin-resistant tuberculosis (RR-TB) remains a major threat to global TB control, primarily driven by mutations in the rpoB gene of Mycobacterium tuberculosis (Mtb). Most resistance-conferring mutations occur within the 81-base pair RIF resistance determining region (RRDR), particularly at codons S450L, H445Y/D, and D435V, which are strongly associated with high level resistance. However, increasing evidence of low-frequency and disputed variants both within and beyond the RRDR reveals a broader genetic spectrum that contributes to diagnostic uncertainty and variable phenotypic outcomes. This review summarizes current knowledge of high frequency, low frequency, and disputed rpoB mutations and their implications for molecular detection of RIF resistance. Structural analyses show that specific amino acid substitutions alter key hydrogen bonds or create steric hindrance in the RIF-binding pocket, leading to diverse resistance levels. Despite the success of molecular platforms such as Xpert MTB/RIF and line probe assays, their hotspot-based detection limits sensitivity to noncanonical variants. Lowering the minimum inhibitory concentration (MIC) breakpoint and integrating sequencing-based approaches, such as targeted and whole-genome sequencing, can enhance detection accuracy. A combined genomic and phenotypic framework will be essential to close existing diagnostic gaps and advance precision guided management of RIF-resistant and multidrug-resistant tuberculosis."
-        }
-       ],
-       "doi": "10.3390/pathogens15010016",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "Pathogens (Basel, Switzerland)",
-       "mentions": [
-        "rpoB"
-       ],
-       "pmcid": "PMC12844990",
-       "quotable_text": "Beyond Hotspot Mutations: Diagnostic Relevance of High Frequency, Low Frequency, and Disputed rpoB Variants in Rifampicin-Resistant Mycobacterium tuberculosis.\n\nRifampicin-resistant tuberculosis (RR-TB) remains a major threat to global TB control, primarily driven by mutations in the rpoB gene of Mycobacterium tuberculosis (Mtb). Most resistance-conferring mutations occur within the 81-base pair RIF resistance determining region (RRDR), particularly at codons S450L, H445Y/D, and D435V, which are strongly associated with high level resistance. However, increasing evidence of low-frequency and disputed variants both within and beyond the RRDR reveals a broader genetic spectrum that contributes to diagnostic uncertainty and variable phenotypic outcomes. This review summarizes current knowledge of high frequency, low frequency, and disputed rpoB mutations and their implications for molecular detection of RIF resistance. Structural analyses show that specific amino acid substitutions alter key hydrogen bonds or create steric hindrance in the RIF-binding pocket, leading to diverse resistance levels. Despite the success of molecular platforms such as Xpert MTB/RIF and line probe assays, their hotspot-based detection limits sensitivity to noncanonical variants. Lowering the minimum inhibitory concentration (MIC) breakpoint and integrating sequencing-based approaches, such as targeted and whole-genome sequencing, can enhance detection accuracy. A combined genomic and phenotypic framework will be essential to close existing diagnostic gaps and advance precision guided management of RIF-resistant and multidrug-resistant tuberculosis.",
-       "title": "Beyond Hotspot Mutations: Diagnostic Relevance of High Frequency, Low Frequency, and Disputed rpoB Variants in Rifampicin-Resistant Mycobacterium tuberculosis.",
-       "year": "2025"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Arg448Gln",
+       "source": "WHO catalogue v2"
       },
-      "name": "Beyond Hotspot Mutations: Diagnostic Relevance of High Frequency, Low Frequency, and Disputed rpoB Variants in Rifampicin-Resistant Mycobacterium tuberculosis.",
-      "record_id": "41599000",
-      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41599000/"
+      "name": "p.Arg448Gln -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Arg448Gln",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "OBJECTIVES: Drug-resistant TB remains a public health challenge. Rifamycins are among the most potent anti-TB drugs. They are known to target the RpoB subunit of RNA polymerase; however, our understanding of how rifamycin resistance is genetically encoded remains incomplete. Here we investigated rpoB genetic diversity and cross-resistance between the two rifamycin drugs rifampicin and rifabutin.\n\nMETHODS: We performed WGS of 1003 Mycobacterium tuberculosis clinical isolates and determined MICs of both rifamycin agents on 7H10 agar using the indirect proportion method. We generated rpoB mutants in a laboratory strain and measured their antibiotic susceptibility using the alamarBlue reduction assay.\n\nRESULTS: Of the 1003 isolates, 766 were rifampicin resistant and 210 (27%) of these were rifabutin susceptible; 102/210 isolates had the rpoB mutation D435V (Escherichia coli D516V). Isolates with discordant resistance were 17.2 times more likely to harbour a D435V mutation than those resistant to both agents (OR 17.2, 95% CI 10.5-27.9, P value <10-40). Compared with WT, the D435V in vitro mutant had an increased IC50 of both rifamycins; however, in both cases to a lesser degree than the S450L (E. coli S531L) mutation.\n\nCONCLUSIONS: The observation that the rpoB D435V mutation produces an increase in the IC50 of both drugs contrasts with findings from previous smaller studies that suggested that isolates with the D435V mutation remain rifabutin susceptible despite being rifampicin resistant. Our finding thus suggests that the recommended critical testing concentration for rifabutin should be revised.",
-       "abstract_sections": [
-        {
-         "label": "OBJECTIVES",
-         "text": "Drug-resistant TB remains a public health challenge. Rifamycins are among the most potent anti-TB drugs. They are known to target the RpoB subunit of RNA polymerase; however, our understanding of how rifamycin resistance is genetically encoded remains incomplete. Here we investigated rpoB genetic diversity and cross-resistance between the two rifamycin drugs rifampicin and rifabutin."
-        },
-        {
-         "label": "METHODS",
-         "text": "We performed WGS of 1003 Mycobacterium tuberculosis clinical isolates and determined MICs of both rifamycin agents on 7H10 agar using the indirect proportion method. We generated rpoB mutants in a laboratory strain and measured their antibiotic susceptibility using the alamarBlue reduction assay."
-        },
-        {
-         "label": "RESULTS",
-         "text": "Of the 1003 isolates, 766 were rifampicin resistant and 210 (27%) of these were rifabutin susceptible; 102/210 isolates had the rpoB mutation D435V (Escherichia coli D516V). Isolates with discordant resistance were 17.2 times more likely to harbour a D435V mutation than those resistant to both agents (OR 17.2, 95% CI 10.5-27.9, P value <10-40). Compared with WT, the D435V in vitro mutant had an increased IC50 of both rifamycins; however, in both cases to a lesser degree than the S450L (E. coli S531L) mutation."
-        },
-        {
-         "label": "CONCLUSIONS",
-         "text": "The observation that the rpoB D435V mutation produces an increase in the IC50 of both drugs contrasts with findings from previous smaller studies that suggested that isolates with the D435V mutation remain rifabutin susceptible despite being rifampicin resistant. Our finding thus suggests that the recommended critical testing concentration for rifabutin should be revised."
-        }
-       ],
-       "doi": "10.1093/jac/dkz048",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "The Journal of antimicrobial chemotherapy",
-       "mentions": [
-        "rpoB"
-       ],
-       "pmcid": "PMC6524487",
-       "quotable_text": "Rifampicin and rifabutin resistance in 1003 Mycobacterium tuberculosis clinical isolates.\n\nOBJECTIVES: Drug-resistant TB remains a public health challenge. Rifamycins are among the most potent anti-TB drugs. They are known to target the RpoB subunit of RNA polymerase; however, our understanding of how rifamycin resistance is genetically encoded remains incomplete. Here we investigated rpoB genetic diversity and cross-resistance between the two rifamycin drugs rifampicin and rifabutin.\n\nMETHODS: We performed WGS of 1003 Mycobacterium tuberculosis clinical isolates and determined MICs of both rifamycin agents on 7H10 agar using the indirect proportion method. We generated rpoB mutants in a laboratory strain and measured their antibiotic susceptibility using the alamarBlue reduction assay.\n\nRESULTS: Of the 1003 isolates, 766 were rifampicin resistant and 210 (27%) of these were rifabutin susceptible; 102/210 isolates had the rpoB mutation D435V (Escherichia coli D516V). Isolates with discordant resistance were 17.2 times more likely to harbour a D435V mutation than those resistant to both agents (OR 17.2, 95% CI 10.5-27.9, P value <10-40). Compared with WT, the D435V in vitro mutant had an increased IC50 of both rifamycins; however, in both cases to a lesser degree than the S450L (E. coli S531L) mutation.\n\nCONCLUSIONS: The observation that the rpoB D435V mutation produces an increase in the IC50 of both drugs contrasts with findings from previous smaller studies that suggested that isolates with the D435V mutation remain rifabutin susceptible despite being rifampicin resistant. Our finding thus suggests that the recommended critical testing concentration for rifabutin should be revised.",
-       "title": "Rifampicin and rifabutin resistance in 1003 Mycobacterium tuberculosis clinical isolates.",
-       "year": "2019"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Arg448Leu",
+       "source": "WHO catalogue v2"
       },
-      "name": "Rifampicin and rifabutin resistance in 1003 Mycobacterium tuberculosis clinical isolates.",
-      "record_id": "30793747",
-      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/30793747/"
+      "name": "p.Arg448Leu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Arg448Leu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "BACKGROUND: While several recent studies have documented the importance of efflux pumps as mediators of rifampin (RIF) resistance, it remains uncertain which efflux pumps play major roles in rifampin-resistant Mycobacterium tuberculosis strains harboring rpoB gene mutations.\n\nMETHODS: In this study, minimum inhibitory concentration (MIC) values for RIF were calculated and the expression of 13 efflux pump genes was evaluated across 35 clinical rifampicin-resistant M. tuberculosis isolates carrying the rpoB mutation before and after efflux pump inhibitor treatment.\n\nRESULTS: Rv0677c and Rv0191 were identified as the efflux pump genes that were most frequently overexpressed, and treatment with the inhibitor verapamil was sufficient to synergistically enhance the antibacterial effects of RIF and downregulate efflux pump gene expression. Greater numbers of overexpressed efflux pump genes were associated with a more significant decrease in the MIC value for RIF following verapamil treatment. Levels of RIF resistance for clinical isolates with the rpoB codon 445 mutation were also found to be significantly less susceptible to the effects of verapamil as compared to the resistance of strains with the codon 450 and 170 mutations.\n\nCONCLUSIONS: These results suggest that levels of RIF resistance in clinical RIF-resistant M. tuberculosis isolates are ultimately determined by a combination of efflux pump activity and rpoB gene mutations.",
-       "abstract_sections": [
-        {
-         "label": "BACKGROUND",
-         "text": "While several recent studies have documented the importance of efflux pumps as mediators of rifampin (RIF) resistance, it remains uncertain which efflux pumps play major roles in rifampin-resistant Mycobacterium tuberculosis strains harboring rpoB gene mutations."
-        },
-        {
-         "label": "METHODS",
-         "text": "In this study, minimum inhibitory concentration (MIC) values for RIF were calculated and the expression of 13 efflux pump genes was evaluated across 35 clinical rifampicin-resistant M. tuberculosis isolates carrying the rpoB mutation before and after efflux pump inhibitor treatment."
-        },
-        {
-         "label": "RESULTS",
-         "text": "Rv0677c and Rv0191 were identified as the efflux pump genes that were most frequently overexpressed, and treatment with the inhibitor verapamil was sufficient to synergistically enhance the antibacterial effects of RIF and downregulate efflux pump gene expression. Greater numbers of overexpressed efflux pump genes were associated with a more significant decrease in the MIC value for RIF following verapamil treatment. Levels of RIF resistance for clinical isolates with the rpoB codon 445 mutation were also found to be significantly less susceptible to the effects of verapamil as compared to the resistance of strains with the codon 450 and 170 mutations."
-        },
-        {
-         "label": "CONCLUSIONS",
-         "text": "These results suggest that levels of RIF resistance in clinical RIF-resistant M. tuberculosis isolates are ultimately determined by a combination of efflux pump activity and rpoB gene mutations."
-        }
-       ],
-       "doi": "10.1186/s12941-025-00816-5",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "Annals of clinical microbiology and antimicrobials",
-       "mentions": [
-        "rpoB"
-       ],
-       "pmcid": "PMC12400691",
-       "quotable_text": "Efflux pumps positively contribute to rifampin resistance in rpoB mutant Mycobacterium tuberculosis.\n\nBACKGROUND: While several recent studies have documented the importance of efflux pumps as mediators of rifampin (RIF) resistance, it remains uncertain which efflux pumps play major roles in rifampin-resistant Mycobacterium tuberculosis strains harboring rpoB gene mutations.\n\nMETHODS: In this study, minimum inhibitory concentration (MIC) values for RIF were calculated and the expression of 13 efflux pump genes was evaluated across 35 clinical rifampicin-resistant M. tuberculosis isolates carrying the rpoB mutation before and after efflux pump inhibitor treatment.\n\nRESULTS: Rv0677c and Rv0191 were identified as the efflux pump genes that were most frequently overexpressed, and treatment with the inhibitor verapamil was sufficient to synergistically enhance the antibacterial effects of RIF and downregulate efflux pump gene expression. Greater numbers of overexpressed efflux pump genes were associated with a more significant decrease in the MIC value for RIF following verapamil treatment. Levels of RIF resistance for clinical isolates with the rpoB codon 445 mutation were also found to be significantly less susceptible to the effects of verapamil as compared to the resistance of strains with the codon 450 and 170 mutations.\n\nCONCLUSIONS: These results suggest that levels of RIF resistance in clinical RIF-resistant M. tuberculosis isolates are ultimately determined by a combination of efflux pump activity and rpoB gene mutations.",
-       "title": "Efflux pumps positively contribute to rifampin resistance in rpoB mutant Mycobacterium tuberculosis.",
-       "year": "2025"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Arg448Lys",
+       "source": "WHO catalogue v2"
       },
-      "name": "Efflux pumps positively contribute to rifampin resistance in rpoB mutant Mycobacterium tuberculosis.",
-      "record_id": "40887591",
-      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/40887591/"
+      "name": "p.Arg448Lys -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Arg448Lys",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asn437_Asn438del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn437_Asn438del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asn437_Asn438del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asn437Asp",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn437Asp -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asn437Asp",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asn437His",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn437His -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asn437His",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asn437Ile",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn437Ile -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asn437Ile",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asn437Ser",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn437Ser -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asn437Ser",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asn437Tyr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn437Tyr -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asn437Tyr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asn438del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn438del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asn438del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asn438His",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn438His -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asn438His",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435_Gln436del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435_Gln436del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435_Gln436del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435_Gln436delinsGlu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435_Gln436delinsGlu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435_Gln436delinsGlu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435Ala",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435Ala -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435Ala",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435Asn -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435Glu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435Glu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435Glu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435Gly",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435Gly -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435Gly",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435His",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435His -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435His",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435Leu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435Leu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435Leu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435Phe",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435Phe -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435Phe",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435Tyr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435Tyr -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435Tyr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Asp435Val",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp435Val -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Asp435Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln429His",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln429His -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln429His",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln429Leu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln429Leu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln429Leu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln429Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln429Pro -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln429Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432_Asp435delinsHis",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432_Asp435delinsHis -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432_Asp435delinsHis",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432_Met434del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432_Met434del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432_Met434del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432_Met434delinsLeu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432_Met434delinsLeu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432_Met434delinsLeu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432_Phe433del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432_Phe433del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432_Phe433del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432Asn -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432Glu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432Glu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432Glu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432His",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432His -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432His",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432Leu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432Leu -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432Leu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432Lys",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432Lys -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432Lys",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln432Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln432Pro -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln432Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln436_Asn437del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln436_Asn437del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln436_Asn437del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln436Arg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln436Arg -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln436Arg",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln436Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln436Asn -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln436Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln436del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln436del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln436del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gln436Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gln436Pro -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gln436Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gly426_Thr427del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly426_Thr427del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gly426_Thr427del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gly426Ser",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly426Ser -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gly426Ser",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Gly442Glu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Gly442Glu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Gly442Glu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445_Lys446del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445_Lys446del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445_Lys446del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445_Lys446delinsGln",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445_Lys446delinsGln -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445_Lys446delinsGln",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Arg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Arg -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Arg",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Asn -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Asp",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Asp -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Asp",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Cys",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Cys -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Cys",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Gln",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Gln -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Gln",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Gly",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Gly -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Gly",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Leu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Leu -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Leu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Phe",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Phe -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Phe",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Pro -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Ser",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Ser -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Ser",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Thr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Thr -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Thr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.His445Tyr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.His445Tyr -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.His445Tyr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ile491Phe",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ile491Phe -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ile491Phe",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu430_Gln432del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu430_Gln432del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu430_Gln432del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu430_Ser431insArg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu430_Ser431insArg -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu430_Ser431insArg",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu430Arg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu430Arg -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu430Arg",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu430Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu430Pro -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu430Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu443_Lys446delinsProGln",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu443_Lys446delinsProGln -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu443_Lys446delinsProGln",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu443Phe",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu443Phe -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu443Phe",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu443Ser",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu443Ser -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu443Ser",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu443Trp",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu443Trp -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu443Trp",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu449Met",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu449Met -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu449Met",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu452Met",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu452Met -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu452Met",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu452Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu452Pro -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu452Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Leu452Val",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Leu452Val -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Leu452Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Lys446Arg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys446Arg -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Lys446Arg",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Lys446Gln",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys446Gln -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Lys446Gln",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Lys446Glu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys446Glu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Lys446Glu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Lys446Thr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Lys446Thr -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Lys446Thr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Met434_Asn437delinsIle",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met434_Asn437delinsIle -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Met434_Asn437delinsIle",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Met434_Asp435del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met434_Asp435del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Met434_Asp435del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Met434_Asp435insVal",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met434_Asp435insVal -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Met434_Asp435insVal",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Met434Arg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met434Arg -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Met434Arg",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Met434Ile",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met434Ile -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Met434Ile",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Met434Leu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met434Leu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Met434Leu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Met434Thr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met434Thr -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Met434Thr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Met434Val",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Met434Val -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Met434Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Phe425_Gly426del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Phe425_Gly426del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Phe425_Gly426del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Phe433_Asp435del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Phe433_Asp435del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Phe433_Asp435del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Phe433_Gln436del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Phe433_Gln436del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Phe433_Gln436del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Phe433dup",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Phe433dup -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Phe433dup",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Pro439Ala",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro439Ala -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Pro439Ala",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Pro439Leu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro439Leu -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Pro439Leu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Pro439Ser",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Pro439Ser -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Pro439Ser",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser428Arg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser428Arg -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser428Arg",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser428Gly",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser428Gly -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser428Gly",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser428Ile",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser428Ile -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser428Ile",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser428Thr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser428Thr -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser428Thr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser431_Gln432insArg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser431_Gln432insArg -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser431_Gln432insArg",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser431_Gln432insHis",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser431_Gln432insHis -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser431_Gln432insHis",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser431_Met434del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser431_Met434del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser431_Met434del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser431Arg",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser431Arg -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser431Arg",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser431Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser431Asn -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser431Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser431Gly",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser431Gly -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser431Gly",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser431Thr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser431Thr -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser431Thr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser441Ala",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser441Ala -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser441Ala",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser441Gln",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser441Gln -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser441Gln",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser441Leu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser441Leu -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser441Leu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser441Lys",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser441Lys -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser441Lys",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser441Met",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser441Met -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser441Met",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser441Trp",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser441Trp -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser441Trp",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser441Val",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser441Val -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser441Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450_Leu452del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450_Leu452del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450_Leu452del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Ala",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Ala -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Ala",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Cys",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Cys -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Cys",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Gln",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Gln -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Gln",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Gly",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Gly -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Gly",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Leu",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Leu -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Leu",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Met",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Met -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Met",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Phe",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Phe -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Phe",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Trp",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Trp -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Trp",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Tyr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Tyr -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Tyr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Ser450Val",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser450Val -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Ser450Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr427_Gln429del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr427_Gln429del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr427_Gln429del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr427_Gln429delinsLys",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr427_Gln429delinsLys -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr427_Gln429delinsLys",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr427_Ser428del",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr427_Ser428del -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr427_Ser428del",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr427Ala",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr427Ala -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr427Ala",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr427Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr427Asn -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr427Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr427Gly",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr427Gly -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr427Gly",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr427Ile",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr427Ile -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr427Ile",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr427Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr427Pro -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr427Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr427Ser",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr427Ser -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr427Ser",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr444dup",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr444dup -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr444dup",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr444Ile",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr444Ile -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr444Ile",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr444Pro",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr444Pro -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr444Pro",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Thr444Ser",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Thr444Ser -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Thr444Ser",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "p.Val170Phe",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Val170Phe -- Assoc w R (rifampicin)",
+      "record_id": "tbdb:rpoB:p.Val170Phe",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Expert rule: Non-silent variants in RRDR of rpoB",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "missense_variant_p.426_452",
+       "source": "WHO catalogue v2"
+      },
+      "name": "missense_variant_p.426_452 -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:missense_variant_p.426_452",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Expert rule: Non-silent variants in RRDR of rpoB",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "conservative_inframe_deletion_c.1276_1356",
+       "source": "WHO catalogue v2"
+      },
+      "name": "conservative_inframe_deletion_c.1276_1356 -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:conservative_inframe_deletion_c.1276_1356",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Expert rule: Non-silent variants in RRDR of rpoB",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "disruptive_inframe_deletion_c.1276_1356",
+       "source": "WHO catalogue v2"
+      },
+      "name": "disruptive_inframe_deletion_c.1276_1356 -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:disruptive_inframe_deletion_c.1276_1356",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Expert rule: Non-silent variants in RRDR of rpoB",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "conservative_inframe_insertion_c.1276_1356",
+       "source": "WHO catalogue v2"
+      },
+      "name": "conservative_inframe_insertion_c.1276_1356 -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:conservative_inframe_insertion_c.1276_1356",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Expert rule: Non-silent variants in RRDR of rpoB",
+       "confidence": "Assoc w R - Interim",
+       "drug": "rifampicin",
+       "gene": "rpoB",
+       "mutation": "disruptive_inframe_insertion_c.1276_1356",
+       "source": "WHO catalogue v2"
+      },
+      "name": "disruptive_inframe_insertion_c.1276_1356 -- Assoc w R - Interim (rifampicin)",
+      "record_id": "tbdb:rpoB:disruptive_inframe_insertion_c.1276_1356",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      }
     ],
     "requests": [
      {
-      "cached": false,
-      "content_sha256": "b94b20c6acdfeba204a17ec220d26a58144207bfa695f19613bf90206b23674f",
-      "retrieved_at": "2026-08-28T10:26:55.436926+00:00",
+      "cached": true,
+      "content_sha256": "9dcaa790ca50a921289bbb255532f44d673851926017d5769f334e67244b3d30",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "status": 200,
-      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=5&retmode=json&sort=relevance&term=%22rpoB%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
-     },
-     {
-      "cached": false,
-      "content_sha256": "c5a33796dd6824d087a8f715ea8978ffae54925466e778d30798e2b930d43240",
-      "retrieved_at": "2026-08-28T10:26:55.926916+00:00",
-      "status": 200,
-      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=33846134%2C34675557%2C41599000%2C30793747%2C40887591&retmode=xml&tool=kegg-string-mcp"
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/mutations.csv"
      }
     ],
     "resolved": {
-     "matched_by": "pubmed_search",
-     "query_translation": "\"rpoB\"[All Fields] AND \"Mycobacterium tuberculosis\"[All Fields]",
-     "term": "\"rpoB\" AND \"Mycobacterium tuberculosis\""
+     "drugs": [
+      "rifampicin"
+     ],
+     "grading_counts": {
+      "(ungraded)": 74,
+      "Assoc w R": 26,
+      "Assoc w R - Interim": 115,
+      "Not assoc w R": 15,
+      "Not assoc w R - Interim": 544,
+      "Uncertain significance": 825
+     },
+     "matched_by": "symbol",
+     "resistance_associated": true,
+     "variants_in_catalogue": 1599
     }
    },
-   "tool": "pubmed_abstracts"
+   "tool": "resistance_variants"
   }
  ],
  "id": "rpoB",
  "mode": "single",
  "organism": "mtu",
- "summary": "# rpoB \u2014 *Mycobacterium tuberculosis* H37Rv (mtu:Rv0667 / STRING 83332.Rv0667)\n\n## Identity and function\n\nKEGG resolved the symbol `rpoB` to **mtu:Rv0667** (matched by symbol). It encodes the **\u03b2 subunit of DNA-dependent RNA polymerase**, the catalytic core enzyme of bacterial transcription. The interaction profile below is exactly what a core RNAP subunit should look like, which independently corroborates that assignment.\n\n## Pathway membership\n\n- **mtu03020 \u2014 RNA polymerase** (KEGG, *M. tuberculosis* H37Rv)\n\nThis is the only pathway KEGG returned, and the `notes` field was empty \u2014 so this is a genuine, complete pathway assignment, not a resolution failure. It is also a usefully *specific* annotation: mtu03020 is a small pathway describing the polymerase itself rather than a broad container category.\n\n## Notable interaction partners (STRING, required_score \u2265 700)\n\nAll partners listed below have `evidence_beyond_textmining: true`, with the experimental or coexpression channel at or above the textmining score \u2014 so these are not literature co-mention artefacts.\n\n**Core RNA polymerase assembly** \u2014 the strongest and most mechanistically informative set:\n\n| Partner | Gene | Combined | Key non-textmining evidence |\n|---|---|---|---|\n| 83332.Rv0668 | rpoC (\u03b2\u2032) | 0.999 | experimental 0.999, fusion 0.900, neighborhood 0.817, coexpression 0.961 |\n| 83332.Rv3457c | rpoA (\u03b1) | 0.999 | experimental 0.999, coexpression 0.969, database 0.844 |\n| 83332.Rv1390 | rpoZ (\u03c9) | 0.999 | experimental 0.999, coexpression 0.654, database 0.844 |\n\nrpoC is the standout: it is the only partner with a non-zero **fusion** score (0.900) plus high **neighborhood** (0.817) and **cooccurrence** (0.767), the signature of an operonic, co-evolving pair \u2014 consistent with rpoB and rpoC forming the two halves of the catalytic cleft. Together rpoA, rpoB, rpoC and rpoZ constitute the complete \u03b1\u2082\u03b2\u03b2\u2032\u03c9 core enzyme.\n\n**Sigma factors** (promoter-specificity subunits that convert core enzyme to holoenzyme) \u2014 all at combined 0.999 on the strength of the experimental channel (0.999), with low textmining:\n\n- 83332.Rv2703 \u2014 **sigA**, the principal/housekeeping sigma factor (textmining only 0.513)\n- 83332.Rv2710 \u2014 **sigB** (textmining 0.374)\n- 83332.Rv3223c \u2014 **sigH** (textmining 0.092)\n- 83332.Rv0735 \u2014 **sigL** (textmining 0.127)\n\nThe sigH and sigL links are worth flagging: their textmining scores are near zero, so these are essentially *pure experimental* associations rather than literature-driven ones.\n\n**Transcription regulator:**\n\n- 83332.Rv3583c \u2014 **carD**, combined 0.999, experimental 0.999 with textmining only 0.311 and every other channel at or near zero. An RNAP-binding regulatory factor supported here by direct experimental evidence alone.\n\n**Translation machinery** (ribosomal proteins and elongation factor, combined 0.992\u20130.998): 83332.Rv0640 (rplK), 83332.Rv0701 (rplC), 83332.Rv0704 (rplB), 83332.Rv0702 (rplD), 83332.Rv0706 (rplV), 83332.Rv0719 (rplF), 83332.Rv0682 (rpsL), 83332.Rv0700 (rpsJ), 83332.Rv0721 (rpsE), 83332.Rv0705 (rpsS), 83332.Rv1630 (rpsA), 83332.Rv0684 (fusA1).\n\nThese are driven mainly by **coexpression** (0.85\u20130.97), not by experimental complex evidence \u2014 and several sit in the same genomic region as rpoB (Rv0640, Rv0682, Rv0684, Rv0700\u2013Rv0721), consistent with shared regulation across the ribosomal-protein/RNAP gene cluster rather than physical association with the \u03b2 subunit. I would read these as *functional/regulatory* coupling of transcription and translation capacity, not as binding partners.\n\n## Clinical relevance: rifampicin target\n\nKEGG and STRING say nothing about drug resistance, so this rests on literature alone (one evidence class). RpoB is the target of the rifamycins: PMID:30793747 \"They are known to target the RpoB subunit of RNA polymerase\". Resistance arises from point mutations in the gene \u2014 PMID:41599000 \"Rifampicin-resistant tuberculosis (RR-TB) remains a major threat to global TB control, primarily driven by mutations in the rpoB gene of Mycobacterium tuberculosis (Mtb)\", clustered in \"the 81-base pair RIF resistance determining region (RRDR), particularly at codons S450L, H445Y/D, and D435V, which are strongly associated with high level resistance.\"\n\nMechanistically these act on drug binding rather than on catalysis: PMID:34675557 \"Of the 34 mutations, 25 could alter the structural interaction between RpoB and RIF and contribute to RIF resistance\", with \"S450L, H445D, H445Y and H445R mutations were associated with high-level RIF resistance, while D435V was associated with moderate-level RIF resistance.\"\n\nTwo caveats the abstracts themselves raise. Genotype does not fully determine phenotype \u2014 PMID:33846134 \"Disputed rpoB mutations were identified in 77 (9.2%) M. tuberculosis isolates\" and the authors \"concluded that disputed rpoB mutations are not rare.\" And rpoB genotype is not the sole determinant of resistance level \u2014 PMID:40887591 \"levels of RIF resistance in clinical RIF-resistant M. tuberculosis isolates are ultimately determined by a combination of efflux pump activity and rpoB gene mutations.\"\n\n## Summary\n\nrpoB (Rv0667) is the RNA polymerase \u03b2 subunit, assigned by KEGG to the RNA polymerase pathway (mtu03020) and confirmed by experimentally-supported STRING links to the full core enzyme (rpoA, rpoC, rpoZ), to four sigma factors, and to the RNAP regulator carD. Its association with ribosomal proteins is coexpression-based and likely reflects co-regulation rather than physical interaction. Its status as the rifampicin target is documented only in the literature channel here, not in the structured sources.",
+ "summary": "## rpoB (Rv0667) \u2014 DNA-directed RNA polymerase subunit \u03b2\n\n**Identity.** KEGG resolved the symbol to `mtu:Rv0667`; UniProt returns three entries for the symbol \u2014 the reviewed one is **P9WGY9** (RPOB_MYCTU, locus tag Rv0667), plus two unreviewed entries **M4PJD1** and **Q840J2** that carry no function statement at all (UniProt note: \"UniProt holds no FUNCTION statement for M4PJD1, Q840J2\").\n\n### Function\nP9WGY9 carries an **experimental-tier** function statement: \"DNA-dependent RNA polymerase catalyzes the transcription of DNA into RNA using the four ribonucleoside triphosphates as substrates\" (supporting PMID 22570422), with the catalytic activity \"RNA(n) + a ribonucleoside 5'-triphosphate = RNA(n+1) + diphosphate\". This is the \u03b2 subunit of the bacterial RNAP catalytic core, not an accessory factor.\n\nAssembly, also experimental tier (supporting PMIDs 22570422, 22904282): \"The RNAP catalytic core consists of 2 alpha, 1 beta, 1 beta' and 1 omega subunit. When a sigma factor is associated with the core the holoenzyme is formed, which can initiate transcription. Interacts with CarD, TRCF (Mfd) and RbpA\". The entry lists ~90 PDB structures, so the protein is structurally characterised in depth.\n\n### Pathway\nKEGG assigns exactly one, and it is specific rather than a container: **mtu03020** (RNA polymerase). No other KEGG pathway is linked; that is a complete result, not an empty one.\n\n### Notable interaction partners (STRING, 83332.Rv0667)\nAll partners below have `evidence_beyond_textmining: true` \u2014 the experimental and/or coexpression channels reach confidence independently of literature co-mention.\n\nCore RNAP and initiation machinery, the biologically meaningful set:\n- **83332.Rv0668** (rpoC, \u03b2\u2032) \u2014 combined 0.999; supported across essentially every channel (experimental 0.999, database 0.844, fusion 0.900, neighborhood 0.817, coexpression 0.961). The strongest and best-corroborated partner, as expected for the \u03b2/\u03b2\u2032 pair.\n- **83332.Rv3457c** (rpoA, \u03b1) \u2014 0.999, experimental 0.999, database 0.844, coexpression 0.969.\n- **83332.Rv1390** (rpoZ, \u03c9) \u2014 0.999, experimental 0.999, database 0.844.\n- **83332.Rv2703** (sigA), **83332.Rv2710** (sigB), **83332.Rv3223c** (sigH), **83332.Rv0735** (sigL) \u2014 all 0.999 with experimental 0.999; sigma factors converting core to holoenzyme. Note sigH and sigL have very low textmining (0.092, 0.127), so these are essentially pure experimental-channel calls.\n- **83332.Rv3583c** (carD) \u2014 0.999, experimental 0.999, database 0.000. This independently corroborates the CarD interaction stated experimentally in UniProt.\n\nThe remaining high-scoring partners are ribosomal proteins \u2014 **83332.Rv0640** (rplK), **83332.Rv0701** (rplC), **83332.Rv0704** (rplB), **83332.Rv0682** (rpsL), **83332.Rv0700** (rpsJ), **83332.Rv0719** (rplF), **83332.Rv0721** (rpsE) \u2014 driven mainly by coexpression (0.85\u20130.97) and operonic/genomic context. These reflect co-regulation of the transcription\u2013translation apparatus rather than evidence of a physical \u03b2-subunit\u2013ribosome complex; I would not annotate them as direct binding partners.\n\n### Lineage marker\n**Negative.** No lineage-defining position from the TB-Profiler/tbdb barcode falls within rpoB, and the tool flags this as an informative negative (855 of 4,008 H37Rv genes do carry one). So an association involving rpoB is less likely to be driven by population structure at this locus \u2014 though that still needs testing against genotype data rather than being assumed.\n\n### Drug-resistance catalogue\nrpoB is **resistance-associated**, for **rifampicin**. Of 1,599 catalogued variants: 26 \"Assoc w R\", 115 \"Assoc w R - Interim\", 15 \"Not assoc w R\", 544 \"Not assoc w R - Interim\", 825 \"Uncertain significance\", 74 ungraded. The associated variants cluster in the RRDR \u2014 e.g. `tbdb:rpoB:p.Ser450Leu`, `tbdb:rpoB:p.His445Tyr`, `tbdb:rpoB:p.Asp435Val` (all \"Assoc w R\") \u2014 plus the borderline `tbdb:rpoB:p.Ile491Phe` and `tbdb:rpoB:p.Val170Phe` outside it, and an expert rule `tbdb:rpoB:missense_variant_p.426_452`. This flag is a property of the gene: the same catalogue grades hundreds of rpoB variants as not associated or uncertain, so no individual variant can be called resistance-conferring on the strength of this result alone.\n\n### What is not established here\nI did not query the literature, because the structured sources left no open question: function, catalysis, subunit composition and the CarD/Mfd/RbpA contacts are all experimental-tier in UniProt with PMIDs attached, and the STRING network agrees through non-textmining channels. The interaction with **Mfd (TRCF)** is asserted by UniProt but did not appear among the top 15 STRING partners at score \u2265700, so I have it on the UniProt statement only.",
  "target": "rpoB",
  "turns": [
   {
@@ -857,33 +3501,37 @@
     {
      "input": {
       "gene": "rpoB",
-      "limit": 20,
-      "required_score": 700,
+      "organism_id": 83332
+     },
+     "name": "uniprot_protein"
+    },
+    {
+     "input": {
+      "gene": "rpoB",
+      "limit": 15,
       "species": 83332
      },
      "name": "string_partners"
+    },
+    {
+     "input": {
+      "gene": "rpoB"
+     },
+     "name": "lineage_markers"
+    },
+    {
+     "input": {
+      "gene": "rpoB"
+     },
+     "name": "resistance_variants"
     }
    ],
    "turn": 1
   },
   {
-   "stop_reason": "tool_use",
-   "tools_requested": [
-    {
-     "input": {
-      "gene": "rpoB",
-      "limit": 5,
-      "organism": "Mycobacterium tuberculosis"
-     },
-     "name": "pubmed_abstracts"
-    }
-   ],
-   "turn": 2
-  },
-  {
    "stop_reason": "end_turn",
    "tools_requested": [],
-   "turn": 3
+   "turn": 2
   }
  ]
 }

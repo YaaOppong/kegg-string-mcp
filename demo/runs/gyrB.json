@@ -20,14 +20,14 @@
      {
       "cached": true,
       "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
-      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "retrieved_at": "2026-08-28T13:00:27.870904+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/list/mtu"
      },
      {
       "cached": true,
       "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-      "retrieved_at": "2026-08-28T10:29:38.231747+00:00",
+      "retrieved_at": "2026-09-14T17:30:21.860147+00:00",
       "status": 200,
       "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0005"
      }
@@ -42,18 +42,207 @@
   {
    "arguments": {
     "gene": "gyrB",
-    "required_score": 700,
+    "organism_id": 83332
+   },
+   "origin": "turn 1",
+   "result": {
+    "notes": [
+     "3 UniProt entries matched gene 'gyrB': A9X5B9, E5G958, P9WG45. They are all returned; resolved.accession names only the first.",
+     "UniProt holds no FUNCTION statement for E5G958, A9X5B9 -- the entry exists but its function is not described. Nothing to quote."
+    ],
+    "query": {
+     "gene": "gyrB",
+     "limit": 3,
+     "organism_id": 83332
+    },
+    "record_ids": [
+     "P9WG45",
+     "E5G958",
+     "A9X5B9"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "ATP-dependent breakage, passage and rejoining of double-stranded DNA."
+       ],
+       "entry_name": "GYRB_MYCTU",
+       "function_statements": [
+        {
+         "evidence_codes": [
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "15047530",
+          "16377674",
+          "16876125",
+          "18426901",
+          "19060136",
+          "19596812",
+          "20805881",
+          "22457352",
+          "22844097",
+          "23869946",
+          "24015710"
+         ],
+         "text": "A type II topoisomerase that negatively supercoils closed circular double-stranded (ds) DNA in an ATP-dependent manner to maintain chromosomes in an underwound state, while in the absence of ATP it relaxes supercoiled dsDNA (PubMed:15047530, PubMed:16377674, PubMed:16876125, PubMed:18426901, PubMed:19060136, PubMed:19596812, PubMed:20805881, PubMed:22844097). Also catalyzes the interconversion of other topological isomers of dsDNA rings, including catenanes (PubMed:16876125, PubMed:19060136, PubMed:22457352). Gyrase from M.tuberculosis has higher decatenation than supercoiling activity compared to E.coli; as M.tuberculosis only has 1 type II topoisomerase, gyrase has to fulfill the decatenation function of topoisomerase IV as well (PubMed:16876125, PubMed:22457352, PubMed:23869946). At comparable concentrations M.tuberculosis gyrase cannot introduce as many negative supercoils into DNA as the E.coli enzyme, and its ATPase activity is lower, perhaps because it does not couple DNA wrapping and ATP binding as well as E.coli (PubMed:22457352, PubMed:24015710)",
+         "tiers": [
+          "experimental"
+         ]
+        },
+        {
+         "evidence_codes": [],
+         "experimental": false,
+         "supporting_pmids": [],
+         "text": "Negative supercoiling favors strand separation, and DNA replication, transcription, recombination and repair, all of which involve strand separation. Type II topoisomerases break and join 2 DNA strands simultaneously in an ATP-dependent manner",
+         "tiers": [
+          "unstated"
+         ]
+        }
+       ],
+       "gene_names": [
+        "gyrB"
+       ],
+       "has_experimental_function": true,
+       "locus_tags": [
+        "Rv0005"
+       ],
+       "pdb": [
+        "2ZJT",
+        "3IG0",
+        "3M4I",
+        "3ZKB",
+        "3ZKD",
+        "3ZM7",
+        "5BS8",
+        "5BTA",
+        "5BTC",
+        "5BTD",
+        "5BTF",
+        "5BTG",
+        "5BTI",
+        "5BTL",
+        "5BTN",
+        "6GAU",
+        "6GAV",
+        "7UGW",
+        "8S7K",
+        "8S7O",
+        "9FOY"
+       ],
+       "quotable_text": "DNA gyrase subunit B\n\nA type II topoisomerase that negatively supercoils closed circular double-stranded (ds) DNA in an ATP-dependent manner to maintain chromosomes in an underwound state, while in the absence of ATP it relaxes supercoiled dsDNA (PubMed:15047530, PubMed:16377674, PubMed:16876125, PubMed:18426901, PubMed:19060136, PubMed:19596812, PubMed:20805881, PubMed:22844097). Also catalyzes the interconversion of other topological isomers of dsDNA rings, including catenanes (PubMed:16876125, PubMed:19060136, PubMed:22457352). Gyrase from M.tuberculosis has higher decatenation than supercoiling activity compared to E.coli; as M.tuberculosis only has 1 type II topoisomerase, gyrase has to fulfill the decatenation function of topoisomerase IV as well (PubMed:16876125, PubMed:22457352, PubMed:23869946). At comparable concentrations M.tuberculosis gyrase cannot introduce as many negative supercoils into DNA as the E.coli enzyme, and its ATPase activity is lower, perhaps because it does not couple DNA wrapping and ATP binding as well as E.coli (PubMed:22457352, PubMed:24015710)\n\nNegative supercoiling favors strand separation, and DNA replication, transcription, recombination and repair, all of which involve strand separation. Type II topoisomerases break and join 2 DNA strands simultaneously in an ATP-dependent manner\n\nHeterotetramer, composed of two GyrA and two GyrB chains (PubMed:15047530). In the heterotetramer, GyrA contains the active site tyrosine that forms a transient covalent intermediate with DNA, while GyrB binds cofactors and catalyzes ATP hydrolysis\n\nATP-dependent breakage, passage and rejoining of double-stranded DNA.",
+       "reviewed": true,
+       "subunit": [
+        {
+         "evidence_codes": [
+          "ECO:0000255",
+          "ECO:0000269"
+         ],
+         "experimental": true,
+         "supporting_pmids": [
+          "15047530"
+         ],
+         "text": "Heterotetramer, composed of two GyrA and two GyrB chains (PubMed:15047530). In the heterotetramer, GyrA contains the active site tyrosine that forms a transient covalent intermediate with DNA, while GyrB binds cofactors and catalyzes ATP hydrolysis",
+         "tiers": [
+          "experimental",
+          "sequence_model"
+         ]
+        }
+       ]
+      },
+      "name": "DNA gyrase subunit B",
+      "record_id": "P9WG45",
+      "retrieved_at": "2026-09-14T17:25:23.939694+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/P9WG45"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "ATP-dependent breakage, passage and rejoining of double-stranded DNA."
+       ],
+       "entry_name": "E5G958_MYCTU",
+       "function_statements": [],
+       "gene_names": [
+        "gyrB"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [],
+       "pdb": [],
+       "quotable_text": "DNA topoisomerase (ATP-hydrolyzing)\n\nATP-dependent breakage, passage and rejoining of double-stranded DNA.",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "DNA topoisomerase (ATP-hydrolyzing)",
+      "record_id": "E5G958",
+      "retrieved_at": "2026-09-14T17:25:23.939694+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/E5G958"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "catalytic_activity": [
+        "ATP-dependent breakage, passage and rejoining of double-stranded DNA."
+       ],
+       "entry_name": "A9X5B9_MYCTU",
+       "function_statements": [],
+       "gene_names": [
+        "gyrB"
+       ],
+       "has_experimental_function": false,
+       "locus_tags": [],
+       "pdb": [],
+       "quotable_text": "DNA topoisomerase (ATP-hydrolyzing)\n\nATP-dependent breakage, passage and rejoining of double-stranded DNA.",
+       "reviewed": false,
+       "subunit": []
+      },
+      "name": "DNA topoisomerase (ATP-hydrolyzing)",
+      "record_id": "A9X5B9",
+      "retrieved_at": "2026-09-14T17:25:23.939694+00:00",
+      "source": "uniprot",
+      "type": "protein",
+      "url": "https://www.uniprot.org/uniprotkb/A9X5B9"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "21426c7508e9b1b73b3b4aaebe95929c67548253ec4dd3bc4979130b96c064bb",
+      "retrieved_at": "2026-09-14T17:25:23.939694+00:00",
+      "status": 200,
+      "url": "https://rest.uniprot.org/uniprotkb/search?fields=accession%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Ccc_function%2Ccc_catalytic_activity%2Ccc_subunit%2Cxref_pdb%2Cec&format=json&query=organism_id%3A83332+AND+gene%3AgyrB&size=3"
+     }
+    ],
+    "resolved": {
+     "accession": "P9WG45",
+     "matched_by": "uniprot_search",
+     "n_entries": 3,
+     "uniprot_release": "2026_03"
+    }
+   },
+   "tool": "uniprot_protein"
+  },
+  {
+   "arguments": {
+    "gene": "gyrB",
+    "limit": 15,
     "species": 83332
    },
    "origin": "turn 1",
    "result": {
     "notes": [
      "STRING's combined_score includes the textmining channel (literature co-mention). evidence_beyond_textmining is True only when some other channel reaches STRING's medium-confidence threshold (0.4).",
-     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: rpoB, inhA, embB, rpoC, pncA, recA, tlyA, katG, groEL2, secA1, gid, eis, rpoA, rpsL, trpB."
+     "Supported essentially only by textmining, so NOT independent of literature evidence about the same pair: rpoB, inhA, embB, rpoC, pncA, recA, tlyA, katG, groEL2, secA1."
     ],
     "query": {
      "gene": "gyrB",
-     "limit": 20,
+     "limit": 15,
      "required_score": 700,
      "species": 83332
     },
@@ -72,12 +261,7 @@
      "83332.Rv1694",
      "83332.Rv1908c",
      "83332.Rv0440",
-     "83332.Rv3240c",
-     "83332.Rv3919c",
-     "83332.Rv2416c",
-     "83332.Rv3457c",
-     "83332.Rv0682",
-     "83332.Rv1612"
+     "83332.Rv3240c"
     ],
     "records": [
      {
@@ -99,7 +283,7 @@
       },
       "name": "gyrA",
       "record_id": "83332.Rv0006",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0006"
@@ -123,7 +307,7 @@
       },
       "name": "mfpA",
       "record_id": "83332.Rv3361c",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3361c"
@@ -147,7 +331,7 @@
       },
       "name": "rpoB",
       "record_id": "83332.Rv0667",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0667"
@@ -171,7 +355,7 @@
       },
       "name": "recF",
       "record_id": "83332.Rv0003",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0003"
@@ -195,7 +379,7 @@
       },
       "name": "inhA",
       "record_id": "83332.Rv1484",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1484"
@@ -219,7 +403,7 @@
       },
       "name": "embB",
       "record_id": "83332.Rv3795",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3795"
@@ -243,7 +427,7 @@
       },
       "name": "Rv0730",
       "record_id": "83332.Rv0730",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0730"
@@ -267,7 +451,7 @@
       },
       "name": "dnaN",
       "record_id": "83332.Rv0002",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0002"
@@ -291,7 +475,7 @@
       },
       "name": "rpoC",
       "record_id": "83332.Rv0668",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0668"
@@ -315,7 +499,7 @@
       },
       "name": "pncA",
       "record_id": "83332.Rv2043c",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2043c"
@@ -339,7 +523,7 @@
       },
       "name": "recA",
       "record_id": "83332.Rv2737c",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv2737c"
@@ -363,7 +547,7 @@
       },
       "name": "tlyA",
       "record_id": "83332.Rv1694",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1694"
@@ -387,7 +571,7 @@
       },
       "name": "katG",
       "record_id": "83332.Rv1908c",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv1908c"
@@ -411,7 +595,7 @@
       },
       "name": "groEL2",
       "record_id": "83332.Rv0440",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv0440"
@@ -435,146 +619,26 @@
       },
       "name": "secA1",
       "record_id": "83332.Rv3240c",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "source": "string",
       "type": "partner",
       "url": "https://string-db.org/network/83332.Rv3240c"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.143,
-        "cooccurrence": 0.0,
-        "database": 0.0,
-        "experimental": 0.0,
-        "fusion": 0.0,
-        "neighborhood": 0.114
-       },
-       "combined_score": 0.877,
-       "evidence_beyond_textmining": false,
-       "max_non_textmining_score": 0.143,
-       "partner_of": "83332.Rv0005",
-       "textmining_score": 0.851
-      },
-      "name": "gid",
-      "record_id": "83332.Rv3919c",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv3919c"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.0,
-        "cooccurrence": 0.0,
-        "database": 0.0,
-        "experimental": 0.0,
-        "fusion": 0.0,
-        "neighborhood": 0.0
-       },
-       "combined_score": 0.87,
-       "evidence_beyond_textmining": false,
-       "max_non_textmining_score": 0.0,
-       "partner_of": "83332.Rv0005",
-       "textmining_score": 0.87
-      },
-      "name": "eis",
-      "record_id": "83332.Rv2416c",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv2416c"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.095,
-        "cooccurrence": 0.0,
-        "database": 0.0,
-        "experimental": 0.0,
-        "fusion": 0.0,
-        "neighborhood": 0.0
-       },
-       "combined_score": 0.867,
-       "evidence_beyond_textmining": false,
-       "max_non_textmining_score": 0.095,
-       "partner_of": "83332.Rv0005",
-       "textmining_score": 0.859
-      },
-      "name": "rpoA",
-      "record_id": "83332.Rv3457c",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv3457c"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.07,
-        "cooccurrence": 0.0,
-        "database": 0.0,
-        "experimental": 0.0,
-        "fusion": 0.0,
-        "neighborhood": 0.0
-       },
-       "combined_score": 0.861,
-       "evidence_beyond_textmining": false,
-       "max_non_textmining_score": 0.07,
-       "partner_of": "83332.Rv0005",
-       "textmining_score": 0.856
-      },
-      "name": "rpsL",
-      "record_id": "83332.Rv0682",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv0682"
-     },
-     {
-      "cached": false,
-      "detail": {
-       "channels": {
-        "coexpression": 0.07,
-        "cooccurrence": 0.0,
-        "database": 0.0,
-        "experimental": 0.0,
-        "fusion": 0.0,
-        "neighborhood": 0.048
-       },
-       "combined_score": 0.858,
-       "evidence_beyond_textmining": false,
-       "max_non_textmining_score": 0.07,
-       "partner_of": "83332.Rv0005",
-       "textmining_score": 0.852
-      },
-      "name": "trpB",
-      "record_id": "83332.Rv1612",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
-      "source": "string",
-      "type": "partner",
-      "url": "https://string-db.org/network/83332.Rv1612"
      }
     ],
     "requests": [
      {
-      "cached": false,
+      "cached": true,
       "content_sha256": "fea48d09032f9068efec0ae0b8db4d8406b6c8bbc5972a49c230a622fa8ca8fd",
-      "retrieved_at": "2026-08-28T10:30:12.330096+00:00",
+      "retrieved_at": "2026-09-14T17:25:24.556652+00:00",
       "status": 200,
-      "url": "https://string-db.org/api/json/get_string_ids?caller_identity=kegg-string-mcp&echo_query=1&identifiers=gyrB&limit=1&species=83332"
+      "url": "https://string-db.org/api/json/get_string_ids?echo_query=1&identifiers=gyrB&limit=1&species=83332"
      },
      {
       "cached": false,
-      "content_sha256": "5e9e15d45d9ff4696ec8a3d52f866d7bcef5abdd7c8a9397cb00ce5a5c1ac674",
-      "retrieved_at": "2026-08-28T10:30:13.323588+00:00",
+      "content_sha256": "65d87bdeaf83ddd63ba78b0644c7a26fc892f4553db42be392c5220cf91c3da8",
+      "retrieved_at": "2026-09-14T18:45:12.569148+00:00",
       "status": 200,
-      "url": "https://string-db.org/api/json/interaction_partners?caller_identity=kegg-string-mcp&identifiers=83332.Rv0005&limit=20&required_score=700&species=83332"
+      "url": "https://string-db.org/api/json/interaction_partners?caller_identity=kegg-string-mcp&identifiers=83332.Rv0005&limit=15&required_score=700&species=83332"
      }
     ],
     "resolved": {
@@ -587,16 +651,16 @@
   },
   {
    "arguments": {
-    "gene": "gyrA",
+    "gene": "gyrB",
     "organism": "mtu"
    },
-   "origin": "turn 2",
+   "origin": "turn 1",
    "result": {
     "notes": [
-     "KEGG returned no pathway assignments for mtu:Rv0006. The gene exists in KEGG but is not mapped to any pathway in this organism."
+     "No lineage-defining position falls within gyrB in the tbdb barcode. 855 of 4,008 H37Rv genes carry one, so this is an informative negative."
     ],
     "query": {
-     "gene": "gyrA",
+     "gene": "gyrB",
      "organism": "mtu"
     },
     "record_ids": [],
@@ -604,232 +668,533 @@
     "requests": [
      {
       "cached": true,
-      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
-      "retrieved_at": "2026-08-28T08:49:25.743250+00:00",
+      "content_sha256": "9c05673045615483890c0e31e65ddb9175ecdce7a22ac9a6868a840ae3f2a753",
+      "retrieved_at": "2026-09-14T11:08:37.431048+00:00",
       "status": 200,
-      "url": "https://rest.kegg.jp/list/mtu"
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/barcode.bed"
      },
      {
       "cached": true,
-      "content_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-      "retrieved_at": "2026-08-28T10:29:23.550221+00:00",
+      "content_sha256": "11020f5f1a2cfaac14965ae1dc7394c5e1c8c0730554ef3d73fe50f5e8b4d0c4",
+      "retrieved_at": "2026-08-28T13:00:27.870904+00:00",
       "status": 200,
-      "url": "https://rest.kegg.jp/link/pathway/mtu:Rv0006"
+      "url": "https://rest.kegg.jp/list/mtu"
      }
     ],
     "resolved": {
-     "kegg_gene_id": "mtu:Rv0006",
-     "matched_by": "symbol"
+     "matched_by": "none"
     }
    },
-   "tool": "kegg_pathways"
+   "tool": "lineage_markers"
   },
   {
    "arguments": {
-    "gene": "MfpA gyrase",
-    "limit": 5,
-    "organism": "Mycobacterium tuberculosis"
+    "gene": "gyrB"
    },
-   "origin": "turn 2",
+   "origin": "turn 1",
    "result": {
     "notes": [
-     "7 articles matched this query; the 5 most relevant were retrieved. A finding absent from these abstracts may still be reported in the 2 not retrieved.",
-     "PubMed search is relevance-ranked text retrieval, NOT identifier resolution. These articles matched the query string; matching is not the same as being about this gene, and unlike KEGG or STRING there is no 'did not resolve' signal to distinguish the two. Read each record's title and abstract before citing it for a claim about the gene.",
-     "If STRING scored an interaction for this gene via its textmining channel, these abstracts may be the very literature that produced that score. Citing a STRING textmining-supported interaction and a PubMed abstract about the same pair is one line of evidence counted twice, not independent corroboration."
+     "gyrB is RESISTANCE-ASSOCIATED: 16 of its 1126 catalogued variants are graded as associated with resistance (4 Assoc w R, 12 Assoc w R - Interim). One associated variant marks the gene however many are not. This is a statement about the GENE: it does not mean a particular variant in gyrB confers resistance, and the catalogue explicitly grades some variants in resistance-associated genes as not associated."
     ],
     "query": {
-     "gene": "MfpA gyrase",
-     "limit": 5,
-     "organism": "Mycobacterium tuberculosis"
+     "drug": null,
+     "gene": "gyrB"
     },
     "record_ids": [
-     "18977756",
-     "33095938",
-     "16388575",
-     "27806933",
-     "19060136"
+     "tbdb:gyrB:p.Ala504Val",
+     "tbdb:gyrB:p.Asn499Asp",
+     "tbdb:gyrB:p.Asn499Thr",
+     "tbdb:gyrB:p.Asp461Asn",
+     "tbdb:gyrB:p.Asp461His",
+     "tbdb:gyrB:p.Glu501Asp",
+     "tbdb:gyrB:p.Glu501Val",
+     "tbdb:gyrB:p.Ser447Phe",
+     "tbdb:gyrB:p.Ala504Val",
+     "tbdb:gyrB:p.Asn499Asp",
+     "tbdb:gyrB:p.Asn499Thr",
+     "tbdb:gyrB:p.Asp461Asn",
+     "tbdb:gyrB:p.Asp461His",
+     "tbdb:gyrB:p.Glu501Asp",
+     "tbdb:gyrB:p.Glu501Val",
+     "tbdb:gyrB:p.Ser447Phe"
     ],
     "records": [
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "The pentapeptide repeat is a recently discovered protein fold. Mycobacterium tuberculosis MfpA is a founding member of the pentapeptide repeat protein (PRP) family that confers resistance to the antibiotic fluoroquinolone by binding to DNA gyrase and inhibiting its activity. The size, shape, and surface potential of MfpA mimics duplex DNA. As an initial step in a comprehensive biophysical analysis of the role of PRPs in the regulation of cellular topoisomerase activity and conferring antibiotic resistance, we have explored the solution structure and refolding of MfpA by fluorescence spectroscopy, CD, and analytical centrifugation. A unique CD spectrum for the pentapeptide repeat fold is described. This spectrum reveals a native structure whose beta-strands and turns within the right-handed quadrilateral beta-helix that define the PRP fold differ from canonical secondary structure types. MfpA refolded from urea or guanidium by dialysis or dilution forms stable aggregates of monomers whose secondary and tertiary structure are not native. In contrast, MfpA refolded using a novel \"time-dependent renaturation\" protocol yields protein with native secondary, tertiary, and quaternary structure. The generality of \"time-dependent renaturation\" to other proteins and denaturation methods is discussed.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "The pentapeptide repeat is a recently discovered protein fold. Mycobacterium tuberculosis MfpA is a founding member of the pentapeptide repeat protein (PRP) family that confers resistance to the antibiotic fluoroquinolone by binding to DNA gyrase and inhibiting its activity. The size, shape, and surface potential of MfpA mimics duplex DNA. As an initial step in a comprehensive biophysical analysis of the role of PRPs in the regulation of cellular topoisomerase activity and conferring antibiotic resistance, we have explored the solution structure and refolding of MfpA by fluorescence spectroscopy, CD, and analytical centrifugation. A unique CD spectrum for the pentapeptide repeat fold is described. This spectrum reveals a native structure whose beta-strands and turns within the right-handed quadrilateral beta-helix that define the PRP fold differ from canonical secondary structure types. MfpA refolded from urea or guanidium by dialysis or dilution forms stable aggregates of monomers whose secondary and tertiary structure are not native. In contrast, MfpA refolded using a novel \"time-dependent renaturation\" protocol yields protein with native secondary, tertiary, and quaternary structure. The generality of \"time-dependent renaturation\" to other proteins and denaturation methods is discussed."
-        }
-       ],
-       "doi": "10.1074/jbc.M804702200",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "The Journal of biological chemistry",
-       "mentions": [
-        "MfpA",
-        "gyrase"
-       ],
-       "pmcid": "PMC2606005",
-       "quotable_text": "Solution structure and refolding of the Mycobacterium tuberculosis pentapeptide repeat protein MfpA.\n\nThe pentapeptide repeat is a recently discovered protein fold. Mycobacterium tuberculosis MfpA is a founding member of the pentapeptide repeat protein (PRP) family that confers resistance to the antibiotic fluoroquinolone by binding to DNA gyrase and inhibiting its activity. The size, shape, and surface potential of MfpA mimics duplex DNA. As an initial step in a comprehensive biophysical analysis of the role of PRPs in the regulation of cellular topoisomerase activity and conferring antibiotic resistance, we have explored the solution structure and refolding of MfpA by fluorescence spectroscopy, CD, and analytical centrifugation. A unique CD spectrum for the pentapeptide repeat fold is described. This spectrum reveals a native structure whose beta-strands and turns within the right-handed quadrilateral beta-helix that define the PRP fold differ from canonical secondary structure types. MfpA refolded from urea or guanidium by dialysis or dilution forms stable aggregates of monomers whose secondary and tertiary structure are not native. In contrast, MfpA refolded using a novel \"time-dependent renaturation\" protocol yields protein with native secondary, tertiary, and quaternary structure. The generality of \"time-dependent renaturation\" to other proteins and denaturation methods is discussed.",
-       "title": "Solution structure and refolding of the Mycobacterium tuberculosis pentapeptide repeat protein MfpA.",
-       "year": "2008"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "levofloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Ala504Val",
+       "source": "WHO catalogue v2"
       },
-      "name": "Solution structure and refolding of the Mycobacterium tuberculosis pentapeptide repeat protein MfpA.",
-      "record_id": "18977756",
-      "retrieved_at": "2026-08-28T10:30:22.316372+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/18977756/"
+      "name": "p.Ala504Val -- Assoc w R - Interim (levofloxacin)",
+      "record_id": "tbdb:gyrB:p.Ala504Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "MfpA protein encoded by Mycobacterium tuberculosis (Mtb) and stands for Mycobacterium fluoroquinolone resistance protein A. This protein provides Mtb intrinsic resistant property from fluoroquinolone antibiotics by inhibiting DNA gyrase that are known to be the primary target of fluoroquinolone drugs. DNA gyrases are important for bacterial chromosomal genesis as they are majorly involved in DNA replication, transcription, bacterial stress response to several external stimulus. Therefore, in Mtb it forms an essential integrity and also a desirable target for drug development approaches. This article implies on determining the essential facts about mfpA including its interaction study, epitope prediction, modelling and validation and most importantly it deals with the mutation. Mutational analysis was carried out on the basis of sequential information and there were several mutations that cause a large decrease in stability of the protein. Total 24 mutations were shortlisted based on \u0394\u0394G value W154G, F54G, L84G, F9G, W4G, F74G, F64G, F49G, L104G, L94G, L124G, F29G, L39G, L59G, W60G, L114G, W154G, W154S, L19G, L144G, L129G, F34G, W154D, W154A and W4S. Separate mutation on DXXG GTPase motif was examined to check any effect on protein stability and we found that D33A, D98A, D128A, G36A, G101A, G131A, D33G, D98G, D128G, G36W, G101W, G131W, D33K, D98K, D128K decreases protein stability the most. Further stress dependent analysis on selected residues showed that lower temperature and pH destabilizes the protein. The reason behind this increase in protein destability was drastic decrease and disruption of interatomic interactions in mutant MfpA. This analysis provides essential information about the residues that are important for MfpA stability and also enlightens protein vulnerability after mutation. This article is protected by copyright. All rights reserved.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "MfpA protein encoded by Mycobacterium tuberculosis (Mtb) and stands for Mycobacterium fluoroquinolone resistance protein A. This protein provides Mtb intrinsic resistant property from fluoroquinolone antibiotics by inhibiting DNA gyrase that are known to be the primary target of fluoroquinolone drugs. DNA gyrases are important for bacterial chromosomal genesis as they are majorly involved in DNA replication, transcription, bacterial stress response to several external stimulus. Therefore, in Mtb it forms an essential integrity and also a desirable target for drug development approaches. This article implies on determining the essential facts about mfpA including its interaction study, epitope prediction, modelling and validation and most importantly it deals with the mutation. Mutational analysis was carried out on the basis of sequential information and there were several mutations that cause a large decrease in stability of the protein. Total 24 mutations were shortlisted based on \u0394\u0394G value W154G, F54G, L84G, F9G, W4G, F74G, F64G, F49G, L104G, L94G, L124G, F29G, L39G, L59G, W60G, L114G, W154G, W154S, L19G, L144G, L129G, F34G, W154D, W154A and W4S. Separate mutation on DXXG GTPase motif was examined to check any effect on protein stability and we found that D33A, D98A, D128A, G36A, G101A, G131A, D33G, D98G, D128G, G36W, G101W, G131W, D33K, D98K, D128K decreases protein stability the most. Further stress dependent analysis on selected residues showed that lower temperature and pH destabilizes the protein. The reason behind this increase in protein destability was drastic decrease and disruption of interatomic interactions in mutant MfpA. This analysis provides essential information about the residues that are important for MfpA stability and also enlightens protein vulnerability after mutation. This article is protected by copyright. All rights reserved."
-        }
-       ],
-       "doi": "10.1002/bab.2058",
-       "has_abstract": true,
-       "in_pmc": false,
-       "journal": "Biotechnology and applied biochemistry",
-       "mentions": [
-        "MfpA",
-        "gyrase"
-       ],
-       "pmcid": "",
-       "quotable_text": "Revelation of point mutations effect in Mycobacterium tuberculosis MfpA protein that involved in mycobacterial DNA supercoiling and fluoroquinolone resistance.\n\nMfpA protein encoded by Mycobacterium tuberculosis (Mtb) and stands for Mycobacterium fluoroquinolone resistance protein A. This protein provides Mtb intrinsic resistant property from fluoroquinolone antibiotics by inhibiting DNA gyrase that are known to be the primary target of fluoroquinolone drugs. DNA gyrases are important for bacterial chromosomal genesis as they are majorly involved in DNA replication, transcription, bacterial stress response to several external stimulus. Therefore, in Mtb it forms an essential integrity and also a desirable target for drug development approaches. This article implies on determining the essential facts about mfpA including its interaction study, epitope prediction, modelling and validation and most importantly it deals with the mutation. Mutational analysis was carried out on the basis of sequential information and there were several mutations that cause a large decrease in stability of the protein. Total 24 mutations were shortlisted based on \u0394\u0394G value W154G, F54G, L84G, F9G, W4G, F74G, F64G, F49G, L104G, L94G, L124G, F29G, L39G, L59G, W60G, L114G, W154G, W154S, L19G, L144G, L129G, F34G, W154D, W154A and W4S. Separate mutation on DXXG GTPase motif was examined to check any effect on protein stability and we found that D33A, D98A, D128A, G36A, G101A, G131A, D33G, D98G, D128G, G36W, G101W, G131W, D33K, D98K, D128K decreases protein stability the most. Further stress dependent analysis on selected residues showed that lower temperature and pH destabilizes the protein. The reason behind this increase in protein destability was drastic decrease and disruption of interatomic interactions in mutant MfpA. This analysis provides essential information about the residues that are important for MfpA stability and also enlightens protein vulnerability after mutation. This article is protected by copyright. All rights reserved.",
-       "title": "Revelation of point mutations effect in Mycobacterium tuberculosis MfpA protein that involved in mycobacterial DNA supercoiling and fluoroquinolone resistance.",
-       "year": "2020"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Asn499Asp",
+       "source": "WHO catalogue v2"
       },
-      "name": "Revelation of point mutations effect in Mycobacterium tuberculosis MfpA protein that involved in mycobacterial DNA supercoiling and fluoroquinolone resistance.",
-      "record_id": "33095938",
-      "retrieved_at": "2026-08-28T10:30:22.316372+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/33095938/"
+      "name": "p.Asn499Asp -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrB:p.Asn499Asp",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "The pentapeptide repeat protein (PRP) family has more than 500 members in the prokaryotic and eukaryotic kingdoms. These proteins are composed of, or contain domains composed of, tandemly repeated amino acid sequences with a consensus sequence of [S,T,A,V][D,N][L,F][S,T,R][G]. The biochemical function of the vast majority of PRP family members is unknown. The three-dimensional structure of the first member of the PRP family was determined for the fluoroquinolone resistance protein (MfpA) from Mycobacterium tuberculosis. The structure revealed that the pentapeptide repeats encode the folding of a novel right-handed quadrilateral beta-helix. MfpA binds to DNA gyrase and inhibits its activity. The rod-shaped, dimeric protein exhibits remarkable similarity in size, shape, and electrostatics to DNA.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "The pentapeptide repeat protein (PRP) family has more than 500 members in the prokaryotic and eukaryotic kingdoms. These proteins are composed of, or contain domains composed of, tandemly repeated amino acid sequences with a consensus sequence of [S,T,A,V][D,N][L,F][S,T,R][G]. The biochemical function of the vast majority of PRP family members is unknown. The three-dimensional structure of the first member of the PRP family was determined for the fluoroquinolone resistance protein (MfpA) from Mycobacterium tuberculosis. The structure revealed that the pentapeptide repeats encode the folding of a novel right-handed quadrilateral beta-helix. MfpA binds to DNA gyrase and inhibits its activity. The rod-shaped, dimeric protein exhibits remarkable similarity in size, shape, and electrostatics to DNA."
-        }
-       ],
-       "doi": "10.1021/bi052130w",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "Biochemistry",
-       "mentions": [
-        "MfpA",
-        "gyrase"
-       ],
-       "pmcid": "PMC2566302",
-       "quotable_text": "Pentapeptide repeat proteins.\n\nThe pentapeptide repeat protein (PRP) family has more than 500 members in the prokaryotic and eukaryotic kingdoms. These proteins are composed of, or contain domains composed of, tandemly repeated amino acid sequences with a consensus sequence of [S,T,A,V][D,N][L,F][S,T,R][G]. The biochemical function of the vast majority of PRP family members is unknown. The three-dimensional structure of the first member of the PRP family was determined for the fluoroquinolone resistance protein (MfpA) from Mycobacterium tuberculosis. The structure revealed that the pentapeptide repeats encode the folding of a novel right-handed quadrilateral beta-helix. MfpA binds to DNA gyrase and inhibits its activity. The rod-shaped, dimeric protein exhibits remarkable similarity in size, shape, and electrostatics to DNA.",
-       "title": "Pentapeptide repeat proteins.",
-       "year": "2006"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Asn499Thr",
+       "source": "WHO catalogue v2"
       },
-      "name": "Pentapeptide repeat proteins.",
-      "record_id": "16388575",
-      "retrieved_at": "2026-08-28T10:30:22.316372+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/16388575/"
+      "name": "p.Asn499Thr -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrB:p.Asn499Thr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "Tuberculosis, caused by the pathogen Mycobacterium tuberculosis, is one of the world's deadliest bacterial infectious disease. It is still a global-health threat, particularly because of the drug-resistant forms. Fluoroquinolones, with target of gyrase, are among the drugs used to treat tuberculosis. However, their widespread use has led to bacterial resistance. The molecular mechanisms of fluoroquinolone resistance in mycobacterium tuberculosis have been reported, such as DNA gyrase mutations, drug efflux pumps system, bacterial cell wall thickness and pentapeptide proteins (MfpA) mediated regulation of gyrase. Mutations in gyrase conferring quinolone resistance play important roles and have been extensively studied. Recent studies have shown that the regulation of DNA gyrase affects mycobacterial drug resistance, but the mechanisms, especially by post-translational modification and regulatory proteins, are poorly understood. In this review, we summarize the fluoroquinolone drug development, and the molecular genetics of fluoroquinolone resistance in mycobacteria. Comprehensive understanding of the mechanisms of fluoroquinolone resistance in Mycobacterium tuberculosis will open a new view on understanding drug resistance in mycobacteria and lead to novel strategies to develop new accurate diagnosis methods.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "Tuberculosis, caused by the pathogen Mycobacterium tuberculosis, is one of the world's deadliest bacterial infectious disease. It is still a global-health threat, particularly because of the drug-resistant forms. Fluoroquinolones, with target of gyrase, are among the drugs used to treat tuberculosis. However, their widespread use has led to bacterial resistance. The molecular mechanisms of fluoroquinolone resistance in mycobacterium tuberculosis have been reported, such as DNA gyrase mutations, drug efflux pumps system, bacterial cell wall thickness and pentapeptide proteins (MfpA) mediated regulation of gyrase. Mutations in gyrase conferring quinolone resistance play important roles and have been extensively studied. Recent studies have shown that the regulation of DNA gyrase affects mycobacterial drug resistance, but the mechanisms, especially by post-translational modification and regulatory proteins, are poorly understood. In this review, we summarize the fluoroquinolone drug development, and the molecular genetics of fluoroquinolone resistance in mycobacteria. Comprehensive understanding of the mechanisms of fluoroquinolone resistance in Mycobacterium tuberculosis will open a new view on understanding drug resistance in mycobacteria and lead to novel strategies to develop new accurate diagnosis methods."
-        }
-       ],
-       "doi": "10.16288/j.yczz.16-136",
-       "has_abstract": true,
-       "in_pmc": false,
-       "journal": "Yi chuan = Hereditas",
-       "mentions": [
-        "MfpA",
-        "gyrase"
-       ],
-       "pmcid": "",
-       "quotable_text": "Mechanisms of fluoroquinolone resistance in Mycobacterium tuberculosis.\n\nTuberculosis, caused by the pathogen Mycobacterium tuberculosis, is one of the world's deadliest bacterial infectious disease. It is still a global-health threat, particularly because of the drug-resistant forms. Fluoroquinolones, with target of gyrase, are among the drugs used to treat tuberculosis. However, their widespread use has led to bacterial resistance. The molecular mechanisms of fluoroquinolone resistance in mycobacterium tuberculosis have been reported, such as DNA gyrase mutations, drug efflux pumps system, bacterial cell wall thickness and pentapeptide proteins (MfpA) mediated regulation of gyrase. Mutations in gyrase conferring quinolone resistance play important roles and have been extensively studied. Recent studies have shown that the regulation of DNA gyrase affects mycobacterial drug resistance, but the mechanisms, especially by post-translational modification and regulatory proteins, are poorly understood. In this review, we summarize the fluoroquinolone drug development, and the molecular genetics of fluoroquinolone resistance in mycobacteria. Comprehensive understanding of the mechanisms of fluoroquinolone resistance in Mycobacterium tuberculosis will open a new view on understanding drug resistance in mycobacteria and lead to novel strategies to develop new accurate diagnosis methods.",
-       "title": "Mechanisms of fluoroquinolone resistance in Mycobacterium tuberculosis.",
-       "year": "2016"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R",
+       "drug": "levofloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Asp461Asn",
+       "source": "WHO catalogue v2"
       },
-      "name": "Mechanisms of fluoroquinolone resistance in Mycobacterium tuberculosis.",
-      "record_id": "27806933",
-      "retrieved_at": "2026-08-28T10:30:22.316372+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/27806933/"
+      "name": "p.Asp461Asn -- Assoc w R (levofloxacin)",
+      "record_id": "tbdb:gyrB:p.Asp461Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      },
      {
-      "cached": false,
+      "cached": true,
       "detail": {
-       "abstract": "MfpA(Mt) and QnrB4 are two newly characterized pentapeptide repeat proteins (PRPs) that interact with DNA gyrase. The mfpA(Mt) gene is chromosome borne in Mycobacterium tuberculosis, while qnrB4 is plasmid borne in enterobacteria. We expressed and purified the two PRPs and compared their effects on DNA gyrase, taking into account host specificity, i.e., the effect of MfpA(Mt) on M. tuberculosis gyrase and the effect of QnrB4 on Escherichia coli gyrase. Whereas QnrB4 inhibited E. coli gyrase activity only at concentrations higher than 30 microM, MfpA(Mt) inhibited all catalytic reactions of the M. tuberculosis gyrase described for this enzyme (supercoiling, cleavage, relaxation, and decatenation) with a 50% inhibitory concentration of 2 microM. We showed that the D87 residue in GyrA has a major role in the MfpA(Mt)-gyrase interaction, as D87H and D87G substitutions abolished MfpA(Mt) inhibition of M. tuberculosis gyrase catalytic reactions, while A83S modification did not. Since MfpA(Mt) and QnrB4 have been involved in resistance to fluoroquinolones, we measured the inhibition of the quinolone effect in the presence of each PRP. QnrB4 reversed quinolone inhibition of E. coli gyrase at 0.1 microM as described for other Qnr proteins, but MfpA(Mt) did not modify M. tuberculosis gyrase inhibition by fluoroquinolones. Crossover experiments showed that MfpA(Mt) also inhibited E. coli gyrase function, while QnrB4 did not reverse quinolone inhibition of M. tuberculosis gyrase. In conclusion, our in vitro experiments showed that MfpA(Mt) and QnrB4 exhibit opposite effects on DNA gyrase and that these effects are protein and species specific.",
-       "abstract_sections": [
-        {
-         "label": "",
-         "text": "MfpA(Mt) and QnrB4 are two newly characterized pentapeptide repeat proteins (PRPs) that interact with DNA gyrase. The mfpA(Mt) gene is chromosome borne in Mycobacterium tuberculosis, while qnrB4 is plasmid borne in enterobacteria. We expressed and purified the two PRPs and compared their effects on DNA gyrase, taking into account host specificity, i.e., the effect of MfpA(Mt) on M. tuberculosis gyrase and the effect of QnrB4 on Escherichia coli gyrase. Whereas QnrB4 inhibited E. coli gyrase activity only at concentrations higher than 30 microM, MfpA(Mt) inhibited all catalytic reactions of the M. tuberculosis gyrase described for this enzyme (supercoiling, cleavage, relaxation, and decatenation) with a 50% inhibitory concentration of 2 microM. We showed that the D87 residue in GyrA has a major role in the MfpA(Mt)-gyrase interaction, as D87H and D87G substitutions abolished MfpA(Mt) inhibition of M. tuberculosis gyrase catalytic reactions, while A83S modification did not. Since MfpA(Mt) and QnrB4 have been involved in resistance to fluoroquinolones, we measured the inhibition of the quinolone effect in the presence of each PRP. QnrB4 reversed quinolone inhibition of E. coli gyrase at 0.1 microM as described for other Qnr proteins, but MfpA(Mt) did not modify M. tuberculosis gyrase inhibition by fluoroquinolones. Crossover experiments showed that MfpA(Mt) also inhibited E. coli gyrase function, while QnrB4 did not reverse quinolone inhibition of M. tuberculosis gyrase. In conclusion, our in vitro experiments showed that MfpA(Mt) and QnrB4 exhibit opposite effects on DNA gyrase and that these effects are protein and species specific."
-        }
-       ],
-       "doi": "10.1128/JB.01205-08",
-       "has_abstract": true,
-       "in_pmc": true,
-       "journal": "Journal of bacteriology",
-       "mentions": [
-        "MfpA",
-        "gyrase"
-       ],
-       "pmcid": "PMC2648189",
-       "quotable_text": "The pentapeptide repeat proteins MfpAMt and QnrB4 exhibit opposite effects on DNA gyrase catalytic reactions and on the ternary gyrase-DNA-quinolone complex.\n\nMfpA(Mt) and QnrB4 are two newly characterized pentapeptide repeat proteins (PRPs) that interact with DNA gyrase. The mfpA(Mt) gene is chromosome borne in Mycobacterium tuberculosis, while qnrB4 is plasmid borne in enterobacteria. We expressed and purified the two PRPs and compared their effects on DNA gyrase, taking into account host specificity, i.e., the effect of MfpA(Mt) on M. tuberculosis gyrase and the effect of QnrB4 on Escherichia coli gyrase. Whereas QnrB4 inhibited E. coli gyrase activity only at concentrations higher than 30 microM, MfpA(Mt) inhibited all catalytic reactions of the M. tuberculosis gyrase described for this enzyme (supercoiling, cleavage, relaxation, and decatenation) with a 50% inhibitory concentration of 2 microM. We showed that the D87 residue in GyrA has a major role in the MfpA(Mt)-gyrase interaction, as D87H and D87G substitutions abolished MfpA(Mt) inhibition of M. tuberculosis gyrase catalytic reactions, while A83S modification did not. Since MfpA(Mt) and QnrB4 have been involved in resistance to fluoroquinolones, we measured the inhibition of the quinolone effect in the presence of each PRP. QnrB4 reversed quinolone inhibition of E. coli gyrase at 0.1 microM as described for other Qnr proteins, but MfpA(Mt) did not modify M. tuberculosis gyrase inhibition by fluoroquinolones. Crossover experiments showed that MfpA(Mt) also inhibited E. coli gyrase function, while QnrB4 did not reverse quinolone inhibition of M. tuberculosis gyrase. In conclusion, our in vitro experiments showed that MfpA(Mt) and QnrB4 exhibit opposite effects on DNA gyrase and that these effects are protein and species specific.",
-       "title": "The pentapeptide repeat proteins MfpAMt and QnrB4 exhibit opposite effects on DNA gyrase catalytic reactions and on the ternary gyrase-DNA-quinolone complex.",
-       "year": "2009"
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "levofloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Asp461His",
+       "source": "WHO catalogue v2"
       },
-      "name": "The pentapeptide repeat proteins MfpAMt and QnrB4 exhibit opposite effects on DNA gyrase catalytic reactions and on the ternary gyrase-DNA-quinolone complex.",
-      "record_id": "19060136",
-      "retrieved_at": "2026-08-28T10:30:22.316372+00:00",
-      "source": "pubmed",
-      "type": "article",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/19060136/"
+      "name": "p.Asp461His -- Assoc w R - Interim (levofloxacin)",
+      "record_id": "tbdb:gyrB:p.Asp461His",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "levofloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Glu501Asp",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu501Asp -- Assoc w R - Interim (levofloxacin)",
+      "record_id": "tbdb:gyrB:p.Glu501Asp",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "levofloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Glu501Val",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu501Val -- Assoc w R - Interim (levofloxacin)",
+      "record_id": "tbdb:gyrB:p.Glu501Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "",
+       "confidence": "Assoc w R - Interim",
+       "drug": "levofloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Ser447Phe",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser447Phe -- Assoc w R - Interim (levofloxacin)",
+      "record_id": "tbdb:gyrB:p.Ser447Phe",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R - Interim",
+       "drug": "moxifloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Ala504Val",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ala504Val -- Assoc w R - Interim (moxifloxacin)",
+      "record_id": "tbdb:gyrB:p.Ala504Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R - Interim",
+       "drug": "moxifloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Asn499Asp",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn499Asp -- Assoc w R - Interim (moxifloxacin)",
+      "record_id": "tbdb:gyrB:p.Asn499Asp",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R - Interim",
+       "drug": "moxifloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Asn499Thr",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asn499Thr -- Assoc w R - Interim (moxifloxacin)",
+      "record_id": "tbdb:gyrB:p.Asn499Thr",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R - Interim",
+       "drug": "moxifloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Asp461Asn",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp461Asn -- Assoc w R - Interim (moxifloxacin)",
+      "record_id": "tbdb:gyrB:p.Asp461Asn",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R - Interim",
+       "drug": "moxifloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Asp461His",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Asp461His -- Assoc w R - Interim (moxifloxacin)",
+      "record_id": "tbdb:gyrB:p.Asp461His",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R",
+       "drug": "moxifloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Glu501Asp",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu501Asp -- Assoc w R (moxifloxacin)",
+      "record_id": "tbdb:gyrB:p.Glu501Asp",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R - Interim",
+       "drug": "moxifloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Glu501Val",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Glu501Val -- Assoc w R - Interim (moxifloxacin)",
+      "record_id": "tbdb:gyrB:p.Glu501Val",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "associated": true,
+       "comment": "Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)",
+       "confidence": "Assoc w R - Interim",
+       "drug": "moxifloxacin",
+       "gene": "gyrB",
+       "mutation": "p.Ser447Phe",
+       "source": "WHO catalogue v2"
+      },
+      "name": "p.Ser447Phe -- Assoc w R - Interim (moxifloxacin)",
+      "record_id": "tbdb:gyrB:p.Ser447Phe",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
+      "source": "tbdb",
+      "type": "resistance_variant",
+      "url": "https://github.com/jodyphelan/tbdb"
      }
     ],
     "requests": [
      {
-      "cached": false,
-      "content_sha256": "f4373974e397af8bc930014c5664793e1ccca60385cb10f13dd8f88777884330",
-      "retrieved_at": "2026-08-28T10:30:21.934476+00:00",
+      "cached": true,
+      "content_sha256": "9dcaa790ca50a921289bbb255532f44d673851926017d5769f334e67244b3d30",
+      "retrieved_at": "2026-09-14T11:08:31.848323+00:00",
       "status": 200,
-      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&email=REDACTED&retmax=5&retmode=json&sort=relevance&term=%22MfpA+gyrase%22+AND+%22Mycobacterium+tuberculosis%22&tool=kegg-string-mcp"
-     },
-     {
-      "cached": false,
-      "content_sha256": "3e9657f5ccb44c93b5135c03f41de9344bb00e42f858e0660d0c3862c4e00ba6",
-      "retrieved_at": "2026-08-28T10:30:22.316372+00:00",
-      "status": 200,
-      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&email=REDACTED&id=18977756%2C33095938%2C16388575%2C27806933%2C19060136&retmode=xml&tool=kegg-string-mcp"
+      "url": "https://raw.githubusercontent.com/jodyphelan/tbdb/master/mutations.csv"
      }
     ],
     "resolved": {
-     "matched_by": "pubmed_search",
-     "query_translation": "\"mfpa\"[All Fields] AND (\"gyrase\"[All Fields] OR \"gyrases\"[All Fields]) AND \"Mycobacterium tuberculosis\"[All Fields]",
-     "term": "\"MfpA gyrase\" AND \"Mycobacterium tuberculosis\""
+     "drugs": [
+      "levofloxacin",
+      "moxifloxacin"
+     ],
+     "grading_counts": {
+      "(ungraded)": 8,
+      "Assoc w R": 4,
+      "Assoc w R - Interim": 12,
+      "Not assoc w R": 13,
+      "Not assoc w R - Interim": 424,
+      "Uncertain significance": 665
+     },
+     "matched_by": "symbol",
+     "resistance_associated": true,
+     "variants_in_catalogue": 1126
     }
    },
-   "tool": "pubmed_abstracts"
+   "tool": "resistance_variants"
+  },
+  {
+   "arguments": {
+    "limit": 5,
+    "query": "MfpA pentapeptide repeat protein DNA gyrase Mycobacterium tuberculosis fluoroquinolone"
+   },
+   "origin": "turn 2",
+   "result": {
+    "notes": [
+     "Ranked by the hybrid arm (BM25 fused with dense embeddings), which measured 0.917 precision@10 on this corpus against 0.844 lexical and 0.739 dense. `quotable_text` is the whole abstract; `matched_passage` is the span that ranked.",
+     "This corpus holds 1350 passages from 676 papers, gathered for: katG, inhA, rpoB, embB, pncA, fabG1, gyrA, gyrB, ahpC, furA, pknB, sodA .... A gene outside that set will retrieve nothing relevant however it is queried -- use pubmed_abstracts for those."
+    ],
+    "query": {
+     "limit": 5,
+     "query": "MfpA pentapeptide repeat protein DNA gyrase Mycobacterium tuberculosis fluoroquinolone"
+    },
+    "record_ids": [
+     "30514513",
+     "23869946",
+     "32393213",
+     "27569197",
+     "25816236"
+    ],
+    "records": [
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "gyrA",
+        "gyrB"
+       ],
+       "matched_passage": "Chemical classes targeting energy supplying GyrB domain of Mycobacterium tuberculosis. Tuberculosis (TB) is contagious in nature and immunocompromised patients have a higher probability of developing TB. The occurrence of drug resistance, has led to serious health concerns in the management of TB. In order to combat resistant tuberculosis there is an urgent need of identifying new drug targets and new drug combinations for the effective management and reduction in the duration of TB treatment. Targeting DNA gyrase that is involved in bacterial replication cycle, provides one rationale approach. Various fluoroquinolone based drugs have shown promising effect against DNA gyrase enzyme and in turn were successful in combat against MDR TB. However, GyrA domain mutations based resistance towards fluoroquinolones has put a question mark over current therapies for tuberculosis. Fluoroquinolones target GyrA domain of bacterial DNA gyrase therefore targeting DNA GyrB domain may overcome this resistance issue, establishing it as an attractive target. This review is a compilation of current research efforts on energy supplying domain of Mycobacterium tuberculosis that could provide breakthrough in development of more potent Mtb DNA GyrB",
+       "mentions": [
+        "gyrB"
+       ],
+       "passages_in_corpus": 2,
+       "quotable_text": "Chemical classes targeting energy supplying GyrB domain of Mycobacterium tuberculosis. Tuberculosis (TB) is contagious in nature and immunocompromised patients have a higher probability of developing TB. The occurrence of drug resistance, has led to serious health concerns in the management of TB. In order to combat resistant tuberculosis there is an urgent need of identifying new drug targets and new drug combinations for the effective management and reduction in the duration of TB treatment. Targeting DNA gyrase that is involved in bacterial replication cycle, provides one rationale approach. Various fluoroquinolone based drugs have shown promising effect against DNA gyrase enzyme and in turn were successful in combat against MDR TB. However, GyrA domain mutations based resistance towards fluoroquinolones has put a question mark over current therapies for tuberculosis. Fluoroquinolones target GyrA domain of bacterial DNA gyrase therefore targeting DNA GyrB domain may overcome this resistance issue, establishing it as an attractive target. This review is a compilation of current research efforts on energy supplying domain of Mycobacterium tuberculosis that could provide breakthrough in development of more potent Mtb DNA GyrB domain may overcome this resistance issue, establishing it as an attractive target. This review is a compilation of current research efforts on energy supplying domain of Mycobacterium tuberculosis that could provide breakthrough in development of more potent Mtb DNA GyrB inhibitors.",
+       "rank": 1,
+       "score": 0.0328
+      },
+      "name": "Chemical classes targeting energy supplying GyrB domain of Mycobacterium tuberculosis.",
+      "record_id": "30514513",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/30514513/"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "gyrA"
+       ],
+       "matched_passage": "Mycobacterium tuberculosis DNA gyrase possesses two functional GyrA-boxes. In contrast with most bacteria which possess two type II topoisomerases (topoisomerase IV and DNA gyrase), Mycobacterium tuberculosis possesses only one, DNA gyrase, which is functionally a hybrid enzyme. Functional differences between the two type IIA topoisomerases are thought to be specified by a CTD (C-terminal DNA-binding domain), which controls DNA recognition. To explore the molecular mechanism responsible for the hybrid functions of the M. tuberculosis DNA gyrase, we conducted a series of sequence analyses and structural and biochemical experiments with the isolated GyrA CTD and the holoenzyme. Although the CTD displayed a global structure similar to that of bona fide GyrA and ParC paralogues, it harbours a second key motif similar in all respects to that of the conserved GyrA-box sequence motif. Biochemical assays showed that the GyrA-box is responsible for DNA supercoiling, whereas the second GyrA-box-l (GyrA-box-like motif) is responsible for the enhanced decatenation activity, suggesting that the mechanistic originality of M. tuberculosis DNA gyrase depends largely on the particular DNA path around the CTD allowed for by the presence",
+       "mentions": [
+        "gyrA"
+       ],
+       "passages_in_corpus": 2,
+       "quotable_text": "Mycobacterium tuberculosis DNA gyrase possesses two functional GyrA-boxes. In contrast with most bacteria which possess two type II topoisomerases (topoisomerase IV and DNA gyrase), Mycobacterium tuberculosis possesses only one, DNA gyrase, which is functionally a hybrid enzyme. Functional differences between the two type IIA topoisomerases are thought to be specified by a CTD (C-terminal DNA-binding domain), which controls DNA recognition. To explore the molecular mechanism responsible for the hybrid functions of the M. tuberculosis DNA gyrase, we conducted a series of sequence analyses and structural and biochemical experiments with the isolated GyrA CTD and the holoenzyme. Although the CTD displayed a global structure similar to that of bona fide GyrA and ParC paralogues, it harbours a second key motif similar in all respects to that of the conserved GyrA-box sequence motif. Biochemical assays showed that the GyrA-box is responsible for DNA supercoiling, whereas the second GyrA-box-l (GyrA-box-like motif) is responsible for the enhanced decatenation activity, suggesting that the mechanistic originality of M. tuberculosis DNA gyrase depends largely on the particular DNA path around the CTD allowed for by the presence DNA supercoiling, whereas the second GyrA-box-l (GyrA-box-like motif) is responsible for the enhanced decatenation activity, suggesting that the mechanistic originality of M. tuberculosis DNA gyrase depends largely on the particular DNA path around the CTD allowed for by the presence of GyrA-box-l. The results of the present study also provide, through phylogenetic exploration of the entire Corynebacterineae suborder, a new and broader insight into the functional diversity of bacterial type IIA topoisomerases.",
+       "rank": 2,
+       "score": 0.0323
+      },
+      "name": "Mycobacterium tuberculosis DNA gyrase possesses two functional GyrA-boxes.",
+      "record_id": "23869946",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23869946/"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "gyrA",
+        "gyrB"
+       ],
+       "matched_passage": "Fluoroquinolone resistance and mutational profile of gyrA in pulmonary MDR tuberculosis patients. BACKGROUND: Fluoroquinolones (FQs) are potential drugs that inhibit DNA synthesis and are used in the treatment of multidrug-resistant tuberculosis (TB) and short-term anti-TB regimens. In recent years, a high proportion of FQ resistance has been observed in Mycobacterium tuberculosis isolates. The development of FQ resistance in multidrug-resistant TB negatively impacts patient treatment outcome and is a serious threat to control of TB. METHODS: The study included a total of 562 samples from patients with pulmonary TB that had been on anti-tuberculosis therapy. MTBDRsl assays were performed for the molecular detection of mutations. Sequence analysis was performed for the characterization and mutational profiling of FQ-resistant isolates. RESULTS: FQ resistance was observed in 104 samples (18.5%), most of which were previously treated and treatment failure cases. A total of 102 isolates had mutations in DNA gyrase subunit A (gyrA), while mutations in gyrB were observed in only two isolates. Mutational analysis revealed that the mutations mostly alter codons 94 (replacing aspartic acid with glycine, D94G) and 90 (replacing alanine with",
+       "mentions": [
+        "gyrA"
+       ],
+       "passages_in_corpus": 2,
+       "quotable_text": "Fluoroquinolone resistance and mutational profile of gyrA in pulmonary MDR tuberculosis patients. BACKGROUND: Fluoroquinolones (FQs) are potential drugs that inhibit DNA synthesis and are used in the treatment of multidrug-resistant tuberculosis (TB) and short-term anti-TB regimens. In recent years, a high proportion of FQ resistance has been observed in Mycobacterium tuberculosis isolates. The development of FQ resistance in multidrug-resistant TB negatively impacts patient treatment outcome and is a serious threat to control of TB. METHODS: The study included a total of 562 samples from patients with pulmonary TB that had been on anti-tuberculosis therapy. MTBDRsl assays were performed for the molecular detection of mutations. Sequence analysis was performed for the characterization and mutational profiling of FQ-resistant isolates. RESULTS: FQ resistance was observed in 104 samples (18.5%), most of which were previously treated and treatment failure cases. A total of 102 isolates had mutations in DNA gyrase subunit A (gyrA), while mutations in gyrB were observed in only two isolates. Mutational analysis revealed that the mutations mostly alter codons 94 (replacing aspartic acid with glycine, D94G) and 90 (replacing alanine with isolates had mutations in DNA gyrase subunit A (gyrA), while mutations in gyrB were observed in only two isolates. Mutational analysis revealed that the mutations mostly alter codons 94 (replacing aspartic acid with glycine, D94G) and 90 (replacing alanine with valine, A90V). In MDR and treatment failure cases, resistance to FQs was most commonly associated with the D94G mutation. In contract, a high proportion of A90V mutations were observed in isolates that were newly diagnosed. CONCLUSION: The findings suggest that genotypic assays for FQ resistance should be carried out at the time of initial diagnosis, before starting treatment, in order to rule out mutations that impact the potential use of FQs in treatment and to control drug resistance.",
+       "rank": 3,
+       "score": 0.0313
+      },
+      "name": "Fluoroquinolone resistance and mutational profile of gyrA in pulmonary MDR tuberculosis patients.",
+      "record_id": "32393213",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32393213/"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "gyrB"
+       ],
+       "matched_passage": "Mycobacterium Tuberculosis (MTB) GyrB inhibitors: An attractive approach for developing novel drugs against TB.\n\nNew classes of drugs are needed to treat tuberculosis (TB) in order to combat the emergence of resistance (MDR and XDR) to existing agents and shorten the duration of therapy. Mycobacterial DNA gyrase B subunit has been identified to be one of the potentially under exploited drug targets in the field of antitubercular drug discovery. In the present review, we discussed the synthesis, structural optimization and docking study of effective potent DNA gyrase inhibitor against M. tuberculosis, with improved properties such as enhanced activity against MDR strains, reduced toxicity. Based on this progress, if we can successfully leverage the opportunities in this target, there is hope that we will be able to raise novel gyrase inhibitor in earnest in the long.",
+       "mentions": [
+        "gyrB"
+       ],
+       "passages_in_corpus": 1,
+       "quotable_text": "Mycobacterium Tuberculosis (MTB) GyrB inhibitors: An attractive approach for developing novel drugs against TB.\n\nNew classes of drugs are needed to treat tuberculosis (TB) in order to combat the emergence of resistance (MDR and XDR) to existing agents and shorten the duration of therapy. Mycobacterial DNA gyrase B subunit has been identified to be one of the potentially under exploited drug targets in the field of antitubercular drug discovery. In the present review, we discussed the synthesis, structural optimization and docking study of effective potent DNA gyrase inhibitor against M. tuberculosis, with improved properties such as enhanced activity against MDR strains, reduced toxicity. Based on this progress, if we can successfully leverage the opportunities in this target, there is hope that we will be able to raise novel gyrase inhibitor in earnest in the long.",
+       "rank": 4,
+       "score": 0.0312
+      },
+      "name": "Mycobacterium Tuberculosis (MTB) GyrB inhibitors: An attractive approach for developing novel drugs against TB.",
+      "record_id": "27569197",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27569197/"
+     },
+     {
+      "cached": true,
+      "detail": {
+       "genes_named": [
+        "gyrA",
+        "gyrB"
+       ],
+       "matched_passage": "Frequency and geographic distribution of gyrA and gyrB mutations associated with fluoroquinolone resistance in clinical Mycobacterium tuberculosis isolates: a systematic review. BACKGROUND: The detection of mutations in the gyrA and gyrB genes in the Mycobacterium tuberculosis genome that have been demonstrated to confer phenotypic resistance to fluoroquinolones is the most promising technology for rapid diagnosis of fluoroquinolone resistance. METHODS: In order to characterize the diversity and frequency of gyrA and gyrB mutations and to describe the global distribution of these mutations, we conducted a systematic review, from May 1996 to April 2013, of all published studies evaluating Mycobacterium tuberculosis mutations associated with resistance to fluoroquinolones. The overall goal of the study was to determine the potential utility and reliability of these mutations as diagnostic markers to detect phenotypic fluoroquinolone resistance in Mycobacterium tuberculosis and to describe their geographic distribution. RESULTS: Forty-six studies, covering four continents and 18 countries, provided mutation data for 3,846 unique clinical isolates with phenotypic resistance profiles to fluoroquinolones. The gyrA mutations occurring most frequently in fluoroquinolone-resistant isolates, ranged from 21-32% for D94G and 13-20% for A90V,",
+       "mentions": [
+        "gyrA",
+        "gyrB"
+       ],
+       "passages_in_corpus": 3,
+       "quotable_text": "Frequency and geographic distribution of gyrA and gyrB mutations associated with fluoroquinolone resistance in clinical Mycobacterium tuberculosis isolates: a systematic review. BACKGROUND: The detection of mutations in the gyrA and gyrB genes in the Mycobacterium tuberculosis genome that have been demonstrated to confer phenotypic resistance to fluoroquinolones is the most promising technology for rapid diagnosis of fluoroquinolone resistance. METHODS: In order to characterize the diversity and frequency of gyrA and gyrB mutations and to describe the global distribution of these mutations, we conducted a systematic review, from May 1996 to April 2013, of all published studies evaluating Mycobacterium tuberculosis mutations associated with resistance to fluoroquinolones. The overall goal of the study was to determine the potential utility and reliability of these mutations as diagnostic markers to detect phenotypic fluoroquinolone resistance in Mycobacterium tuberculosis and to describe their geographic distribution. RESULTS: Forty-six studies, covering four continents and 18 countries, provided mutation data for 3,846 unique clinical isolates with phenotypic resistance profiles to fluoroquinolones. The gyrA mutations occurring most frequently in fluoroquinolone-resistant isolates, ranged from 21-32% for D94G and 13-20% for A90V, Forty-six studies, covering four continents and 18 countries, provided mutation data for 3,846 unique clinical isolates with phenotypic resistance profiles to fluoroquinolones. The gyrA mutations occurring most frequently in fluoroquinolone-resistant isolates, ranged from 21-32% for D94G and 13-20% for A90V, by drug. Eighty seven percent of all strains that were phenotypically resistant to moxifloxacin and 83% of ofloxacin resistant isolates contained mutations in gyrA. Additionally we found that 83% and 80% of moxifloxacin and ofloxacin resistant strains respectively, were observed to have mutations in the gyrA codons interrogated by the existing MTBDRsl line probe assay. In China and Russia, 83% and 84% of fluoroquinolone resistant strains respectively, were observed to have gyrA mutations in the gene regions covered by the MTBDRsl assay. CONCLUSIONS: Molecular diagnostics, specifically the Genotype MTBDRsl assay, focusing on codons 88-94 should have moderate to high sensitivity in most countries. While we did observe geographic differences in the frequencies of single gyrA mutations across countries, molecular diagnostics based on detection of all gyrA mutations demonstrated to confer resistance should have broad and global utility. in most countries. While we did observe geographic differences in the frequencies of single gyrA mutations across countries, molecular diagnostics based on detection of all gyrA mutations demonstrated to confer resistance should have broad and global utility.",
+       "rank": 5,
+       "score": 0.0293
+      },
+      "name": "Frequency and geographic distribution of gyrA and gyrB mutations associated with fluoroquinolone resistance in clinical Mycobacterium tuberculosis isolates: a systematic review.",
+      "record_id": "25816236",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "source": "pubmed",
+      "type": "article",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/25816236/"
+     }
+    ],
+    "requests": [
+     {
+      "cached": true,
+      "content_sha256": "2d4662956315555b49c301627428ec08ac66067aae71c2b3622ba0ac154ba1a5",
+      "retrieved_at": "2026-09-04T19:28:52.585919+00:00",
+      "status": 200,
+      "url": "file:///Users/yaa/kegg-string-mcp/data/corpus_tb41.json"
+     }
+    ],
+    "resolved": {
+     "matched_by": "corpus_search"
+    }
+   },
+   "tool": "corpus_search"
   }
  ],
  "id": "gyrB",
  "mode": "single",
  "organism": "mtu",
- "summary": "# gyrB \u2014 *Mycobacterium tuberculosis* (mtu:Rv0005 / STRING 83332.Rv0005)\n\n## Identity\nThe symbol `gyrB` resolves cleanly in both resources: KEGG resolved it by symbol to **mtu:Rv0005**, and STRING resolved it to **83332.Rv0005** (preferred name `gyrB`).\n\n## Pathways \u2014 an explicit negative, not a lookup failure\nKEGG returned **no pathway assignments** for mtu:Rv0005. The note is unambiguous about which kind of empty result this is: *\"The gene exists in KEGG but is not mapped to any pathway in this organism.\"* So this is a genuine annotation gap in KEGG's mtu pathway maps, not an unresolved identifier.\n\nTo test whether this is specific to gyrB or a systematic gap, I queried the partner subunit: **mtu:Rv0006 (gyrA)** likewise resolved and likewise returned no pathway assignments, with the same note. Both subunits of the gyrase are absent from KEGG's mtu pathway mapping, which points to a database-level gap for this locus rather than anything biologically meaningful about gyrB. **I therefore cannot cite any KEGG pathway ID for this gene.**\n\n## Function\nThe structured tools support the core assignment only indirectly, so I will be careful about what rests on what. STRING's top partner by a wide margin is **83332.Rv0006 (gyrA)**, combined score 0.999, and critically this is *not* a textmining artefact: experimental 0.981, coexpression 0.941, neighborhood 0.830, cooccurrence 0.773 (`evidence_beyond_textmining: true`). The pattern \u2014 conserved genomic adjacency (Rv0005/Rv0006 are neighbours), phylogenetic cooccurrence, tight coexpression, and direct experimental evidence \u2014 is the signature of two obligate subunits of one enzyme. gyrB is the B subunit of DNA gyrase, which pairs with GyrA.\n\nOn the enzyme's activity, the literature I retrieved describes the *M. tuberculosis* gyrase holoenzyme (not gyrB in isolation): PMID:19060136 lists the \"catalytic reactions of the M. tuberculosis gyrase described for this enzyme (supercoiling, cleavage, relaxation, and decatenation)\", and PMID:33095938 notes DNA gyrases \"are majorly involved in DNA replication, transcription, bacterial stress response to several external stimulus.\" Note these characterise the two-subunit enzyme; I have no tool evidence partitioning these activities to the B subunit specifically.\n\n## Notable interaction partners\n\n**High-confidence, evidence beyond textmining:**\n\n- **83332.Rv0006 (gyrA)** \u2014 0.999. The partner subunit; discussed above. The strongest and most interpretable edge in the network.\n- **83332.Rv3361c (mfpA)** \u2014 0.997, driven almost entirely by the **experimental channel (0.997)** with textmining only 0.299. This is the rare case of an edge that is essentially *not* literature-derived. MfpA is a pentapeptide-repeat protein that inhibits gyrase: PMID:16388575 \"MfpA binds to DNA gyrase and inhibits its activity. The rod-shaped, dimeric protein exhibits remarkable similarity in size, shape, and electrostatics to DNA\", and PMID:19060136 reports it \"inhibited all catalytic reactions of the M. tuberculosis gyrase ... with a 50% inhibitory concentration of 2 microM.\" Because the STRING support here is experimental rather than textmining, the abstracts and the STRING score are closer to genuinely separable support than elsewhere in this network. One caveat worth flagging: PMID:19060136 maps the interaction to the *A* subunit \u2014 \"the D87 residue in GyrA has a major role in the MfpA(Mt)-gyrase interaction\" \u2014 so MfpA's contact point is documented on GyrA, and the gyrB edge plausibly reflects the holoenzyme rather than a direct GyrB\u2013MfpA contact.\n- **83332.Rv0730** \u2014 0.956; experimental 0.818, coexpression 0.725. An uncharacterised protein (STRING gives no informative name) with strong non-literature support. This is a real lead that neither KEGG nor the literature channel explains; I have no basis to assign it a function.\n- **83332.Rv0003 (recF)** \u2014 0.975 and **83332.Rv0002 (dnaN)** \u2014 0.952. Both driven by neighborhood (0.726, 0.713) plus coexpression. These are the classic conserved bacterial origin-proximal gene cluster (dnaN\u2013recF\u2013gyrB\u2013gyrA); the support is genomic-context and coexpression, i.e. shared regulation/operonic linkage, **not** evidence of physical complex formation.\n\n**Textmining-only \u2014 one line of evidence (literature co-mention):** STRING's own note lists these as supported essentially by textmining alone: **83332.Rv0667 (rpoB)** 0.976, **83332.Rv1484 (inhA)** 0.966, **83332.Rv3795 (embB)** 0.962, **83332.Rv0668 (rpoC)** 0.949, **83332.Rv2043c (pncA)** 0.949, **83332.Rv2737c (recA)** 0.919, **83332.Rv1694 (tlyA)** 0.912, **83332.Rv1908c (katG)** 0.907, **83332.Rv0440 (groEL2)** 0.892, **83332.Rv3240c (secA1)** 0.879, **83332.Rv3919c (gid)** 0.877, **83332.Rv2416c (eis)** 0.870, **83332.Rv3457c (rpoA)** 0.867, **83332.Rv0682 (rpsL)** 0.861, **83332.Rv1612 (trpB)** 0.858.\n\nThese should **not** be read as functional partners. The composition of the list is self-explanatory: katG, inhA, rpoB, embB, pncA, rpsL, gid, eis, tlyA are the canonical *M. tuberculosis* drug-resistance marker genes. They co-occur with gyrB in drug-susceptibility-testing and resistance-genotyping papers, which is exactly what inflates a textmining score without implying any physical or pathway relationship. Their high combined scores are an artefact of how TB resistance is reported, and any paper I retrieved about such a pair would very likely be the source of that same score rather than independent corroboration.\n\n## Summary\ngyrB (Rv0005) encodes the B subunit of DNA gyrase, partnered with gyrA (Rv0006) \u2014 the one interaction here supported convergently across experimental, coexpression, genomic-neighborhood and cooccurrence channels. Its other well-supported edge is to the gyrase inhibitor MfpA (Rv3361c), on experimental evidence, though the documented contact residue lies in GyrA. It sits in the conserved dnaN\u2013recF\u2013gyrB\u2013gyrA genomic cluster, explaining the Rv0002/Rv0003 edges. **KEGG assigns it to no pathway in mtu**, and the same is true of gyrA, so no pathway ID can be cited. The uncharacterised **Rv0730** is the most interesting unexplained partner. The large block of high-scoring drug-resistance genes is textmining co-mention and carries no functional weight.",
+ "summary": "## gyrB (Rv0005, mtu) \u2014 DNA gyrase subunit B\n\n### Function\n\nUniProt has a **reviewed, experimentally supported** entry: **P9WG45** (GYRB_MYCTU, locus tag Rv0005), \"DNA gyrase subunit B\". Its function statement carries experimental evidence (ECO:0000269) and describes:\n\n- P9WG45 \"A type II topoisomerase that negatively supercoils closed circular double-stranded (ds) DNA in an ATP-dependent manner to maintain chromosomes in an underwound state, while in the absence of ATP it relaxes supercoiled dsDNA\"\n- A distinctive mycobacterial feature: P9WG45 \"Gyrase from M.tuberculosis has higher decatenation than supercoiling activity compared to E.coli; as M.tuberculosis only has 1 type II topoisomerase, gyrase has to fulfill the decatenation function of topoisomerase IV as well\" \u2014 i.e. this is a hybrid gyrase/topo IV enzyme, and it is also comparatively weak: P9WG45 \"At comparable concentrations M.tuberculosis gyrase cannot introduce as many negative supercoils into DNA as the E.coli enzyme, and its ATPase activity is lower\".\n- Catalytic activity: \"ATP-dependent breakage, passage and rejoining of double-stranded DNA.\"\n- Subunit / division of labour within the holoenzyme: P9WG45 \"Heterotetramer, composed of two GyrA and two GyrB chains (PubMed:15047530). In the heterotetramer, GyrA contains the active site tyrosine that forms a transient covalent intermediate with DNA, while GyrB binds cofactors and catalyzes ATP hydrolysis\" \u2014 GyrB is the ATPase/energy-transducing subunit.\n\nThe single-type-II-topoisomerase point is independently reflected in the corpus: PMID:23869946 \"In contrast with most bacteria which possess two type II topoisomerases (topoisomerase IV and DNA gyrase), Mycobacterium tuberculosis possesses only one, DNA gyrase, which is functionally a hybrid enzyme.\"\n\nTwo further UniProt entries matched the symbol, **E5G958** and **A9X5B9**, but both are unreviewed and, per the tool note, hold no FUNCTION statement \u2014 nothing to draw from them beyond the same catalytic-activity line.\n\nStructural coverage is extensive: PDB entries listed on P9WG45 include 2ZJT, 3IG0, 3ZKB, 5BS8, 6GAU, 7UGW and 9FOY among others.\n\n### Pathways\n\n**KEGG is the silent source here, not biology.** KEGG resolved the symbol to `mtu:Rv0005` and returned zero pathway assignments, with the explicit note that \"The gene exists in KEGG but is not mapped to any pathway in this organism.\" That is an annotation gap: the UniProt record above establishes the enzymatic role (DNA topology maintenance / ATP-dependent type II topoisomerase activity) with experimental evidence. I have no specific KEGG pathway ID to cite and will not invent one.\n\n### Notable interaction partners (STRING, taxon 83332, Rv0005)\n\nPartners with support **beyond** textmining:\n\n| Partner | STRING ID | Combined | Strongest non-textmining channel |\n|---|---|---|---|\n| gyrA | 83332.Rv0006 | 0.999 | experimental 0.981, coexpression 0.941, neighbourhood 0.83 |\n| mfpA | 83332.Rv3361c | 0.997 | experimental 0.997 (textmining only 0.299) |\n| Rv0730 | 83332.Rv0730 | 0.956 | experimental 0.818, coexpression 0.725 |\n| recF | 83332.Rv0003 | 0.975 | neighbourhood 0.726, coexpression 0.65 |\n| dnaN | 83332.Rv0002 | 0.952 | neighbourhood 0.713 |\n\n- **gyrA (83332.Rv0006)** is the biologically meaningful partner and the only one corroborated by the curated record: it is the other half of the A\u2082B\u2082 heterotetramer per P9WG45.\n- **mfpA (83332.Rv3361c)** is striking because it is driven almost entirely by the experimental channel (0.997) with low textmining \u2014 a genuinely non-literature-derived link. My corpus search did not retrieve an MfpA\u2013gyrase paper, so I can describe the evidence only as STRING's experimental channel and make no mechanistic claim about it.\n- **recF (Rv0003)** and **dnaN (Rv0002)** score largely on genomic neighbourhood and coexpression \u2014 they are immediate chromosomal neighbours of Rv0005 in the conserved *dnaA-dnaN-recF-gyrB-gyrA* origin-proximal cluster, so this is operon/synteny signal, not evidence of physical contact.\n\nPartners supported **essentially by textmining alone** (`evidence_beyond_textmining: false`), per the tool's own note: rpoB (83332.Rv0667), inhA (83332.Rv1484), embB (83332.Rv3795), rpoC (83332.Rv0668), pncA (83332.Rv2043c), recA (83332.Rv2737c), tlyA (83332.Rv1694), katG (83332.Rv1908c), groEL2 (83332.Rv0440), secA1 (83332.Rv3240c). These are the canonical drug-resistance genes co-mentioned with gyrB in resistance-survey papers; the score reflects co-citation, not interaction. Note that literature and this channel are one evidence class \u2014 e.g. PMID:25816236 is exactly the kind of paper generating it (\"we conducted a systematic review... of all published studies evaluating Mycobacterium tuberculosis mutations associated with resistance to fluoroquinolones\"), so citing it would not corroborate the STRING edge independently.\n\n### Lineage marker\n\n**Negative.** `lineage_markers` found no lineage-defining position falling within gyrB in the TB-Profiler tbdb barcode; the tool notes that 855 of 4,008 H37Rv genes carry one, so this is an informative negative. An association involving gyrB is therefore not obviously confounded by population structure at this locus \u2014 though that still needs testing against genotype data rather than being settled by this lookup.\n\n### Drug-resistance catalogue\n\ngyrB **is resistance-associated** at the gene level, for **levofloxacin and moxifloxacin**. Of 1,126 catalogued variants: 4 \"Assoc w R\", 12 \"Assoc w R - Interim\", 13 \"Not assoc w R\", 424 \"Not assoc w R - Interim\", 665 \"Uncertain significance\", 8 ungraded. The associated variants cluster in the GyrB quinolone-resistance-determining region \u2014 e.g. `tbdb:gyrB:p.Asn499Asp`, `tbdb:gyrB:p.Asn499Thr`, `tbdb:gyrB:p.Asp461Asn` (all \"Assoc w R\", levofloxacin) and `tbdb:gyrB:p.Glu501Asp` (\"Assoc w R\", moxifloxacin), with `tbdb:gyrB:p.Ser447Phe`, `tbdb:gyrB:p.Asp461His`, `tbdb:gyrB:p.Glu501Val` and `tbdb:gyrB:p.Ala504Val` graded interim. Several moxifloxacin records carry the comment \"Low-level resistance (multiple, genetically linked low-level resistance mutations are additive and confer high-level resistance)\".\n\nTwo cautions: this flag is about the **gene**, not about any particular gyrB variant \u2014 the majority of catalogued gyrB variants are graded \"Uncertain significance\" (665) or not associated. And clinically, gyrB is the minor partner: PMID:32393213 reports \"A total of 102 isolates had mutations in DNA gyrase subunit A (gyrA), while mutations in gyrB were observed in only two isolates.\"\n\n### Summary\n\ngyrB encodes the ATPase subunit of M. tuberculosis DNA gyrase, the organism's sole type II topoisomerase, which must serve both the supercoiling role of gyrase and the decatenation role of topoisomerase IV. Its one well-supported physical partner is GyrA, with which it forms the A\u2082B\u2082 holoenzyme; MfpA is a strong experiment-channel link whose mechanism I cannot substantiate from the sources retrieved here. KEGG assigns it no pathway, which is an annotation gap rather than a lack of knowledge. It carries no lineage-defining barcode position, and it is a WHO-catalogued fluoroquinolone resistance gene.",
  "target": "gyrB",
  "turns": [
   {
@@ -845,10 +1210,30 @@
     {
      "input": {
       "gene": "gyrB",
-      "required_score": 700,
+      "organism_id": 83332
+     },
+     "name": "uniprot_protein"
+    },
+    {
+     "input": {
+      "gene": "gyrB",
+      "limit": 15,
       "species": 83332
      },
      "name": "string_partners"
+    },
+    {
+     "input": {
+      "gene": "gyrB",
+      "organism": "mtu"
+     },
+     "name": "lineage_markers"
+    },
+    {
+     "input": {
+      "gene": "gyrB"
+     },
+     "name": "resistance_variants"
     }
    ],
    "turn": 1
@@ -858,18 +1243,10 @@
    "tools_requested": [
     {
      "input": {
-      "gene": "gyrA",
-      "organism": "mtu"
-     },
-     "name": "kegg_pathways"
-    },
-    {
-     "input": {
-      "gene": "MfpA gyrase",
       "limit": 5,
-      "organism": "Mycobacterium tuberculosis"
+      "query": "MfpA pentapeptide repeat protein DNA gyrase Mycobacterium tuberculosis fluoroquinolone"
      },
-     "name": "pubmed_abstracts"
+     "name": "corpus_search"
     }
    ],
    "turn": 2
