@@ -19,10 +19,13 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "src"))
 from kegg_string_mcp.cache import DiskCache
 from kegg_string_mcp.http import PoliteClient
 from kegg_string_mcp.hypothesis.residue import assess, residue, summarise, undetermined
+from kegg_string_mcp.identity import resolve
 from kegg_string_mcp.kegg import KeggClient
 from kegg_string_mcp.lineage import LineageClient
 from kegg_string_mcp.provenance import answered
 from kegg_string_mcp.retrieval.corpus import Corpus
+from kegg_string_mcp.string_db import StringClient
+from kegg_string_mcp.uniprot import UniProtClient
 
 
 def main() -> int:
@@ -44,13 +47,27 @@ def main() -> int:
 
     http = PoliteClient(DiskCache())
     kegg = KeggClient(http)
+
+    # Look KEGG up by resolved identity, not by whatever the corpus calls a gene.
+    # KEGG's symbols are its own: it holds devR, devS and gid where this gene set
+    # says dosR, dosS and gidB, so three genes returned nothing at all -- and an
+    # unanswered lookup used to be indistinguishable from "this gene is in no
+    # pathway", which is what put 117 pairs into the residue with a reason
+    # missing rather than absent.
+    identities = resolve(corpus.genes, string=StringClient(http), kegg=kegg,
+                         uniprot=UniProtClient(http))
+
     pathways: dict[str, set[str]] = {}
     # "KEGG holds no pathway for this gene" and "KEGG never answered about this
     # gene" are different facts, and only the first says anything about the gene.
     # `answered` is the same discriminator retrieval/coverage.py uses.
     unanswered: dict[str, list[str]] = {}
     for gene in corpus.genes:
-        result = kegg.pathways(gene)
+        identity = identities.get(gene)
+        # The locus tag is the identifier every source carries; the symbol is the
+        # one most likely to differ between them.
+        lookup = (identity.kegg_gene_id or identity.locus_tag or gene) if identity else gene
+        result = kegg.pathways(lookup)
         pathways[gene] = {r.record_id for r in result.records}
         if not answered(result):
             unanswered.setdefault(gene, []).append("kegg")
@@ -73,6 +90,7 @@ def main() -> int:
     out = args.data / f"residue_{args.tag}.json"
     out.write_text(json.dumps(
         {"summary": summary,
+         "identities": identities.to_dict(),
          "undetermined": [a.to_dict() for a in unknown],
          "residue": [dict(a.to_dict(),
                           lineage_marker={a.gene_a: marked[a.gene_a],

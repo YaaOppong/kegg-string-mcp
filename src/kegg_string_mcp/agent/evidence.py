@@ -228,8 +228,12 @@ def _no_direct_phrase(ev: PairEvidence) -> str:
         return "No direct STRING interaction at the threshold queried"
     if len(ev.truncated) == 2:
         limit = min(ev.partners_retrieved.values(), default=0)
-        return (f"Direct interaction NOT CHECKED beyond the top {limit} partners of each gene, "
-                f"and both lists were full")
+        # Parenthesised, not a trailing clause: this phrase is composed with the
+        # pathway and shared-partner clauses below, and "..., and both lists were
+        # full and no specific shared pathway, but 20 shared partners" is not a
+        # sentence anyone can read.
+        return (f"Direct interaction NOT CHECKED beyond the top {limit} partners of each gene "
+                f"(both lists were full)")
     return "No direct interaction in the partner lists retrieved"
 
 
