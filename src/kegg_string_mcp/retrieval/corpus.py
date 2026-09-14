@@ -49,6 +49,11 @@ class Passage:
     # this field; using `mentions` measured corpus construction instead of
     # retrieval, and undercounted pair evidence 25 vs 88 on the TB corpus.
     genes_named: list[str] = field(default_factory=list)
+    # Which spelling actually matched, per gene named. A paper that says "mmpR5"
+    # now counts for Rv0678, and this records that it did so by synonym rather
+    # than by the queried name -- an alias map that silently changes counts is
+    # not auditable, and the counts feed the residue.
+    named_via: dict[str, list[str]] = field(default_factory=dict)
     # Set when a passage is a chunk of a longer abstract. Paper-level metrics
     # dedupe on `pmid`, so a paper split into three chunks still counts once.
     chunk_index: int = 0
@@ -67,15 +72,22 @@ class Corpus:
     genes: list[str]
     passages: list[Passage] = field(default_factory=list)
     notes: list[str] = field(default_factory=list)
+    # gene -> the spellings that mean it, from `kegg_string_mcp.identity`. Written
+    # with the corpus so a re-read counts the same way the build did.
+    aliases: dict[str, list[str]] = field(default_factory=dict)
 
     @property
     def pmids(self) -> set[str]:
         return {p.pmid for p in self.passages}
 
+    def names_for(self, gene: str) -> list[str]:
+        """Every spelling that counts as naming `gene`, the query string first."""
+        return [gene, *[a for a in self.aliases.get(gene, []) if a.lower() != gene.lower()]]
+
     def write(self, path: Path) -> Path:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(
-            {"genes": self.genes, "notes": self.notes,
+            {"genes": self.genes, "notes": self.notes, "aliases": self.aliases,
              "passages": [p.to_dict() for p in self.passages]}, indent=1), encoding="utf-8")
         return path
 
@@ -83,12 +95,14 @@ class Corpus:
     def read(cls, path: Path) -> Corpus:
         raw = json.loads(path.read_text(encoding="utf-8"))
         return cls(genes=raw["genes"], notes=raw.get("notes", []),
+                   aliases=raw.get("aliases", {}),
                    passages=[Passage(**{k: v for k, v in p.items() if k != "url"})
                              for p in raw["passages"]])
 
 
 def build(genes: list[str], organism: str = "Mycobacterium tuberculosis",
-          limit: int = 20, client: PubMedClient | None = None) -> Corpus:
+          limit: int = 20, client: PubMedClient | None = None,
+          aliases: dict[str, list[str]] | None = None) -> Corpus:
     """Fetch abstracts for each gene and flatten them into deduplicated passages.
 
     Deduplication is by PMID: the same paper is routinely returned for several
@@ -96,7 +110,7 @@ def build(genes: list[str], organism: str = "Mycobacterium tuberculosis",
     depends on corpus size.
     """
     client = client or PubMedClient(PoliteClient(DiskCache()))
-    corpus = Corpus(genes=list(genes))
+    corpus = Corpus(genes=list(genes), aliases=dict(aliases or {}))
     by_pmid: dict[str, Passage] = {}
 
     for gene in genes:
@@ -149,7 +163,8 @@ def chunk(corpus: Corpus, max_words: int = CHUNK_WORDS,
     Overlapping windows because a relationship stated across a boundary would
     otherwise be split in half and lost to both arms.
     """
-    out = Corpus(genes=list(corpus.genes), notes=list(corpus.notes))
+    out = Corpus(genes=list(corpus.genes), notes=list(corpus.notes),
+                 aliases=dict(corpus.aliases))
     for passage in corpus.passages:
         words = passage.text.split()
         if len(words) <= max_words:
@@ -177,10 +192,25 @@ def annotate_genes_named(corpus: Corpus) -> Corpus:
     Word-boundary matching so `embB` does not match inside another token. Done
     once over the finished corpus rather than per query, which is the whole point:
     the answer must not depend on which gene's search happened to return the paper.
+
+    It must not depend on which *spelling* was asked for either. Matching only the
+    literal query string meant a paper saying "mmpR5" did not count for `Rv0678`,
+    which undercounted co-mention and the retrieval judge -- and both feed the
+    residue, so the undercount became false novelty. Aliases come from
+    `kegg_string_mcp.identity`, which has already refused the ones that name more
+    than one gene; `named_via` keeps the match auditable.
     """
-    patterns = {gene: re.compile(rf"\b{re.escape(gene)}\b", re.IGNORECASE)
+    patterns = {gene: [(name, re.compile(rf"\b{re.escape(name)}\b", re.IGNORECASE))
+                       for name in corpus.names_for(gene)]
                 for gene in corpus.genes}
     for passage in corpus.passages:
-        passage.genes_named = [g for g, pattern in patterns.items()
-                               if pattern.search(passage.text)]
+        named: list[str] = []
+        via: dict[str, list[str]] = {}
+        for gene, alternatives in patterns.items():
+            hits = [name for name, pattern in alternatives if pattern.search(passage.text)]
+            if hits:
+                named.append(gene)
+                via[gene] = hits
+        passage.genes_named = named
+        passage.named_via = via
     return corpus

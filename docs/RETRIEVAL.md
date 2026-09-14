@@ -48,6 +48,14 @@ records which *queried* terms appear -- a passage retrieved for katG names ahpC
 whether or not ahpC was asked for. Conflating the two undercounted pair evidence
 by a factor of three before it was caught.
 
+A gene is named by any of its **aliases**, not only by the spelling the corpus
+was built with: a paper saying `mmpR5` is a paper about `Rv0678`. The alias set
+comes from `kegg_string_mcp.identity` (UniProt gene names and locus tags, the
+KEGG symbol table, STRING's preferred name), and a symbol KEGG records for more
+than one gene is refused rather than matched -- a wrong co-mention makes a pair
+look explained, which is worse than missing a synonym. `named_via` records which
+spelling actually matched, so a count can be audited back to its text.
+
 So "did this return papers that discuss the gene asked about?" has an exact
 answer, reproducible and impossible to tune after the fact. It is weaker than
 human judgement -- a gene can be named in passing -- but it costs nothing.
