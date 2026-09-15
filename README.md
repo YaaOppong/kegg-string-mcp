@@ -207,9 +207,42 @@ Citation and quote precision are the numbers worth trusting — computed, not ju
 
 ## Literature retrieval
 
-The tools above answer what a curated source records. For a gene they do not describe,
-the answer has to come from papers — so there is a second retrieval path, with three arms
-measured against each other on the same corpus and the same queries.
+The tools above answer what a curated source records. KEGG assigns a pathway to 29% of
+*M. tuberculosis* genes; UniProt describes many of the rest only by similarity to
+something else. For those genes the answer exists, but it is in papers.
+
+So there is a second path, and it is retrieval-augmented generation: gather the
+literature first, then let the model read it, quote it, and be checked against it. Three
+choices make that more than a phrase.
+
+**What is gathered, and by whom.** `build_corpus.py` decides which genes need papers at
+all — those whose structured annotation is thin — then asks PubMed for the 20 most
+relevant records per gene, deduplicates by PMID, and splits each abstract into 180-word
+passages. The corpus is a fixed, hashed artefact: the same file gives the same answers
+tomorrow, and the run store records which file was read.
+
+**How a passage is found.** Keyword search knows that `Rv1908c` is a rare, decisive token
+and ignores a paraphrase; embeddings know that "peroxide detoxification" and "antioxidant
+defence" are the same idea and have no feel for an identifier. Neither is sufficient for
+literature where gene symbols and prose descriptions carry the meaning together, so the
+tool runs both and merges the two ranked lists by **reciprocal rank fusion**: each paper
+scores `1 / (60 + rank)` in each list, and the scores are added. Fusing on rank rather
+than score is the point — a BM25 score of 27.96 and a cosine of 0.655 are not on a common
+scale, and normalising them would invent a calibration neither arm has. Agreement between
+two different notions of relevance outranks one arm's favourite.
+
+**When the model reaches for it.** Never by default. Literature is the expensive, noisy
+channel, so the prompt asks for it only when the structured tools leave a real question
+open, and asks for `corpus_search` before live PubMed because its ranking is measured
+where the corpus applies. An empty corpus result says the corpus does not cover the query,
+never that no literature exists — so the agent falls back rather than concluding.
+
+What comes back is quotable, not just readable: every claim drawn from a paper must carry
+a verbatim span, and [citation validation](#citation-validation) checks that span against
+the retrieved text. Retrieval supplies the evidence; the checking decides whether the
+write-up actually used it.
+
+Three arms, measured head to head on the same corpus and the same queries:
 
 | Arm | Mechanism | precision@10 |
 |---|---|---|
@@ -227,6 +260,11 @@ The dense arm is the least precise and retrieves the most different papers (Jacc
 against lexical), which is the case for keeping it and the case against replacing BM25
 with it. [docs/RETRIEVAL.md](docs/RETRIEVAL.md) has the full result and, more usefully,
 what it does not show.
+
+The candidate set bounds all of it. A corpus built from the 20 most relevant records per
+gene is a gene-centric sample of the literature, so these numbers measure ranking *within*
+that sample and not recall over PubMed — and a paper about a pair that ranked 21st for
+both of its genes is beyond every arm's reach.
 
 ```bash
 python scripts/build_corpus.py --extended --all-genes --tag tb41   # build the corpus
