@@ -86,6 +86,21 @@ def test_quotable_text_is_the_whole_abstract_not_the_matched_chunk():
     assert len(quotable) > len(record.detail["matched_passage"])
 
 
+def test_records_carry_what_the_corpus_manifest_needs(client):
+    """The manifest reads doi/pmcid/in_pmc/title/year/journal off the record. Without
+    them a corpus-only run emitted a manifest of blanks -- and `in_pmc: false` on every
+    paper, which reads as 'not in PMC' rather than 'not recorded' and is the field that
+    decides whether full text can be fetched at all."""
+    record = client.search("ahpC oxidative stress drug resistance", limit=1).records[0]
+    detail = record.detail
+    source = next(p for p in json.loads(pathlib.Path(FIXTURE).read_text())["passages"]
+                  if p["pmid"] == record.record_id)
+    for field in ("doi", "pmcid", "year", "journal"):
+        assert detail[field] == source[field], field
+    assert detail["in_pmc"] is bool(source["in_pmc"])
+    assert detail["title"]
+
+
 def test_records_are_one_per_paper_not_one_per_passage(client):
     result = client.search("katG", limit=4)
     ids = [r.record_id for r in result.records]

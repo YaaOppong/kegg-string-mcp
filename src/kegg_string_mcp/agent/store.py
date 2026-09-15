@@ -225,7 +225,11 @@ class RunStore:
                 "url": record.get("url", ""),
                 "mentions": [],
             })
-            entry["mentions"] = sorted(set(entry["mentions"]) | set(detail.get("mentions", [])))
+            # `genes_named` where the source computed it (corpus records), since
+            # there `mentions` is the corpus-build query rather than the genes the
+            # text names -- the distinction this docstring turns on.
+            named = detail.get("genes_named") or detail.get("mentions", [])
+            entry["mentions"] = sorted(set(entry["mentions"]) | set(named))
         return [papers[k] for k in sorted(papers)]
 
     def replay(self) -> Iterator[dict[str, Any]]:

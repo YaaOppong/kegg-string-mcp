@@ -255,6 +255,20 @@ def test_manifest_mentions_reflect_the_text_not_the_query(tmp_path):
     assert by_pmid["23899494"]["mentions"] == []
 
 
+def test_manifest_names_the_genes_a_corpus_paper_names(tmp_path):
+    """corpus_search sets `mentions` to the corpus-build query and `genes_named` to
+    what the text names. Reading `mentions` here filed a paper about katG and ahpC
+    under whichever gene the corpus had been built for."""
+    store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
+    store.tool_result("corpus_search", {"query": "katG ahpC"}, {
+        "record_ids": ["10609885"],
+        "records": [{"record_id": "10609885", "type": "article", "name": "n", "url": "u",
+                     "detail": {"quotable_text": "…", "mentions": ["furA"],
+                                "genes_named": ["katG", "ahpC"]}}],
+    })
+    assert store.corpus_manifest()[0]["mentions"] == ["ahpC", "katG"]
+
+
 def test_manifest_excludes_non_article_records(tmp_path):
     store = RunStore(path=tmp_path / "r.jsonl", run_id="t")
     store.tool_result("kegg_pathways", {"gene": "katG"}, KEGG_RESULT)

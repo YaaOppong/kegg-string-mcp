@@ -46,11 +46,11 @@ needs no account and costs nothing. The checking runs fresh each time you load a
 
 FAILED = """<div style="border-left:5px solid #b3261e;background:#fdecea;padding:1rem 1.25rem;
 border-radius:6px">
-<strong>⚠️ On this run, the checking caught a bad citation.</strong><br/>
+<strong>⚠️ On this run, the checking flagged a citation.</strong><br/>
 The write-up below cites records that were <strong>not</strong> retrieved for this gene.
-The model produced real, correctly-formatted identifiers for things it was never shown
-for this gene — that is the failure this project exists to catch, and it is caught here
-on a real run. Details in section 3.
+The check compares each identifier against the gene being annotated; it does not read the
+sentence, so a neighbour gene cited as context is flagged too. Read section 3 against the
+write-up and judge it yourself — that is the point of showing the working.
 </div>"""
 
 CLEAN = """<div style="border-left:5px solid #1e8e3e;background:#e9f7ef;padding:1rem 1.25rem;
@@ -58,16 +58,16 @@ border-radius:6px">
 <strong>✅ On this run, every citation checked out.</strong><br/>
 Each identifier in the write-up names a record a tool returned for this gene,
 and every quoted span appears verbatim in its source. Try one of the genes marked
-⚠️ to see the checking catch something.
+⚠️ to see the checking fire.
 </div>"""
 
 
 def _label(name: str) -> str:
-    """Mark, in the picker itself, which runs contain a caught failure. Without it a
+    """Mark, in the picker itself, which runs the checking fires on. Without it a
     visitor has to select the right gene to find the point of the demo, and most
     will not."""
     base = LABELS.get(name, name)
-    return f"⚠️ {base}  — citation check FAILS" if not load(name).clean else base
+    return f"⚠️ {base}  — citation check FIRES" if not load(name).clean else base
 
 
 def render(choice: str):
@@ -96,15 +96,15 @@ def build() -> gr.Blocks:
 
         # The verdict sits directly under the picker, above everything else. It is
         # the whole demonstration; putting it below the tool-call table meant a
-        # visitor had to scroll to find out whether anything was caught.
+        # visitor had to scroll to find out whether anything was flagged.
         verdict = gr.HTML()
 
         gr.Markdown("## 1. What the model asked for")
         gr.Markdown(
             "The model chooses which tools to call and when it has enough. A well-annotated "
             "gene takes one round; a sparsely annotated one takes several, and may fall back "
-            "to literature. Calls marked *pipeline* were made deterministically by the code, "
-            "not chosen by the model."
+            "to literature. In a two-gene run, the calls marked *pipeline* were made "
+            "deterministically by the code before the model started; single-gene runs have none."
         )
         turns_note = gr.Markdown()
         calls = gr.Dataframe(
@@ -124,10 +124,13 @@ def build() -> gr.Blocks:
         )
 
         gr.Markdown(
-            f"**CROSS-TARGET** means the record was retrieved during this run, but for a "
-            f"different gene than the sentence attributes it to — a real identifier in the "
-            f"wrong place, which a check of 'does this ID exist?' would miss. **UNSUPPORTED** "
-            f"means no tool returned it at all.\n\n"
+            f"**CROSS-TARGET** means the record was retrieved during this run, but not for "
+            f"the gene being annotated — a real identifier that a check of 'does this ID "
+            f"exist?' would wave through. It compares identifiers against the run's own "
+            f"record of which gene returned what, rather than reading the sentence, so a "
+            f"neighbour gene discussed as context is flagged as well. **UNSUPPORTED** means "
+            f"no tool returned it at all. Two-gene runs have no single target and skip this "
+            f"check.\n\n"
             f"Research use only. Not for clinical decisions. [Repository]({REPO})"
         )
 

@@ -143,6 +143,18 @@ class CorpusSearchClient:
                     "genes_named": list(best.genes_named),
                     "mentions": list(best.mentions),
                     "passages_in_corpus": len(passages),
+                    # The corpus carries what the manifest needs for a downstream
+                    # full-text fetch, and omitting it here did not leave those
+                    # fields empty -- it left `in_pmc: false` on every paper of a
+                    # corpus-only run, which reads as "not in PMC" rather than
+                    # "not recorded" and is the field that decides whether full
+                    # text can be fetched at all.
+                    "title": best.title,
+                    "year": passages[0].year,
+                    "journal": passages[0].journal,
+                    "doi": passages[0].doi,
+                    "pmcid": passages[0].pmcid,
+                    "in_pmc": bool(passages[0].in_pmc),
                 },
             ))
 

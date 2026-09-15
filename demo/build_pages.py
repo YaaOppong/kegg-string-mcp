@@ -144,9 +144,10 @@ the reasoning behind every design decision</a>.</p>
   <div id="verdict" class="banner"></div>
 
   <h2>1. What the model asked for</h2>
-  <p class="note">The model chooses which tools to call and when it has enough. Calls
-  marked <em>pipeline</em> were made deterministically by the code, not chosen by the
-  model.</p>
+  <p class="note">The model chooses which tools to call and when it has enough.</p>
+  <p class="note" id="pipeline-note" hidden>This is a two-gene run, so the calls marked
+  <em>pipeline</em> were made deterministically by the code before the model started, not
+  chosen by it. Single-gene runs have none.</p>
   <p id="turns" class="mono"></p>
   <table id="calls"></table>
 
@@ -161,9 +162,12 @@ the reasoning behind every design decision</a>.</p>
   </div>
 
   <p class="note" style="margin-top:2rem"><strong>CROSS-TARGET</strong> means the record
-  was retrieved during this run, but for a different gene than the sentence attributes it
-  to &mdash; a real identifier in the wrong place, which a check of &ldquo;does this ID
-  exist?&rdquo; would miss. <strong>UNSUPPORTED</strong> means no tool returned it at all.
+  was retrieved during this run, but not for the gene being annotated &mdash; a real
+  identifier that a check of &ldquo;does this ID exist?&rdquo; would wave through. It is
+  a mechanical comparison against the run&rsquo;s own record of which gene returned what,
+  not a reading of the sentence, so a neighbour gene discussed as context is flagged as
+  well. <strong>UNSUPPORTED</strong> means no tool returned it at all. Two-gene runs have
+  no single target and so are not checked this way.
   <br/><br/>Research use only. Not for clinical decisions.
   <a href="https://github.com/YaaOppong/kegg-string-mcp">Repository</a>.</p>
 </div>
@@ -201,16 +205,17 @@ function table(el, headers, rows, classify) {
     }).join("") + "</tr>").join("") + "</tbody>";
 }
 
-const FAIL_BANNER = `<strong>&#9888;&#65039; On this run, the checking caught a bad citation.</strong>
+const FAIL_BANNER = `<strong>&#9888;&#65039; On this run, the checking flagged a citation.</strong>
 <br/>The write-up below cites records that were <strong>not</strong>
-retrieved for this gene. The model produced real, correctly-formatted identifiers for
-things it was never shown for this gene &mdash; that is the failure this project exists
-to catch, and it is caught here on a real run. Details in section 3.`;
+retrieved for this gene. The check compares each identifier against the gene being
+annotated; it does not read the sentence, so a neighbour gene cited as context is
+flagged too. Read section 3 against the write-up and judge it yourself &mdash; that is
+the point of showing the working rather than a verdict.`;
 
 const CLEAN_BANNER = `<strong>&#9989; On this run, every citation checked out.</strong>
 <br/>Each identifier in the write-up names a record a tool returned for this
 gene, and every quoted span appears verbatim in its source. Pick one of the genes marked
-&#9888;&#65039; to watch the checking catch something.`;
+&#9888;&#65039; to watch the checking fire.`;
 
 async function main() {
   const step = label => { window.__step = label; };
@@ -261,6 +266,9 @@ async function main() {
     document.getElementById("turns").textContent =
       `The model made ${d.model_calls} tool call(s) across ${d.turns} turn(s)` +
       (d.pipeline_calls ? `, after the pipeline fetched ${d.pipeline_calls} deterministically` : "");
+    // Shown only where there is something to see: the note used to sit above every
+    // run, including the nine with no pipeline row in the table below it.
+    document.getElementById("pipeline-note").hidden = !d.pipeline_calls;
 
     table(document.getElementById("calls"),
           ["requested by", "tool", "arguments", "returned", "note from the tool"], d.calls);
