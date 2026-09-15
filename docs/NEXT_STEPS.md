@@ -169,6 +169,35 @@ Re-measuring is not optional. `docs/RETRIEVAL.md`, the README and the demo all
 quote corpus-dependent figures, and a rebuild under the same tag would silently
 invalidate them.
 
+## Workstream 5 -- how much to hand the model
+
+`corpus_search` returns five papers by default, and that number was chosen rather
+than measured. It is the tightest funnel in the whole path: 1,350 passages rank,
+15 are fetched, 5 papers reach the model, and the other 671 are never seen. A
+mechanism described in the sixth-best paper does not exist as far as the
+annotation is concerned.
+
+Five was a reasonable default when a paper meant an abstract and context was
+scarce. Neither holds now. The whole 41-gene corpus is roughly 256K tokens,
+comfortably inside a 1M-token window, so the binding constraint is no longer what
+fits -- it is what the model reads carefully and what the run costs.
+
+Three settings to measure rather than assume:
+
+* **A larger `limit`** -- 10, 20, 40 papers per query. Cheap to test and needs no
+  new code.
+* **Both genes' literature in full** for an epistasis pair, which for most pairs
+  is a few dozen abstracts rather than the corpus.
+* **The whole corpus in context**, as a fourth arm in the same comparison:
+  no ranking at all, the model selects. This is the honest answer to "why
+  retrieve when the corpus fits in the window" -- it should be measured, not
+  argued. Score it exactly like the other arms, with `on_target` and
+  `naming_all`, so the comparison is like for like.
+
+The cost side is measurable too: per-pair literature is a few thousand tokens,
+the full corpus per query is ~256K. The question is whether the extra papers
+change the annotation, and pair co-mention is the column that would show it.
+
 ## Open questions, to settle before building
 
 1. **What counts as naming a gene** once protein names are in play. Symbol only,
