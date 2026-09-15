@@ -31,7 +31,7 @@ jobs:
           test -s docs/index.html
           grep -q 'runs/furA.json' docs/index.html
           grep -q 'browser_api' docs/index.html
-          grep -q 'caught a bad citation' docs/index.html
+          grep -q 'flagged a citation' docs/index.html
           # Bare Pyodide only: a package install is what broke the first attempt.
           # Match calls, not words -- a comment saying "no loadPackage" previously
           # tripped this check and blocked the deploy.

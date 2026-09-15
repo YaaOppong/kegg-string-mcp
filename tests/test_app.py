@@ -155,7 +155,7 @@ def test_the_verdict_is_the_first_thing_rendered():
     from app.ui import render
 
     verdict = render("furA")[0]
-    assert "caught a bad citation" in verdict
+    assert "flagged a citation" in verdict
 
 
 def test_a_clean_run_points_at_the_failing_ones():
@@ -164,7 +164,7 @@ def test_a_clean_run_points_at_the_failing_ones():
 
     verdict = render("katG")[0]
     assert "every citation checked out" in verdict.lower()
-    assert "⚠️" in verdict, "a clean run should say where to find a caught failure"
+    assert "⚠️" in verdict, "a clean run should say where to find a flagged one"
 
 
 def test_the_static_build_rewrites_only_import_lines():
@@ -228,7 +228,7 @@ def test_the_generated_page_states_the_failure_on_one_line():
     break inside it silently fails the deploy. It did."""
     from demo.build_pages import TEMPLATE
 
-    assert "caught a bad citation" in TEMPLATE, "the banner phrase is split across lines"
+    assert "flagged a citation" in TEMPLATE, "the banner phrase is split across lines"
 
 
 def test_deploy_guards_match_calls_not_prose():
