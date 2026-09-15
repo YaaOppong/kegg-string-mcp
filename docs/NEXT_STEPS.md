@@ -198,6 +198,57 @@ The cost side is measurable too: per-pair literature is a few thousand tokens,
 the full corpus per query is ~256K. The question is whether the extra papers
 change the annotation, and pair co-mention is the column that would show it.
 
+## Workstream 6 -- let the model search for its own hypothesis
+
+Last, and deliberately so: a model that proposes a mechanism for an unexplained
+pair and then searches the literature for evidence for and against it.
+
+The machinery is half built and unused. `retrieval/graph.py` implements
+retrieve -> judge sufficiency -> rewrite the query -> retrieve again, with a
+deterministic judge by default and a model judge injectable. Nothing in the
+pipeline or the scripts calls it; only the tests do.
+
+Two tiers, and they are not equally safe.
+
+**Query expansion.** The model rewrites a query that returned nothing useful:
+a pair search that finds no co-mention becomes a mechanism search --
+"compensatory mutation", "efflux-mediated resistance", "transcriptional
+repression under oxidative stress". Same corpus, same relevance criterion, more
+queries per pair, so it scores in the existing harness unchanged. The graph's
+deterministic sufficiency check already bounds the loop. This is a small step and
+should be taken first.
+
+**Generate and test.** The model states a mechanism, then goes looking. The
+failure mode is severe and obvious: a model searching for support for its own
+hypothesis will find something, and co-mention is not confirmation. Three guards
+make it defensible, and none is optional:
+
+* **Record the hypothesis before the search.** Written to the run store first, so
+  what was predicted cannot drift to fit what was found. The store is
+  append-only, which is exactly the property this needs.
+* **Search the negation too**, and report both results. A search run only in the
+  direction of the answer is not evidence.
+* **Keep the verdict deterministic.** Did a retrieved paper name both genes, what
+  does STRING hold, is either gene lineage-marked. The model proposes; the code
+  decides. This is the division the repo already uses for pathway intersections
+  and pair verdicts.
+
+**Scoring it is the hard part**, and it should be settled before any of it is
+built. A generated mechanism has no ground truth. The workable version is the
+gold-set shape used elsewhere: positive controls where the mechanism is known and
+documented (katG/ahpC compensation, phoP/phoR phosphotransfer, furA repression of
+katG) and negative controls of randomly paired genes with no plausible link. The
+measure is not "is the hypothesis right" -- it is whether the loop abstains on the
+negatives. A system that proposes a confident mechanism for a random pair has
+told you what its output is worth, and that is the same reasoning the annotation
+gold set already rests on.
+
+**It depends on the corpus work above.** Generate-and-test over a corpus built
+from gene-name queries would mostly rediscover what STRING encodes, at greater
+length and with more conviction. Widening the corpus is what gives the loop
+something to find; doing this first would produce a more articulate version of
+the result the repo already has.
+
 ## Open questions, to settle before building
 
 1. **What counts as naming a gene** once protein names are in play. Symbol only,
