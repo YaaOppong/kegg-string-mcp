@@ -114,6 +114,7 @@ Space deployment: [`app/README_SPACE.md`](app/README_SPACE.md).
 gar single katG                  # annotate one gene's function
 gar epistasis katG furA ahpC     # look for mechanistic links between genes
 gar eval                         # score the pipeline against a gold set
+gar table                        # turn every finished run into TSVs
 ```
 
 **The pipeline is a client of its own MCP server.** It spawns the server over stdio,
@@ -127,6 +128,29 @@ record IDs. In epistasis mode every pairwise relationship is computed *before* t
 sees it, with each shared pathway's size attached — `mtu01100` holds 698 of ~4,000
 *M. tuberculosis* genes, so sharing it is a base rate, not a link.
 
+Both modes settle the gene's names first, through `identity.py`, so every tool in a run
+answers about the same gene and the aliases it accepted — and the ones it refused as
+ambiguous — are on the record rather than re-derived per caller.
+
+**Epistasis also computes why a pair might co-occur without being related**, and puts
+the answer in the verdict the model is forbidden to contradict. Two genes graded
+resistance-associated for the same drug are co-selected by treating with it; two genes
+carrying positions that define the same lineage are inherited together by descent.
+Neither is a link between the genes.
+
+```
+katG / inhA   Direct STRING interaction (combined 0.916), supported essentially only by
+              literature co-mention. CONFOUND: both genes carry variants graded
+              resistance-associated for isoniazid. Treating with that drug selects
+              both, so they co-occur across isolates under co-selection rather than
+              through any link between the genes.
+```
+
+Any scan over clinical isolates will flag katG/inhA, and the explanation is the
+treatment. The lineage and catalogue lookups behind that are made by the pipeline, not
+requested of the model: they are the only claims in the run that a prompt used to ask
+for and nothing checked.
+
 Each run writes an append-only JSONL store: every tool call and its full result, every
 deterministic computation, and every turn of the loop.
 
@@ -136,6 +160,21 @@ turn 2: stop=tool_use   tools=[string_partners(katG), string_partners(ahpC)]
 turn 3: stop=tool_use   tools=[corpus_search("ahpC promoter mutations compensate katG")]
 turn 4: stop=end_turn
 ```
+
+### The rules, as a skill
+
+The prompts are not in the code. [`skills/gene-annotation/SKILL.md`](skills/gene-annotation/SKILL.md)
+holds them — the abstention rules, the citation rules, and the two modes — and
+`agent/modes.py` reads the marked blocks out of it at import and assembles them.
+
+It is also a loadable skill, so an agent driving these tools directly follows the same
+text the scored pipeline does rather than a second copy that drifts. That is the same
+argument as taking the tool schemas from `list_tools()`: one definition, or the thing
+being measured and the thing being used are not the same thing.
+[`reference/tools.md`](skills/gene-annotation/reference/tools.md) carries the per-tool
+caveat that governs each, and
+[`reference/envelope.md`](skills/gene-annotation/reference/envelope.md) the result
+envelope and the four meanings of an empty `records`.
 
 ### Citation validation
 
@@ -168,6 +207,41 @@ Runs that find papers emit `<run>.corpus.jsonl` for a downstream full-text pipel
 a PMCID is the licit route to full text. `mentions` records the genes present
 in the retrieved text, not the genes queried: `genes_named` for a corpus record, whose
 `mentions` is the corpus-build query, and `mentions` for a live PubMed one.
+
+### Tabular output
+
+`gar table` reads the stores already on disk and writes four TSVs. It makes no model
+call and no request, so the fan-out over many genes can be a rule per gene and one
+aggregate rule here.
+
+| File | One row per | Carries |
+|---|---|---|
+| `genes.tsv` | annotated gene | resolved ID, accepted and refused aliases, `matched_by` per source, per-tool counts, the resistance flag, and the validation verdict |
+| `pairs.tsv` | pair in an epistasis run | the deterministic verdict, the per-channel STRING scores, shared pathways split by specificity, and the confound tokens |
+| `resistance_variants.tsv` | catalogued associated variant | mutation, drug, WHO grade — the specific variants, not a count of them |
+| `lineage_markers.tsv` | lineage-defining position in the locus | H37Rv position, lineage, allele |
+
+**Built from the stores, never from the summary.** Deriving the numbers from prose
+would reintroduce exactly what the citation validator exists to catch, and at a hundred
+rows nobody reads the prose to notice. So the cells keep apart what prose renders
+identically:
+
+```
+kegg_n = 0          KEGG was asked and assigns nothing — true of 71% of genes
+kegg_n = NA         KEGG never resolved the gene
+string_truncated    the partner list hit `limit`; an absent partner is a query artefact
+resistance NA       absent from the WHO catalogue: never assessed, which is not negative
+```
+
+Whether an empty result is a zero or a missing value is not uniform across the tools, so
+it is declared per tool rather than inferred. `lineage_markers` reports a gene with no
+marker as `matched_by: "none"` — its index holds only genes that have one — and reading
+that as unresolved turns an informative negative into a blank.
+
+Counts come only from calls whose gene argument matches the target's alias set.
+Annotating `furA` and looking up `katG` for context is legitimate; letting katG's
+pathways land in furA's row is the cross-target error in tabular form, and unlike the
+citation flag nothing downstream would show it.
 
 ## Evaluation
 
@@ -299,6 +373,7 @@ commands are installed by `pip install -e .`; the rest are run with `python`.
 |---|---|---|
 | **MCP server** | `kegg-string-mcp` | Serves the seven tools over stdio. `src/kegg_string_mcp/server.py`. |
 | **Annotation pipeline** | `gar single \| epistasis \| eval` | Runs the agent loop against the server and validates the result. `src/kegg_string_mcp/cli.py`. |
+| **Run tables** | `gar table --runs runs --out tables` | Turns finished run stores into `genes.tsv`, `pairs.tsv`, `resistance_variants.tsv` and `lineage_markers.tsv`. No model, no network, re-runnable. `src/kegg_string_mcp/agent/tables.py`. |
 | **Corpus build** | `python scripts/build_corpus.py --extended --all-genes --tag tb41` | Routes genes by annotation coverage, resolves every alias, fetches abstracts, dedupes by PMID, chunks to 180 words, records which genes each passage names. Writes `data/corpus_<tag>.json` and `coverage_<tag>.json`. |
 | **Arm comparison** | `python scripts/run_comparison.py data/corpus_tb41.json --tag tb41` | Measures lexical, dense and hybrid retrieval over all gene pairs, then again over the pairs STRING has no edge for, which removes the circularity in scoring relevance by gene names. Writes `comparison_<tag>.json`. |
 | **Unexplained residue** | `python scripts/residue.py --tag tb41` | Reads what the earlier steps wrote, adds KEGG pathway membership, and reports which pairs no source accounts for — the input to hypothesis generation. |
@@ -441,8 +516,10 @@ remain the caller's responsibility:
 
 ## Status
 
-MCP server, annotation pipeline, evaluation and the retrieval arm are all on `main`.
+MCP server, annotation pipeline, evaluation, the run tables and the retrieval arm are
+all on `main`.
 
+- The rules an external client should follow: [skills/gene-annotation/SKILL.md](skills/gene-annotation/SKILL.md)
 - Design rationale: [docs/DESIGN.md](docs/DESIGN.md)
 - Retrieval comparison, and what it does not show: [docs/RETRIEVAL.md](docs/RETRIEVAL.md)
 - Found, understood, not fixed: [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md)
