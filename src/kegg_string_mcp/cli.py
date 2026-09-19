@@ -3,6 +3,7 @@
     gar single katG
     gar epistasis katG furA ahpC
     gar eval
+    gar table                       # tabulate every finished run under runs/
 """
 
 from __future__ import annotations
@@ -44,14 +45,28 @@ async def _run_eval(evaluate, args):
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="gar", description=__doc__)
-    parser.add_argument("mode", choices=["single", "epistasis", "eval"])
+    parser.add_argument("mode", choices=["single", "epistasis", "eval", "table"])
     parser.add_argument("genes", nargs="*")
     parser.add_argument("--organism", default="mtu")
     parser.add_argument("--runs", type=Path, default=Path("runs"))
     parser.add_argument("--json", action="store_true", help="emit the full payload")
+    parser.add_argument("--out", type=Path, default=Path("tables"),
+                        help="where `table` writes its TSVs")
     parser.add_argument("--direct", action="store_true",
                         help="dispatch tools in-process instead of over MCP (debugging)")
     args = parser.parse_args(argv)
+
+    if args.mode == "table":
+        # A pure post-processor over stores already on disk: no model, no network,
+        # and re-runnable. That is what lets the fan-out over many genes be someone
+        # else's job -- a Snakemake rule per gene, then one aggregate rule here.
+        from kegg_string_mcp.agent.tables import build
+
+        written = build(args.runs, args.out)
+        for label, path in written.items():
+            rows = max(0, sum(1 for _ in path.open(encoding="utf-8")) - 1)
+            print(f"{label:9} {rows:5} rows  {path}")
+        return 0
 
     if args.mode == "eval":
         from kegg_string_mcp.evaluate import evaluate, render, write

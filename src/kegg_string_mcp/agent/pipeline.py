@@ -100,13 +100,52 @@ class Tools:
         return method(**clean).model_dump()
 
 
+def _identity_clients(tools: Any, string: Any, kegg: Any, uniprot: Any) -> tuple[Any, Any, Any]:
+    """Explicit argument first, then the dispatch's own clients, then live ones.
+
+    `McpTools` has no `.string`/`.kegg`/`.uniprot` -- the model's tools go over
+    stdio -- so the live fallback is what runs under the default dispatch, and a
+    caller isolating this function from the network must pass clients rather than
+    rely on the dispatch lacking them. One `PoliteClient` is shared so three
+    fallbacks do not open three caches.
+    """
+    http: PoliteClient | None = None
+
+    def fallback() -> PoliteClient:
+        nonlocal http
+        if http is None:
+            http = PoliteClient(DiskCache())
+        return http
+
+    return (string or getattr(tools, "string", None) or StringClient(fallback()),
+            kegg or getattr(tools, "kegg", None) or KeggClient(fallback()),
+            uniprot or getattr(tools, "uniprot", None) or UniProtClient(fallback()))
+
+
 async def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("runs"),
                         tools: Any | None = None, client: Any | None = None,
-                        tool_schemas: list[dict[str, Any]] | None = None) -> dict[str, Any]:
+                        tool_schemas: list[dict[str, Any]] | None = None,
+                        string: Any | None = None, kegg: Any | None = None,
+                        uniprot: Any | None = None) -> dict[str, Any]:
     tools = tools or Tools()
     schemas = tool_schemas or (tools.schemas() if hasattr(tools, "schemas")
                                else await server_tool_schemas())
     store = new_store(runs, f"single-{gene}")
+
+    # Settle the gene's names once, before the model runs, and record it. Epistasis
+    # mode has always done this; single mode inferred a thinner alias set inside
+    # `store.tool_result` for citation checking only -- no cross-source rescue and
+    # no record of which synonyms were refused. Both matter per-gene: `rejected`
+    # is what separates a gene with no synonyms from one whose synonyms were all
+    # ambiguous, and at a hundred genes an unrefused ambiguous alias is a silent
+    # merge of two genes rather than a visible error.
+    #
+    # Every source in `resolve` is fail-soft, so a gene that resolves nowhere
+    # yields an identity saying so rather than taking the annotation down.
+    string, kegg, uniprot = _identity_clients(tools, string, kegg, uniprot)
+    identities = identity.resolve([gene], string=string, kegg=kegg, uniprot=uniprot,
+                                  organism=organism)
+    store.derived("identities", identities.to_dict())
 
     task = (f"Annotate the gene '{gene}' in KEGG organism '{organism}' "
             f"(NCBI taxon 83332 for STRING). Describe its function, pathways and "
@@ -116,6 +155,7 @@ async def annotate_gene(gene: str, organism: str = "mtu", runs: Path = Path("run
     report = validate(result.text, store.citable_ids, store.per_target, gene.strip().upper(),
                       records=store.records, notes=store.notes)
     payload = {"mode": "single", "gene": gene, "organism": organism,
+               "identity": identities.to_dict(),
                "summary": result.text, "turns": result.turns,
                "stop_reason": result.stop_reason, "validation": report.to_dict()}
     return _finish(store, payload)
