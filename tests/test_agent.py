@@ -1176,3 +1176,44 @@ def test_the_pair_query_is_mapped_back_onto_the_callers_gene_names():
                                       "combined_score": 0.989}}]}
     index = edge_index(result, identities, ["Rv0678", "Rv0676c"])
     assert index[("rv0676c", "rv0678")]["combined_score"] == 0.989
+
+
+# The prompts live in skills/gene-annotation/SKILL.md, which is also the skill an
+# external MCP client loads. These tests exist because that file is now load-bearing
+# in two directions: edit it carelessly, or drop it from the wheel, and the pipeline
+# runs with a prompt that is missing rules the validator still enforces.
+
+def test_both_prompts_assemble_from_the_skill_file():
+    from kegg_string_mcp.agent import modes
+
+    single, epistasis = modes.prompt_for("single"), modes.prompt_for("epistasis")
+    for prompt in (single, epistasis):
+        assert prompt.startswith("You are annotating genes using only the tools")
+        assert "Cite only identifiers that appear in a tool result" in prompt
+        assert "Call lineage_markers for EVERY gene" in prompt
+        assert "canonical:" not in prompt          # markers are not prompt text
+    assert "MODE: single gene." in single
+    assert "MODE: epistasis." in epistasis
+    assert single != epistasis
+
+
+def test_a_missing_marker_raises_instead_of_shortening_the_prompt(monkeypatch):
+    """A truncated rule list would drop the citation rule and the run would look
+    normal until the validator started firing."""
+    import pytest
+
+    from kegg_string_mcp.agent import modes
+
+    monkeypatch.setattr(modes, "_skill_text", lambda: "# Skill\n\nNo markers here.\n")
+    with pytest.raises(ValueError, match="canonical:shared"):
+        modes.block("shared")
+
+
+def test_the_skill_file_is_force_included_in_the_wheel():
+    """`_skill_file` falls back to the source tree, so a missing force-include only
+    breaks once the package is installed rather than run from a checkout."""
+    from kegg_string_mcp.agent.modes import SKILL_RELATIVE
+
+    pyproject = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
+    assert f'"{SKILL_RELATIVE.as_posix()}"' in pyproject
+    assert f'"kegg_string_mcp/{SKILL_RELATIVE.as_posix()}"' in pyproject

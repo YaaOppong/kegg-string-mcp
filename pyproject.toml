@@ -29,6 +29,9 @@ packages = ["src/kegg_string_mcp"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "src/kegg_string_mcp/evaluate/gold_mtu.json" = "kegg_string_mcp/evaluate/gold_mtu.json"
+# The annotation prompts live in the skill file, and agent/modes.py reads them
+# from it at import. An installed wheel without it cannot build a prompt.
+"skills/gene-annotation/SKILL.md" = "kegg_string_mcp/skills/gene-annotation/SKILL.md"
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]
