@@ -15,6 +15,13 @@ Two traps this module exists to defuse:
 * **Hub proteins.** A STRING partner list is not evidence of a *specific*
   relationship if the protein in question partners with everything. Shared
   partners are reported with the degree that produced them.
+* **Confounded co-occurrence.** Two genes can co-occur across clinical isolates
+  for reasons that are not a biological link at all: they sit on positions that
+  define the same lineage, or they confer resistance to the same drug and are
+  co-selected by treating with it. Both are lookups, so both are computed here
+  and attached to the verdict rather than left to a prompt asking the model to
+  remember. An epistasis scan that reports either as a mechanism has found the
+  population, not the biology.
 """
 
 from __future__ import annotations
@@ -64,6 +71,21 @@ class PairEvidence:
     # gene with exactly 20 -- disabling the very hub check it exists for.
     partners_retrieved: dict[str, int] = field(default_factory=dict)
     truncated: list[str] = field(default_factory=list)   # genes whose list hit the limit
+    # Lineage-defining positions each gene contains, and the lineages BOTH mark.
+    # A count of None means the barcode was never consulted for that gene, which
+    # is not the same as a gene that contains no marker.
+    lineage_markers: dict[str, int | None] = field(default_factory=dict)
+    shared_lineages: list[str] = field(default_factory=list)
+    # Drugs each gene has a resistance-associated variant for, and the drugs both
+    # do. None means the gene is absent from the WHO catalogue: never assessed.
+    resistance_drugs: dict[str, list[str] | None] = field(default_factory=dict)
+    shared_drugs: list[str] = field(default_factory=list)
+    # Alternative explanations for co-occurrence, computed, in the verdict. The
+    # kinds are the machine-readable form: prose belongs in the verdict a model
+    # reads, tokens belong in a column a filter reads, and neither is parsed from
+    # the other.
+    confounds: list[str] = field(default_factory=list)
+    confound_kinds: list[str] = field(default_factory=list)
     verdict: str = ""
 
     def to_dict(self) -> dict[str, Any]:
@@ -99,6 +121,8 @@ def pair_evidence(
     partner_limit: int | None = None,
     edges: dict[tuple[str, str], dict[str, Any]] | None = None,
     unresolved: set[str] | frozenset[str] | None = None,
+    lineage: dict[str, list[dict[str, Any]] | None] | None = None,
+    resistance: dict[str, dict[str, Any] | None] | None = None,
 ) -> PairEvidence:
     """Assemble everything known about ONE pair. Pure function of tool output.
 
@@ -111,6 +135,11 @@ def pair_evidence(
     `unresolved` names the genes STRING could not resolve. Their pairs get no
     verdict about interaction at all -- the tool already says a resolution failure
     is not evidence of no partners, and this is that rule applied downstream.
+
+    `lineage` and `resistance` carry `lineage_markers` records and the
+    `resistance_variants` resolved block per gene, or None for a gene they were
+    never fetched for. They produce no interaction evidence; they produce the
+    reasons an association might not be one.
     """
     ev = PairEvidence(gene_a=gene_a, gene_b=gene_b)
     unresolved = set(unresolved or ())
@@ -166,8 +195,81 @@ def pair_evidence(
     b_ids = {r["record_id"] for r in b_partners}
     ev.shared_partners = [{"record_id": rid, "name": a_ids[rid]} for rid in sorted(a_ids.keys() & b_ids)]
 
+    _add_confounds(ev, lineage or {}, resistance or {})
     ev.verdict = _verdict(ev)
+    if ev.confounds:
+        # In the verdict, not beside it: the epistasis prompt forbids contradicting
+        # the verdict, and that is the only sentence in the run the model is bound
+        # to. A confound stated anywhere else is a suggestion.
+        ev.verdict = " ".join([ev.verdict, *ev.confounds])
     return ev
+
+
+# 855 of 4,008 H37Rv genes contain a lineage-defining position, so roughly one
+# gene in five does. Two genes both containing one is unremarkable on its own and
+# the note says so; two genes marking the SAME lineage is the case that matters.
+LINEAGE_GENES = 855
+LINEAGE_GENOME = 4008
+
+
+def _add_confounds(ev: PairEvidence, lineage: dict[str, Any],
+                   resistance: dict[str, Any]) -> None:
+    """Why these two genes might co-occur without being related.
+
+    Computed rather than prompted. The epistasis prompt already tells the model to
+    state population structure before a biological mechanism; nothing checked that
+    it had, and a scan over clinical isolates is exactly where it matters.
+    """
+    genes = (ev.gene_a, ev.gene_b)
+
+    lineages: dict[str, set[str]] = {}
+    for gene in genes:
+        records = lineage.get(gene)
+        if records is None:
+            ev.lineage_markers[gene] = None
+            continue
+        ev.lineage_markers[gene] = len(records)
+        lineages[gene] = {str(r.get("detail", {}).get("lineage", "")).strip()
+                          for r in records if r.get("detail", {}).get("lineage")}
+
+    if len(lineages) == 2 and all(lineages.values()):
+        ev.shared_lineages = sorted(lineages[ev.gene_a] & lineages[ev.gene_b])
+        if ev.shared_lineages:
+            ev.confound_kinds.append("shared_lineage")
+            ev.confounds.append(
+                f"CONFOUND: both genes contain positions defining {', '.join(ev.shared_lineages)}, "
+                f"so isolates of that lineage carry both alleles by descent. Population structure "
+                f"explains an association between them without any interaction, and must be "
+                f"excluded before a biological mechanism is proposed.")
+        else:
+            ev.confound_kinds.append("lineage_both")
+            ev.confounds.append(
+                f"CONFOUND: both genes contain lineage-defining positions, though for different "
+                f"lineages ({ev.gene_a}: {', '.join(sorted(lineages[ev.gene_a]))}; "
+                f"{ev.gene_b}: {', '.join(sorted(lineages[ev.gene_b]))}). "
+                f"{LINEAGE_GENES:,} of {LINEAGE_GENOME:,} genes contain one, so this is a caveat to "
+                f"test against genotype data rather than a finding.")
+
+    drugs: dict[str, set[str]] = {}
+    for gene in genes:
+        block = resistance.get(gene)
+        if block is None or not block.get("resistance_associated"):
+            ev.resistance_drugs[gene] = None if block is None else []
+            continue
+        found = {str(d).strip() for d in (block.get("drugs") or []) if str(d).strip()}
+        ev.resistance_drugs[gene] = sorted(found)
+        drugs[gene] = found
+
+    if len(drugs) == 2:
+        ev.shared_drugs = sorted(drugs[ev.gene_a] & drugs[ev.gene_b])
+        if ev.shared_drugs:
+            ev.confound_kinds.append("co_selection")
+            ev.confounds.append(
+                f"CONFOUND: both genes carry variants graded resistance-associated for "
+                f"{', '.join(ev.shared_drugs)}. Treating with that drug selects both, so they "
+                f"co-occur across isolates under co-selection rather than through any link "
+                f"between the genes. This is a property of the sampled population, not of the "
+                f"proteins.")
 
 
 def _verdict(ev: PairEvidence) -> str:
@@ -246,10 +348,13 @@ def all_pairs(
     partner_limit: int | None = None,
     edges: dict[tuple[str, str], dict[str, Any]] | None = None,
     unresolved: set[str] | frozenset[str] | None = None,
+    lineage: dict[str, list[dict[str, Any]] | None] | None = None,
+    resistance: dict[str, dict[str, Any] | None] | None = None,
 ) -> list[PairEvidence]:
     return [
         pair_evidence(a, b, pathways, partners, pathway_sizes, genome_size, partner_limit,
-                      edges=edges, unresolved=unresolved)
+                      edges=edges, unresolved=unresolved, lineage=lineage,
+                      resistance=resistance)
         for a, b in combinations(genes, 2)
     ]
 

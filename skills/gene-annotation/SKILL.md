@@ -130,6 +130,13 @@ Your job is interpretation:
   a live explanation for their association and must be stated before a
   biological one. This is the default confound in an epistasis scan over
   clinical isolates, not an edge case.
+* The lineage and resistance-catalogue results for every gene are ALREADY in the
+  evidence table, so rules 8 and 9 are answered for you here: read them there
+  rather than calling those tools again. Where a line begins CONFOUND it is part
+  of the deterministic verdict and you may not contradict it -- state it before
+  any biological mechanism you propose. Two genes selected by the same drug, or
+  marking the same lineage, co-occur across clinical isolates for reasons that
+  are not a link between the genes.
 * Where the deterministic verdict says there is no known link, say that plainly.
   An unexplained interaction from an upstream analysis may be the interesting
   result; inventing a mechanism for it destroys that.

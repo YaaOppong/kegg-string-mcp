@@ -192,6 +192,13 @@ async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path
 
     pathways: dict[str, list[dict[str, Any]]] = {}
     partners: dict[str, list[dict[str, Any]]] = {}
+    # The two confound lookups. Previously the prompt asked the model to make these
+    # calls for every gene "without exception" and nothing checked that it had --
+    # the only claim in an epistasis run with no deterministic backing, and the one
+    # the prompt leans hardest on. Both are pure lookups, so the pipeline makes
+    # them: same rule as the pathway sizes and the set intersections.
+    lineage: dict[str, list[dict[str, Any]] | None] = {}
+    resistance: dict[str, dict[str, Any] | None] = {}
     for gene in genes:
         kegg_result = await _call(tools, "kegg_pathways", {"gene": gene, "organism": organism})
         store.tool_result("kegg_pathways", {"gene": gene, "organism": organism}, kegg_result)
@@ -201,6 +208,24 @@ async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path
         string_result = await _call(tools, "string_partners", string_args)
         store.tool_result("string_partners", string_args, string_result)
         partners[gene] = string_result.get("records", [])
+
+        lineage_args = {"gene": gene, "organism": organism}
+        lineage_result = await _call(tools, "lineage_markers", lineage_args)
+        store.tool_result("lineage_markers", lineage_args, lineage_result)
+        # The barcode index holds only genes that HAVE a marker, so the tool reports
+        # a gene without one as `matched_by: "none"` -- the same value it uses for a
+        # lookup that never ran. What separates them is whether the barcode was
+        # fetched, so an empty list is a real zero only when `requests` is non-empty.
+        lineage[gene] = (lineage_result.get("records", [])
+                         if lineage_result.get("requests") else None)
+
+        resistance_args = {"gene": gene}
+        resistance_result = await _call(tools, "resistance_variants", resistance_args)
+        store.tool_result("resistance_variants", resistance_args, resistance_result)
+        resolved_block = resistance_result.get("resolved", {})
+        # Absent from the WHO catalogue means never assessed, which must not read as
+        # "no resistance association".
+        resistance[gene] = resolved_block if resolved_block.get("matched_by") != "none" else None
 
     # Pathway sizes and the genome denominator are pipeline-internal arithmetic,
     # not model-facing tools, so they use a direct client regardless of how the
@@ -244,7 +269,8 @@ async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path
     store.derived("identities", identities.to_dict())
 
     pairs = all_pairs(genes, pathways, partners, sizes, genome_size, PARTNER_LIMIT,
-                      edges=edges, unresolved=unresolved)
+                      edges=edges, unresolved=unresolved, lineage=lineage,
+                      resistance=resistance)
     store.derived("pair_evidence", {"pairs": [p.to_dict() for p in pairs]})
 
     table = "\n\n".join(
@@ -263,7 +289,12 @@ async def annotate_epistasis(genes: list[str], organism: str = "mtu", runs: Path
             f"{sp.pathway_id} '{sp.name}' [{sp.specificity}, {sp.size} genes]"
             for sp in p.shared_pathways) or "none") + "\n"
         "  shared partners: " + (", ".join(
-            f"{sp['record_id']} ({sp['name']})" for sp in p.shared_partners) or "none")
+            f"{sp['record_id']} ({sp['name']})" for sp in p.shared_partners) or "none") + "\n"
+        "  lineage markers: " + ", ".join(
+            f"{g} {'not checked' if n is None else n}" for g, n in p.lineage_markers.items()) + "\n"
+        "  resistance-associated: " + ", ".join(
+            f"{g} {'not in catalogue' if d is None else (', '.join(d) if d else 'no')}"
+            for g, d in p.resistance_drugs.items())
         for p in pairs
     )
 

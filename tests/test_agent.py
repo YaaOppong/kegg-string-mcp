@@ -1405,3 +1405,118 @@ def test_a_run_that_never_finished_is_not_tabled(tmp_path):
     # "nothing to report" and "the step did not run".
     assert all(p.exists() for p in written.values())
     assert written["genes"].read_text().strip() == "\t".join(tables.GENE_COLUMNS)
+
+
+# --- confounds -------------------------------------------------------------
+#
+# Why two genes co-occur across clinical isolates without being related. These
+# were prompt rules with nothing checking them; an epistasis scan that reports a
+# confound as a mechanism has found the population, not the biology.
+
+def _marker(position: int, lineage: str) -> dict:
+    return {"record_id": f"tbdb:{position}",
+            "detail": {"position": position, "lineage": lineage, "lineage_name": "x"}}
+
+
+def _pair(**kwargs):
+    from kegg_string_mcp.agent.evidence import pair_evidence
+
+    return pair_evidence("geneA", "geneB", pathways={}, partners={"geneA": [], "geneB": []},
+                         pathway_sizes={}, genome_size=4008, partner_limit=20, **kwargs)
+
+
+def test_two_genes_marking_the_same_lineage_are_flagged_as_population_structure():
+    """Isolates of that lineage carry both alleles by descent, so the association
+    needs no interaction to exist."""
+    ev = _pair(lineage={"geneA": [_marker(851797, "lineage1.1.1.1")],
+                        "geneB": [_marker(852641, "lineage1.1.1.1")]})
+
+    assert ev.shared_lineages == ["lineage1.1.1.1"]
+    assert ev.confound_kinds == ["shared_lineage"]
+    # In the verdict, because the epistasis prompt binds the model to the verdict
+    # and to nothing else in the run.
+    assert "CONFOUND" in ev.verdict
+    assert "by descent" in ev.verdict
+
+
+def test_markers_for_different_lineages_are_a_caveat_not_a_finding():
+    """855 of 4,008 genes contain a lineage-defining position, so two genes both
+    containing one is close to a base rate and must not read as a result."""
+    ev = _pair(lineage={"geneA": [_marker(851797, "lineage1.1.1.1")],
+                        "geneB": [_marker(853469, "lineage4.3.2")]})
+
+    assert ev.shared_lineages == []
+    assert ev.confound_kinds == ["lineage_both"]
+    assert "855 of 4,008" in ev.verdict
+
+
+def test_a_gene_never_checked_for_markers_is_not_a_gene_without_them():
+    """`None` is "the barcode was never consulted", which cannot support any
+    statement about population structure in either direction."""
+    ev = _pair(lineage={"geneA": [_marker(851797, "lineage1.1.1.1")], "geneB": None})
+
+    assert ev.lineage_markers == {"geneA": 1, "geneB": None}
+    assert ev.confound_kinds == []
+
+
+def test_two_genes_selected_by_the_same_drug_are_flagged_as_co_selection():
+    """Treating with isoniazid selects every isoniazid-resistant locus at once, so
+    they co-occur across isolates under treatment rather than through any link."""
+    ev = _pair(resistance={
+        "geneA": {"matched_by": "symbol", "resistance_associated": True,
+                  "drugs": ["isoniazid", "ethionamide"]},
+        "geneB": {"matched_by": "symbol", "resistance_associated": True,
+                  "drugs": ["isoniazid"]}})
+
+    assert ev.shared_drugs == ["isoniazid"]
+    assert ev.confound_kinds == ["co_selection"]
+    assert "co-selection" in ev.verdict or "selects both" in ev.verdict
+
+
+def test_absence_from_the_catalogue_does_not_become_a_resistance_negative():
+    """Not in the WHO catalogue means never assessed. Treating it as "no drugs"
+    would let a pair read as unconfounded on a lookup that never happened."""
+    ev = _pair(resistance={
+        "geneA": {"matched_by": "symbol", "resistance_associated": True,
+                  "drugs": ["isoniazid"]},
+        "geneB": None})
+
+    assert ev.resistance_drugs == {"geneA": ["isoniazid"], "geneB": None}
+    assert ev.confound_kinds == []
+
+
+def test_an_assessed_gene_with_no_associated_variant_is_a_real_negative():
+    ev = _pair(resistance={
+        "geneA": {"matched_by": "symbol", "resistance_associated": True, "drugs": ["isoniazid"]},
+        "geneB": {"matched_by": "symbol", "resistance_associated": False, "drugs": []}})
+
+    assert ev.resistance_drugs["geneB"] == []
+    assert ev.confound_kinds == []
+
+
+def test_confound_tokens_and_the_three_resistance_states_reach_the_pair_table(tmp_path):
+    """The sentence is for the model, the token is for a filter, and neither is
+    parsed out of the other."""
+    from kegg_string_mcp.agent import evidence, tables
+
+    ev = evidence.pair_evidence(
+        "geneA", "geneB", pathways={}, partners={"geneA": [], "geneB": []},
+        pathway_sizes={}, genome_size=4008, partner_limit=20,
+        lineage={"geneA": [_marker(851797, "lineage2.2.1")],
+                 "geneB": [_marker(852641, "lineage2.2.1")]},
+        resistance={"geneA": {"matched_by": "symbol", "resistance_associated": True,
+                              "drugs": ["rifampicin"]},
+                    "geneB": None})
+    pairs = [ev.to_dict()]
+    store = RunStore(path=tmp_path / "g.jsonl", run_id="g")
+    store.derived("pair_evidence", {"pairs": pairs})
+    store.output({"mode": "epistasis", "genes": ["geneA", "geneB"], "organism": "mtu",
+                  "unresolved": [], "pairs": pairs, "validation": {"passed": True}})
+
+    row = tables.pair_rows(tables.load_run(store.path))[0]
+    assert row["confounds"] == "shared_lineage"
+    assert row["shared_lineages"] == "lineage2.2.1"
+    assert row["lineage_a_n"] == 1
+    assert row["resistance_a"] == "rifampicin"
+    assert row["resistance_b"] == "NA"           # never assessed
+    assert "confounds" in tables.PAIR_COLUMNS
