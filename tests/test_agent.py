@@ -1520,3 +1520,17 @@ def test_confound_tokens_and_the_three_resistance_states_reach_the_pair_table(tm
     assert row["resistance_a"] == "rifampicin"
     assert row["resistance_b"] == "NA"           # never assessed
     assert "confounds" in tables.PAIR_COLUMNS
+
+
+def test_the_docker_build_context_includes_the_skill():
+    """The wheel declares a force-include of a path outside `src/`, so a build
+    context without it fails at metadata generation. Declaring it in pyproject is
+    not enough -- the container build has its own idea of what is in scope, and it
+    is the one CI runs."""
+    from kegg_string_mcp.agent.modes import SKILL_RELATIVE
+
+    root = Path(__file__).resolve().parents[1]
+    dockerfile = (root / "Dockerfile").read_text()
+    top = SKILL_RELATIVE.parts[0]
+    assert f"COPY {top} ./{top}" in dockerfile
+    assert top not in (root / ".dockerignore").read_text().split()

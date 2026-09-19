@@ -7,6 +7,9 @@ FROM python:3.12-slim AS build
 WORKDIR /src
 COPY pyproject.toml README.md LICENSE ./
 COPY src ./src
+# The annotation prompts live here and `agent/modes.py` reads them at import, so
+# the build fails without them rather than producing a server that cannot prompt.
+COPY skills ./skills
 RUN pip install --no-cache-dir --prefix=/install .
 
 FROM python:3.12-slim
