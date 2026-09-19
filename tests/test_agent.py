@@ -1176,3 +1176,347 @@ def test_the_pair_query_is_mapped_back_onto_the_callers_gene_names():
                                       "combined_score": 0.989}}]}
     index = edge_index(result, identities, ["Rv0678", "Rv0676c"])
     assert index[("rv0676c", "rv0678")]["combined_score"] == 0.989
+
+
+# The prompts live in skills/gene-annotation/SKILL.md, which is also the skill an
+# external MCP client loads. These tests exist because that file is now load-bearing
+# in two directions: edit it carelessly, or drop it from the wheel, and the pipeline
+# runs with a prompt that is missing rules the validator still enforces.
+
+def test_both_prompts_assemble_from_the_skill_file():
+    from kegg_string_mcp.agent import modes
+
+    single, epistasis = modes.prompt_for("single"), modes.prompt_for("epistasis")
+    for prompt in (single, epistasis):
+        assert prompt.startswith("You are annotating genes using only the tools")
+        assert "Cite only identifiers that appear in a tool result" in prompt
+        assert "Call lineage_markers for EVERY gene" in prompt
+        assert "canonical:" not in prompt          # markers are not prompt text
+    assert "MODE: single gene." in single
+    assert "MODE: epistasis." in epistasis
+    assert single != epistasis
+
+
+def test_a_missing_marker_raises_instead_of_shortening_the_prompt(monkeypatch):
+    """A truncated rule list would drop the citation rule and the run would look
+    normal until the validator started firing."""
+    import pytest
+
+    from kegg_string_mcp.agent import modes
+
+    monkeypatch.setattr(modes, "_skill_text", lambda: "# Skill\n\nNo markers here.\n")
+    with pytest.raises(ValueError, match="canonical:shared"):
+        modes.block("shared")
+
+
+def test_the_skill_file_is_force_included_in_the_wheel():
+    """`_skill_file` falls back to the source tree, so a missing force-include only
+    breaks once the package is installed rather than run from a checkout."""
+    from kegg_string_mcp.agent.modes import SKILL_RELATIVE
+
+    pyproject = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
+    assert f'"{SKILL_RELATIVE.as_posix()}"' in pyproject
+    assert f'"kegg_string_mcp/{SKILL_RELATIVE.as_posix()}"' in pyproject
+
+
+# --- tables ----------------------------------------------------------------
+#
+# The gene and pair tables are what a hundred-gene batch is read through, and
+# nobody reads the prose at that size. Every test here is about a cell that would
+# be wrong in a way no reader could catch.
+
+def _tabled(tmp_path: Path, *, calls, identity, output, run_id="t") -> dict:
+    from kegg_string_mcp.agent import tables
+
+    store = RunStore(path=tmp_path / f"{run_id}.jsonl", run_id=run_id)
+    for tool, arguments, result in calls:
+        store.tool_result(tool, arguments, result)
+    store.derived("identities", {"identities": identity, "ambiguous": {}, "notes": []})
+    store.output(output)
+    return tables.load_run(store.path)
+
+
+def _identity(query="katG", **overrides) -> dict:
+    base = {"query": query, "string_id": "83332.Rv1908c", "preferred_name": query,
+            "kegg_gene_id": "mtu:Rv1908c", "locus_tag": "Rv1908c", "accession": "P9WIE5",
+            "aliases": [query, "Rv1908c"], "rejected": {},
+            "matched_by": {"kegg": "symbol", "string": "get_string_ids",
+                           "uniprot": "uniprot_search"}}
+    return {query: base | overrides}
+
+
+SINGLE_OUTPUT = {"mode": "single", "gene": "katG", "organism": "mtu", "turns": 2,
+                 "stop_reason": "end_turn",
+                 "validation": {"passed": True, "citations": [], "quotes": []}}
+
+
+def test_a_source_that_answered_with_nothing_is_zero_and_an_unresolved_one_is_na(tmp_path):
+    """The distinction the whole table exists for. KEGG assigns a pathway to 29% of
+    genes, so an empty result is usually a real zero -- but a gene KEGG never
+    resolved is a failed lookup, and flattening both to 0 puts a fact in the table
+    that no tool ever returned."""
+    from kegg_string_mcp.agent.tables import gene_row
+
+    answered = _tabled(tmp_path, run_id="a", identity=_identity(), output=SINGLE_OUTPUT, calls=[
+        ("kegg_pathways", {"gene": "katG"},
+         {"resolved": {"matched_by": "symbol", "kegg_gene_id": "mtu:Rv1908c"},
+          "records": [], "record_ids": []})])
+    unresolved = _tabled(tmp_path, run_id="b", identity=_identity(), output=SINGLE_OUTPUT, calls=[
+        ("kegg_pathways", {"gene": "katG"},
+         {"resolved": {"matched_by": "none"}, "records": [], "record_ids": []})])
+
+    assert gene_row(answered)["kegg_n"] == 0
+    assert gene_row(unresolved)["kegg_n"] == "NA"
+
+
+def test_a_gene_with_no_lineage_marker_is_zero_not_missing(tmp_path):
+    """`lineage_markers` returns `matched_by: "none"` for a gene that simply has no
+    marker -- its index holds only genes that have one -- so the shared convention
+    reads an informative negative (855 of 4,008 genes carry one) as a failed
+    lookup. What separates them is whether the barcode was fetched at all."""
+    from kegg_string_mcp.agent.tables import gene_row
+
+    looked_up = _tabled(tmp_path, run_id="c", identity=_identity(), output=SINGLE_OUTPUT, calls=[
+        ("lineage_markers", {"gene": "katG"},
+         {"resolved": {"matched_by": "none"}, "records": [], "record_ids": [],
+          "requests": [{"url": "https://example/barcode", "status": 200}]})])
+    never_ran = _tabled(tmp_path, run_id="d", identity=_identity(), output=SINGLE_OUTPUT, calls=[
+        ("lineage_markers", {"gene": "katG"},
+         {"resolved": {"matched_by": "none"}, "records": [], "record_ids": [], "requests": []})])
+
+    assert gene_row(looked_up)["lineage_n"] == 0
+    assert gene_row(never_ran)["lineage_n"] == "NA"
+
+
+def test_a_neighbours_lookup_does_not_land_in_the_targets_row(tmp_path):
+    """Annotating furA and looking up katG for context is legitimate -- the
+    validator reports it as cross-target rather than as an error. Counting it into
+    furA's row would be the tabular form of the same mistake, and unlike the
+    citation flag nothing downstream would show it."""
+    from kegg_string_mcp.agent.tables import gene_row
+
+    run = _tabled(tmp_path, identity=_identity("furA", kegg_gene_id="mtu:Rv1909c",
+                                               locus_tag="Rv1909c", aliases=["furA", "Rv1909c"]),
+                  output=SINGLE_OUTPUT | {"gene": "furA"}, calls=[
+        ("kegg_pathways", {"gene": "furA"},
+         {"resolved": {"matched_by": "symbol"}, "records": [], "record_ids": []}),
+        ("kegg_pathways", {"gene": "katG"},
+         {"resolved": {"matched_by": "symbol"},
+          "records": [{"record_id": f"mtu0{n}"} for n in range(5)],
+          "record_ids": [f"mtu0{n}" for n in range(5)]})])
+
+    assert gene_row(run)["kegg_n"] == 0
+
+
+def test_the_variant_count_is_not_the_catalogue_count(tmp_path):
+    """`resistance_variants` returns only the graded-associated variants: katG has
+    1,771 catalogued rows of which 1,254 are "Uncertain significance". One column
+    would read as the gene's total and overstate it tenfold."""
+    from kegg_string_mcp.agent.tables import gene_row, variant_rows
+
+    run = _tabled(tmp_path, identity=_identity(), output=SINGLE_OUTPUT, calls=[
+        ("resistance_variants", {"gene": "katG"},
+         {"resolved": {"matched_by": "symbol", "resistance_associated": True,
+                       "drugs": ["isoniazid"], "variants_in_catalogue": 1771},
+          "records": [{"record_id": "tbdb:katG:p.Ser315Thr",
+                       "detail": {"gene": "katG", "mutation": "p.Ser315Thr",
+                                  "drug": "isoniazid", "confidence": "Assoc w R",
+                                  "associated": True, "source": "WHO catalogue v2"}}],
+          "record_ids": ["tbdb:katG:p.Ser315Thr"],
+          "requests": [{"url": "https://example/who", "status": 200}]})])
+
+    row = gene_row(run)
+    assert row["variants_associated_n"] == 1
+    assert row["variants_in_catalogue"] == 1771
+    assert row["resistance_associated"] == "True"
+    # The specific variant is reachable, not only counted: a count cannot tell you
+    # whether YOUR mutation is one of them.
+    variants = variant_rows(run)
+    assert [v["mutation"] for v in variants] == ["p.Ser315Thr"]
+    assert variants[0]["resolved_id"] == "mtu:Rv1908c"
+
+
+def test_a_gene_absent_from_the_catalogue_is_not_a_negative(tmp_path):
+    """Absence from the WHO catalogue means the gene was never assessed. Reporting
+    it as False would be a claim the catalogue does not make."""
+    from kegg_string_mcp.agent.tables import gene_row
+
+    run = _tabled(tmp_path, identity=_identity("furA"), output=SINGLE_OUTPUT | {"gene": "furA"},
+                  calls=[("resistance_variants", {"gene": "furA"},
+                          {"resolved": {"matched_by": "none", "resistance_associated": False},
+                           "records": [], "record_ids": [],
+                           "requests": [{"url": "https://example/who", "status": 200}]})])
+
+    row = gene_row(run)
+    assert row["resistance_associated"] == "NA"
+    assert row["variants_associated_n"] == "NA"
+
+
+def test_a_full_partner_list_is_marked_truncated(tmp_path):
+    """A list that hit `limit` means true degree is unknown, so an absent partner is
+    a property of the query. katG/rpoC scores 0.823 at rank 24 and read as no
+    interaction until the pair itself was asked about."""
+    from kegg_string_mcp.agent.tables import gene_row
+
+    run = _tabled(tmp_path, identity=_identity(), output=SINGLE_OUTPUT, calls=[
+        ("string_partners", {"gene": "katG", "limit": 20},
+         {"resolved": {"matched_by": "get_string_ids", "string_id": "83332.Rv1908c"},
+          "records": [{"record_id": f"83332.X{n}"} for n in range(20)],
+          "record_ids": [f"83332.X{n}" for n in range(20)]})])
+
+    row = gene_row(run)
+    assert row["string_n"] == 20
+    assert row["string_truncated"] == "True"
+
+
+def test_shared_pathways_are_split_by_specificity(tmp_path):
+    """mtu01100 holds 698 of ~4,000 genes and mtu00983 holds 11. One column mixing
+    them is the base-rate trap in tabular form."""
+    from kegg_string_mcp.agent import tables
+
+    store = RunStore(path=tmp_path / "e.jsonl", run_id="e")
+    pairs = [{"gene_a": "katG", "gene_b": "ahpC", "verdict": "…", "checked_directly": True,
+              "direct_interaction": None, "unresolved": [], "truncated": [],
+              "partners_retrieved": {"katG": 20, "ahpC": 12}, "shared_partners": [],
+              "shared_pathways": [{"pathway_id": "mtu01100", "specificity": "broad"},
+                                  {"pathway_id": "mtu00983", "specificity": "specific"}]}]
+    store.derived("pair_evidence", {"pairs": pairs})
+    store.output({"mode": "epistasis", "genes": ["katG", "ahpC"], "organism": "mtu",
+                  "unresolved": [], "pairs": pairs, "validation": {"passed": True}})
+
+    row = tables.pair_rows(tables.load_run(store.path))[0]
+    assert row["shared_broad"] == "mtu01100"
+    assert row["shared_specific"] == "mtu00983"
+    assert row["n_shared_pathways"] == 2
+    assert row["partners_retrieved_a"] == 20
+
+
+def test_a_run_that_never_finished_is_not_tabled(tmp_path):
+    """No `output` line means the run crashed or is still going. Its partial tool
+    calls would make a row indistinguishable from a validated one."""
+    from kegg_string_mcp.agent import tables
+
+    store = RunStore(path=tmp_path / "f.jsonl", run_id="f")
+    store.tool_result("kegg_pathways", {"gene": "katG"}, KEGG_RESULT)
+    assert tables.load_run(store.path) is None
+
+    written = tables.build(tmp_path, tmp_path / "out")
+    # Every file is written even when empty: a missing one is ambiguous between
+    # "nothing to report" and "the step did not run".
+    assert all(p.exists() for p in written.values())
+    assert written["genes"].read_text().strip() == "\t".join(tables.GENE_COLUMNS)
+
+
+# --- confounds -------------------------------------------------------------
+#
+# Why two genes co-occur across clinical isolates without being related. These
+# were prompt rules with nothing checking them; an epistasis scan that reports a
+# confound as a mechanism has found the population, not the biology.
+
+def _marker(position: int, lineage: str) -> dict:
+    return {"record_id": f"tbdb:{position}",
+            "detail": {"position": position, "lineage": lineage, "lineage_name": "x"}}
+
+
+def _pair(**kwargs):
+    from kegg_string_mcp.agent.evidence import pair_evidence
+
+    return pair_evidence("geneA", "geneB", pathways={}, partners={"geneA": [], "geneB": []},
+                         pathway_sizes={}, genome_size=4008, partner_limit=20, **kwargs)
+
+
+def test_two_genes_marking_the_same_lineage_are_flagged_as_population_structure():
+    """Isolates of that lineage carry both alleles by descent, so the association
+    needs no interaction to exist."""
+    ev = _pair(lineage={"geneA": [_marker(851797, "lineage1.1.1.1")],
+                        "geneB": [_marker(852641, "lineage1.1.1.1")]})
+
+    assert ev.shared_lineages == ["lineage1.1.1.1"]
+    assert ev.confound_kinds == ["shared_lineage"]
+    # In the verdict, because the epistasis prompt binds the model to the verdict
+    # and to nothing else in the run.
+    assert "CONFOUND" in ev.verdict
+    assert "by descent" in ev.verdict
+
+
+def test_markers_for_different_lineages_are_a_caveat_not_a_finding():
+    """855 of 4,008 genes contain a lineage-defining position, so two genes both
+    containing one is close to a base rate and must not read as a result."""
+    ev = _pair(lineage={"geneA": [_marker(851797, "lineage1.1.1.1")],
+                        "geneB": [_marker(853469, "lineage4.3.2")]})
+
+    assert ev.shared_lineages == []
+    assert ev.confound_kinds == ["lineage_both"]
+    assert "855 of 4,008" in ev.verdict
+
+
+def test_a_gene_never_checked_for_markers_is_not_a_gene_without_them():
+    """`None` is "the barcode was never consulted", which cannot support any
+    statement about population structure in either direction."""
+    ev = _pair(lineage={"geneA": [_marker(851797, "lineage1.1.1.1")], "geneB": None})
+
+    assert ev.lineage_markers == {"geneA": 1, "geneB": None}
+    assert ev.confound_kinds == []
+
+
+def test_two_genes_selected_by_the_same_drug_are_flagged_as_co_selection():
+    """Treating with isoniazid selects every isoniazid-resistant locus at once, so
+    they co-occur across isolates under treatment rather than through any link."""
+    ev = _pair(resistance={
+        "geneA": {"matched_by": "symbol", "resistance_associated": True,
+                  "drugs": ["isoniazid", "ethionamide"]},
+        "geneB": {"matched_by": "symbol", "resistance_associated": True,
+                  "drugs": ["isoniazid"]}})
+
+    assert ev.shared_drugs == ["isoniazid"]
+    assert ev.confound_kinds == ["co_selection"]
+    assert "co-selection" in ev.verdict or "selects both" in ev.verdict
+
+
+def test_absence_from_the_catalogue_does_not_become_a_resistance_negative():
+    """Not in the WHO catalogue means never assessed. Treating it as "no drugs"
+    would let a pair read as unconfounded on a lookup that never happened."""
+    ev = _pair(resistance={
+        "geneA": {"matched_by": "symbol", "resistance_associated": True,
+                  "drugs": ["isoniazid"]},
+        "geneB": None})
+
+    assert ev.resistance_drugs == {"geneA": ["isoniazid"], "geneB": None}
+    assert ev.confound_kinds == []
+
+
+def test_an_assessed_gene_with_no_associated_variant_is_a_real_negative():
+    ev = _pair(resistance={
+        "geneA": {"matched_by": "symbol", "resistance_associated": True, "drugs": ["isoniazid"]},
+        "geneB": {"matched_by": "symbol", "resistance_associated": False, "drugs": []}})
+
+    assert ev.resistance_drugs["geneB"] == []
+    assert ev.confound_kinds == []
+
+
+def test_confound_tokens_and_the_three_resistance_states_reach_the_pair_table(tmp_path):
+    """The sentence is for the model, the token is for a filter, and neither is
+    parsed out of the other."""
+    from kegg_string_mcp.agent import evidence, tables
+
+    ev = evidence.pair_evidence(
+        "geneA", "geneB", pathways={}, partners={"geneA": [], "geneB": []},
+        pathway_sizes={}, genome_size=4008, partner_limit=20,
+        lineage={"geneA": [_marker(851797, "lineage2.2.1")],
+                 "geneB": [_marker(852641, "lineage2.2.1")]},
+        resistance={"geneA": {"matched_by": "symbol", "resistance_associated": True,
+                              "drugs": ["rifampicin"]},
+                    "geneB": None})
+    pairs = [ev.to_dict()]
+    store = RunStore(path=tmp_path / "g.jsonl", run_id="g")
+    store.derived("pair_evidence", {"pairs": pairs})
+    store.output({"mode": "epistasis", "genes": ["geneA", "geneB"], "organism": "mtu",
+                  "unresolved": [], "pairs": pairs, "validation": {"passed": True}})
+
+    row = tables.pair_rows(tables.load_run(store.path))[0]
+    assert row["confounds"] == "shared_lineage"
+    assert row["shared_lineages"] == "lineage2.2.1"
+    assert row["lineage_a_n"] == 1
+    assert row["resistance_a"] == "rifampicin"
+    assert row["resistance_b"] == "NA"           # never assessed
+    assert "confounds" in tables.PAIR_COLUMNS
