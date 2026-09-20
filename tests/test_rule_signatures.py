@@ -537,3 +537,65 @@ def test_the_gold_set_ships_with_the_wheel():
     pyproject = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
     assert '"src/kegg_string_mcp/rules/gold_rules.json"' in pyproject
     assert '"kegg_string_mcp/rules/gold_rules.json"' in pyproject
+
+
+# --- stage A: the question list --------------------------------------------
+
+
+def test_a_pair_already_linked_beyond_co_mention_is_not_asked_about(sources, tmp_path):
+    """The structured sources already support it, so spending a retrieval on it
+    buys nothing. Only the textmining-only and unlinked pairs need literature."""
+    from kegg_string_mcp.rules.questions import COMPENSATION, generate
+
+    rule = _rule("Rv0667=1 AND Rv0668=1", "R", tmp_path)
+    linked = {("Rv0667", "Rv0668"): Link("string_beyond_textmining", "0.999")}
+    assert not [q for q in generate([classify(rule, evidence_for(rule, sources), linked)])
+                if q.kind == COMPENSATION]
+
+    weak = {("Rv0667", "Rv0668"): Link("string_textmining_only", "0.910")}
+    asked = [q for q in generate([classify(rule, evidence_for(rule, sources), weak)])
+             if q.kind == COMPENSATION]
+    assert len(asked) == 1
+
+
+def test_a_question_uses_the_name_a_paper_would_use(sources, tmp_path):
+    """Questions are search strings before they are anything else, and the
+    literature says ahpC, not Rv2428. Both appear: the symbol finds the papers,
+    the locus tag joins the answer back to the tables."""
+    from kegg_string_mcp.rules.questions import generate
+
+    rule = _rule("Rv1908c=1 AND Rv9000=1", "R", tmp_path)
+    question = generate([classify(rule, evidence_for(rule, sources))])[0]
+    assert "katG (Rv1908c)" in question.text or "Rv9000" in question.text
+    assert "Mycobacterium tuberculosis" in question.text
+    # Asks for the evidence, never for the verdict -- a question naming a
+    # conclusion invites the model to confirm it.
+    assert "Quote any passage" in question.text
+
+
+def test_a_negated_anchor_still_supplies_the_drug(sources, tmp_path):
+    """`katG=0 AND X=1 -> R` is still a rule about isoniazid. Dropping the drug
+    because the anchor is negated leaves the question unanswerable."""
+    from kegg_string_mcp.rules.questions import RESISTANCE_ROLE, generate
+
+    rule = _rule("Rv1908c=0 AND Rv9000=1", "R", tmp_path)
+    questions = generate([classify(rule, evidence_for(rule, sources))])
+    role = next(q for q in questions if q.kind == RESISTANCE_ROLE)
+    assert role.drugs == ("isoniazid",)
+    assert "isoniazid" in role.text
+
+
+def test_the_same_gap_raised_by_many_rules_is_asked_once(sources, tmp_path):
+    """A classifier population reuses its loci, so asking per rule multiplies the
+    cost by the redundancy in the rule set."""
+    from kegg_string_mcp.rules.questions import generate
+
+    path = tmp_path / "rep.tsv"
+    path.write_text("conditions\tpredicted_class\n"
+                    "Rv1908c=1 AND Rv9000=1\tR\n"
+                    "Rv0667=1 AND Rv9000=1\tR\n"
+                    "Rv9000=1\tR\n")
+    signatures = [classify(r, evidence_for(r, sources)) for r in parse_rules(path)]
+    asked = [q for q in generate(signatures) if q.locus == "Rv9000"]
+    assert len(asked) == 1
+    assert len(asked[0].raised_by) == 3

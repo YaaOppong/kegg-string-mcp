@@ -166,3 +166,17 @@ def _write(path: Path, columns: list[str], rows: list[dict]) -> Path:
                 str(row.get(column, NA)).replace("\t", " ").replace("\n", " ")
                 for column in columns) + "\n")
     return path
+
+
+QUESTION_COLUMNS = ["question_id", "kind", "locus", "partner", "drugs", "n_rules",
+                    "raised_by", "signatures", "question"]
+
+
+def write_questions(path: Path, questions) -> Path:
+    """Stage A of the literature layer, and the only free part of it.
+
+    Written whatever the run found, empty header included: no questions is a
+    result -- every rule accounted for by the structured sources -- and a missing
+    file is ambiguous between that and a step that did not run.
+    """
+    return _write(path, QUESTION_COLUMNS, [q.to_dict() for q in questions])

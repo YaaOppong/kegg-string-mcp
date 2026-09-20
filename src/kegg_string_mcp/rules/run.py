@@ -30,7 +30,9 @@ from kegg_string_mcp.rules.annotation import parse as parse_annotation
 from kegg_string_mcp.rules.catalogue import ANCHOR
 from kegg_string_mcp.rules.evidence import classify_all, load_sources, rename_map, summarise
 from kegg_string_mcp.rules.parse import parse as parse_rules
-from kegg_string_mcp.rules.report import write_loci, write_rules
+from kegg_string_mcp.rules.questions import generate as generate_questions
+from kegg_string_mcp.rules.questions import summarise as summarise_questions
+from kegg_string_mcp.rules.report import write_loci, write_questions, write_rules
 
 
 @dataclass
@@ -40,6 +42,7 @@ class RunResult:
     annotations: dict[str, Any]
     written: dict[str, Path]
     summary: dict[str, Any]
+    questions: list[Any]
     notes: list[str]
 
 
@@ -119,8 +122,12 @@ def run(rules_path: str | Path, annotation_path: str | Path, out_dir: str | Path
     best = {pair: found[0] for pair, found in links.items() if found}
     signatures = classify_all(rules, sources, best)
 
+    questions = generate_questions(signatures)
+
     out_dir = Path(out_dir)
     written = {"loci": write_loci(out_dir / "loci.tsv", list(annotations.values()), by_locus),
-               "rules": write_rules(out_dir / "rules.tsv", signatures, rename)}
+               "rules": write_rules(out_dir / "rules.tsv", signatures, rename),
+               "questions": write_questions(out_dir / "questions.tsv", questions)}
+    summary = summarise(signatures) | summarise_questions(questions)
     return RunResult(rules=rules, signatures=signatures, annotations=annotations,
-                     written=written, summary=summarise(signatures), notes=notes)
+                     written=written, summary=summary, questions=questions, notes=notes)

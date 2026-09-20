@@ -156,6 +156,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"\n{len(result.annotations):,} loci, {len(result.rules):,} rules")
         for name, count in result.summary["by_primary_signature"].items():
             print(f"  {name:28} {count:5,}")
+        if result.questions:
+            print(f"\n{len(result.questions):,} question(s) the sources could not answer, "
+                  f"over {result.summary['distinct_loci']:,} loci")
+            for kind, count in result.summary["by_kind"].items():
+                print(f"  {kind:28} {count:5,}")
         for label, path in result.written.items():
             print(f"\n{label}: {path}")
         return 0
