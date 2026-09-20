@@ -268,3 +268,107 @@ def test_a_file_with_no_conditions_column_is_refused(tmp_path):
     path.write_text("gene_a\tgene_b\tp\nRv0001\tRv0002c\t1e-8\n")
     with pytest.raises(ValueError, match="no conditions column"):
         parse_rules(path)
+
+
+# --- GFF3 parent/child rows ------------------------------------------------
+#
+# A GFF3 carries a parent `gene` row and a child `CDS` row per locus. Counting
+# both put every tag in the index twice, which made the strand-suffix rule find
+# two candidates that were the same gene and refuse them as ambiguous. On NCBI's
+# H37Rv GFF3 that halved resolution: 7,884 "genes", 1,339 false ambiguities,
+# `via strand suffix` down from 1,346 to zero.
+
+GFF3 = """##gff-version 3
+NC_000962.3\tRefSeq\tgene\t1\t1524\t.\t+\t.\tID=gene-Rv0001;locus_tag=Rv0001;gene=dnaA
+NC_000962.3\tRefSeq\tCDS\t1\t1524\t.\t+\t0\tID=cds-Rv0001;locus_tag=Rv0001;gene=dnaA
+NC_000962.3\tRefSeq\tgene\t2052\t3260\t.\t+\t.\tID=gene-Rv0003;locus_tag=Rv0003;gene=recF
+NC_000962.3\tRefSeq\tCDS\t2052\t3260\t.\t+\t0\tID=cds-Rv0003;locus_tag=Rv0003;gene=recF
+NC_000962.3\tRefSeq\tgene\t4000\t5000\t.\t-\t.\tID=gene-Rv0005;locus_tag=Rv0005;gene=gyrB
+NC_000962.3\tRefSeq\tCDS\t4000\t5000\t.\t-\t0\tID=cds-Rv0005;locus_tag=Rv0005;gene=gyrB
+NC_000962.3\tRefSeq\tpseudogene\t6000\t6500\t.\t+\t.\tID=gene-Rv0007;locus_tag=Rv0007
+NC_000962.3\tRefSeq\tgene\t7000\t7300\t.\t+\t.\tID=gene-Rvnr01;locus_tag=Rvnr01;gene=rrs
+NC_000962.3\tRefSeq\trRNA\t7000\t7300\t.\t+\t.\tID=rna-Rvnr01;locus_tag=Rvnr01;gene=rrs
+"""
+
+
+@pytest.fixture
+def gff3(tmp_path: Path) -> Path:
+    path = tmp_path / "h37rv.gff"
+    path.write_text(GFF3)
+    return path
+
+
+def test_a_parent_and_child_row_are_one_gene(gff3):
+    """Five loci, nine rows. Counting the child rows would give nine 'genes'."""
+    annotation = parse_annotation(gff3)
+    assert len(annotation.genes) == 5
+    assert {g.locus for g in annotation.genes} == {
+        "Rv0001", "Rv0003", "Rv0005", "Rv0007", "Rvnr01"}
+
+
+def test_the_strand_suffix_rule_survives_a_gff3(gff3):
+    """The regression itself: `Rv0003c` reaching `Rv0003` found two candidates
+    that were the same gene, and was refused."""
+    feature = Resolver(parse_annotation(gff3)).resolve("Rv0003c")
+    assert feature.kind == CODING
+    assert feature.matched_by == "strand_suffix"
+    assert feature.gene.locus == "Rv0003"
+
+
+def test_non_coding_and_pseudogene_loci_come_in_too(gff3):
+    """`rrs` and `rrl` are named by real rule vocabularies, and a pseudogene row
+    is the only row some loci have. Taking `gene` rows alone would drop the 30
+    pseudogenes in H37Rv; taking CDS rows alone would drop every RNA gene."""
+    annotation = parse_annotation(gff3)
+    assert annotation.gene("Rv0007") is not None                 # pseudogene row
+    assert Resolver(annotation).resolve("rrs").gene.locus == "Rvnr01"
+
+
+def test_a_real_ambiguity_is_still_refused(tmp_path):
+    """Deduplication must not weaken the refusal. Two genuinely different tags
+    that collide once the suffix is stripped still have no answer."""
+    path = tmp_path / "collide.gff"
+    path.write_text(
+        "##gff-version 3\n"
+        "NC_000962.3\tRefSeq\tgene\t100\t200\t.\t+\t.\tID=g1;locus_tag=Rv0070\n"
+        "NC_000962.3\tRefSeq\tCDS\t100\t200\t.\t+\t0\tID=c1;locus_tag=Rv0070\n"
+        "NC_000962.3\tRefSeq\tgene\t300\t400\t.\t-\t.\tID=g2;locus_tag=Rv0070c\n"
+        "NC_000962.3\tRefSeq\tCDS\t300\t400\t.\t-\t0\tID=c2;locus_tag=Rv0070c\n")
+    feature = Resolver(parse_annotation(path)).resolve("Rv0070C")
+    assert feature.kind == UNRESOLVED
+    assert set(feature.candidates) == {"Rv0070", "Rv0070c"}
+
+
+def test_a_cds_only_file_falls_back_and_says_so(tmp_path):
+    """Prokka and some Ensembl bacterial dumps emit no gene rows. The file stays
+    usable, and the note records that spans are translated regions."""
+    path = tmp_path / "prokka.gff"
+    path.write_text(
+        "##gff-version 3\n"
+        "NC_000962.3\tProkka\tCDS\t100\t200\t.\t+\t0\tID=c1;locus_tag=Rv0001\n"
+        "NC_000962.3\tProkka\tCDS\t300\t400\t.\t+\t0\tID=c2;locus_tag=Rv0003\n")
+    annotation = parse_annotation(path)
+    assert len(annotation.genes) == 2
+    assert any("fell back to CDS rows" in n for n in annotation.notes)
+
+
+def test_c_coordinates_count_from_the_translation_start(tmp_path):
+    """HGVS `c.-N` is relative to the ATG, not to the gene's 5' end. Three H37Rv
+    gene rows begin before their CDS -- Rv0614 by 243 bp -- so counting from the
+    gene start puts a promoter variant that far from where it is."""
+    path = tmp_path / "leader.gff"
+    path.write_text(
+        "##gff-version 3\n"
+        "NC_000962.3\tRefSeq\tgene\t709356\t710348\t.\t+\t.\tID=g;locus_tag=Rv0614\n"
+        "NC_000962.3\tRefSeq\tCDS\t709599\t710348\t.\t+\t0\tID=c;locus_tag=Rv0614\n")
+    gene = parse_annotation(path).gene("Rv0614")
+    assert (gene.start, gene.end) == (709356, 710348)     # the locus's extent
+    assert gene.cds_start == 709599                       # where `c.` counts from
+    assert gene.coding_start == 709599
+
+
+def test_a_gene_whose_cds_matches_records_no_separate_start(gff3):
+    """The common case. Recording a redundant CDS start would make the note fire
+    on every file."""
+    assert parse_annotation(gff3).gene("Rv0001").cds_start is None
+    assert parse_annotation(gff3).gene("Rv0001").coding_start == 1

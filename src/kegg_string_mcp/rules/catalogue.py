@@ -116,8 +116,13 @@ class Catalogue:
                 # Upstream is lower coordinate on the forward strand and higher on
                 # the reverse. Getting this backwards puts every promoter variant
                 # inside the gene instead of in front of it.
-                position = (span.start - offset if span.strand != "-"
-                            else span.end + offset)
+                #
+                # Counted from the TRANSLATION start: HGVS `c.` numbering is
+                # relative to the ATG, and three H37Rv gene rows begin before
+                # their CDS -- Rv0614 by 243 bp -- so the gene's 5' end would put
+                # the variant that far from where it is.
+                origin = span.coding_start
+                position = origin - offset if span.strand != "-" else origin + offset
                 out.append(Placed(position=position, named_for=gene, variant=variant))
         return out
 

@@ -270,8 +270,12 @@ gar gold                --annotation h37rv.bed    # score the classifier on know
 
 **The reference annotation is an input, never fetched.** Feature names come from
 whichever annotation the variant caller used — `snpEff genes2bed
-Mycobacterium_tuberculosis_h37rv` — so resolving them against a different gene
-list is how a locus silently becomes the wrong locus. Measured against one real
+Mycobacterium_tuberculosis_h37rv`, or NCBI's H37Rv GFF3 where SnpEff is not
+installed — so resolving them against a different gene list is how a locus
+silently becomes the wrong locus. BED and GFF/GTF are both read, the format from
+the shape of a row rather than the extension, and a GFF3's child rows (`CDS`,
+`rRNA`, `exon`) are folded into their parent locus rather than counted as
+separate genes. Measured against one real
 2,903-label vocabulary, KEGG's curated list was missing 76 of them and disagreed
 with 1,346 more on the strand suffix. KEGG stays authoritative for pathways; the
 caller's annotation is authoritative for what a locus is and where it sits. Its

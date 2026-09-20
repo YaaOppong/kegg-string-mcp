@@ -12,6 +12,28 @@ for what the caller's feature is called or where it sits. Measured against one
 real vocabulary, 76 of 2,879 locus tags were absent from KEGG entirely and 1,346
 more differed in their strand suffix. Two sources, two jobs.
 
+**One row per locus, whatever the file says.** A GFF3 carries a parent `gene`
+row and a child `CDS` row for the same locus tag, so reading both as genes puts
+every tag in the index twice. Nothing looks broken -- until a label like
+`Rv0003c` has to reach `Rv0003` through the strand-suffix rule, finds two
+candidates that are the same gene, and is refused as ambiguous. Measured on
+NCBI's H37Rv GFF3: 7,884 "genes" parsed, `via strand suffix` matches fall from
+1,339 to zero, and resolution halves from 97% to 51%. The overlap count inflates
+from 940 to 4,846, so intergenic naming goes with it.
+
+Gene-level rows (`gene`, `pseudogene`) are the locus set. On that file they cover
+all 4,008 distinct locus tags -- 3,978 `gene` plus 30 `pseudogene` -- and carry
+every biotype, so rRNA loci like `rrs` and `rrl` come in without special-casing.
+A file with no gene-level rows at all (Prokka output, some Ensembl bacterial
+dumps) falls back to `CDS` and says so.
+
+**The CDS start is kept separately, and it is not decoration.** HGVS `c.-N`
+numbering is relative to the translation start, not to the gene's 5' end. Those
+differ on three H37Rv loci -- Rv0614's gene row begins 243 bp before its CDS --
+so placing a promoter variant from the gene start would put it 243 bp from where
+it is. The gene span is what a locus occupies; the CDS start is where `c.`
+counts from.
+
 **Coordinates are normalised to 1-based inclusive on the way in.** BED is 0-based
 half-open and GFF/GTF is 1-based inclusive; mixing them shifts every start by one
 and every interval width by one, which is invisible until a variant sits on a
@@ -56,10 +78,20 @@ class Gene:
     start: int
     end: int
     strand: str          # "+" | "-" | "." when the annotation does not say
+    # Translation start, where the annotation distinguishes it from the gene's
+    # 5' end. `c.` coordinates count from here, not from `start`.
+    cds_start: int | None = None
 
     @property
     def length(self) -> int:
         return self.end - self.start + 1
+
+    @property
+    def coding_start(self) -> int:
+        """Where HGVS `c.` numbering counts from, on this gene's own strand."""
+        if self.cds_start is not None:
+            return self.cds_start
+        return self.end if self.strand == "-" else self.start
 
 
 @dataclass(frozen=True)
@@ -209,7 +241,13 @@ def _detect(first_row: list[str]) -> str:
     return "bed"
 
 
-def parse(path: str | Path, feature_types: tuple[str, ...] = ("gene", "CDS")) -> Annotation:
+# Parent features: one row per locus, covering every biotype. Child rows (CDS,
+# exon, tRNA, rRNA) repeat their parent's locus tag and must not be counted again.
+GENE_LEVEL = ("gene", "pseudogene")
+CODING = ("CDS",)
+
+
+def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Annotation:
     """Read a BED or GFF/GTF into 1-based inclusive `Gene` records.
 
     Name resolution order is the caller's vocabulary first: `locus_tag`, then
@@ -231,6 +269,29 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = ("gene", "CDS")) ->
     fmt = _detect(rows[0])
     genes: list[Gene] = []
     skipped = 0
+    notes_extra: list[str] = []
+
+    cds_starts: dict[str, tuple[int, int]] = {}
+    if fmt == "gff":
+        present = {row[2] for row in rows if len(row) >= 9}
+        if not (set(feature_types) & present):
+            # Prokka and some Ensembl bacterial dumps emit CDS rows and no gene
+            # rows. Falling back keeps those files usable; saying so keeps the
+            # coordinate meaning honest, since a CDS span is the translated
+            # region rather than the locus.
+            feature_types = CODING
+            notes_extra.append(
+                f"no {', '.join(GENE_LEVEL)} rows found; fell back to CDS rows, so spans are "
+                f"translated regions rather than gene extents")
+        # Translation starts, by locus tag, for HGVS `c.` conversion.
+        for row in rows:
+            if len(row) < 9 or row[2] not in CODING:
+                continue
+            tag = _attributes(row[8]).get("locus_tag")
+            if tag:
+                cds_starts.setdefault(tag, (int(row[3]), int(row[4])))
+
+    seen_tags: set[str] = set()
     for row in rows:
         if fmt == "gff":
             if len(row) < 9:
@@ -241,6 +302,11 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = ("gene", "CDS")) ->
             attrs = _attributes(row[8])
             name = (attrs.get("locus_tag") or attrs.get("gene_id")
                     or attrs.get("ID") or attrs.get("Name") or attrs.get("gene_name"))
+            # One row per locus. A second row for a tag already seen is a child
+            # feature or a duplicate, and admitting it makes every strand-suffix
+            # lookup ambiguous against the gene's own other row.
+            if name and name in seen_tags:
+                continue
             symbol = attrs.get("gene_name") or attrs.get("Name") or attrs.get("gene") or ""
             start, end, strand = int(row[3]), int(row[4]), row[6] or "."
         else:
@@ -257,9 +323,19 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = ("gene", "CDS")) ->
             continue
         if symbol == name:
             symbol = ""
-        genes.append(Gene(locus=name, symbol=symbol, start=start, end=end, strand=strand))
+        seen_tags.add(name)
+        cds = cds_starts.get(name)
+        coding = None
+        if cds is not None and (cds[0], cds[1]) != (start, end):
+            coding = cds[1] if strand == "-" else cds[0]
+        genes.append(Gene(locus=name, symbol=symbol, start=start, end=end, strand=strand,
+                          cds_start=coding))
 
-    notes = [f"parsed {len(genes)} genes from {fmt.upper()} at {path}"]
+    notes = [f"parsed {len(genes)} genes from {fmt.upper()} at {path}", *notes_extra]
+    distinct = sum(1 for g in genes if g.cds_start is not None)
+    if distinct:
+        notes.append(f"{distinct} locus/loci whose CDS start differs from the gene start; "
+                     f"`c.` coordinates count from the CDS")
     if skipped:
         notes.append(f"{skipped} row(s) skipped for having no usable name or too few columns")
     if not any(g.strand in "+-" for g in genes):
