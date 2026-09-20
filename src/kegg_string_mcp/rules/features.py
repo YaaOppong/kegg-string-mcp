@@ -30,11 +30,35 @@ from kegg_string_mcp.rules.annotation import (
     Intergenic,
     is_locus_tag,
     normalise_locus,
+    strip_version,
 )
 
 CODING = "coding"
 INTERGENIC = "intergenic"
 UNRESOLVED = "unresolved"
+
+# How a producer names a non-coding region, mapped to what the name means.
+# SnpEff's effect vocabulary supplies these three, so they are the default rather
+# than a guess -- but they are a default, not a law: another variant caller will
+# use other words, and a caller can pass its own. When nothing matches, the
+# refusal names what was tried, so the next vocabulary is a configuration change
+# rather than someone else's bug.
+UPSTREAM, DOWNSTREAM, PAIR = "upstream", "downstream", "pair"
+PREFIXES: dict[str, str] = {
+    "upstream_": UPSTREAM,
+    "downstream_": DOWNSTREAM,
+    "intergenic_": PAIR,
+}
+
+# SnpEff calls an upstream_gene_variant within a window of the gene -- 5,000 bp
+# by default -- and 3,048 of H37Rv's 3,049 intergenic intervals are narrower than
+# that (median 81 bp). So `upstream_X` names a region that usually extends past
+# the gap and into the neighbouring gene. Resolving it to the gap is right about
+# the location and understates the extent, which the note says rather than the
+# coordinates pretending otherwise.
+_WINDOW_CAVEAT = ("the producer's upstream/downstream window is typically wider than this "
+                  "interval, so these coordinates are the intergenic part of that region "
+                  "rather than its full extent")
 
 
 @dataclass(frozen=True)
@@ -93,8 +117,9 @@ def _unresolved(label: str, note: str, candidates: tuple[str, ...] = ()) -> Feat
 class Resolver:
     """Resolves labels against one annotation, and remembers what it decided."""
 
-    def __init__(self, annotation: Annotation):
+    def __init__(self, annotation: Annotation, prefixes: dict[str, str] | None = None):
         self.annotation = annotation
+        self.prefixes = dict(PREFIXES if prefixes is None else prefixes)
         # Intergenic intervals addressable by their flanking pair with strand
         # suffixes ignored, so a gap named `Rv1482c-Rv1483` in one vocabulary
         # still resolves when the annotation spells a flank the other way.
@@ -109,9 +134,39 @@ class Resolver:
         label = label.strip()
         if not label:
             return _unresolved(label, "empty label")
+        # Longest prefix first, so `intergenic_` is not shadowed by a shorter one
+        # a caller happens to configure.
+        for prefix in sorted(self.prefixes, key=len, reverse=True):
+            if label.startswith(prefix):
+                return self._region(label, label[len(prefix):], self.prefixes[prefix])
         if "-" in label:
             return self._intergenic(label)
         return self._coding(label)
+
+    def _region(self, label: str, rest: str, kind: str) -> Feature:
+        """A prefixed region name: `upstream_X`, `downstream_X`, `intergenic_a-b`."""
+        if kind == PAIR:
+            return self._intergenic(label, rest)
+
+        target = self._coding(strip_version(rest))
+        if target.gene is None:
+            return _unresolved(
+                label, f"the gene named by this region does not resolve: {target.note}")
+
+        interval = (self.annotation.upstream_of(target.gene) if kind == UPSTREAM
+                    else self.annotation.downstream_of(target.gene))
+        if interval is None:
+            side = "5'" if kind == UPSTREAM else "3'"
+            return _unresolved(
+                label,
+                f"{target.gene.locus} has no intergenic interval {side} of it: its neighbour "
+                f"abuts or overlaps it, so a variant called {kind} of it lies inside that "
+                f"neighbour. This is a fact about the genome, not a failed lookup -- 830 of "
+                f"H37Rv's 4,008 genes are like this.")
+        return Feature(label, INTERGENIC, kind, interval=interval,
+                       note=(f"the interval {'5' if kind == UPSTREAM else '3'}' of "
+                             f"{target.gene.locus} ({target.gene.strand} strand); "
+                             f"{_WINDOW_CAVEAT}"))
 
     # -- coding --------------------------------------------------------------
 
@@ -119,6 +174,12 @@ class Resolver:
         gene = self.annotation.gene(label)
         if gene is not None:
             return Feature(label, CODING, "exact", gene=gene)
+
+        bare = strip_version(label)
+        if bare != label and self.annotation.gene(bare) is not None:
+            return Feature(label, CODING, "exact", gene=self.annotation.gene(bare),
+                           note="matched once the transcript version was stripped")
+        label = bare
 
         if is_locus_tag(label):
             hits = self.annotation.by_normalised(label)
@@ -139,16 +200,22 @@ class Resolver:
             return _unresolved(label, "the symbol names more than one gene in this annotation",
                                tuple(g.locus for g in by_symbol))
 
-        return _unresolved(label, "no locus tag or symbol in the supplied annotation matches")
+        tried = ", ".join(sorted(self.prefixes)) or "none"
+        return _unresolved(
+            label, f"no locus tag or symbol in the supplied annotation matches. If this names "
+                   f"a non-coding region, its prefix is not one this run recognises (tried: "
+                   f"{tried})")
 
     # -- intergenic ----------------------------------------------------------
 
-    def _intergenic(self, label: str) -> Feature:
-        interval = self.annotation.intergenic(label)
+    def _intergenic(self, label: str, body: str | None = None) -> Feature:
+        body = label if body is None else body
+        interval = self.annotation.intergenic(body)
         if interval is not None:
             return Feature(label, INTERGENIC, "exact", interval=interval)
 
-        left, _, right = label.partition("-")
+        left, _, right = body.partition("-")
+        left, right = strip_version(left), strip_version(right)
         if not left or not right:
             return _unresolved(label, "not a well-formed flanking pair")
 
@@ -186,7 +253,8 @@ class Coverage:
 
     def counts(self) -> dict[str, int]:
         out = {"total": len(self.features), CODING: 0, INTERGENIC: 0, UNRESOLVED: 0,
-               "exact": 0, "strand_suffix": 0, "symbol": 0, "flanking": 0, "ambiguous": 0}
+               "exact": 0, "strand_suffix": 0, "symbol": 0, "flanking": 0,
+               UPSTREAM: 0, DOWNSTREAM: 0, "ambiguous": 0}
         for feature in self.features.values():
             out[feature.kind] += 1
             if feature.matched_by in out:

@@ -65,6 +65,16 @@ def normalise_locus(tag: str) -> str:
     return match.group(1) if match else tag.strip()
 
 
+# SnpEff appends a transcript version to the gene part of a region name --
+# `upstream_Rv1482c.1`. Locus tags and gene symbols carry no dot, so a trailing
+# `.<digits>` is a version and nothing else.
+_VERSION = re.compile(r"\.\d+$")
+
+
+def strip_version(name: str) -> str:
+    return _VERSION.sub("", name.strip())
+
+
 def is_locus_tag(label: str) -> bool:
     return bool(_LOCUS_TAG.match(label.strip()))
 
@@ -149,6 +159,9 @@ class Annotation:
     _by_norm: dict[str, list[Gene]] = field(default_factory=dict, repr=False)
     _by_symbol: dict[str, list[Gene]] = field(default_factory=dict, repr=False)
     _intergenic: dict[str, Intergenic] = field(default_factory=dict, repr=False)
+    # Intervals by the locus on each side, for resolving `upstream_X`.
+    _by_left: dict[str, Intergenic] = field(default_factory=dict, repr=False)
+    _by_right: dict[str, Intergenic] = field(default_factory=dict, repr=False)
 
     def __post_init__(self) -> None:
         self.genes = sorted(self.genes, key=lambda g: (g.start, g.end, g.locus))
@@ -170,9 +183,11 @@ class Annotation:
         for left, right in zip(self.genes, self.genes[1:]):
             if right.start > left.end + 1:
                 name = f"{left.locus}-{right.locus}"
-                self._intergenic[name] = Intergenic(
-                    name=name, left=left, right=right,
-                    start=left.end + 1, end=right.start - 1)
+                interval = Intergenic(name=name, left=left, right=right,
+                                      start=left.end + 1, end=right.start - 1)
+                self._intergenic[name] = interval
+                self._by_left[left.locus] = interval
+                self._by_right[right.locus] = interval
             else:
                 overlapping += 1
         self.notes.append(
@@ -193,6 +208,20 @@ class Annotation:
 
     def intergenic(self, name: str) -> Intergenic | None:
         return self._intergenic.get(name.strip())
+
+    def upstream_of(self, gene: Gene) -> Intergenic | None:
+        """The interval immediately 5' of a gene, on that gene's own strand.
+
+        None when the neighbour abuts or overlaps it, which is not rare: 830 of
+        H37Rv's 4,008 genes have no gap 5' of them. That is a fact about the
+        genome and a different answer from "the gene was not found".
+        """
+        return (self._by_left.get(gene.locus) if gene.strand == "-"
+                else self._by_right.get(gene.locus))
+
+    def downstream_of(self, gene: Gene) -> Intergenic | None:
+        return (self._by_right.get(gene.locus) if gene.strand == "-"
+                else self._by_left.get(gene.locus))
 
     @property
     def intergenic_names(self) -> list[str]:

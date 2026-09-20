@@ -275,7 +275,22 @@ installed — so resolving them against a different gene list is how a locus
 silently becomes the wrong locus. BED and GFF/GTF are both read, the format from
 the shape of a row rather than the extension, and a GFF3's child rows (`CDS`,
 `rRNA`, `exon`) are folded into their parent locus rather than counted as
-separate genes. Measured against one real
+separate genes.
+
+Non-coding features are named differently by different producers. A pipeline
+collapsing SnpEff `ANN` fields emits `upstream_<gene>`, `downstream_<gene>` and
+`intergenic_<a>-<b>`, with a transcript version on the gene part
+(`upstream_Rv1482c.1`); another names the flanking pair directly. Both resolve,
+the version is stripped, and the prefix set is the caller's to override — a
+refusal names the prefixes it tried, so a new vocabulary is a configuration
+change rather than a silent loss.
+
+`upstream_X` resolves to the intergenic interval 5' of X *on X's own strand*,
+and says in its note that the producer's window is usually wider: SnpEff's
+default upstream window is 5,000 bp, and 3,048 of H37Rv's 3,049 intergenic
+intervals are narrower than that (median 81 bp). Where X abuts or overlaps its
+5' neighbour — 830 of 4,008 genes — there is no interval to resolve to, and the
+answer says so rather than reading as a failed lookup. Measured against one real
 2,903-label vocabulary, KEGG's curated list was missing 76 of them and disagreed
 with 1,346 more on the strand suffix. KEGG stays authoritative for pathways; the
 caller's annotation is authoritative for what a locus is and where it sits. Its

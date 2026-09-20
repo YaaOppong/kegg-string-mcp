@@ -37,6 +37,8 @@ def render(coverage: Coverage, annotation: Annotation, limit: int = 15) -> str:
         f"      via symbol          {counts['symbol']:,}",
         f"    intergenic            {counts[INTERGENIC]:,}",
         f"      via flanking pair   {counts['flanking']:,}",
+        f"      5' of a gene        {counts['upstream']:,}",
+        f"      3' of a gene        {counts['downstream']:,}",
         f"  unresolved              {counts['unresolved']:,}",
         f"    of which ambiguous    {counts['ambiguous']:,}  (refused, not guessed)",
     ]

@@ -372,3 +372,91 @@ def test_a_gene_whose_cds_matches_records_no_separate_start(gff3):
     on every file."""
     assert parse_annotation(gff3).gene("Rv0001").cds_start is None
     assert parse_annotation(gff3).gene("Rv0001").coding_start == 1
+
+
+# --- prefixed region names -------------------------------------------------
+#
+# A producer that collapses SnpEff ANN output names non-coding features
+# `upstream_<gene>`, `downstream_<gene>` and `intergenic_<a>-<b>`, with a
+# transcript version on the gene part. None of those is a flanking pair, so the
+# whole intergenic half of such a vocabulary resolved at zero.
+
+
+def test_a_transcript_version_is_stripped_from_the_gene_part(annotation):
+    """`upstream_Rv0003.1` is SnpEff's naming. Locus tags carry no dot, so a
+    trailing `.<digits>` is a version and nothing else."""
+    from kegg_string_mcp.rules.annotation import strip_version
+
+    assert strip_version("Rv1482c.1") == "Rv1482c"
+    assert strip_version("Rv1482c") == "Rv1482c"
+
+    feature = Resolver(annotation).resolve("upstream_Rv0003.1")
+    assert feature.kind == INTERGENIC
+    assert feature.interval.name == "Rv0002c-Rv0003"
+
+
+def test_upstream_is_read_on_the_genes_own_strand(annotation):
+    """5' is the lower coordinate on the forward strand and the higher one on the
+    reverse. Reading it the same way for both puts a promoter behind the gene."""
+    resolver = Resolver(annotation)
+
+    forward = resolver.resolve("upstream_Rv0003")       # + strand
+    assert forward.matched_by == "upstream"
+    assert (forward.interval.start, forward.interval.end) == (400, 449)
+
+    reverse = resolver.resolve("upstream_Rv0002c")      # - strand, diverging
+    assert (reverse.interval.start, reverse.interval.end) == (400, 449)
+
+    downstream = resolver.resolve("downstream_Rv0001")  # + strand
+    assert downstream.matched_by == "downstream"
+    assert downstream.interval.name == "Rv0001-Rv0002c"
+
+
+def test_a_prefixed_region_says_the_window_is_wider_than_the_interval(annotation):
+    """SnpEff calls an upstream variant within a window -- 5,000 bp by default --
+    and 3,048 of H37Rv's 3,049 intergenic intervals are narrower than that. The
+    coordinates are the intergenic part of the region, not its extent."""
+    feature = Resolver(annotation).resolve("upstream_Rv0003")
+    assert "wider than this interval" in feature.note
+
+
+def test_a_gene_with_no_gap_upstream_gets_its_own_answer(annotation):
+    """830 of H37Rv's 4,008 genes abut or overlap their 5' neighbour, so a variant
+    called upstream of them lies inside that neighbour. A fact about the genome,
+    and a different answer from 'not found'."""
+    feature = Resolver(annotation).resolve("upstream_Rv0004")   # overlaps Rv0003
+    assert feature.kind == UNRESOLVED
+    assert "no intergenic interval 5' of it" in feature.note
+    assert "inside that neighbour" in feature.note
+
+
+def test_an_intergenic_prefix_is_still_a_flanking_pair(annotation):
+    resolver = Resolver(annotation)
+    assert resolver.resolve("intergenic_Rv0001-Rv0002c").interval.name == "Rv0001-Rv0002c"
+    # Versions on both halves.
+    assert resolver.resolve("intergenic_Rv0001.1-Rv0002c.1").interval.name == "Rv0001-Rv0002c"
+
+
+def test_an_unrecognised_prefix_names_what_was_tried(annotation):
+    """A different caller will use different words. The refusal should make that
+    a configuration change rather than someone else's bug."""
+    feature = Resolver(annotation).resolve("sideways_Rv0001")
+    assert feature.kind == UNRESOLVED
+    assert "tried: downstream_, intergenic_, upstream_" in feature.note
+
+
+def test_the_prefix_set_is_the_callers_to_override(annotation):
+    """SnpEff's three are the default, not a law."""
+    resolver = Resolver(annotation, prefixes={"5prime_": "upstream"})
+    assert resolver.resolve("5prime_Rv0003").interval.name == "Rv0002c-Rv0003"
+    # ...and the defaults are then not in play, which the refusal says.
+    assert "tried: 5prime_" in resolver.resolve("upstream_Rv0003").note
+
+
+def test_a_promoter_by_orientation_is_distinguishable_from_a_stated_pair(annotation):
+    """One is asserted by the caller, the other inferred by us from strand. A
+    table that shows them the same way hides which assumption a row rests on."""
+    resolver = Resolver(annotation)
+    assert resolver.resolve("Rv0001-Rv0002c").matched_by == "exact"
+    assert resolver.resolve("intergenic_Rv0001c-Rv0002").matched_by == "flanking"
+    assert resolver.resolve("upstream_Rv0003").matched_by == "upstream"
