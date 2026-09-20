@@ -273,7 +273,20 @@ def _detect(first_row: list[str]) -> str:
 # Parent features: one row per locus, covering every biotype. Child rows (CDS,
 # exon, tRNA, rRNA) repeat their parent's locus tag and must not be counted again.
 GENE_LEVEL = ("gene", "pseudogene")
+# Files with no gene-level rows at all. Mycobrowser's H37Rv GFF is one: it emits
+# CDS, ncRNA, tRNA, rRNA and misc_RNA rows and no `gene` row anywhere, so taking
+# CDS alone would drop 141 real loci -- every RNA gene, `rrs` and `rrl` among
+# them. Regulatory rows (`promoter`, `-35_signal`, `-10_signal`) are excluded:
+# they carry a Locus value but name a part of a gene, not a gene.
+TRANSCRIPT_LEVEL = ("CDS", "ncRNA", "tRNA", "rRNA", "misc_RNA", "tmRNA")
 CODING = ("CDS",)
+
+# Where a locus tag hides, in preference order. NCBI writes `locus_tag`;
+# Mycobrowser writes `Locus` and puts the SYMBOL in `Name`, so reading `Name`
+# first would make every locus its own gene symbol -- fdxA rather than Rv2007c --
+# and no locus tag in the vocabulary would resolve.
+LOCUS_KEYS = ("locus_tag", "Locus", "gene_id", "ID", "Name", "gene_name")
+SYMBOL_KEYS = ("gene_name", "Name", "gene")
 
 
 def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Annotation:
@@ -304,14 +317,15 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Anno
     if fmt == "gff":
         present = {row[2] for row in rows if len(row) >= 9}
         if not (set(feature_types) & present):
-            # Prokka and some Ensembl bacterial dumps emit CDS rows and no gene
-            # rows. Falling back keeps those files usable; saying so keeps the
-            # coordinate meaning honest, since a CDS span is the translated
-            # region rather than the locus.
-            feature_types = CODING
+            # Mycobrowser, Prokka and some Ensembl bacterial dumps emit no
+            # gene-level rows. Falling back keeps those files usable; saying so
+            # keeps the coordinate meaning honest, since a CDS span is the
+            # translated region rather than the locus.
+            feature_types = tuple(f for f in TRANSCRIPT_LEVEL if f in present) or CODING
             notes_extra.append(
-                f"no {', '.join(GENE_LEVEL)} rows found; fell back to CDS rows, so spans are "
-                f"translated regions rather than gene extents")
+                f"no {', '.join(GENE_LEVEL)} rows found; read {', '.join(feature_types)} rows "
+                f"instead, so spans are transcribed or translated regions rather than gene "
+                f"extents")
         # Translation starts, by locus tag, for HGVS `c.` conversion.
         for row in rows:
             if len(row) < 9 or row[2] not in CODING:
@@ -329,14 +343,13 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Anno
             if feature_types and row[2] not in feature_types:
                 continue
             attrs = _attributes(row[8])
-            name = (attrs.get("locus_tag") or attrs.get("gene_id")
-                    or attrs.get("ID") or attrs.get("Name") or attrs.get("gene_name"))
+            name = next((attrs[k] for k in LOCUS_KEYS if attrs.get(k)), None)
             # One row per locus. A second row for a tag already seen is a child
             # feature or a duplicate, and admitting it makes every strand-suffix
             # lookup ambiguous against the gene's own other row.
             if name and name in seen_tags:
                 continue
-            symbol = attrs.get("gene_name") or attrs.get("Name") or attrs.get("gene") or ""
+            symbol = next((attrs[k] for k in SYMBOL_KEYS if attrs.get(k)), "")
             start, end, strand = int(row[3]), int(row[4]), row[6] or "."
         else:
             if len(row) < 4:

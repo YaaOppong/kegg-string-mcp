@@ -350,7 +350,8 @@ def test_a_cds_only_file_falls_back_and_says_so(tmp_path):
         "NC_000962.3\tProkka\tCDS\t300\t400\t.\t+\t0\tID=c2;locus_tag=Rv0003\n")
     annotation = parse_annotation(path)
     assert len(annotation.genes) == 2
-    assert any("fell back to CDS rows" in n for n in annotation.notes)
+    assert any("no gene, pseudogene rows found" in n for n in annotation.notes)
+    assert any("read CDS rows instead" in n for n in annotation.notes)
 
 
 def test_c_coordinates_count_from_the_translation_start(tmp_path):
@@ -501,3 +502,66 @@ def test_a_flanking_pair_tries_the_names_as_given_first(annotation):
     resolver = Resolver(annotation)
     assert resolver.resolve("Rv0001-Rv0002c").interval.name == "Rv0001-Rv0002c"
     assert resolver.resolve("intergenic_Rv0001.1-Rv0002c.1").interval.name == "Rv0001-Rv0002c"
+
+
+# --- Mycobrowser-shaped GFF ------------------------------------------------
+#
+# The TubercuList successor, and the fuller H37Rv annotation: 4,173 loci against
+# NCBI's 4,008. Structurally different in two ways that each broke parsing.
+
+MYCOBROWSER = """NC_000962.3\tMycobrowser_v5\tCDS\t100\t200\t.\t+\t\tLocus=Rv0001;Name=dnaA;Product=X
+NC_000962.3\tMycobrowser_v5\tCDS\t300\t400\t.\t-\t\tLocus=Rv0002c;Name=dnaN;Product=Y
+NC_000962.3\tMycobrowser_v5\tncRNA\t500\t560\t.\t+\t\tLocus=MTB000115;Name=ncRv10666;Product=Z
+NC_000962.3\tMycobrowser_v5\trRNA\t700\t800\t.\t+\t\tLocus=MTB000019;Name=rrs;Product=16S
+NC_000962.3\tMycobrowser_v5\ttRNA\t900\t980\t.\t+\t\tLocus=MTB000001;Name=alaT;Product=tRNA
+NC_000962.3\tMycobrowser_v5\tpromoter\t210\t240\t.\t+\t\tLocus=MTBp0001;Name=Prv0001
+"""
+
+
+@pytest.fixture
+def mycobrowser(tmp_path: Path) -> Path:
+    path = tmp_path / "H37Rv.gff"
+    path.write_text(MYCOBROWSER)
+    return path
+
+
+def test_the_locus_attribute_is_read_before_the_name(mycobrowser):
+    """Mycobrowser writes the tag in `Locus` and the SYMBOL in `Name`. Reading
+    `Name` first makes every locus its own gene symbol -- dnaA rather than
+    Rv0001 -- and no locus tag in a vocabulary resolves."""
+    annotation = parse_annotation(mycobrowser)
+    gene = annotation.gene("Rv0001")
+    assert gene is not None and gene.symbol == "dnaA"
+    assert Resolver(annotation).resolve("dnaA").gene.locus == "Rv0001"
+
+
+def test_rna_loci_survive_a_file_with_no_gene_rows(mycobrowser):
+    """Mycobrowser emits no `gene` row anywhere, so the fallback decides what
+    comes in. CDS alone would drop 141 real loci -- every RNA gene, rrs and rrl
+    among them."""
+    annotation = parse_annotation(mycobrowser)
+    assert {g.locus for g in annotation.genes} == {
+        "Rv0001", "Rv0002c", "MTB000115", "MTB000019", "MTB000001"}
+    assert Resolver(annotation).resolve("rrs").gene.locus == "MTB000019"
+    assert any("no gene, pseudogene rows found" in n for n in annotation.notes)
+
+
+def test_a_regulatory_row_is_not_a_gene(mycobrowser):
+    """`promoter`, `-35_signal` and `-10_signal` rows carry a Locus value but
+    name part of a gene, not a gene. Admitting them would put spurious loci
+    between real ones and change every intergenic interval around them."""
+    assert parse_annotation(mycobrowser).gene("MTBp0001") is None
+
+
+def test_a_tag_whose_locus_was_split_is_refused(tmp_path):
+    """`Rv2306c` normalises to `Rv2306`, which exists in neither annotation --
+    the locus was split into Rv2306A and Rv2306B between revisions. The trailing
+    letter is part of the name, so neither half is reachable by suffix
+    stripping, and guessing one would silently pick half a gene."""
+    path = tmp_path / "split.gff"
+    path.write_text(
+        "NC_000962.3\tMycobrowser_v5\tCDS\t100\t200\t.\t+\t\tLocus=Rv2306A;Name=a\n"
+        "NC_000962.3\tMycobrowser_v5\tCDS\t300\t400\t.\t+\t\tLocus=Rv2306B;Name=b\n")
+    feature = Resolver(parse_annotation(path)).resolve("Rv2306c")
+    assert feature.kind == UNRESOLVED
+    assert feature.candidates == ()

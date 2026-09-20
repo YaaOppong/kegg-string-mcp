@@ -277,6 +277,22 @@ the shape of a row rather than the extension, and a GFF3's child rows (`CDS`,
 `rRNA`, `exon`) are folded into their parent locus rather than counted as
 separate genes.
 
+Which annotation matters. On one real 2,903-label vocabulary:
+
+| Annotation | Loci | Labels resolved |
+|---|---|---|
+| Mycobrowser H37Rv v5 | 4,173 | 2,900 (99.9%) |
+| NCBI RefSeq `GCF_000195955.2` | 4,008 | 2,827 (97.4%) |
+| KEGG `mtu` gene list | 4,008 | 2,827 (97.4%) |
+
+Mycobrowser is read too, and it is shaped differently: no `gene` rows at all, the
+locus tag in a `Locus` attribute and the gene symbol in `Name`. Reading `Name`
+first would make every locus its own symbol — `dnaA` rather than `Rv0001` — and
+no locus tag would resolve. A file with no gene-level rows falls back to
+transcript-level ones (`CDS`, `ncRNA`, `tRNA`, `rRNA`), because CDS alone drops
+141 real loci including `rrs` and `rrl`; regulatory rows (`promoter`,
+`-35_signal`) carry a locus value but name part of a gene and are excluded.
+
 Non-coding features are named differently by different producers. A pipeline
 collapsing SnpEff `ANN` fields emits `upstream_<gene>`, `downstream_<gene>` and
 `intergenic_<a>-<b>`, with a transcript version on the gene part
