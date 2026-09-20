@@ -110,6 +110,11 @@ Space deployment: [`app/README_SPACE.md`](app/README_SPACE.md).
 
 ## Annotation pipeline
 
+`gar` is the pipeline's command. `pip install -e .` puts it on your PATH alongside
+`kegg-string-mcp` (the server); it runs `main()` in
+[`src/kegg_string_mcp/cli.py`](src/kegg_string_mcp/cli.py), which spawns the server as a
+subprocess and drives the agent loop against it.
+
 ```bash
 gar single katG                  # annotate one gene's function
 gar epistasis katG furA ahpC     # look for mechanistic links between genes
@@ -372,7 +377,7 @@ commands are installed by `pip install -e .`; the rest are run with `python`.
 | What | Command | Does |
 |---|---|---|
 | **MCP server** | `kegg-string-mcp` | Serves the seven tools over stdio. `src/kegg_string_mcp/server.py`. |
-| **Annotation pipeline** | `gar single \| epistasis \| eval` | Runs the agent loop against the server and validates the result. `src/kegg_string_mcp/cli.py`. |
+| **Annotation pipeline** | `gar single \| epistasis \| eval` | Runs the agent loop against the server and validates the result. Installed by `pip install -e .`. `src/kegg_string_mcp/cli.py`. |
 | **Run tables** | `gar table --runs runs --out tables` | Turns finished run stores into `genes.tsv`, `pairs.tsv`, `resistance_variants.tsv` and `lineage_markers.tsv`. No model, no network, re-runnable. `src/kegg_string_mcp/agent/tables.py`. |
 | **Corpus build** | `python scripts/build_corpus.py --extended --all-genes --tag tb41` | Routes genes by annotation coverage, resolves every alias, fetches abstracts, dedupes by PMID, chunks to 180 words, records which genes each passage names. Writes `data/corpus_<tag>.json` and `coverage_<tag>.json`. |
 | **Arm comparison** | `python scripts/run_comparison.py data/corpus_tb41.json --tag tb41` | Measures lexical, dense and hybrid retrieval over all gene pairs, then again over the pairs STRING has no edge for, which removes the circularity in scoring relevance by gene names. Writes `comparison_<tag>.json`. |
@@ -389,6 +394,9 @@ conda create -n kegg-string-mcp python=3.11 -y && conda activate kegg-string-mcp
 pip install -e ".[dev]"
 pytest
 ```
+
+That puts two commands on your PATH: `kegg-string-mcp`, the MCP server, and `gar`, the
+annotation pipeline.
 
 The server and the annotation pipeline need nothing beyond the base install. The
 retrieval arm is a separate extra, kept out of the default so the MCP server does not
