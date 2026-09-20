@@ -249,3 +249,29 @@ def test_the_run_summarises_by_primary_signature(sources, tmp_path):
     results = classify_all(parse_rules(path), sources)
     assert summarise(results)["by_primary_signature"] == {
         SIG_COMPENSATION: 1, SIG_RESISTANCE: 1, SIG_UNKNOWN: 1}
+
+
+def test_a_known_anchor_beside_an_unaccounted_locus_is_not_lost(sources, tmp_path):
+    """The signatures are facts about a rule, not exclusive branches. Written as
+    exclusive, `anchor + unaccounted locus` matched none of them and fell through
+    to an empty list -- losing the very category this exists to surface: a known
+    mechanism with something unexplained riding along."""
+    rule = _rule("Rv1908c=1 AND Rv9000=1", "R", tmp_path)
+    result = classify(rule, evidence_for(rule, sources))
+
+    assert set(result.signatures) == {SIG_UNKNOWN, SIG_RESISTANCE}
+    # Unknown leads, so the rule lands in the bucket a reviewer would open.
+    assert result.primary == SIG_UNKNOWN
+
+
+def test_no_rule_shape_ends_with_an_empty_signature_list(sources, tmp_path):
+    """Falling through to a default hides a shape the tests do not describe."""
+    shapes = ["Rv1908c=1", "Rv1908c=0", "Rv9000=0", "Rv0668=1", "Rv9000=1",
+              "Rv1908c=1 AND Rv9000=1", "Rv0667=1 AND Rv0668=1 AND Rv1908c=0"]
+    for index, conditions in enumerate(shapes):
+        for predicted in ("R", "S", ""):
+            rule = _rule(conditions, predicted, tmp_path, name=f"s{index}{predicted}.tsv")
+            result = classify(rule, evidence_for(rule, sources))
+            assert result.signatures, f"{conditions} -> {predicted} produced no signature"
+            assert result.primary in result.signatures
+            assert result.verdict

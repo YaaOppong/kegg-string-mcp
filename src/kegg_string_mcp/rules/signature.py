@@ -193,13 +193,19 @@ def classify(rule: Rule, conditions: list[ConditionEvidence],
         signatures.append(SIG_CONFOUNDED)
 
     if kind == RESISTANT:
+        # Each test states one fact about the rule and they are NOT exclusive: a
+        # rule can carry a known anchor AND a locus nothing accounts for, which is
+        # a known mechanism with something unexplained riding along. Written as
+        # mutually exclusive branches, that combination matched none of them and
+        # fell through to an empty signature list -- losing the category the whole
+        # exercise is aimed at.
+        if anchors:
+            signatures.append(SIG_RESISTANCE)
         if anchors and candidates:
             signatures.append(SIG_COMPENSATION)
         if negated_anchors and (anchors or candidates or unknowns):
             signatures.append(SIG_ALT_ROUTE)
-        if anchors and not candidates and not unknowns:
-            signatures.append(SIG_RESISTANCE)
-        if not anchors and (unknowns or candidates):
+        if unknowns or (candidates and not anchors):
             signatures.append(SIG_UNKNOWN)
     elif kind == SUSCEPTIBLE:
         if anchors:
@@ -212,7 +218,12 @@ def classify(rule: Rule, conditions: list[ConditionEvidence],
         signatures.append(SIG_UNKNOWN)
 
     result.signatures = [s for s in PRECEDENCE if s in signatures]
-    result.primary = result.signatures[0] if result.signatures else SIG_UNKNOWN
+    # Nothing may fall through silently: an empty list means a rule shape the
+    # tests above do not describe, and it should be visible as unknown rather
+    # than arrived at by default.
+    if not result.signatures:
+        result.signatures = [SIG_UNKNOWN]
+    result.primary = result.signatures[0]
     result.verdict = _verdict(result, kind)
     return result
 
