@@ -165,7 +165,7 @@ class Resolver:
         if kind == PAIR:
             return self._intergenic(label, rest)
 
-        target = self._coding(strip_version(rest))
+        target = self._coding(rest)
         if target.gene is None:
             return _unresolved(
                 label, f"the gene named by this region does not resolve: {target.note}")
@@ -188,15 +188,37 @@ class Resolver:
     # -- coding --------------------------------------------------------------
 
     def _coding(self, label: str) -> Feature:
+        """The whole label first; the version-stripped stem only if that fails.
+
+        H37Rv has ten gene symbols that end in what looks like a version --
+        TB7.3, TB15.3, TB31.7 and the rest of that family -- where the number is
+        part of the name. Stripping first maps TB7.3 to TB7, which is nothing.
+        The same shape as the strand-suffix rule: `.1` from SnpEff is a
+        transcript version, `.3` in TB7.3 is the gene.
+
+        Unambiguous in this annotation: no stripped stem is itself a real name,
+        so the two readings never both resolve and never compete.
+        """
+        found = self._coding_once(label)
+        if found.resolved:
+            return found
+
+        bare = strip_version(label)
+        if bare == label:
+            return found
+        retry = self._coding_once(bare)
+        if retry.resolved:
+            return Feature(label, retry.kind, retry.matched_by, gene=retry.gene,
+                           note=("matched once the transcript version was stripped"
+                                 + (f"; {retry.note}" if retry.note else "")))
+        # Report the failure of the name as given, which is the truer one.
+        return _unresolved(label, f"{found.note} (also tried without the trailing version, "
+                                  f"as {bare!r})", found.candidates)
+
+    def _coding_once(self, label: str) -> Feature:
         gene = self.annotation.gene(label)
         if gene is not None:
             return Feature(label, CODING, "exact", gene=gene)
-
-        bare = strip_version(label)
-        if bare != label and self.annotation.gene(bare) is not None:
-            return Feature(label, CODING, "exact", gene=self.annotation.gene(bare),
-                           note="matched once the transcript version was stripped")
-        label = bare
 
         if is_locus_tag(label):
             hits = self.annotation.by_normalised(label)
@@ -232,11 +254,15 @@ class Resolver:
             return Feature(label, INTERGENIC, "exact", interval=interval)
 
         left, _, right = body.partition("-")
-        left, right = strip_version(left), strip_version(right)
         if not left or not right:
             return _unresolved(label, "not a well-formed flanking pair")
 
-        hits = self._by_flanks.get((normalise_locus(left), normalise_locus(right)), [])
+        hits: list[Intergenic] = []
+        for one, two in ((left, right), (strip_version(left), strip_version(right))):
+            hits = self._by_flanks.get((normalise_locus(one), normalise_locus(two)), [])
+            if hits:
+                left, right = one, two
+                break
         if len(hits) == 1:
             return Feature(
                 label, INTERGENIC, "flanking", interval=hits[0],

@@ -280,8 +280,11 @@ separate genes.
 Non-coding features are named differently by different producers. A pipeline
 collapsing SnpEff `ANN` fields emits `upstream_<gene>`, `downstream_<gene>` and
 `intergenic_<a>-<b>`, with a transcript version on the gene part
-(`upstream_Rv1482c.1`); another names the flanking pair directly. Both resolve,
-the version is stripped, and the prefix set is the caller's to override — a
+(`upstream_Rv1482c.1`); another names the flanking pair directly. A trailing
+`.N` is tried as part of the name before it is tried as a version, because H37Rv
+has ten symbols — `TB7.3`, `TB15.3`, `TB31.7` and the rest of that family —
+where the number *is* the gene. Both resolve,
+the prefix set is the caller's to override — a
 refusal names the prefixes it tried, so a new vocabulary is a configuration
 change rather than a silent loss.
 

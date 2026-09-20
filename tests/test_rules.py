@@ -25,6 +25,7 @@ BED_ROWS = [
     ("AL123456", 959, 1000, "Rv0063a", ".", "+", ""),   # a DIFFERENT gene
     ("AL123456", 1099, 1150, "Rv0070", ".", "+", ""),
     ("AL123456", 1199, 1250, "Rv0070c", ".", "-", ""),  # collides once 'c' is dropped
+    ("AL123456", 1299, 1350, "Rv0080", ".", "+", "TB7.3"),  # the number IS the name
 ]
 
 
@@ -460,3 +461,43 @@ def test_a_promoter_by_orientation_is_distinguishable_from_a_stated_pair(annotat
     assert resolver.resolve("Rv0001-Rv0002c").matched_by == "exact"
     assert resolver.resolve("intergenic_Rv0001c-Rv0002").matched_by == "flanking"
     assert resolver.resolve("upstream_Rv0003").matched_by == "upstream"
+
+
+def test_a_symbol_that_ends_in_a_number_is_not_a_version(annotation):
+    """H37Rv has ten of these -- TB7.3, TB15.3, TB31.7 and the rest of that
+    family -- where the trailing number is part of the gene's name. Stripping
+    first maps TB7.3 to TB7, which is nothing. Same shape as the strand-suffix
+    rule: `.1` from SnpEff is a version, `.3` in TB7.3 is the gene."""
+    resolver = Resolver(annotation)
+
+    feature = resolver.resolve("TB7.3")
+    assert feature.kind == CODING and feature.matched_by == "symbol"
+    assert feature.gene.locus == "Rv0080"
+    assert "version was stripped" not in feature.note
+
+    # The stem alone is not a gene, and must not become one.
+    assert resolver.resolve("TB7").kind == UNRESOLVED
+
+
+def test_a_transcript_version_still_strips_when_nothing_else_matches(annotation):
+    """SnpEff's `Rv0001.1` must keep working. The fallback is only reached once
+    the name as given has failed."""
+    feature = Resolver(annotation).resolve("Rv0001.1")
+    assert feature.gene.locus == "Rv0001"
+    assert "version was stripped" in feature.note
+
+
+def test_a_label_matching_neither_reading_reports_both_attempts(annotation):
+    """So the refusal says what was tried rather than leaving the reader to guess
+    which reading failed."""
+    feature = Resolver(annotation).resolve("Rv9999.1")
+    assert feature.kind == UNRESOLVED
+    assert "also tried without the trailing version, as 'Rv9999'" in feature.note
+
+
+def test_a_flanking_pair_tries_the_names_as_given_first(annotation):
+    """Same rule for interval names: the pair as written, then the stripped
+    stems, so a versioned pair and an unversioned one both resolve."""
+    resolver = Resolver(annotation)
+    assert resolver.resolve("Rv0001-Rv0002c").interval.name == "Rv0001-Rv0002c"
+    assert resolver.resolve("intergenic_Rv0001.1-Rv0002c.1").interval.name == "Rv0001-Rv0002c"
