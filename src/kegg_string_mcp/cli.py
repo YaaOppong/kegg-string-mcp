@@ -4,6 +4,7 @@
     gar epistasis katG furA ahpC
     gar eval
     gar table                       # tabulate every finished run under runs/
+    gar features LABELS --annotation H37RV.bed    # do the feature labels resolve?
 """
 
 from __future__ import annotations
@@ -11,6 +12,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -45,13 +47,23 @@ async def _run_eval(evaluate, args):
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="gar", description=__doc__)
-    parser.add_argument("mode", choices=["single", "epistasis", "eval", "table"])
+    parser.add_argument("mode", choices=["single", "epistasis", "eval", "table", "features"])
     parser.add_argument("genes", nargs="*")
     parser.add_argument("--organism", default="mtu")
     parser.add_argument("--runs", type=Path, default=Path("runs"))
     parser.add_argument("--json", action="store_true", help="emit the full payload")
     parser.add_argument("--out", type=Path, default=Path("tables"),
                         help="where `table` writes its TSVs")
+    # The reference annotation is an input, never fetched: the features in a rule
+    # set are named by whichever annotation the variant caller used, and resolving
+    # them against a different gene list is how a locus becomes the wrong locus.
+    parser.add_argument("--annotation", type=Path,
+                        default=(Path(os.environ["KEGG_STRING_MCP_ANNOTATION"])
+                                 if os.environ.get("KEGG_STRING_MCP_ANNOTATION") else None),
+                        help="gene annotation (BED/GFF/GTF) the feature labels were named "
+                             "from; defaults to $KEGG_STRING_MCP_ANNOTATION")
+    parser.add_argument("--strict", action="store_true",
+                        help="`features` exits non-zero if any label fails to resolve")
     parser.add_argument("--direct", action="store_true",
                         help="dispatch tools in-process instead of over MCP (debugging)")
     args = parser.parse_args(argv)
@@ -67,6 +79,37 @@ def main(argv: list[str] | None = None) -> int:
             rows = max(0, sum(1 for _ in path.open(encoding="utf-8")) - 1)
             print(f"{label:9} {rows:5} rows  {path}")
         return 0
+
+    if args.mode == "features":
+        from kegg_string_mcp.rules import parse_annotation, parse_rules, resolve_all, vocabulary
+        from kegg_string_mcp.rules.report import render, write_tsv
+
+        if len(args.genes) != 1:
+            parser.error("features mode takes exactly one labels or rules file")
+        if args.annotation is None:
+            parser.error("features mode needs --annotation (or $KEGG_STRING_MCP_ANNOTATION)")
+
+        source = Path(args.genes[0])
+        try:
+            # A rule file states its own vocabulary, and that is the one that has
+            # to resolve: a separate labels list may name features no rule uses.
+            labels = vocabulary(parse_rules(source))
+            origin = f"{len(labels):,} distinct labels used by the rules in {source}"
+        except (ValueError, UnicodeDecodeError):
+            labels = [line.strip() for line in source.read_text().splitlines() if line.strip()]
+            origin = f"{len(labels):,} labels listed in {source}"
+
+        annotation = parse_annotation(args.annotation)
+        coverage = resolve_all(labels, annotation)
+        print(origin + "\n")
+        print(render(coverage, annotation))
+        if args.out and args.out != Path("tables"):
+            print(f"\nfeatures: {write_tsv(args.out, coverage)}")
+        # A report succeeds by reporting. Some labels not resolving is a finding
+        # about the inputs, not a failure of this step, and failing the process
+        # would stop a pipeline on something the report is there to show you.
+        # `--strict` is for the caller who wants the run gated on full coverage.
+        return 1 if (args.strict and coverage.unresolved()) else 0
 
     if args.mode == "eval":
         from kegg_string_mcp.evaluate import evaluate, render, write

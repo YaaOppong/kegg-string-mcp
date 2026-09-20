@@ -1,0 +1,270 @@
+"""Feature resolution and rule parsing. No network, no model.
+
+Every test here is a case a real vocabulary produced: 2,903 labels against a
+second annotation gave 1,346 strand-suffix disagreements in both directions, 76
+labels absent entirely, and a family of `Rv0063a`-style names where the trailing
+letter is part of the gene rather than a strand marker.
+"""
+
+from pathlib import Path
+
+import pytest
+
+from kegg_string_mcp.rules import parse_annotation, parse_rules, resolve_all, vocabulary
+from kegg_string_mcp.rules.annotation import normalise_locus
+from kegg_string_mcp.rules.features import CODING, INTERGENIC, UNRESOLVED, Resolver
+
+# chrom, 0-based start, end, name, score, strand, symbol
+BED_ROWS = [
+    ("AL123456", 99, 199, "Rv0001", ".", "+", ""),
+    ("AL123456", 299, 399, "Rv0002c", ".", "-", ""),
+    ("AL123456", 449, 549, "Rv0003", ".", "+", "rpoC"),
+    ("AL123456", 499, 600, "Rv0004", ".", "+", ""),     # overlaps Rv0003: no gap
+    ("AL123456", 699, 799, "Rv0005c", ".", "-", ""),
+    ("AL123456", 899, 950, "Rv0063", ".", "+", ""),
+    ("AL123456", 959, 1000, "Rv0063a", ".", "+", ""),   # a DIFFERENT gene
+    ("AL123456", 1099, 1150, "Rv0070", ".", "+", ""),
+    ("AL123456", 1199, 1250, "Rv0070c", ".", "-", ""),  # collides once 'c' is dropped
+]
+
+
+@pytest.fixture
+def bed(tmp_path: Path) -> Path:
+    path = tmp_path / "h37rv_genes.bed"
+    path.write_text("\n".join("\t".join(str(c) for c in row) for row in BED_ROWS) + "\n")
+    return path
+
+
+@pytest.fixture
+def annotation(bed: Path):
+    return parse_annotation(bed)
+
+
+# --- the annotation --------------------------------------------------------
+
+
+def test_bed_coordinates_become_one_based_inclusive(annotation):
+    """BED is 0-based half-open and GFF is 1-based inclusive. Mixing them shifts
+    every start by one, which stays invisible until a variant sits on a boundary
+    and lands in the wrong feature."""
+    gene = annotation.gene("Rv0001")
+    assert (gene.start, gene.end) == (100, 199)
+    assert gene.length == 100
+
+
+def test_the_format_is_detected_from_the_row_not_the_extension(tmp_path):
+    """A GTF named `.bed` would otherwise be read with the wrong coordinate
+    convention and every start would be one out."""
+    path = tmp_path / "misnamed.bed"
+    path.write_text(
+        "AL123456\tena\tgene\t100\t199\t.\t+\t.\tlocus_tag=Rv0001;gene_name=dnaA\n")
+    annotation = parse_annotation(path)
+    assert annotation.source_format == "gff"
+    # 1-based inclusive taken verbatim, not shifted as a BED start would be.
+    assert (annotation.gene("Rv0001").start, annotation.gene("Rv0001").end) == (100, 199)
+
+
+def test_the_annotation_records_its_own_hash(annotation, bed):
+    """Every HTTP response in a run store carries a content hash. The one local
+    file that decides what every feature means deserves the same, or a reference
+    update changes the results with nothing in the record to say so."""
+    assert len(annotation.sha256) == 64
+    assert annotation.summary()["genes"] == len(BED_ROWS)
+    assert annotation.summary()["path"] == str(bed)
+
+
+def test_overlapping_genes_produce_no_interval(annotation):
+    """Rv0003 and Rv0004 overlap, so that junction has no feature. That is a fact
+    about the genome, not a parsing failure -- around 900 H37Rv pairs overlap."""
+    assert annotation.intergenic("Rv0003-Rv0004") is None
+    assert annotation.intergenic("Rv0002c-Rv0003") is not None
+
+
+def test_intergenic_intervals_sit_between_the_flanking_genes(annotation):
+    interval = annotation.intergenic("Rv0001-Rv0002c")
+    assert (interval.start, interval.end) == (200, 299)
+    assert interval.width == 100
+
+
+def test_promoter_orientation_reads_both_flanks(annotation):
+    """A gap upstream of a forward-strand gene is where its promoter would be.
+    Divergent flanks qualify on both sides; convergent flanks on neither."""
+    divergent = annotation.intergenic("Rv0002c-Rv0003")     # <--  -->
+    assert {g.locus for g in divergent.promoter_of()} == {"Rv0002c", "Rv0003"}
+
+    convergent = annotation.intergenic("Rv0001-Rv0002c")    # -->  <--
+    assert convergent.promoter_of() == []
+
+
+# --- resolving coding labels -----------------------------------------------
+
+
+def test_a_label_differing_only_in_the_strand_suffix_still_resolves(annotation):
+    """1,346 of 2,879 real labels disagreed with a second annotation in the
+    trailing `c` alone, in both directions. A tag that differs only there is the
+    same gene."""
+    resolver = Resolver(annotation)
+
+    dropped = resolver.resolve("Rv0002")        # annotation says Rv0002c
+    assert dropped.kind == CODING and dropped.matched_by == "strand_suffix"
+    assert dropped.gene.locus == "Rv0002c"
+
+    added = resolver.resolve("Rv0001c")         # annotation says Rv0001
+    assert added.gene.locus == "Rv0001"
+
+
+def test_a_trailing_letter_that_is_not_c_names_a_different_gene(annotation):
+    """Rv0063a is not Rv0063. Stripping any trailing letter collides 96 times
+    across H37Rv; stripping only `c` collides zero times."""
+    assert normalise_locus("Rv0063a") == "Rv0063a"
+    assert normalise_locus("Rv0063c") == "Rv0063"
+
+    resolver = Resolver(annotation)
+    assert resolver.resolve("Rv0063a").gene.locus == "Rv0063a"
+    # ...and the `c` form still reaches Rv0063 without being confused by Rv0063a.
+    assert resolver.resolve("Rv0063c").gene.locus == "Rv0063"
+
+
+def test_an_ambiguous_tag_is_refused_rather_than_guessed(annotation):
+    """Rv0070 and Rv0070c both exist, so a label that normalises onto both cannot
+    be resolved. A silently wrong locus is worse than a missing one because
+    nothing downstream can detect it."""
+    feature = Resolver(annotation).resolve("Rv0070C")
+    assert feature.kind == UNRESOLVED
+    assert set(feature.candidates) == {"Rv0070", "Rv0070c"}
+    assert "more than one gene" in feature.note
+
+
+def test_an_exact_match_wins_over_the_loose_one(annotation):
+    """SnpEff falls back to a gene's name where the annotation has one, so a real
+    vocabulary mixes `Rv0001` with `rpoC`. Both must resolve, exact first."""
+    resolver = Resolver(annotation)
+    assert resolver.resolve("Rv0070c").matched_by == "exact"
+    assert resolver.resolve("rpoC").matched_by == "symbol"
+    assert resolver.resolve("rpoC").gene.locus == "Rv0003"
+
+
+def test_a_label_in_no_annotation_stays_unresolved(annotation):
+    feature = Resolver(annotation).resolve("Rv9999")
+    assert feature.kind == UNRESOLVED and feature.gene is None
+    assert "no locus tag or symbol" in feature.note
+
+
+# --- resolving intergenic labels -------------------------------------------
+
+
+def test_an_intergenic_label_resolves_by_its_flanking_pair(annotation):
+    resolver = Resolver(annotation)
+
+    exact = resolver.resolve("Rv0001-Rv0002c")
+    assert exact.kind == INTERGENIC and exact.matched_by == "exact"
+
+    # Same gap, both flanks spelled the other way round on the suffix.
+    loose = resolver.resolve("Rv0001c-Rv0002")
+    assert loose.kind == INTERGENIC and loose.matched_by == "flanking"
+    assert loose.interval.name == "Rv0001-Rv0002c"
+
+
+def test_flanking_genes_that_exist_but_do_not_abut_say_so(annotation):
+    """Distinguishable from a missing gene, and a different problem: the caller
+    named a gap the annotation does not have because the genes overlap."""
+    feature = Resolver(annotation).resolve("Rv0003-Rv0004")
+    assert feature.kind == UNRESOLVED
+    assert "not consecutive" in feature.note
+
+
+def test_coverage_counts_every_outcome(annotation):
+    coverage = resolve_all(
+        ["Rv0001", "Rv0002", "rpoC", "Rv0001-Rv0002c", "Rv0070C", "Rv9999"], annotation)
+    counts = coverage.counts()
+    assert counts["total"] == 6
+    assert counts[CODING] == 3          # exact, strand_suffix, symbol
+    assert counts[INTERGENIC] == 1
+    assert counts[UNRESOLVED] == 2      # the ambiguous one and the absent one
+    assert counts["ambiguous"] == 1
+    assert {f.label for f in coverage.unresolved()} == {"Rv0070C", "Rv9999"}
+
+
+# --- reading the rules -----------------------------------------------------
+
+
+RULES_TSV = """n_conditions\tconditions\tpredicted_class\tnumerosity\taccuracy\tcoverage\tprecision
+2\tRv0001=1 AND Rv0002c=0\tR\t6\t0.8125\t8.44\t0.8125
+3\tRv0001=1 AND rpoC=1 AND Rv0005c=0\tS\t11\t0.9524\t31.08\t0.9524
+"""
+
+
+@pytest.fixture
+def rules_file(tmp_path: Path) -> Path:
+    path = tmp_path / "rules.tsv"
+    path.write_text(RULES_TSV)
+    return path
+
+
+def test_conditions_keep_their_state(rules_file):
+    """`Rv0002c=0` asserts those isolates match the reference at that locus. Read
+    as a bare gene set it becomes "these genes are involved", which is a
+    different and wrong claim -- and it is where alternative-route patterns are."""
+    rules = parse_rules(rules_file)
+    assert [c.state for c in rules[0].conditions] == [1, 0]
+    assert rules[0].labels == ("Rv0001", "Rv0002c")
+    assert rules[0].k == 2
+
+
+def test_the_learners_statistics_pass_through_prefixed(rules_file):
+    """They are the scan's judgement of the rule, not anything computed here, and
+    the prefix is what keeps the two from being confused in a joined table."""
+    rules = parse_rules(rules_file)
+    assert rules[0].extras["scan_numerosity"] == "6"
+    assert rules[0].extras["scan_precision"] == "0.8125"
+    assert rules[1].predicted_class == "S"
+
+
+def test_a_condition_count_that_disagrees_is_reported(tmp_path):
+    """The learner says how many conditions it wrote. Disagreement means the
+    conjunction was split wrongly, and a rule one condition short still looks
+    like a valid rule."""
+    path = tmp_path / "bad.tsv"
+    path.write_text("n_conditions\tconditions\tpredicted_class\n"
+                    "3\tRv0001=1 AND Rv0002c=0\tR\n")
+    rule = parse_rules(path)[0]
+    assert any("says 3 but 2 condition(s) parsed" in p for p in rule.problems)
+
+
+def test_an_unparsable_condition_is_reported_not_dropped(tmp_path):
+    path = tmp_path / "odd.tsv"
+    path.write_text("conditions\tpredicted_class\nRv0001=1 AND Rv0002c>0\tR\n")
+    rule = parse_rules(path)[0]
+    assert rule.k == 1
+    assert any("unparsed condition" in p for p in rule.problems)
+
+
+def test_rule_identity_ignores_condition_order_and_spelling(rules_file):
+    """A conjunction is unordered, so two files listing the same rule differently
+    must give the same id. And `Rv0006=1` and `Rv0006c=1` are the same locus under
+    two spellings -- the same bug identity.py exists for, one level up."""
+    rules = parse_rules(rules_file)
+    first = rules[0]
+
+    reordered = type(first)(row=99, conditions=tuple(reversed(first.conditions)),
+                            predicted_class=first.predicted_class)
+    assert reordered.rule_id() == first.rule_id()
+
+    rename = {"Rv0001": "Rv0001", "Rv0002c": "Rv0002"}
+    assert first.rule_id(rename) != first.rule_id()
+    respelled = type(first)(row=100, conditions=first.conditions,
+                            predicted_class=first.predicted_class)
+    assert respelled.rule_id(rename) == first.rule_id(rename)
+
+
+def test_the_vocabulary_is_what_the_rules_actually_use(rules_file):
+    """A separate labels file may list features no rule ever mentions; this is the
+    set that has to resolve for a run to mean anything."""
+    assert vocabulary(parse_rules(rules_file)) == ["Rv0001", "Rv0002c", "rpoC", "Rv0005c"]
+
+
+def test_a_file_with_no_conditions_column_is_refused(tmp_path):
+    path = tmp_path / "wrong.tsv"
+    path.write_text("gene_a\tgene_b\tp\nRv0001\tRv0002c\t1e-8\n")
+    with pytest.raises(ValueError, match="no conditions column"):
+        parse_rules(path)
