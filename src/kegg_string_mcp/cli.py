@@ -6,6 +6,7 @@
     gar table                       # tabulate every finished run under runs/
     gar features LABELS --annotation H37RV.bed    # do the feature labels resolve?
     gar rules RULES.tsv --annotation H37RV.bed    # annotate loci, classify rules
+    gar gold --annotation H37RV.bed               # score the classifier on known rules
 """
 
 from __future__ import annotations
@@ -48,7 +49,7 @@ async def _run_eval(evaluate, args):
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="gar", description=__doc__)
-    parser.add_argument("mode", choices=["single", "epistasis", "eval", "table", "features", "rules"])
+    parser.add_argument("mode", choices=["single", "epistasis", "eval", "table", "features", "rules", "gold"])
     parser.add_argument("genes", nargs="*")
     parser.add_argument("--organism", default="mtu")
     parser.add_argument("--runs", type=Path, default=Path("runs"))
@@ -80,6 +81,30 @@ def main(argv: list[str] | None = None) -> int:
             rows = max(0, sum(1 for _ in path.open(encoding="utf-8")) - 1)
             print(f"{label:9} {rows:5} rows  {path}")
         return 0
+
+    if args.mode == "gold":
+        # Scores the classifier against rules whose answer is known. Needs the
+        # catalogue and the annotation, but no model and no STRING: the expected
+        # signatures turn on the catalogue, not on link evidence.
+        from kegg_string_mcp.cache import DiskCache
+        from kegg_string_mcp.http import PoliteClient
+        from kegg_string_mcp.lineage import LineageClient
+        from kegg_string_mcp.resistance import ResistanceClient
+        from kegg_string_mcp.rules.annotation import parse as parse_annotation
+        from kegg_string_mcp.rules.evidence import load_sources
+        from kegg_string_mcp.rules.gold import load, render, score, summary
+
+        if args.annotation is None:
+            parser.error("gold mode needs --annotation (or $KEGG_STRING_MCP_ANNOTATION)")
+        http = PoliteClient(DiskCache())
+        sources = load_sources(parse_annotation(args.annotation), ResistanceClient(http),
+                               LineageClient(http), args.organism)
+        gold = load()
+        scores = score(sources, gold)
+        print(render(scores, gold))
+        # Non-zero on a real failure, but not on a skip: a locus the supplied
+        # annotation lacks is a fact about the annotation, not a wrong answer.
+        return 1 if summary(scores)["failed"] else 0
 
     if args.mode == "rules":
         # The deterministic half: no model, no API key. Clients are the direct

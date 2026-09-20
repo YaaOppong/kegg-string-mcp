@@ -474,3 +474,66 @@ def test_the_drugs_a_locus_was_assessed_against_are_recorded(catalogue):
     assert rpoc.drugs == []
     assert rpoc.assessed_drugs == ["rifampicin"]
     assert "assessed against rifampicin" in rpoc.note
+
+
+# --- the gold set ----------------------------------------------------------
+
+
+def test_every_gold_rule_parses_and_states_an_expectation():
+    """An entry with no expectation is a rule that can never fail, which is worse
+    than no entry at all."""
+    from kegg_string_mcp.rules.gold import load
+
+    gold = load()
+    assert len(gold.rules) >= 10
+    for entry in gold.rules:
+        rule = entry.as_rule(1)
+        assert rule.conditions, f"{entry.id} parsed to no conditions"
+        assert not rule.problems, f"{entry.id}: {rule.problems}"
+        assert entry.expect_primary or entry.expect_contains or entry.expect_absent \
+            or entry.expect_cross_resistant, f"{entry.id} asserts nothing"
+        assert entry.why, f"{entry.id} has no rationale"
+
+
+def test_the_set_holds_a_negative_control():
+    """Positives test that the classifier finds what is there. Only a negative
+    tests that it declines what is not -- and the drug-concordance check has
+    nothing else guarding it."""
+    from kegg_string_mcp.rules.gold import load
+
+    negatives = [r for r in load().rules if r.kind == "negative"]
+    assert negatives
+    assert all(r.expect_absent for r in negatives)
+
+
+def test_the_scorer_reports_a_wrong_expectation(sources, tmp_path):
+    """A check that cannot fail is not a check."""
+    from kegg_string_mcp.rules.gold import GoldRule, score_one
+
+    wrong = GoldRule(id="deliberately-wrong", kind="positive",
+                     conditions="Rv1908c=1", predicted_class="R",
+                     expect_primary="known:compensation", why="katG alone is not compensation")
+    result = score_one(wrong, 1, sources)
+    assert not result.passed
+    assert "expected 'known:compensation'" in result.failures[0]
+
+
+def test_a_locus_the_annotation_lacks_is_skipped_not_failed(sources):
+    """The classifier was never given the chance to be right, so scoring it as a
+    miss blames the wrong component."""
+    from kegg_string_mcp.rules.gold import GoldRule, score_one
+
+    entry = GoldRule(id="absent-locus", kind="positive", conditions="Rv7777=1",
+                     predicted_class="R", expect_primary="known:resistance", why="n/a")
+    result = score_one(entry, 1, sources)
+    assert result.unresolved == ["Rv7777"]
+    assert not result.failures
+    assert not result.passed
+
+
+def test_the_gold_set_ships_with_the_wheel():
+    """`gold.py` reads a JSON file beside it, so a wheel without that file has
+    code that cannot run. Same trap as the evaluation gold set and the skill."""
+    pyproject = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
+    assert '"src/kegg_string_mcp/rules/gold_rules.json"' in pyproject
+    assert '"kegg_string_mcp/rules/gold_rules.json"' in pyproject

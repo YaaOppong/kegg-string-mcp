@@ -1,0 +1,109 @@
+{
+  "organism": "mtu",
+  "reference": "Canonical M. tuberculosis resistance pharmacology, checked against the WHO catalogue of mutations v2",
+  "validated_on": "2026-09-20",
+  "note": "Locus tags in H37Rv nomenclature. A failure here is not always a bug: the WHO catalogue is versioned, and a locus regraded upstream will change what the classifier can say. Read a failure as 'the sources no longer support this expectation' and check which changed.",
+  "rules": [
+    {
+      "id": "rpoB-rpoC-compensation",
+      "kind": "positive",
+      "conditions": "Rv0667=1 AND Rv0668=1",
+      "predicted_class": "R",
+      "expect_primary": "known:compensation",
+      "expect_contains": ["known:compensation"],
+      "why": "rpoC is the canonical rifampicin compensatory locus: rpoB resistance mutations impair RNA polymerase and rpoC changes restore fitness. Both are RNA polymerase subunits, so the functional link should carry evidence beyond literature co-mention."
+    },
+    {
+      "id": "katG-ahpC-compensation",
+      "kind": "positive",
+      "conditions": "Rv1908c=1 AND Rv2428=1",
+      "predicted_class": "R",
+      "expect_primary": "known:compensation",
+      "expect_contains": ["known:compensation"],
+      "why": "katG's day job is oxidative defence, so losing it weakens peroxide detoxification; ahpC promoter upregulation compensates. ahpC is catalogued under isoniazid with no graded-associated variant."
+    },
+    {
+      "id": "katG-rpoA-wrong-drug",
+      "kind": "negative",
+      "conditions": "Rv1908c=1 AND Rv3457c=1",
+      "predicted_class": "R",
+      "expect_absent": ["known:compensation"],
+      "why": "rpoA is a rifampicin compensatory locus and was never assessed against isoniazid, so it cannot be compensating for katG. The catalogue-shape test alone would call this compensation, and STRING will supply a weak co-mention edge to support it."
+    },
+    {
+      "id": "katG-rpoB-multidrug",
+      "kind": "positive",
+      "conditions": "Rv1908c=1 AND Rv0667=1",
+      "predicted_class": "R",
+      "expect_primary": "confounded:multidrug",
+      "expect_absent": ["known:compensation"],
+      "why": "MDR-TB is defined as resistance to at least isoniazid and rifampicin. These co-occur because the isolate received both drugs, not because the loci are related."
+    },
+    {
+      "id": "katG-inhA-co-selection",
+      "kind": "positive",
+      "conditions": "Rv1908c=1 AND Rv1484=1",
+      "predicted_class": "R",
+      "expect_primary": "confounded:co_selection",
+      "why": "Two loci conferring resistance to the same drug. Isoniazid selects either, so they co-occur under one drug's pressure rather than through a relationship."
+    },
+    {
+      "id": "inhA-promoter-alternative-route",
+      "kind": "positive",
+      "conditions": "Rv1908c=0 AND Rv1482c-Rv1483=1",
+      "predicted_class": "R",
+      "expect_primary": "known:alt_route",
+      "why": "Resistance while katG matches the reference: the fabG1-inhA promoter route taken instead. The interval carries the catalogue's inhA c.-770/-777/-778/-779 variants, which sit physically between Rv1482c and fabG1 despite being named for inhA."
+    },
+    {
+      "id": "katG-alone-known",
+      "kind": "positive",
+      "conditions": "Rv1908c=1",
+      "predicted_class": "R",
+      "expect_primary": "known:resistance",
+      "why": "The dominant isoniazid mechanism on its own. Recovers known pharmacology and should not be flagged as anything more."
+    },
+    {
+      "id": "inhA-cross-resistance",
+      "kind": "positive",
+      "conditions": "Rv1484=1",
+      "predicted_class": "R",
+      "expect_primary": "known:resistance",
+      "expect_cross_resistant": ["Rv1484"],
+      "why": "inhA is graded for isoniazid and ethionamide: one mechanism covering two drugs, because ethionamide is also a prodrug hitting InhA."
+    },
+    {
+      "id": "rpoB-susceptible-discordant",
+      "kind": "positive",
+      "conditions": "Rv0667=1",
+      "predicted_class": "S",
+      "expect_primary": "discordant",
+      "why": "A known rifampicin locus varying in susceptible isolates. Either the variant is not one of the graded ones, is suppressed, or is a calling artefact -- all worth surfacing."
+    },
+    {
+      "id": "fabG1-alone-unknown",
+      "kind": "positive",
+      "conditions": "Rv1483=1",
+      "predicted_class": "R",
+      "expect_primary": "unknown",
+      "why": "fabG1 is absent from the WHO catalogue, so it was never assessed. Must read as unknown rather than as a negative."
+    },
+    {
+      "id": "known-anchor-with-unaccounted-locus",
+      "kind": "positive",
+      "conditions": "Rv1908c=1 AND Rv1483=1",
+      "predicted_class": "R",
+      "expect_primary": "unknown",
+      "expect_contains": ["unknown", "known:resistance"],
+      "why": "A known mechanism with something unexplained beside it. Both facts must survive, and the unexplained one must lead so the rule lands in a bucket a reviewer opens."
+    },
+    {
+      "id": "gyrA-pncA-multidrug",
+      "kind": "positive",
+      "conditions": "Rv0006=1 AND Rv2043c=1",
+      "predicted_class": "R",
+      "expect_primary": "confounded:multidrug",
+      "why": "Fluoroquinolone and pyrazinamide resistance loci. Different drugs, so treatment history rather than any relationship between the loci."
+    }
+  ]
+}
