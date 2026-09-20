@@ -565,3 +565,35 @@ def test_a_tag_whose_locus_was_split_is_refused(tmp_path):
     feature = Resolver(parse_annotation(path)).resolve("Rv2306c")
     assert feature.kind == UNRESOLVED
     assert feature.candidates == ()
+
+
+def test_curated_fields_are_read_from_the_annotation_that_has_them(mycobrowser):
+    """A Mycobrowser GFF already carries these in its attributes, so reading them
+    costs nothing and needs no second file, no new tool and no fetch."""
+    annotation = parse_annotation(mycobrowser)
+    gene = annotation.gene("Rv0001")
+    assert gene.product == "X"
+    # A BED has no attributes, so the fields stay empty -- and empty means "this
+    # annotation did not say", never "uncategorised".
+    assert parse_annotation(mycobrowser).gene("Rv0002c").category == ""
+
+
+def test_repetitive_categories_are_flagged_for_variant_calling(tmp_path):
+    """PE/PPE (168 loci) and mobile elements (147) are repeated elsewhere in the
+    genome, so short reads misplace and a condition on one may be an artefact."""
+    from kegg_string_mcp.rules.annotation import MOBILE, PE_PPE
+
+    path = tmp_path / "cats.gff"
+    path.write_text(
+        f"NC_000962.3\tMB\tCDS\t100\t200\t.\t+\t\tLocus=Rv1806;Name=PE20;"
+        f"Functional_Category={PE_PPE}\n"
+        f"NC_000962.3\tMB\tCDS\t300\t400\t.\t+\t\tLocus=Rv0031;Functional_Category={MOBILE}\n"
+        f"NC_000962.3\tMB\tCDS\t500\t600\t.\t+\t\tLocus=Rv0002;"
+        f"Functional_Category=lipid metabolism\n")
+    annotation = parse_annotation(path)
+    assert annotation.gene("Rv1806").repetitive == "repetitive and GC-rich"
+    assert annotation.gene("Rv0031").repetitive == "a multi-copy mobile element"
+    # A category that is not a mapping hazard gets no caution.
+    assert annotation.gene("Rv0002").repetitive == ""
+    assert annotation.gene("Rv0002").category == "lipid metabolism"
+    assert any("are repetitive" in n for n in annotation.notes)

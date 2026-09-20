@@ -74,7 +74,8 @@ def write_tsv(path: Path, coverage: Coverage) -> Path:
 # stays readable and still parses.
 
 LOCUS_COLUMNS = [
-    "locus", "symbol", "labels", "product", "start", "end", "strand", "length",
+    "locus", "symbol", "labels", "product", "functional_category",
+    "start", "end", "strand", "length",
     "catalogue_status", "catalogue_drugs", "catalogued_variants", "associated_variants",
     "lineage_markers", "kegg_pathways", "string_partners", "linked_loci",
     "n_rules", "n_present", "n_absent", "with_anchor", "without_anchor", "notes",
@@ -108,7 +109,10 @@ def locus_row(annotation, links) -> dict:
         # the supplementary table to the rules needs to see that `Rv0006c` and
         # `Rv0006` are one row, not two.
         "labels": _join(annotation.labels),
-        "product": annotation.product or NA,
+        # UniProt's name first, the annotation's own Product where UniProt was
+        # not consulted or had nothing.
+        "product": annotation.product or (gene.product if gene else "") or NA,
+        "functional_category": (gene.category if gene and gene.category else NA),
         "start": gene.start if gene else NA,
         "end": gene.end if gene else NA,
         "strand": gene.strand if gene else NA,

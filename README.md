@@ -293,6 +293,19 @@ transcript-level ones (`CDS`, `ncRNA`, `tRNA`, `rRNA`), because CDS alone drops
 141 real loci including `rrs` and `rrl`; regulatory rows (`promoter`,
 `-35_signal`) carry a locus value but name part of a gene and are excluded.
 
+Where the annotation carries curated fields, they are read from it — no second
+file and no extra lookup. Mycobrowser's `Functional_Category` is the TubercuList
+scheme, has no equivalent in KEGG or UniProt, and does two things here. It names
+1,042 loci "conserved hypotheticals", which is a better answer than "absent from
+the catalogue" for an unexplained locus. And it identifies the 315 loci that are
+**repetitive** — 168 PE/PPE, 147 insertion sequences and phages — where short
+reads misplace, so a condition on one may be a mapping artefact rather than a
+variant. Rules touching them carry a caution.
+
+Mycobrowser is frozen: release 5 (June 2024) is the last, and the site states it
+is no longer maintained. That makes it a stable target rather than a moving one,
+but nothing here fetches it — you supply the file.
+
 Non-coding features are named differently by different producers. A pipeline
 collapsing SnpEff `ANN` fields emits `upstream_<gene>`, `downstream_<gene>` and
 `intergenic_<a>-<b>`, with a transcript version on the gene part

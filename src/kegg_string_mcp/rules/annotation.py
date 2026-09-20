@@ -91,6 +91,19 @@ class Gene:
     # Translation start, where the annotation distinguishes it from the gene's
     # 5' end. `c.` coordinates count from here, not from `start`.
     cds_start: int | None = None
+    # Present only when the supplied annotation carries them; empty otherwise,
+    # and empty means "this annotation did not say", never "uncategorised".
+    category: str = ""
+    product: str = ""
+
+    @property
+    def is_pe_ppe(self) -> bool:
+        return self.category == PE_PPE
+
+    @property
+    def repetitive(self) -> str:
+        """Why reads misplace here, or empty when they do not."""
+        return REPETITIVE.get(self.category, "")
 
     @property
     def length(self) -> int:
@@ -288,6 +301,26 @@ CODING = ("CDS",)
 LOCUS_KEYS = ("locus_tag", "Locus", "gene_id", "ID", "Name", "gene_name")
 SYMBOL_KEYS = ("gene_name", "Name", "gene")
 
+# Curated fields a Mycobrowser GFF already carries in its attributes, so reading
+# them costs nothing and needs no second file. `Functional_Category` is the
+# TubercuList scheme and has no equivalent in KEGG or UniProt: it names 1,042
+# loci "conserved hypotheticals", which is a better answer than "absent from the
+# catalogue" for an unexplained locus, and flags the 168 PE/PPE loci whose
+# repetitive sequence makes short-read variant calls unreliable.
+CATEGORY_KEYS = ("Functional_Category", "functional_category")
+PRODUCT_KEYS = ("Product", "product")
+
+# Categories whose loci deserve a warning rather than an interpretation, because
+# short-read variant calls in them are unreliable for the same underlying reason:
+# the sequence is repeated elsewhere in the genome, so reads misplace.
+#   PE/PPE (168 loci)   repetitive, GC-rich, the documented TB case
+#   insertion seqs and phages (147)  multi-copy mobile elements; IS6110 alone
+#                       varies in copy number between isolates
+PE_PPE = "PE/PPE"
+MOBILE = "insertion seqs and phages"
+REPETITIVE = {PE_PPE: "repetitive and GC-rich",
+              MOBILE: "a multi-copy mobile element"}
+
 
 def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Annotation:
     """Read a BED or GFF/GTF into 1-based inclusive `Gene` records.
@@ -350,6 +383,8 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Anno
             if name and name in seen_tags:
                 continue
             symbol = next((attrs[k] for k in SYMBOL_KEYS if attrs.get(k)), "")
+            category = next((attrs[k] for k in CATEGORY_KEYS if attrs.get(k)), "")
+            product = next((attrs[k] for k in PRODUCT_KEYS if attrs.get(k)), "")
             start, end, strand = int(row[3]), int(row[4]), row[6] or "."
         else:
             if len(row) < 4:
@@ -360,6 +395,7 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Anno
             # BED is 0-based half-open: [start, end) -> [start+1, end].
             start, end = int(row[1]) + 1, int(row[2])
             strand = row[5].strip() if len(row) > 5 and row[5].strip() in "+-." else "."
+            category = product = ""
         if not name:
             skipped += 1
             continue
@@ -371,9 +407,15 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Anno
         if cds is not None and (cds[0], cds[1]) != (start, end):
             coding = cds[1] if strand == "-" else cds[0]
         genes.append(Gene(locus=name, symbol=symbol, start=start, end=end, strand=strand,
-                          cds_start=coding))
+                          cds_start=coding, category=category, product=product))
 
     notes = [f"parsed {len(genes)} genes from {fmt.upper()} at {path}", *notes_extra]
+    categorised = sum(1 for g in genes if g.category)
+    if categorised:
+        repeats = sum(1 for g in genes if g.repetitive)
+        notes.append(f"{categorised:,} loci carry a functional category; {repeats} are "
+                     f"repetitive (PE/PPE or mobile elements), where short-read variant "
+                     f"calls are unreliable")
     distinct = sum(1 for g in genes if g.cds_start is not None)
     if distinct:
         notes.append(f"{distinct} locus/loci whose CDS start differs from the gene start; "

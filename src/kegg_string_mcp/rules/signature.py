@@ -113,11 +113,21 @@ class ConditionEvidence:
     def locus(self) -> str:
         return self.feature.locus or self.condition.label
 
+    @property
+    def category(self) -> str:
+        """The annotation's functional category, when it carries one."""
+        return self.feature.gene.category if self.feature.gene is not None else ""
+
+    @property
+    def repetitive(self) -> str:
+        return self.feature.gene.repetitive if self.feature.gene is not None else ""
+
     def to_dict(self) -> dict[str, Any]:
         return ({"label": self.label, "state": self.condition.state, "role": self.role,
                  "locus": self.locus, "kind": self.feature.kind,
                  "matched_by": self.feature.matched_by,
-                 "lineages": "|".join(self.lineages) or "NA"}
+                 "lineages": "|".join(self.lineages) or "NA",
+                 "functional_category": self.category or "NA"}
                 | self.catalogue.to_dict())
 
 
@@ -451,10 +461,25 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"resistance association. Either a mechanism the catalogue does not cover, or a "
             f"confound the structured sources cannot see. The catalogue covers 74 genes, so "
             f"absence here is unassessed rather than negative.")
+        described = [(c.locus, c.category) for c in unknowns + candidates if c.category]
+        if described:
+            # "Conserved hypothetical" is a better answer than silence: it says the
+            # locus is uncharacterised rather than merely uncatalogued.
+            parts.append("The annotation categorises "
+                         + "; ".join(f"{locus} as {category}" for locus, category in described)
+                         + ".")
 
     if SIG_ALIASED in result.signatures and result.primary != SIG_ALIASED:
         parts.append("Also possibly aliased: "
                      + "; ".join(f"{a}/{b}" for a, b, _, _ in result.aliased) + ".")
+    repeats = [(c.locus, c.repetitive) for c in result.conditions if c.repetitive]
+    if repeats:
+        parts.append(
+            "CAUTION: "
+            + "; ".join(f"{locus} is {why}" for locus, why in repeats)
+            + ". Reads misplace in such sequence, so a condition on one of these may reflect "
+              "a mapping artefact rather than a variant. Confirm the calls before "
+              "interpreting the rule.")
     if result.cross_resistant:
         parts.append(
             "Cross-resistance: "
