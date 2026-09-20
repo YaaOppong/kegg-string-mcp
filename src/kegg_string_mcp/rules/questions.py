@@ -201,3 +201,29 @@ def summarise(questions: list[Question]) -> dict[str, Any]:
             "by_kind": {kind: counts.get(kind, 0) for kind in ORDER if counts.get(kind)},
             "distinct_loci": len({q.locus for q in questions} | {q.partner for q in questions
                                                                  if q.partner})}
+
+
+def load(path) -> list[Question]:
+    """Read a questions.tsv back.
+
+    Stage B runs off the written artefact rather than re-deriving from the rules,
+    so what is retrieved for is exactly what was reported -- and a hand-edited
+    question file works without special handling.
+    """
+    import csv
+    from pathlib import Path
+
+    out: list[Question] = []
+    with Path(path).open(encoding="utf-8") as handle:
+        for row in csv.DictReader(handle, delimiter="\t"):
+            drugs = (row.get("drugs") or "").strip()
+            raised = (row.get("raised_by") or "").strip()
+            out.append(Question(
+                kind=(row.get("kind") or "").strip(),
+                locus=(row.get("locus") or "").strip(),
+                partner="" if (row.get("partner") or "NA").strip() == "NA"
+                        else row["partner"].strip(),
+                drugs=() if drugs in ("", "NA") else tuple(drugs.split("|")),
+                text=(row.get("question") or "").strip(),
+                raised_by=[] if raised in ("", "NA") else raised.split("|")))
+    return out

@@ -186,3 +186,13 @@ def write_questions(path: Path, questions) -> Path:
     file is ambiguous between that and a step that did not run.
     """
     return _write(path, QUESTION_COLUMNS, [q.to_dict() for q in questions])
+
+
+RETRIEVAL_COLUMNS = ["question_id", "kind", "source", "record_id", "year", "rank",
+                     "score", "title", "query"]
+
+
+def write_retrieval(path: Path, candidates) -> Path:
+    """One row per retrieved record. The store beside it holds the text a quote
+    is later checked against; this table is the index into it."""
+    return _write(path, RETRIEVAL_COLUMNS, [c.to_dict() for c in candidates])

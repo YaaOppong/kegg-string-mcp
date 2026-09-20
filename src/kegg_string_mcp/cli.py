@@ -7,6 +7,7 @@
     gar features LABELS --annotation H37RV.bed    # do the feature labels resolve?
     gar rules RULES.tsv --annotation H37RV.bed    # annotate loci, classify rules
     gar gold --annotation H37RV.bed               # score the classifier on known rules
+    gar retrieve QUESTIONS.tsv --annotation H37RV.bed   # fetch candidate papers
 """
 
 from __future__ import annotations
@@ -49,7 +50,7 @@ async def _run_eval(evaluate, args):
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="gar", description=__doc__)
-    parser.add_argument("mode", choices=["single", "epistasis", "eval", "table", "features", "rules", "gold"])
+    parser.add_argument("mode", choices=["single", "epistasis", "eval", "table", "features", "rules", "gold", "retrieve"])
     parser.add_argument("genes", nargs="*")
     parser.add_argument("--organism", default="mtu")
     parser.add_argument("--runs", type=Path, default=Path("runs"))
@@ -67,6 +68,8 @@ def main(argv: list[str] | None = None) -> int:
                                  if os.environ.get("KEGG_STRING_MCP_ANNOTATION") else None),
                         help="gene annotation (BED/GFF/GTF) the feature labels were named "
                              "from; defaults to $KEGG_STRING_MCP_ANNOTATION")
+    parser.add_argument("--limit", type=int, default=10,
+                        help="records to retrieve per question (`retrieve`)")
     parser.add_argument("--strict", action="store_true",
                         help="`features` exits non-zero if any label fails to resolve")
     parser.add_argument("--direct", action="store_true",
@@ -83,6 +86,46 @@ def main(argv: list[str] | None = None) -> int:
         for label, path in written.items():
             rows = max(0, sum(1 for _ in path.open(encoding="utf-8")) - 1)
             print(f"{label:9} {rows:5} rows  {path}")
+        return 0
+
+    if args.mode == "retrieve":
+        # Stage B of the literature layer: retrieval only, no model. Queries are
+        # gene-centric so that finding a passage is not made near-certain by the
+        # query having named the conclusion.
+        from kegg_string_mcp.agent.loop import new_store
+        from kegg_string_mcp.cache import DiskCache
+        from kegg_string_mcp.http import PoliteClient
+        from kegg_string_mcp.rules.annotation import parse as parse_annotation
+        from kegg_string_mcp.rules.questions import load as load_questions
+        from kegg_string_mcp.rules.report import write_retrieval
+        from kegg_string_mcp.rules.retrieve import Clients, retrieve
+
+        if len(args.genes) != 1:
+            parser.error("retrieve mode takes exactly one questions file")
+        if args.annotation is None:
+            parser.error("retrieve mode needs --annotation (or $KEGG_STRING_MCP_ANNOTATION)")
+
+        questions = load_questions(Path(args.genes[0]))
+        annotation = parse_annotation(args.annotation)
+        clients = Clients.live(PoliteClient(DiskCache()))
+        if clients.corpus is None:
+            print("note: no corpus configured, so every question goes to PubMed. Set "
+                  "KEGG_STRING_MCP_CORPUS to a corpus from scripts/build_corpus.py.")
+        store = new_store(args.out / "retrieval", "retrieve")
+        report = retrieve(questions, annotation, clients, store=store, limit=args.limit)
+
+        for note in report.notes:
+            print(f"note: {note}")
+        summary = report.summary()
+        print(f"\n{summary['questions']:,} question(s)")
+        print(f"  with at least one candidate   {summary['with_a_candidate']:,}")
+        print(f"  with none                     {summary['without']:,}")
+        print(f"  records retrieved             {summary['records']:,} "
+              f"({summary['distinct_records']:,} distinct)")
+        for source, count in sorted(summary["by_source"].items()):
+            print(f"    from {source:22} {count:,}")
+        print(f"\nretrieval: {write_retrieval(args.out / 'retrieval.tsv', report.candidates)}")
+        print(f"store:     {store.path}")
         return 0
 
     if args.mode == "gold":
