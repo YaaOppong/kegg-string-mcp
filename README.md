@@ -285,6 +285,17 @@ the version is stripped, and the prefix set is the caller's to override — a
 refusal names the prefixes it tried, so a new vocabulary is a configuration
 change rather than a silent loss.
 
+Two conditions in one rule can be driven by the same variant, and a rule saying
+so twice reads as epistasis. Three cases are reported, and they differ in
+certainty: both conditions naming one locus, resolved spans that intersect
+(H37Rv has 917 overlapping consecutive gene pairs — mostly 4 bp start/stop
+junctions, but 56 of at least 50 bp), and a region feature paired with the gene
+that bounds it. The last is **undetermined** rather than either answer: a caller
+reporting upstream variants within a window annotates a variant inside the
+flanking gene to both features, and whether any did is in the caller's distance
+field. The check keys on adjacency *in the rule*, so it fires on the pairing that
+can alias rather than on every gene with a near neighbour.
+
 `upstream_X` resolves to the intergenic interval 5' of X *on X's own strand*,
 and says in its note that the producer's window is usually wider: SnpEff's
 default upstream window is 5,000 bp, and 3,048 of H37Rv's 3,049 intergenic
@@ -316,6 +327,7 @@ leads:
 
 | Signature | Means |
 |---|---|
+| `confounded:feature_overlap` | two conditions one variant could satisfy — the same observation entered twice, which reads as epistasis |
 | `confounded:lineage` | every present locus marks one lineage — carried together by descent |
 | `known:compensation` | anchor + a candidate assessed against the **same drug**, ideally functionally linked |
 | `known:alt_route` | resistance while a canonical locus is at reference |

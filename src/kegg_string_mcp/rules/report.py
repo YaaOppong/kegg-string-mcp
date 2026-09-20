@@ -84,7 +84,7 @@ RULE_COLUMNS = [
     "rule_id", "row", "k", "predicted_class", "conditions", "roles",
     "primary_signature", "signatures", "anchors", "compensator_candidates",
     "unknown_loci", "negated_anchors", "unresolved", "links",
-    "shared_lineages", "shared_drugs", "verdict", "problems",
+    "shared_lineages", "shared_drugs", "aliased", "verdict", "problems",
 ]
 
 

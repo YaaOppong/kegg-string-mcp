@@ -84,6 +84,23 @@ class Feature:
         return self.kind != UNRESOLVED
 
     @property
+    def span(self) -> tuple[int, int] | None:
+        """Where this feature sits, for asking whether two of them can be the
+        same observation. None when nothing resolved."""
+        if self.gene is not None:
+            return (self.gene.start, self.gene.end)
+        if self.interval is not None:
+            return (self.interval.start, self.interval.end)
+        return None
+
+    @property
+    def flanks(self) -> tuple[str, str] | None:
+        """The loci bounding an interval, or None for a coding feature."""
+        if self.interval is None:
+            return None
+        return (self.interval.left.locus, self.interval.right.locus)
+
+    @property
     def locus(self) -> str:
         if self.gene is not None:
             return self.gene.locus

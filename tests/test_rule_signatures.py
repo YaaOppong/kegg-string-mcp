@@ -599,3 +599,79 @@ def test_the_same_gap_raised_by_many_rules_is_asked_once(sources, tmp_path):
     asked = [q for q in generate(signatures) if q.locus == "Rv9000"]
     assert len(asked) == 1
     assert len(asked[0].raised_by) == 3
+
+
+# --- one variant, two conditions -------------------------------------------
+
+
+def test_two_conditions_on_the_same_locus_are_aliased(sources, tmp_path):
+    """`Rv0667=1 AND rpoB=1` names one gene twice. A rule reads as two pieces of
+    evidence when it is one."""
+    from kegg_string_mcp.rules.signature import SAME_FEATURE, SIG_ALIASED
+
+    rule = _rule("Rv0667=1 AND rpoB=1", "R", tmp_path)
+    result = classify(rule, evidence_for(rule, sources))
+    assert result.primary == SIG_ALIASED
+    assert result.aliased[0][2] == SAME_FEATURE
+    assert "one observation entered twice" in result.verdict
+
+
+def test_overlapping_gene_spans_are_aliased(sources, tmp_path):
+    """H37Rv has 917 overlapping consecutive gene pairs -- mostly 4 bp start/stop
+    junctions, but 56 of at least 50 bp. A non-synonymous variant in the shared
+    span is annotated to both genes."""
+    from kegg_string_mcp.rules.signature import OVERLAPPING, SIG_ALIASED
+
+    # Rv1908c 8000-10221 and a gene overlapping its 3' end.
+    path = tmp_path / "ov.bed"
+    path.write_text("AL123456\t7999\t10221\tRv1908c\t.\t-\tkatG\n"
+                    "AL123456\t10100\t10500\tRv1909c\t.\t-\tfurA\n")
+    from kegg_string_mcp.rules import parse_annotation
+    from kegg_string_mcp.rules.catalogue import Catalogue
+    from kegg_string_mcp.rules.evidence import Sources
+
+    annotation = parse_annotation(path)
+    local = Sources(annotation=annotation, catalogue=Catalogue(CATALOGUE, annotation))
+    rule = _rule("Rv1908c=1 AND Rv1909c=1", "R", tmp_path, name="ov.tsv")
+    result = classify(rule, evidence_for(rule, local))
+
+    assert result.primary == SIG_ALIASED
+    kind, detail = result.aliased[0][2], result.aliased[0][3]
+    assert kind == OVERLAPPING and detail == "121bp shared"  # 10221 - 10101 + 1
+
+
+def test_a_region_and_its_own_flanking_gene_are_undetermined(sources, tmp_path):
+    """The case that matters: `upstream_X` and the gene bounding that region can
+    be driven by one variant if the caller used a window. Whether any did is in
+    the caller's distance field, which this run does not have -- so undetermined,
+    not a finding either way."""
+    from kegg_string_mcp.rules.signature import ADJACENT, SIG_ALIASED
+
+    rule = _rule("upstream_Rv1484=1 AND Rv1483=1", "R", tmp_path)
+    result = classify(rule, evidence_for(rule, sources))
+    assert result.primary == SIG_ALIASED
+    assert result.aliased[0][2] == ADJACENT
+    assert "POSSIBLY ALIASED" in result.verdict
+    assert "does not have, so this is undetermined" in result.verdict
+
+
+def test_a_region_and_an_unrelated_gene_are_not_aliased(sources, tmp_path):
+    """Keyed on adjacency in the rule, not on a window size, so it fires on the
+    pairing that can alias and not on every gene with a near neighbour."""
+    from kegg_string_mcp.rules.signature import SIG_ALIASED
+
+    rule = _rule("upstream_Rv1484=1 AND Rv0667=1", "R", tmp_path)
+    result = classify(rule, evidence_for(rule, sources))
+    assert result.aliased == []
+    assert SIG_ALIASED not in result.signatures
+
+
+def test_aliasing_leads_whatever_else_the_rule_looks_like(sources, tmp_path):
+    """A lineage confound says the co-occurrence has a non-biological cause.
+    Aliasing says there may be no co-occurrence to explain."""
+    from kegg_string_mcp.rules.signature import SIG_ALIASED, SIG_RESISTANCE
+
+    rule = _rule("Rv0667=1 AND rpoB=1", "R", tmp_path)
+    result = classify(rule, evidence_for(rule, sources))
+    assert result.signatures[0] == SIG_ALIASED
+    assert SIG_RESISTANCE in result.signatures

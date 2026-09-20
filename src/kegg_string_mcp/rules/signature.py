@@ -56,6 +56,10 @@ SIG_CONFOUNDED = "confounded:lineage"
 #                 katG + rpoB says "this isolate is MDR", not "these loci interact"
 SIG_CO_SELECTION = "confounded:co_selection"
 SIG_MULTIDRUG = "confounded:multidrug"
+# Two conditions that one variant can satisfy. Not a confounded relationship --
+# no relationship at all, the same observation entered twice, which reads as
+# epistasis because the rule names two features.
+SIG_ALIASED = "confounded:feature_overlap"
 SIG_DISCORDANT = "discordant"
 SIG_SUSCEPTIBLE = "known:susceptible_consistent"
 SIG_UNKNOWN = "unknown"
@@ -63,7 +67,9 @@ SIG_UNKNOWN = "unknown"
 # Most actionable first. A lineage confound leads because it undermines whatever
 # else the rule looks like: if both loci mark the same lineage, the isolates
 # carry both alleles by descent and the pattern needs no mechanism at all.
-PRECEDENCE = (SIG_CONFOUNDED, SIG_COMPENSATION, SIG_ALT_ROUTE, SIG_DISCORDANT,
+# Aliasing leads everything. A lineage confound says the co-occurrence has a
+# non-biological cause; aliasing says there may be no co-occurrence to explain.
+PRECEDENCE = (SIG_ALIASED, SIG_CONFOUNDED, SIG_COMPENSATION, SIG_ALT_ROUTE, SIG_DISCORDANT,
               SIG_UNKNOWN, SIG_MULTIDRUG, SIG_CO_SELECTION, SIG_RESISTANCE,
               SIG_SUSCEPTIBLE)
 
@@ -146,6 +152,8 @@ class RuleSignature:
     multidrug: list[tuple[str, str, list[str]]] = field(default_factory=list)
     # A single locus graded for more than one drug: one mechanism, several drugs.
     cross_resistant: list[tuple[str, list[str]]] = field(default_factory=list)
+    # (a, b, kind, detail) for condition pairs one variant could satisfy.
+    aliased: list[tuple[str, str, str, str]] = field(default_factory=list)
     verdict: str = ""
 
     def of_role(self, role: str) -> list[ConditionEvidence]:
@@ -165,8 +173,61 @@ class RuleSignature:
             "links": "|".join(f"{a}~{b}:{link.kind}" for a, b, link in self.links) or "NA",
             "shared_lineages": "|".join(self.shared_lineages) or "NA",
             "shared_drugs": "|".join(self.shared_drugs) or "NA",
+            "aliased": "|".join(f"{a}~{b}:{kind}" for a, b, kind, _ in self.aliased) or "NA",
             "verdict": self.verdict,
         }
+
+
+SAME_FEATURE = "same_feature"
+OVERLAPPING = "overlapping_spans"
+ADJACENT = "adjacent_undetermined"
+
+
+def aliasing(conditions: list[ConditionEvidence]) -> list[tuple[str, str, str, str]]:
+    """Condition pairs that one variant could satisfy.
+
+    Three kinds, and they are not equally certain:
+
+    * `same_feature` -- both resolve to the same locus or the same interval, so
+      any variant satisfying one satisfies the other. Certain.
+    * `overlapping_spans` -- the resolved spans intersect. H37Rv has 917
+      overlapping consecutive gene pairs, mostly 4 bp start/stop junctions but
+      56 of at least 50 bp, and a non-synonymous variant in the intersection is
+      annotated to both genes. Certain if such a variant exists.
+    * `adjacent_undetermined` -- one condition is a region 5' or 3' of a gene and
+      the other IS one of that region's flanking genes. A caller that reports
+      upstream variants within a window -- SnpEff's default is 5,000 bp against a
+      median H37Rv gap of 81 bp -- annotates a variant inside the flank to both
+      features. Whether any did is in the VCF's distance field, which this run
+      does not have, so the answer is undetermined rather than either.
+
+    Keyed on adjacency in the rule rather than on a window size, so it fires on
+    the specific pairing that can alias and not on every gene with a near
+    neighbour.
+    """
+    out: list[tuple[str, str, str, str]] = []
+    for index, first in enumerate(conditions):
+        for second in conditions[index + 1:]:
+            a, b = first.feature, second.feature
+            if not (a.resolved and b.resolved):
+                continue
+            if a.locus == b.locus:
+                out.append((first.label, second.label, SAME_FEATURE,
+                            f"both name {a.locus}"))
+                continue
+            left, right = a.span, b.span
+            if left and right and left[0] <= right[1] and right[0] <= left[1]:
+                width = min(left[1], right[1]) - max(left[0], right[0]) + 1
+                out.append((first.locus, second.locus, OVERLAPPING, f"{width}bp shared"))
+                continue
+            for region, gene in ((a, b), (b, a)):
+                flanks = region.flanks
+                if (flanks and gene.gene is not None and gene.gene.locus in flanks
+                        and region.matched_by in ("upstream", "downstream")):
+                    out.append((region.locus, gene.locus, ADJACENT,
+                                f"{gene.gene.locus} bounds this region"))
+                    break
+    return out
 
 
 def _shared(values: list[tuple[str, ...]]) -> list[str]:
@@ -213,6 +274,7 @@ def classify(rule: Rule, conditions: list[ConditionEvidence],
             result.multidrug.append((one, two, sorted(left | right)))
     result.cross_resistant = [(c.locus, sorted(c.catalogue.drugs))
                               for c in anchors if len(c.catalogue.drugs) > 1]
+    result.aliased = aliasing(conditions)
 
     # A compensator is only plausible for the drug its locus was catalogued
     # under. rpoA and rpoC are assessed for rifampicin only; pairing either with
@@ -234,6 +296,8 @@ def classify(rule: Rule, conditions: list[ConditionEvidence],
     signatures: list[str] = []
     kind = phenotype(rule.predicted_class)
 
+    if result.aliased:
+        signatures.append(SIG_ALIASED)
     if result.shared_lineages and len(present) > 1:
         signatures.append(SIG_CONFOUNDED)
 
@@ -300,7 +364,24 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"({', '.join(c.label for c in unresolved)}), so this rule is classified on the "
             f"rest and the classification may be incomplete.")
 
-    if result.primary == SIG_CONFOUNDED:
+    if result.primary == SIG_ALIASED:
+        certain = [x for x in result.aliased if x[2] != ADJACENT]
+        possible = [x for x in result.aliased if x[2] == ADJACENT]
+        if certain:
+            parts.append(
+                "ALIASED: " + "; ".join(f"{a} and {b} ({detail})" for a, b, _, detail in certain)
+                + ". One variant can satisfy both conditions, so this rule may be one "
+                  "observation entered twice rather than two pieces of evidence -- which is "
+                  "what makes it read as epistasis.")
+        if possible:
+            parts.append(
+                "POSSIBLY ALIASED: " + "; ".join(f"{a} and {b} ({detail})"
+                                                 for a, b, _, detail in possible)
+                + ". A caller reporting upstream variants within a window annotates a variant "
+                  "inside the flanking gene to both features. Whether any did is in the "
+                  "caller's distance field, which this run does not have, so this is "
+                  "undetermined rather than a finding either way.")
+    elif result.primary == SIG_CONFOUNDED:
         parts.append(
             f"CONFOUND: every locus the rule requires present contains positions defining "
             f"{', '.join(result.shared_lineages)}, so isolates of that lineage carry them "
@@ -371,6 +452,9 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"confound the structured sources cannot see. The catalogue covers 74 genes, so "
             f"absence here is unassessed rather than negative.")
 
+    if SIG_ALIASED in result.signatures and result.primary != SIG_ALIASED:
+        parts.append("Also possibly aliased: "
+                     + "; ".join(f"{a}/{b}" for a, b, _, _ in result.aliased) + ".")
     if result.cross_resistant:
         parts.append(
             "Cross-resistance: "
