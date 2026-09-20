@@ -15,6 +15,8 @@ is checked against what the tools returned.
 
 from kegg_string_mcp.rules.annotation import Annotation, Gene, Intergenic
 from kegg_string_mcp.rules.annotation import parse as parse_annotation
+from kegg_string_mcp.rules.catalogue import ABSENT, ANCHOR, ASSESSED_NEGATIVE, Catalogue
+from kegg_string_mcp.rules.evidence import Sources, classify_all, rename_map, summarise
 from kegg_string_mcp.rules.features import (
                                             CODING,
                                             INTERGENIC,
@@ -26,21 +28,33 @@ from kegg_string_mcp.rules.features import (
 )
 from kegg_string_mcp.rules.parse import Condition, Rule, vocabulary
 from kegg_string_mcp.rules.parse import parse as parse_rules
+from kegg_string_mcp.rules.signature import Link, RuleSignature, classify
 
 __all__ = [
+                                            "ABSENT",
+                                            "ANCHOR",
+                                            "ASSESSED_NEGATIVE",
                                             "CODING",
                                             "INTERGENIC",
                                             "UNRESOLVED",
                                             "Annotation",
+                                            "Catalogue",
                                             "Condition",
                                             "Coverage",
                                             "Feature",
                                             "Gene",
                                             "Intergenic",
+                                            "Link",
                                             "Resolver",
                                             "Rule",
+                                            "RuleSignature",
+                                            "Sources",
+                                            "classify",
+                                            "classify_all",
                                             "parse_annotation",
                                             "parse_rules",
+                                            "rename_map",
                                             "resolve_all",
+                                            "summarise",
                                             "vocabulary",
 ]
