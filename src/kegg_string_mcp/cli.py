@@ -5,6 +5,7 @@
     gar eval
     gar table                       # tabulate every finished run under runs/
     gar features LABELS --annotation H37RV.bed    # do the feature labels resolve?
+    gar rules RULES.tsv --annotation H37RV.bed    # annotate loci, classify rules
 """
 
 from __future__ import annotations
@@ -47,7 +48,7 @@ async def _run_eval(evaluate, args):
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="gar", description=__doc__)
-    parser.add_argument("mode", choices=["single", "epistasis", "eval", "table", "features"])
+    parser.add_argument("mode", choices=["single", "epistasis", "eval", "table", "features", "rules"])
     parser.add_argument("genes", nargs="*")
     parser.add_argument("--organism", default="mtu")
     parser.add_argument("--runs", type=Path, default=Path("runs"))
@@ -78,6 +79,60 @@ def main(argv: list[str] | None = None) -> int:
         for label, path in written.items():
             rows = max(0, sum(1 for _ in path.open(encoding="utf-8")) - 1)
             print(f"{label:9} {rows:5} rows  {path}")
+        return 0
+
+    if args.mode == "rules":
+        # The deterministic half: no model, no API key. Clients are the direct
+        # ones rather than the MCP dispatch, because nothing here is a tool call
+        # the model makes -- it is the pipeline fetching for itself.
+        from kegg_string_mcp.cache import DiskCache
+        from kegg_string_mcp.http import PoliteClient
+        from kegg_string_mcp.kegg import KeggClient
+        from kegg_string_mcp.lineage import LineageClient
+        from kegg_string_mcp.resistance import ResistanceClient
+        from kegg_string_mcp.rules.run import run
+        from kegg_string_mcp.string_db import StringClient
+        from kegg_string_mcp.uniprot import UniProtClient
+
+        if len(args.genes) != 1:
+            parser.error("rules mode takes exactly one rule file")
+        if args.annotation is None:
+            parser.error("rules mode needs --annotation (or $KEGG_STRING_MCP_ANNOTATION)")
+
+        http = PoliteClient(DiskCache())
+        kegg = KeggClient(http)
+
+        class _Clients:
+            pass
+
+        clients = _Clients()
+        clients.kegg, clients.string = kegg, StringClient(http)
+        clients.uniprot = UniProtClient(http)
+
+        # Pathway sizes decide whether a shared pathway is a link or a base rate.
+        # A failure here must not take the run down: without them, shared
+        # pathways are simply not reported as links.
+        try:
+            sizes, _ = kegg.pathway_sizes(args.organism)
+            index, _ = kegg.gene_index(args.organism)
+            genome_size = len(index.locus_tags)
+        except Exception as exc:                      # noqa: BLE001
+            sizes, genome_size = {}, 0
+            print(f"note: pathway sizes unavailable ({exc}); shared pathways not linked")
+
+        result = run(Path(args.genes[0]), args.annotation,
+                     args.out if args.out != Path("tables") else Path("tables"),
+                     clients=clients, resistance=ResistanceClient(http),
+                     lineage=LineageClient(http), organism=args.organism,
+                     genome_size=genome_size, pathway_sizes=sizes)
+
+        for note in result.notes:
+            print(f"note: {note}")
+        print(f"\n{len(result.annotations):,} loci, {len(result.rules):,} rules")
+        for name, count in result.summary["by_primary_signature"].items():
+            print(f"  {name:28} {count:5,}")
+        for label, path in result.written.items():
+            print(f"\n{label}: {path}")
         return 0
 
     if args.mode == "features":

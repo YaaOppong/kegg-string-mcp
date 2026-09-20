@@ -55,7 +55,12 @@ class CatalogueStatus:
     """What the catalogue holds for one locus or interval."""
 
     status: str                              # ANCHOR | ASSESSED_NEGATIVE | ABSENT
-    drugs: list[str] = field(default_factory=list)
+    drugs: list[str] = field(default_factory=list)          # associated FOR these
+    # The drugs the gene was assessed AGAINST, associated or not. A compensator
+    # is only plausible for the drug its locus was catalogued under: rpoA and
+    # rpoC are assessed for rifampicin only, ahpC for isoniazid only. Without
+    # this, any assessed-negative locus pairs with any anchor.
+    assessed_drugs: list[str] = field(default_factory=list)
     associated: int = 0
     catalogued: int = 0
     placed: list[Placed] = field(default_factory=list)   # intervals only
@@ -67,6 +72,7 @@ class CatalogueStatus:
 
     def to_dict(self) -> dict[str, Any]:
         return {"catalogue_status": self.status, "drugs": "|".join(self.drugs) or "NA",
+                "assessed_drugs": "|".join(self.assessed_drugs) or "NA",
                 "associated_variants": self.associated,
                 "catalogued_variants": self.catalogued,
                 "note": self.note}
@@ -135,18 +141,21 @@ class Catalogue:
                 ABSENT, note=(f"'{locus}' is not in the WHO catalogue, which covers 74 genes "
                               f"selected for resistance surveillance. Absence means the gene "
                               f"was not assessed, not that it is unrelated to resistance."))
+        assessed = sorted({v.drug for v in variants if v.drug})
         associated = [v for v in variants if v.associated]
         if associated:
             return CatalogueStatus(
                 ANCHOR, drugs=sorted({v.drug for v in associated if v.drug}),
+                assessed_drugs=assessed,
                 associated=len(associated), catalogued=len(variants),
                 note=(f"{len(associated)} of {len(variants)} catalogued variants are graded "
                       f"associated. The flag is about the GENE: a rule condition says the "
                       f"locus carries some qualifying variant, not that it carries one of "
                       f"these."))
         return CatalogueStatus(
-            ASSESSED_NEGATIVE, catalogued=len(variants),
-            note=(f"assessed: {len(variants)} catalogued variants, none graded associated. "
+            ASSESSED_NEGATIVE, catalogued=len(variants), assessed_drugs=assessed,
+            note=(f"assessed against {', '.join(assessed) or 'no drug'}: {len(variants)} "
+                  f"catalogued variants, none graded associated. "
                   f"This is the signature the known compensatory loci carry -- present "
                   f"because they recur in resistant isolates, graded as not conferring "
                   f"resistance themselves."))

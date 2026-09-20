@@ -28,6 +28,7 @@ looking at.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from itertools import combinations
 from typing import Any
 
 from kegg_string_mcp.rules.catalogue import ANCHOR, ASSESSED_NEGATIVE, CatalogueStatus
@@ -47,6 +48,14 @@ SIG_RESISTANCE = "known:resistance"
 SIG_COMPENSATION = "known:compensation"
 SIG_ALT_ROUTE = "known:alt_route"
 SIG_CONFOUNDED = "confounded:lineage"
+# Two more ways a rule can describe treatment history rather than biology. Both
+# are about anchors only: loci already known to confer resistance.
+#   co_selection  anchors sharing a drug -- treating with it selects them together
+#   multidrug     anchors for DIFFERENT drugs -- an MDR isolate, which in TB is
+#                 defined as resistance to at least isoniazid and rifampicin, so
+#                 katG + rpoB says "this isolate is MDR", not "these loci interact"
+SIG_CO_SELECTION = "confounded:co_selection"
+SIG_MULTIDRUG = "confounded:multidrug"
 SIG_DISCORDANT = "discordant"
 SIG_SUSCEPTIBLE = "known:susceptible_consistent"
 SIG_UNKNOWN = "unknown"
@@ -55,7 +64,8 @@ SIG_UNKNOWN = "unknown"
 # else the rule looks like: if both loci mark the same lineage, the isolates
 # carry both alleles by descent and the pattern needs no mechanism at all.
 PRECEDENCE = (SIG_CONFOUNDED, SIG_COMPENSATION, SIG_ALT_ROUTE, SIG_DISCORDANT,
-              SIG_UNKNOWN, SIG_RESISTANCE, SIG_SUSCEPTIBLE)
+              SIG_UNKNOWN, SIG_MULTIDRUG, SIG_CO_SELECTION, SIG_RESISTANCE,
+              SIG_SUSCEPTIBLE)
 
 RESISTANT = "R"
 SUSCEPTIBLE = "S"
@@ -127,6 +137,15 @@ class RuleSignature:
     links: list[tuple[str, str, Link]] = field(default_factory=list)
     shared_lineages: list[str] = field(default_factory=list)
     shared_drugs: list[str] = field(default_factory=list)
+    # (anchor, candidate, drugs) pairs where the candidate was assessed for a
+    # drug the anchor confers resistance to, and the pairs where it was not.
+    compensation_pairs: list[tuple[str, str, list[str]]] = field(default_factory=list)
+    drug_mismatched: list[tuple[str, str]] = field(default_factory=list)
+    # Anchor pairs sharing a drug, and anchor pairs for disjoint drugs.
+    co_selected: list[tuple[str, str, list[str]]] = field(default_factory=list)
+    multidrug: list[tuple[str, str, list[str]]] = field(default_factory=list)
+    # A single locus graded for more than one drug: one mechanism, several drugs.
+    cross_resistant: list[tuple[str, list[str]]] = field(default_factory=list)
     verdict: str = ""
 
     def of_role(self, role: str) -> list[ConditionEvidence]:
@@ -179,11 +198,37 @@ def classify(rule: Rule, conditions: list[ConditionEvidence],
     result.shared_lineages = _shared([c.lineages for c in present])
     result.shared_drugs = _shared([tuple(c.catalogue.drugs) for c in anchors])
 
+    # Pairwise rather than over all anchors at once: three anchors where two share
+    # isoniazid and the third is rifampicin is both co-selection and multidrug,
+    # and an intersection over all three would report neither.
+    for first, second in combinations(anchors, 2):
+        left, right = set(first.catalogue.drugs), set(second.catalogue.drugs)
+        both = sorted(left & right)
+        # Symmetric, so ordered by name rather than by the order the rule listed
+        # them: the same pair must produce the same row from either spelling.
+        one, two = sorted((first.locus, second.locus))
+        if both:
+            result.co_selected.append((one, two, both))
+        else:
+            result.multidrug.append((one, two, sorted(left | right)))
+    result.cross_resistant = [(c.locus, sorted(c.catalogue.drugs))
+                              for c in anchors if len(c.catalogue.drugs) > 1]
+
+    # A compensator is only plausible for the drug its locus was catalogued
+    # under. rpoA and rpoC are assessed for rifampicin only; pairing either with
+    # an isoniazid anchor and calling it compensation is a false positive the
+    # catalogue can rule out, and STRING will happily supply a weak edge between
+    # any two well-studied genes to support it.
     for anchor in anchors:
         for candidate in candidates:
+            shared = sorted(set(anchor.catalogue.drugs) & set(candidate.catalogue.assessed_drugs))
+            if shared:
+                result.compensation_pairs.append((anchor.locus, candidate.locus, shared))
+            else:
+                result.drug_mismatched.append((anchor.locus, candidate.locus))
             link = links.get((anchor.locus, candidate.locus)) or \
                 links.get((candidate.locus, anchor.locus))
-            if link is not None:
+            if link is not None and shared:
                 result.links.append((anchor.locus, candidate.locus, link))
 
     signatures: list[str] = []
@@ -201,7 +246,11 @@ def classify(rule: Rule, conditions: list[ConditionEvidence],
         # exercise is aimed at.
         if anchors:
             signatures.append(SIG_RESISTANCE)
-        if anchors and candidates:
+        if result.co_selected:
+            signatures.append(SIG_CO_SELECTION)
+        if result.multidrug:
+            signatures.append(SIG_MULTIDRUG)
+        if result.compensation_pairs:
             signatures.append(SIG_COMPENSATION)
         if negated_anchors and (anchors or candidates or unknowns):
             signatures.append(SIG_ALT_ROUTE)
@@ -258,17 +307,27 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"together by descent. Population structure explains the co-occurrence without "
             f"any mechanism, and must be excluded first.")
     elif result.primary == SIG_COMPENSATION:
-        link = (f" {_names(anchors)} and {_names(candidates)} are functionally linked ("
-                f"{', '.join(sorted({lk.kind for _, _, lk in result.links}))}), which is what "
-                f"distinguishes compensation from coincidence."
-                if result.links else
-                " No functional link between them was found in the structured sources, so this "
-                "is co-occurrence rather than evidence of compensation.")
+        kinds = {lk.kind for _, _, lk in result.links}
+        if "string_beyond_textmining" in kinds or "kegg_shared_pathway" in kinds \
+                or "adjacent" in kinds:
+            link = (f" They are linked by evidence beyond literature co-mention "
+                    f"({', '.join(sorted(kinds))}), which is what distinguishes compensation "
+                    f"from coincidence.")
+        elif kinds:
+            # STRING's textmining channel IS co-mention in papers, so an edge
+            # supported only by it is the same evidence a literature search would
+            # return -- not a second, independent line of it.
+            link = (" The only link between them is STRING's textmining channel, which is "
+                    "co-mention in papers rather than independent support.")
+        else:
+            link = (" No link between them was found in the structured sources, so this is "
+                    "co-occurrence rather than evidence of compensation.")
+        pairs = "; ".join(f"{a} + {b} ({', '.join(drugs)})"
+                          for a, b, drugs in result.compensation_pairs)
         parts.append(
-            f"Compensation-shaped: {_names(anchors)} carries graded-associated variants for "
-            f"{', '.join(result.shared_drugs or sorted({d for c in anchors for d in c.catalogue.drugs}))}, "
-            f"while {_names(candidates)} is catalogued with none graded associated -- the shape "
-            f"the known compensatory loci have.{link}")
+            f"Compensation-shaped: {pairs}. The first carries graded-associated variants for "
+            f"that drug; the second was assessed against it and graded as conferring none -- "
+            f"the shape the known compensatory loci have.{link}")
     elif result.primary == SIG_ALT_ROUTE:
         parts.append(
             f"Alternative route: the rule requires {_names(negated)} to match the reference "
@@ -280,16 +339,26 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"Discordant: {_names(anchors)} carries graded-associated variants yet the rule "
             f"predicts susceptibility. The variant driving the condition may not be one of the "
             f"graded ones, may be suppressed, or may be a calling artefact.")
+    elif result.primary == SIG_MULTIDRUG:
+        pairs = "; ".join(f"{a} + {b} ({', '.join(drugs)})" for a, b, drugs in result.multidrug)
+        parts.append(
+            f"Multi-drug: {pairs}. These loci confer resistance to different drugs, so an "
+            f"isolate carrying both is one that acquired resistance to each under combination "
+            f"therapy. In M. tuberculosis, MDR is DEFINED as resistance to at least isoniazid "
+            f"and rifampicin, so their co-occurrence is the diagnosis rather than a "
+            f"relationship between the loci.")
+    elif result.primary == SIG_CO_SELECTION:
+        pairs = "; ".join(f"{a} + {b} ({', '.join(drugs)})" for a, b, drugs in result.co_selected)
+        parts.append(
+            f"Co-selection: {pairs}. Treating with that drug selects every locus conferring "
+            f"resistance to it at once, so these co-occur across isolates under treatment "
+            f"rather than through any link between them.")
     elif result.primary == SIG_RESISTANCE:
         drugs = sorted({d for c in anchors for d in c.catalogue.drugs})
-        extra = (f" Both loci are associated with {', '.join(result.shared_drugs)}, so treating "
-                 f"with it selects them together: the rule may be recovering co-selection "
-                 f"rather than a relationship between the loci."
-                 if len(anchors) > 1 and result.shared_drugs else "")
         parts.append(
             f"Recapitulates the catalogue: {_names(anchors)} is graded resistance-associated "
             f"for {', '.join(drugs)}. The condition says the locus carries some qualifying "
-            f"variant, not that it carries a graded one.{extra}")
+            f"variant, not that it carries a graded one.")
     elif result.primary == SIG_SUSCEPTIBLE:
         parts.append(
             f"Consistent with susceptibility: the rule requires {_names(negated)} to match the "
@@ -302,6 +371,19 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"confound the structured sources cannot see. The catalogue covers 74 genes, so "
             f"absence here is unassessed rather than negative.")
 
+    if result.cross_resistant:
+        parts.append(
+            "Cross-resistance: "
+            + "; ".join(f"{locus} is graded for {', '.join(drugs)}" for locus, drugs in
+                        result.cross_resistant)
+            + " -- one mechanism covering several drugs, so resistance to all of them can "
+              "follow from this locus alone.")
+    if result.drug_mismatched:
+        parts.append(
+            "Not counted as compensation: "
+            + "; ".join(f"{a} + {b}" for a, b in result.drug_mismatched)
+            + " -- the second locus was never assessed against the drug the first confers "
+              "resistance to, so it cannot be compensating for it.")
     if SIG_CONFOUNDED in result.signatures and result.primary != SIG_CONFOUNDED:
         parts.append(f"Also lineage-confounded on {', '.join(result.shared_lineages)}.")
     return " ".join(parts)

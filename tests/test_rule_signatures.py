@@ -58,6 +58,7 @@ CATALOGUE = {
              _variant("katG", "c.-20A>G", "isoniazid", "Uncertain significance")],
     # The promoter case: named for inhA, physically upstream of it.
     "inhA": [_variant("inhA", "c.-15C>T", "isoniazid", "Assoc w R"),
+             _variant("inhA", "c.-15C>T", "ethionamide", "Assoc w R"),
              _variant("inhA", "p.Ser94Ala", "isoniazid", "Uncertain significance")],
 }
 
@@ -112,8 +113,10 @@ def test_an_upstream_variant_is_placed_in_front_of_a_forward_strand_gene(catalog
     interval = annotation.intergenic("Rv1483-Rv1484")
     status = catalogue.for_interval(interval)
     assert status.status == ANCHOR
-    assert [p.position for p in status.placed] == [20785]
-    assert status.drugs == ["isoniazid"]
+    # One catalogue row per (variant, drug), so a variant graded for two drugs
+    # places twice at the same base.
+    assert {p.position for p in status.placed} == {20785}
+    assert status.drugs == ["ethionamide", "isoniazid"]
     # The catalogue named it for inhA; it physically sits between fabG1 and inhA.
     assert status.placed[0].named_for == "inhA"
     assert "downstream of it" in status.note
@@ -167,7 +170,7 @@ def test_a_functional_link_is_what_separates_compensation_from_coincidence(sourc
     result = classify(rule, evidence_for(rule, sources), links)
     assert result.primary == SIG_COMPENSATION
     assert result.links and result.links[0][2].kind == "string_beyond_textmining"
-    assert "functionally linked" in result.verdict
+    assert "beyond literature co-mention" in result.verdict
 
 
 def test_an_anchor_alone_recapitulates_the_catalogue(sources, tmp_path):
@@ -181,10 +184,37 @@ def test_an_anchor_alone_recapitulates_the_catalogue(sources, tmp_path):
 def test_two_anchors_for_one_drug_read_as_co_selection(sources, tmp_path):
     """Treating with isoniazid selects every isoniazid locus at once, so their
     co-occurrence needs no relationship between them."""
+    from kegg_string_mcp.rules.signature import SIG_CO_SELECTION
+
     rule = _rule("Rv1908c=1 AND Rv1484=1", "R", tmp_path)
     result = classify(rule, evidence_for(rule, sources))
-    assert result.shared_drugs == ["isoniazid"]
-    assert "co-selection" in result.verdict
+    assert result.primary == SIG_CO_SELECTION
+    assert result.co_selected == [("Rv1484", "Rv1908c", ["isoniazid"])]
+    assert "Co-selection" in result.verdict
+    assert "selects every locus conferring resistance to it" in result.verdict
+
+
+def test_anchors_for_different_drugs_describe_a_multidrug_isolate(sources, tmp_path):
+    """katG + rpoB is MDR-TB by definition. The co-occurrence is the diagnosis,
+    not a relationship between the loci -- and those rules will be everywhere."""
+    from kegg_string_mcp.rules.signature import SIG_MULTIDRUG
+
+    rule = _rule("Rv1908c=1 AND Rv0667=1", "R", tmp_path)
+    result = classify(rule, evidence_for(rule, sources))
+    assert result.primary == SIG_MULTIDRUG
+    assert result.multidrug == [("Rv0667", "Rv1908c", ["isoniazid", "rifampicin"])]
+    assert result.co_selected == []
+    assert "MDR is DEFINED as resistance to at least isoniazid and rifampicin" in result.verdict
+
+
+def test_one_locus_graded_for_several_drugs_is_cross_resistance(sources, tmp_path):
+    """inhA is graded for isoniazid AND ethionamide: one mechanism, two drugs.
+    Different from two loci for two drugs, and worth saying separately."""
+    rule = _rule("Rv1484=1", "R", tmp_path)
+    result = classify(rule, evidence_for(rule, sources))
+    assert result.cross_resistant == [("Rv1484", ["ethionamide", "isoniazid"])]
+    assert "Cross-resistance" in result.verdict
+    assert "one mechanism covering several drugs" in result.verdict
 
 
 def test_a_negated_anchor_is_an_alternative_route(sources, tmp_path):
@@ -275,3 +305,172 @@ def test_no_rule_shape_ends_with_an_empty_signature_list(sources, tmp_path):
             assert result.signatures, f"{conditions} -> {predicted} produced no signature"
             assert result.primary in result.signatures
             assert result.verdict
+
+
+# --- per-locus annotation and links ----------------------------------------
+
+
+class _Result:
+    def __init__(self, payload): self._payload = payload
+    def model_dump(self): return self._payload
+
+
+class _Clients:
+    """Stand-ins. Any client may be absent or may raise; both must be survivable."""
+
+    def __init__(self, kegg=None, uniprot=None, string=None):
+        if kegg is not None: self.kegg = kegg
+        if uniprot is not None: self.uniprot = uniprot
+        if string is not None: self.string = string
+
+
+class _Kegg:
+    def __init__(self, records): self._records = records
+    def pathways(self, gene, organism="mtu"): return _Result({"records": self._records})
+
+
+class _Raises:
+    def pathways(self, *a, **k): raise ValueError("KEGG said no")
+    def protein(self, *a, **k): raise ValueError("UniProt said no")
+    def partners(self, *a, **k): raise ValueError("STRING said no")
+
+
+def test_a_locus_is_annotated_from_whichever_sources_answer(sources):
+    from kegg_string_mcp.rules.annotate import annotate_locus
+
+    clients = _Clients(kegg=_Kegg([{"record_id": "mtu00360", "name": "Phenylalanine"}]))
+    out = annotate_locus("Rv1908c", "katG", sources, clients)
+    assert out.pathways == [("mtu00360", "Phenylalanine")]
+    assert out.catalogue.status == ANCHOR
+    assert out.gene.length == 2222
+    # No UniProt or STRING client was supplied, so those fields stay empty and
+    # nothing pretends the lookup happened.
+    assert out.product == "" and out.partners == []
+
+
+def test_a_source_that_fails_does_not_take_the_locus_down(sources):
+    """Annotating a hundred loci must not be all-or-nothing."""
+    from kegg_string_mcp.rules.annotate import annotate_locus
+
+    out = annotate_locus("Rv1908c", "katG", sources, _Clients(kegg=_Raises()))
+    assert out.pathways == []
+    assert any("KEGG pathways unavailable" in n for n in out.notes)
+    assert out.catalogue.status == ANCHOR       # the free lookups still ran
+
+
+def test_only_pairs_that_share_a_rule_are_linked(sources, tmp_path):
+    """Asking about every pair of a hundred loci is thousands of lookups for
+    links no rule would use."""
+    from kegg_string_mcp.rules.annotate import co_occurring
+
+    path = tmp_path / "many.tsv"
+    path.write_text("conditions\tpredicted_class\n"
+                    "Rv0667=1 AND Rv0668=1\tR\n"
+                    "Rv1908c=1 AND Rv9000=1\tR\n")
+    rules = parse_rules(path)
+    rename = {label: label for rule in rules for label in rule.labels}
+    assert co_occurring(rules, rename) == {("Rv0667", "Rv0668"), ("Rv1908c", "Rv9000")}
+
+
+def test_link_kinds_keep_the_string_channel_apart(sources):
+    """An edge supported only by textmining is co-mention in papers -- the same
+    evidence a literature search finds, not a second line of it."""
+    from kegg_string_mcp.rules.annotate import LocusAnnotation, compute_links
+
+    annotations = {"Rv0667": LocusAnnotation("Rv0667"), "Rv0668": LocusAnnotation("Rv0668")}
+    edges = {("Rv0667", "Rv0668"): {"combined_score": 0.999,
+                                    "evidence_beyond_textmining": True}}
+    links = compute_links({("Rv0667", "Rv0668")}, annotations, sources, edges=edges)
+    assert [link.kind for link in links[("Rv0667", "Rv0668")]] == ["string_beyond_textmining"]
+
+    edges[("Rv0667", "Rv0668")]["evidence_beyond_textmining"] = False
+    links = compute_links({("Rv0667", "Rv0668")}, annotations, sources, edges=edges)
+    assert [link.kind for link in links[("Rv0667", "Rv0668")]] == ["string_textmining_only"]
+
+
+def test_a_container_pathway_is_not_a_link(sources):
+    """mtu01100 holds a sixth of the genome. Sharing it is a base rate."""
+    from kegg_string_mcp.rules.annotate import LocusAnnotation, compute_links
+
+    annotations = {
+        "Rv0667": LocusAnnotation("Rv0667", pathways=[("mtu01100", "Metabolic"),
+                                                      ("mtu00983", "Drug metabolism")]),
+        "Rv0668": LocusAnnotation("Rv0668", pathways=[("mtu01100", "Metabolic"),
+                                                      ("mtu00983", "Drug metabolism")])}
+    links = compute_links({("Rv0667", "Rv0668")}, annotations, sources,
+                          pathway_sizes={"mtu01100": 698, "mtu00983": 11}, genome_size=4008)
+    kinds = [link.detail for link in links[("Rv0667", "Rv0668")]]
+    assert any("mtu00983" in d for d in kinds)
+    assert not any("mtu01100" in d for d in kinds)
+
+
+def test_neighbouring_loci_are_reported_with_their_distance(sources, annotation):
+    """katG and furA are 6 bp apart. Reported as a distance, not as an operon
+    call -- that needs strand and expression evidence this does not have."""
+    from kegg_string_mcp.rules.annotate import LocusAnnotation, compute_links
+
+    annotations = {locus: LocusAnnotation(locus, gene=annotation.gene(locus))
+                   for locus in ("Rv1908c", "Rv1909c")}
+    links = compute_links({("Rv1908c", "Rv1909c")}, annotations, sources)
+    adjacent = [link for link in links[("Rv1908c", "Rv1909c")] if link.kind == "adjacent"]
+    assert adjacent and adjacent[0].detail == "178bp"
+
+
+def test_a_compensator_appears_beside_an_anchor_and_rarely_alone(sources, tmp_path):
+    """The strongest compensation evidence available comes from the rule set
+    itself, not from any external source, and costs one pass."""
+    from kegg_string_mcp.rules.annotate import LocusAnnotation, population_counts
+
+    path = tmp_path / "pop.tsv"
+    path.write_text("conditions\tpredicted_class\n"
+                    "Rv1908c=1 AND Rv0668=1\tR\n"       # anchor + candidate
+                    "Rv0667=1 AND Rv0668=1\tR\n"        # anchor + candidate
+                    "Rv0668=1 AND Rv9000=1\tR\n")       # candidate alone
+    rules = parse_rules(path)
+    rename = {label: label for rule in rules for label in rule.labels}
+    annotations = {locus: LocusAnnotation(locus)
+                   for locus in ("Rv1908c", "Rv0667", "Rv0668", "Rv9000")}
+    population_counts(rules, rename, {"Rv1908c", "Rv0667"}, annotations)
+
+    candidate = annotations["Rv0668"]
+    assert candidate.n_present == 3
+    assert candidate.with_anchor == 2
+    assert candidate.without_anchor == 1
+
+
+def test_a_compensator_for_another_drug_is_not_compensation(sources, tmp_path):
+    """katG confers isoniazid resistance; rpoC was only ever assessed against
+    rifampicin. Pairing them and calling it compensation is a false positive the
+    catalogue can rule out -- and STRING will supply a weak edge between any two
+    well-studied genes to support it if nothing checks."""
+    rule = _rule("Rv1908c=1 AND Rv0668=1", "R", tmp_path)
+    links = {("Rv1908c", "Rv0668"): Link("string_textmining_only", "0.512")}
+    result = classify(rule, evidence_for(rule, sources), links)
+
+    assert result.primary != SIG_COMPENSATION
+    assert result.compensation_pairs == []
+    assert result.drug_mismatched == [("Rv1908c", "Rv0668")]
+    assert "never assessed against the drug" in result.verdict
+
+
+def test_a_textmining_only_edge_is_not_called_a_functional_link(sources, tmp_path):
+    """STRING's textmining channel IS co-mention in papers, so an edge supported
+    only by it is the same evidence a literature search returns -- not a second,
+    independent line of it."""
+    rule = _rule("Rv0667=1 AND Rv0668=1", "R", tmp_path)
+    links = {("Rv0667", "Rv0668"): Link("string_textmining_only", "0.910")}
+    result = classify(rule, evidence_for(rule, sources), links)
+
+    assert result.primary == SIG_COMPENSATION
+    assert "co-mention in papers rather than independent support" in result.verdict
+    assert "beyond literature co-mention" not in result.verdict
+
+
+def test_the_drugs_a_locus_was_assessed_against_are_recorded(catalogue):
+    """Not the same as the drugs it is associated with: an assessed-negative
+    locus has the second empty and the first populated, and that is what makes
+    the concordance check possible."""
+    rpoc = catalogue.for_locus("Rv0668", "rpoC")
+    assert rpoc.drugs == []
+    assert rpoc.assessed_drugs == ["rifampicin"]
+    assert "assessed against rifampicin" in rpoc.note

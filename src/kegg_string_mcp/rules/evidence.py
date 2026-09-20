@@ -37,6 +37,8 @@ class Sources:
     annotation: Annotation
     catalogue: Catalogue
     barcode: list[LineageSnp] = field(default_factory=list)
+    organism: str = "mtu"
+    notes: list[str] = field(default_factory=list)
 
     _resolver: Resolver | None = None
     _cache: dict[str, tuple[Feature, CatalogueStatus, tuple[str, ...]]] = \
@@ -73,6 +75,38 @@ class Sources:
             lineages = ()
         self._cache[label] = (feature, status, lineages)
         return self._cache[label]
+
+
+def load_sources(annotation: Annotation, resistance: Any, lineage: Any = None,
+                 organism: str = "mtu") -> Sources:
+    """Fetch the two TB-specific sources and build a `Sources`.
+
+    Both are single files, fetched once and cached on disk. The lineage barcode
+    was previously never loaded -- `lineages_in` worked but every real run saw an
+    empty list, so the population-structure confound could not fire.
+
+    Fail-soft, separately: a missing barcode must not cost the catalogue, and a
+    run without one reports that it could not check the confound rather than
+    reporting that there is none.
+    """
+    from kegg_string_mcp.lineage import BARCODE_URL, parse_barcode
+    from kegg_string_mcp.rules.catalogue import Catalogue
+
+    notes: list[str] = []
+    catalogue_rows, _ = resistance.catalogue()
+    sources = Sources(annotation=annotation, catalogue=Catalogue(catalogue_rows, annotation),
+                      organism=organism, notes=notes)
+    if lineage is None:
+        notes.append("no lineage client supplied, so population structure was not checked")
+        return sources
+    try:
+        sources.barcode = parse_barcode(lineage.http.get(BARCODE_URL).body)
+        notes.append(f"lineage barcode: {len(sources.barcode)} defining positions")
+    except Exception as exc:                       # noqa: BLE001
+        notes.append(f"lineage barcode unavailable ({type(exc).__name__}: {exc}), so the "
+                     f"population-structure confound could not be checked. This is not "
+                     f"evidence that no rule is confounded.")
+    return sources
 
 
 def evidence_for(rule: Rule, sources: Sources) -> list[ConditionEvidence]:
