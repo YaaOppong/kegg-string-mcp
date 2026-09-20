@@ -429,7 +429,10 @@ def test_a_gene_with_no_gap_upstream_gets_its_own_answer(annotation):
     feature = Resolver(annotation).resolve("upstream_Rv0004")   # overlaps Rv0003
     assert feature.kind == UNRESOLVED
     assert "no intergenic interval 5' of it" in feature.note
-    assert "inside that neighbour" in feature.note
+    # The bounding gene is named -- by symbol where it has one -- rather than
+    # left as "its neighbour", which is what a five-cohort run showed it saying.
+    assert "rpoC (Rv0003) abuts or overlaps it" in feature.note
+    assert feature.bounded_by == "Rv0003"
 
 
 def test_an_intergenic_prefix_is_still_a_flanking_pair(annotation):

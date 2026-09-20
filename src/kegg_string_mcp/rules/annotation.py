@@ -236,6 +236,22 @@ class Annotation:
         return (self._by_right.get(gene.locus) if gene.strand == "-"
                 else self._by_left.get(gene.locus))
 
+    def neighbour(self, gene: Gene, side: str) -> Gene | None:
+        """The gene next to this one, 5' or 3' on its own strand.
+
+        By position in the sorted list, so where genes overlap the nearest
+        neighbour is the one whose start is adjacent -- good enough to name which
+        gene a region without a gap falls into, which is what this is for.
+        """
+        try:
+            index = self.genes.index(gene)
+        except ValueError:
+            return None
+        forward = gene.strand != "-"
+        step = -1 if (side == "5" and forward) or (side == "3" and not forward) else 1
+        target = index + step
+        return self.genes[target] if 0 <= target < len(self.genes) else None
+
     @property
     def intergenic_names(self) -> list[str]:
         return list(self._intergenic)

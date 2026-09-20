@@ -625,7 +625,7 @@ def test_overlapping_gene_spans_are_aliased(sources, tmp_path):
     # Rv1908c 8000-10221 and a gene overlapping its 3' end.
     path = tmp_path / "ov.bed"
     path.write_text("AL123456\t7999\t10221\tRv1908c\t.\t-\tkatG\n"
-                    "AL123456\t10100\t10500\tRv1909c\t.\t-\tfurA\n")
+                    "AL123456\t10100\t10500\tRv1909c\t.\t+\tfurA\n")
     from kegg_string_mcp.rules import parse_annotation
     from kegg_string_mcp.rules.catalogue import Catalogue
     from kegg_string_mcp.rules.evidence import Sources
@@ -675,3 +675,56 @@ def test_aliasing_leads_whatever_else_the_rule_looks_like(sources, tmp_path):
     result = classify(rule, evidence_for(rule, sources))
     assert result.signatures[0] == SIG_ALIASED
     assert SIG_RESISTANCE in result.signatures
+
+
+def _overlapping(tmp_path: Path):
+    """An annotation where Rv1909c's 5' neighbour overlaps it, so the region 5'
+    of Rv1909c has no interval and lies inside katG. Every unresolved label in a
+    real five-cohort run was this shape, and all seven sampled overlapped."""
+    from kegg_string_mcp.rules import parse_annotation
+    from kegg_string_mcp.rules.catalogue import Catalogue
+    from kegg_string_mcp.rules.evidence import Sources
+
+    path = tmp_path / "overlap.bed"
+    path.write_text("AL123456\t99\t3617\tRv0667\t.\t+\trpoB\n"
+                    "AL123456\t7999\t10221\tRv1908c\t.\t-\tkatG\n"
+                    "AL123456\t10100\t10500\tRv1909c\t.\t+\tfurA\n")
+    annotation = parse_annotation(path)
+    return Sources(annotation=annotation, catalogue=Catalogue(CATALOGUE, annotation))
+
+
+def test_a_region_with_no_gap_names_the_gene_it_lies_inside(sources, tmp_path):
+    """Every unresolved label in a real five-cohort run was this case, and the
+    note said 'its neighbour' without saying which. Naming it matters twice: the
+    reader learns which gene, and the aliasing check can see the relation."""
+    local = _overlapping(tmp_path)
+    rule = _rule("upstream_Rv1909c=1", "R", tmp_path, name="nb.tsv")
+    feature = evidence_for(rule, local)[0].feature
+    assert not feature.resolved
+    assert feature.bounded_by == "Rv1908c"
+    assert "katG (Rv1908c)" in feature.note
+    # The coordinates stay unresolved on purpose.
+    assert "belongs to that gene, not to this region" in feature.note
+
+
+def test_a_region_inside_a_gene_aliases_with_that_gene(sources, tmp_path):
+    """The most certain aliasing case, and the one that escaped every check: the
+    region does not resolve, so a pairwise test over resolved spans skipped it.
+    A non-synonymous variant inside the bounding gene sets both conditions."""
+    from kegg_string_mcp.rules.signature import INSIDE, SIG_ALIASED
+
+    local = _overlapping(tmp_path)
+    rule = _rule("upstream_Rv1909c=1 AND Rv1908c=1", "R", tmp_path, name="al.tsv")
+    result = classify(rule, evidence_for(rule, local))
+    assert result.primary == SIG_ALIASED
+    assert result.aliased[0][2] == INSIDE
+    assert "the region lies inside Rv1908c" in result.verdict
+
+
+def test_a_region_inside_one_gene_does_not_alias_with_another(sources, tmp_path):
+    from kegg_string_mcp.rules.signature import SIG_ALIASED
+
+    local = _overlapping(tmp_path)
+    rule = _rule("upstream_Rv1909c=1 AND Rv0667=1", "R", tmp_path, name="na.tsv")
+    result = classify(rule, evidence_for(rule, local))
+    assert SIG_ALIASED not in result.signatures

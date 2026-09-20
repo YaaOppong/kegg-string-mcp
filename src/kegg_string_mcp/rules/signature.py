@@ -191,6 +191,7 @@ class RuleSignature:
 SAME_FEATURE = "same_feature"
 OVERLAPPING = "overlapping_spans"
 ADJACENT = "adjacent_undetermined"
+INSIDE = "region_inside_gene"
 
 
 def aliasing(conditions: list[ConditionEvidence]) -> list[tuple[str, str, str, str]]:
@@ -219,6 +220,17 @@ def aliasing(conditions: list[ConditionEvidence]) -> list[tuple[str, str, str, s
     for index, first in enumerate(conditions):
         for second in conditions[index + 1:]:
             a, b = first.feature, second.feature
+            # A region with no gap of its own lies INSIDE the gene that bounds
+            # it, so a non-synonymous variant there sets both conditions. The
+            # most certain case, and the one that escapes every other check
+            # because the region itself does not resolve.
+            inside = next(((region.label, gene.locus) for region, gene in ((a, b), (b, a))
+                           if region.bounded_by and gene.gene is not None
+                           and gene.gene.locus == region.bounded_by), None)
+            if inside:
+                out.append((inside[0], inside[1], INSIDE,
+                            f"the region lies inside {inside[1]}"))
+                continue
             if not (a.resolved and b.resolved):
                 continue
             if a.locus == b.locus:
@@ -455,7 +467,7 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"Consistent with susceptibility: the rule requires {_names(negated)} to match the "
             f"reference. Expected rather than informative.")
     else:
-        loci = _names(unknowns + candidates) or "its loci"
+        loci = _names(unknowns + candidates) or "no locus it names"
         parts.append(
             f"Nothing in the catalogue accounts for this rule: {loci} carries no graded "
             f"resistance association. Either a mechanism the catalogue does not cover, or a "

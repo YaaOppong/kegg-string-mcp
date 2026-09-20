@@ -77,6 +77,11 @@ class Feature:
     gene: Gene | None = None
     interval: Intergenic | None = None
     candidates: tuple[str, ...] = ()   # populated when a match was refused
+    # For a region with no interval of its own: the locus it falls inside. The
+    # coordinates stay unresolved -- attributing a catalogue hit in that gene to
+    # the region would launder a coding variant into a regulatory one -- but the
+    # relation is recorded, because a rule naming both can be one variant.
+    bounded_by: str = ""
     note: str = ""
 
     @property
@@ -126,9 +131,10 @@ class Feature:
         return out
 
 
-def _unresolved(label: str, note: str, candidates: tuple[str, ...] = ()) -> Feature:
+def _unresolved(label: str, note: str, candidates: tuple[str, ...] = (),
+                bounded_by: str = "") -> Feature:
     return Feature(label=label, kind=UNRESOLVED, matched_by="none",
-                   candidates=candidates, note=note)
+                   candidates=candidates, bounded_by=bounded_by, note=note)
 
 
 class Resolver:
@@ -173,13 +179,18 @@ class Resolver:
         interval = (self.annotation.upstream_of(target.gene) if kind == UPSTREAM
                     else self.annotation.downstream_of(target.gene))
         if interval is None:
-            side = "5'" if kind == UPSTREAM else "3'"
+            side = "5" if kind == UPSTREAM else "3"
+            neighbour = self.annotation.neighbour(target.gene, side)
+            named = (f"{neighbour.symbol} ({neighbour.locus})" if neighbour and neighbour.symbol
+                     else neighbour.locus if neighbour else "its neighbour")
             return _unresolved(
                 label,
-                f"{target.gene.locus} has no intergenic interval {side} of it: its neighbour "
-                f"abuts or overlaps it, so a variant called {kind} of it lies inside that "
-                f"neighbour. This is a fact about the genome, not a failed lookup -- 830 of "
-                f"H37Rv's 4,008 genes are like this.")
+                f"{target.gene.locus} has no intergenic interval {side}' of it: {named} abuts "
+                f"or overlaps it, so a variant called {kind} of {target.gene.locus} lies "
+                f"inside {named}. A fact about the genome, not a failed lookup -- 830 of "
+                f"H37Rv's 4,008 genes are like this. The coordinates stay unresolved because "
+                f"a catalogue hit inside {named} belongs to that gene, not to this region.",
+                bounded_by=neighbour.locus if neighbour else "")
         return Feature(label, INTERGENIC, kind, interval=interval,
                        note=(f"the interval {'5' if kind == UPSTREAM else '3'}' of "
                              f"{target.gene.locus} ({target.gene.strand} strand); "
