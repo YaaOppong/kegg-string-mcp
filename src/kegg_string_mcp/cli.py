@@ -54,8 +54,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--organism", default="mtu")
     parser.add_argument("--runs", type=Path, default=Path("runs"))
     parser.add_argument("--json", action="store_true", help="emit the full payload")
+    # A DIRECTORY for every mode that writes. It previously meant a file for
+    # `features` and a directory for `rules`, so running one after the other with
+    # the same --out made the second fail on a path that was already a file.
     parser.add_argument("--out", type=Path, default=Path("tables"),
-                        help="where `table` writes its TSVs")
+                        help="directory the TSVs are written to")
     # The reference annotation is an input, never fetched: the features in a rule
     # set are named by whichever annotation the variant caller used, and resolving
     # them against a different gene list is how a locus becomes the wrong locus.
@@ -145,8 +148,7 @@ def main(argv: list[str] | None = None) -> int:
             sizes, genome_size = {}, 0
             print(f"note: pathway sizes unavailable ({exc}); shared pathways not linked")
 
-        result = run(Path(args.genes[0]), args.annotation,
-                     args.out if args.out != Path("tables") else Path("tables"),
+        result = run(Path(args.genes[0]), args.annotation, args.out,
                      clients=clients, resistance=ResistanceClient(http),
                      lineage=LineageClient(http), organism=args.organism,
                      genome_size=genome_size, pathway_sizes=sizes)
@@ -188,8 +190,7 @@ def main(argv: list[str] | None = None) -> int:
         coverage = resolve_all(labels, annotation)
         print(origin + "\n")
         print(render(coverage, annotation))
-        if args.out and args.out != Path("tables"):
-            print(f"\nfeatures: {write_tsv(args.out, coverage)}")
+        print(f"\nfeatures: {write_tsv(args.out / 'features.tsv', coverage)}")
         # A report succeeds by reporting. Some labels not resolving is a finding
         # about the inputs, not a failure of this step, and failing the process
         # would stop a pipeline on something the report is there to show you.

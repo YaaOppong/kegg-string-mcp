@@ -248,6 +248,87 @@ Annotating `furA` and looking up `katG` for context is legitimate; letting katG'
 pathways land in furA's row is the cross-target error in tabular form, and unlike the
 citation flag nothing downstream would show it.
 
+## Rule annotation
+
+An upstream rule learner classifies isolates as resistant or susceptible from
+per-locus variant states, and emits rules:
+
+```
+Rv1908c=1 AND Rv2428=1  ->  R     numerosity 11   precision 0.9524
+```
+
+This layer says what the structured sources already account for, before any model
+is involved. `=1` means the locus carries a qualifying variant; `=0` asserts it
+matches the reference, which is a claim about every isolate the rule covers
+rather than silence about the gene.
+
+```bash
+gar features LABELS.txt --annotation h37rv.bed    # do the feature labels resolve?
+gar rules RULES.tsv     --annotation h37rv.bed    # annotate loci, classify rules
+gar gold                --annotation h37rv.bed    # score the classifier on known rules
+```
+
+**The reference annotation is an input, never fetched.** Feature names come from
+whichever annotation the variant caller used — `snpEff genes2bed
+Mycobacterium_tuberculosis_h37rv` — so resolving them against a different gene
+list is how a locus silently becomes the wrong locus. Measured against one real
+2,903-label vocabulary, KEGG's curated list was missing 76 of them and disagreed
+with 1,346 more on the strand suffix. KEGG stays authoritative for pathways; the
+caller's annotation is authoritative for what a locus is and where it sits. Its
+`sha256` is recorded, so a reference update cannot change the results invisibly.
+
+### What a rule is classified as
+
+Each condition gets a role from its state and what the WHO catalogue holds:
+
+| | catalogue anchor | assessed, none associated | absent |
+|---|---|---|---|
+| **state 1** | `anchor` | `compensator_candidate` | `unknown` |
+| **state 0** | `negated_anchor` | `negated` | `negated` |
+
+That middle cell is what the layer is for. `rpoC` (1,401 catalogued variants, 0
+graded associated), `rpoA` (507, 0) and `ahpC` (250, 0) — the canonical
+compensatory loci — all carry it: in the catalogue because they recur in
+resistant isolates, graded as not conferring resistance themselves. 50 of the
+catalogue's 74 genes look like that.
+
+Rules then carry every signature that applies, with precedence deciding which
+leads:
+
+| Signature | Means |
+|---|---|
+| `confounded:lineage` | every present locus marks one lineage — carried together by descent |
+| `known:compensation` | anchor + a candidate assessed against the **same drug**, ideally functionally linked |
+| `known:alt_route` | resistance while a canonical locus is at reference |
+| `discordant` | a known resistance locus varying in isolates predicted susceptible |
+| `unknown` | a locus the catalogue never assessed |
+| `confounded:multidrug` | loci for **different** drugs — MDR is defined that way, so this is the diagnosis, not a relationship |
+| `confounded:co_selection` | loci for the **same** drug — one drug selecting both |
+| `known:resistance` | recovers known pharmacology |
+
+Drug concordance is load-bearing. `rpoA` has the compensatory shape and STRING
+supplies a co-mention edge for it, but it was only ever assessed against
+rifampicin — so pairing it with `katG` is not compensation, and the verdict says
+why. `gar gold` scores twelve rules of known answer, and that negative control is
+the one nothing else in the suite guards.
+
+### Output
+
+| File | One row per | Carries |
+|---|---|---|
+| `loci.tsv` | distinct locus | product, pathways, partners, lineage markers, catalogue status, how many rules it appears in, and `linked_loci` |
+| `rules.tsv` | rule | conditions, roles, signatures, the learner's own statistics, and the verdict |
+| `questions.tsv` | gap the sources could not close | what to ask the literature, and which rules raised it |
+
+Relationships live in a structured string (`ahpC:string_textmining_only:0.968|furA:adjacent:6bp`)
+rather than a third file, because `loci.tsv` is meant to be read as a
+supplementary table. A STRING edge supported only by textmining is co-mention in
+papers, so the channel is carried rather than flattened into one score.
+
+`questions.tsv` is stage A of the literature layer and costs nothing: the
+questions fall out of the classification, so a run can be counted before any
+retrieval happens. Each asks for a verbatim passage rather than for a verdict.
+
 ## Evaluation
 
 **The reference is incomplete, and that is the point.** KEGG assigns a pathway to just
@@ -378,6 +459,9 @@ commands are installed by `pip install -e .`; the rest are run with `python`.
 |---|---|---|
 | **MCP server** | `kegg-string-mcp` | Serves the seven tools over stdio. `src/kegg_string_mcp/server.py`. |
 | **Annotation pipeline** | `gar single \| epistasis \| eval` | Runs the agent loop against the server and validates the result. Installed by `pip install -e .`. `src/kegg_string_mcp/cli.py`. |
+| **Rule annotation** | `gar rules RULES.tsv --annotation h37rv.bed` | Resolves the rule set's feature labels against the supplied annotation, annotates each distinct locus once, and classifies every rule against the WHO catalogue. Writes `loci.tsv`, `rules.tsv`, `questions.tsv`. No model. `src/kegg_string_mcp/rules/`. |
+| **Feature pre-flight** | `gar features LABELS.txt --annotation h37rv.bed` | Reports how much of a feature vocabulary resolves, and why the rest does not. Free, offline. |
+| **Classifier gold set** | `gar gold --annotation h37rv.bed` | Scores the rule classifier against twelve rules of known answer, including a negative control. |
 | **Run tables** | `gar table --runs runs --out tables` | Turns finished run stores into `genes.tsv`, `pairs.tsv`, `resistance_variants.tsv` and `lineage_markers.tsv`. No model, no network, re-runnable. `src/kegg_string_mcp/agent/tables.py`. |
 | **Corpus build** | `python scripts/build_corpus.py --extended --all-genes --tag tb41` | Routes genes by annotation coverage, resolves every alias, fetches abstracts, dedupes by PMID, chunks to 180 words, records which genes each passage names. Writes `data/corpus_<tag>.json` and `coverage_<tag>.json`. |
 | **Arm comparison** | `python scripts/run_comparison.py data/corpus_tb41.json --tag tb41` | Measures lexical, dense and hybrid retrieval over all gene pairs, then again over the pairs STRING has no edge for, which removes the circularity in scoring relevance by gene names. Writes `comparison_<tag>.json`. |
@@ -525,7 +609,8 @@ remain the caller's responsibility:
 ## Status
 
 MCP server, annotation pipeline, evaluation, the run tables and the retrieval arm are
-all on `main`.
+all on `main`. Rule annotation is on `rule-annotation`: the deterministic half is
+complete and scored; the literature layer is stage A only.
 
 - The rules an external client should follow: [skills/gene-annotation/SKILL.md](skills/gene-annotation/SKILL.md)
 - Design rationale: [docs/DESIGN.md](docs/DESIGN.md)
