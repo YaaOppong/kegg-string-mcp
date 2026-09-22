@@ -95,6 +95,9 @@ class Gene:
     # and empty means "this annotation did not say", never "uncategorised".
     category: str = ""
     product: str = ""
+    # axis -> the terms this locus carries. Empty for an annotation that does
+    # not supply them, which means "not said" rather than "no terms".
+    terms: dict[str, tuple[str, ...]] = field(default_factory=dict, hash=False)
 
     @property
     def is_pe_ppe(self) -> bool:
@@ -281,11 +284,28 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-_ATTR = re.compile(r'(\w+)[=\s]"?([^";]+)"?')
+_GTF_ATTR = re.compile(r'^\s*(\S+)\s+"?([^"]*)"?\s*$')
 
 
 def _attributes(field_text: str) -> dict[str, str]:
-    return {k: v.strip() for k, v in _ATTR.findall(field_text)}
+    r"""GFF3 `key=value` and GTF `key "value"`, split on `;` first.
+
+    A `\w+` key pattern cannot match `Gene Ontology` or `Protein Data Bank`, so
+    Mycobrowser's spaced keys parsed as `Ontology` and `Bank` and their values
+    were unreachable. Splitting on the separator first gets the whole key.
+    """
+    out: dict[str, str] = {}
+    for chunk in field_text.split(";"):
+        if not chunk.strip():
+            continue
+        if "=" in chunk:
+            key, value = chunk.split("=", 1)
+            out[key.strip()] = value.strip().strip('"')
+            continue
+        match = _GTF_ATTR.match(chunk)
+        if match:
+            out[match.group(1).strip()] = match.group(2).strip()
+    return out
 
 
 def _detect(first_row: list[str]) -> str:
@@ -325,6 +345,24 @@ SYMBOL_KEYS = ("gene_name", "Name", "gene")
 # repetitive sequence makes short-read variant calls unreliable.
 CATEGORY_KEYS = ("Functional_Category", "functional_category")
 PRODUCT_KEYS = ("Product", "product")
+
+# Axes an enrichment can be computed over, from the annotation alone. The map and
+# the background universe then come from one hashed file and cannot disagree,
+# which is what a KEGG-based enrichment cannot promise: its membership is fetched
+# and covers 29% of H37Rv, so the universe has to be decided separately.
+#
+# Coverage measured on Mycobrowser v5: category 100%, PFAM 75%, GO 63%, EC 31%.
+# `Functional_Category` is a SINGLE value and must not be split -- one of the
+# eleven is "virulence, detoxification, adaptation", which a comma split turns
+# into three categories that do not exist.
+TERM_KEYS: dict[str, tuple[str, ...]] = {
+    "category": CATEGORY_KEYS,
+    "pfam": ("PFAM",),
+    "go": ("Gene Ontology",),
+    "ec": ("Enzyme Classification",),
+}
+LIST_AXES = ("pfam", "go", "ec")
+_TERM_SPLIT = re.compile(r"[,;|]\s*")
 
 # Categories whose loci deserve a warning rather than an interpretation, because
 # short-read variant calls in them are unreliable for the same underlying reason:
@@ -401,6 +439,13 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Anno
             symbol = next((attrs[k] for k in SYMBOL_KEYS if attrs.get(k)), "")
             category = next((attrs[k] for k in CATEGORY_KEYS if attrs.get(k)), "")
             product = next((attrs[k] for k in PRODUCT_KEYS if attrs.get(k)), "")
+            terms = {}
+            for axis, keys in TERM_KEYS.items():
+                raw = next((attrs[k] for k in keys if attrs.get(k)), "")
+                if not raw:
+                    continue
+                terms[axis] = (tuple(t for t in _TERM_SPLIT.split(raw) if t.strip())
+                               if axis in LIST_AXES else (raw,))
             start, end, strand = int(row[3]), int(row[4]), row[6] or "."
         else:
             if len(row) < 4:
@@ -412,6 +457,7 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Anno
             start, end = int(row[1]) + 1, int(row[2])
             strand = row[5].strip() if len(row) > 5 and row[5].strip() in "+-." else "."
             category = product = ""
+            terms = {}
         if not name:
             skipped += 1
             continue
@@ -423,7 +469,8 @@ def parse(path: str | Path, feature_types: tuple[str, ...] = GENE_LEVEL) -> Anno
         if cds is not None and (cds[0], cds[1]) != (start, end):
             coding = cds[1] if strand == "-" else cds[0]
         genes.append(Gene(locus=name, symbol=symbol, start=start, end=end, strand=strand,
-                          cds_start=coding, category=category, product=product))
+                          cds_start=coding, category=category, product=product,
+                          terms=terms))
 
     notes = [f"parsed {len(genes)} genes from {fmt.upper()} at {path}", *notes_extra]
     categorised = sum(1 for g in genes if g.category)
