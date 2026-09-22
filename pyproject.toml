@@ -33,6 +33,7 @@ packages = ["src/kegg_string_mcp"]
 # from it at import. An installed wheel without it cannot build a prompt.
 "skills/gene-annotation/SKILL.md" = "kegg_string_mcp/skills/gene-annotation/SKILL.md"
 "src/kegg_string_mcp/rules/gold_rules.json" = "kegg_string_mcp/rules/gold_rules.json"
+"src/kegg_string_mcp/rules/gold_sets.json" = "kegg_string_mcp/rules/gold_sets.json"
 
 [tool.pytest.ini_options]
 pythonpath = ["src", "."]

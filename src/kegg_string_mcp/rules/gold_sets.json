@@ -1,0 +1,132 @@
+{
+  "axis": "category",
+  "reference": "TubercuList/Mycobrowser functional categories; loci taken from well-described H37Rv gene clusters",
+  "validated_on": "2026-09-22",
+  "note": "These are properties of the supplied annotation, not of this code. An annotation carrying no terms on the axis skips every entry rather than failing them, and a changed annotation can legitimately change an expected term.",
+  "sets": [
+    {
+      "id": "mce1-operon",
+      "kind": "positive",
+      "expect_term": "virulence, detoxification, adaptation",
+      "expect_q_below": 0.001,
+      "loci": [
+        "Rv0166",
+        "Rv0167",
+        "Rv0168",
+        "Rv0169",
+        "Rv0170",
+        "Rv0171",
+        "Rv0172",
+        "Rv0173",
+        "Rv0174",
+        "Rv0175",
+        "Rv0176",
+        "Rv0177",
+        "Rv0178"
+      ],
+      "why": "The mce1 operon is a contiguous, co-transcribed virulence locus -- mammalian cell entry. If a coherent operon does not enrich, nothing will."
+    },
+    {
+      "id": "esx1-secretion",
+      "kind": "positive",
+      "expect_term": "cell wall and cell processes",
+      "expect_q_below": 0.0001,
+      "loci": [
+        "Rv3868",
+        "Rv3869",
+        "Rv3870",
+        "Rv3871",
+        "Rv3872",
+        "Rv3873",
+        "Rv3874",
+        "Rv3875",
+        "Rv3876",
+        "Rv3877",
+        "Rv3878",
+        "Rv3879c",
+        "Rv3880c",
+        "Rv3881c",
+        "Rv3882c",
+        "Rv3883c"
+      ],
+      "why": "The ESX-1 type VII secretion system, the RD1 locus lost in BCG. A secretion apparatus should read as cell wall and cell processes, not as virulence -- the categories are curated by function, not by phenotype."
+    },
+    {
+      "id": "ribosomal-cluster",
+      "kind": "positive",
+      "expect_term": "information pathways",
+      "expect_q_below": 1e-10,
+      "loci": [
+        "Rv0700",
+        "Rv0701",
+        "Rv0702",
+        "Rv0703",
+        "Rv0704",
+        "Rv0705",
+        "Rv0706",
+        "Rv0707",
+        "Rv0708",
+        "Rv0709",
+        "Rv0710",
+        "Rv0711",
+        "Rv0712",
+        "Rv0713",
+        "Rv0714",
+        "Rv0715",
+        "Rv0716",
+        "Rv0717",
+        "Rv0718",
+        "Rv0719",
+        "Rv0720",
+        "Rv0721",
+        "Rv0722"
+      ],
+      "why": "The main ribosomal protein cluster. The strongest signal available, and the entry that would catch an off-by-one in the universe or the test."
+    },
+    {
+      "id": "pdim-pks-cluster",
+      "kind": "positive",
+      "expect_term": "lipid metabolism",
+      "expect_q_below": 1e-06,
+      "loci": [
+        "Rv2930",
+        "Rv2931",
+        "Rv2932",
+        "Rv2933",
+        "Rv2934",
+        "Rv2935",
+        "Rv2936",
+        "Rv2937",
+        "Rv2938",
+        "Rv2939",
+        "Rv2940c",
+        "Rv2941",
+        "Rv2942",
+        "Rv2943",
+        "Rv2943A",
+        "Rv2944",
+        "Rv2945c",
+        "Rv2946c",
+        "Rv2947c",
+        "Rv2948c"
+      ],
+      "why": "The PDIM/phenolglycolipid biosynthesis cluster: polyketide synthases and fatty-acid AMP ligases. Also covers a locus with a letter suffix, Rv2943A."
+    },
+    {
+      "id": "base-rate-set",
+      "kind": "negative",
+      "expect_no_term_below_q": 0.05,
+      "loci": [
+        "Rv0004",
+        "Rv0021c",
+        "Rv0033",
+        "Rv0001",
+        "Rv0007",
+        "Rv0014c",
+        "Rv0013",
+        "Rv0096"
+      ],
+      "why": "Two of eight are conserved hypotheticals, a category covering a quarter of the genome -- so the expected count is exactly 2. A term present at precisely its base rate must not be called enriched. This is the entry that fails if the universe, the expected value or the correction is wrong, and no positive control would notice."
+    }
+  ]
+}

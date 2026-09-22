@@ -138,7 +138,15 @@ def main(argv: list[str] | None = None) -> int:
         from kegg_string_mcp.resistance import ResistanceClient
         from kegg_string_mcp.rules.annotation import parse as parse_annotation
         from kegg_string_mcp.rules.evidence import load_sources
-        from kegg_string_mcp.rules.gold import load, render, score, summary
+        from kegg_string_mcp.rules.gold import (
+            load,
+            load_sets,
+            render,
+            render_sets,
+            score,
+            score_sets,
+            summary,
+        )
 
         if args.annotation is None:
             parser.error("gold mode needs --annotation (or $KEGG_STRING_MCP_ANNOTATION)")
@@ -146,11 +154,19 @@ def main(argv: list[str] | None = None) -> int:
         sources = load_sources(parse_annotation(args.annotation), ResistanceClient(http),
                                LineageClient(http), args.organism)
         gold = load()
+        annotation = parse_annotation(args.annotation)
         scores = score(sources, gold)
         print(render(scores, gold))
+
+        # The enrichment gold set: properties of the supplied annotation rather
+        # than of this code, so it is scored and reported separately.
+        set_scores = score_sets(annotation)
+        print("\n" + "-" * 70 + "\nenrichment\n")
+        print(render_sets(set_scores, load_sets()[1]))
         # Non-zero on a real failure, but not on a skip: a locus the supplied
         # annotation lacks is a fact about the annotation, not a wrong answer.
-        return 1 if summary(scores)["failed"] else 0
+        failed = summary(scores)["failed"] + sum(1 for s in set_scores if s.failures)
+        return 1 if failed else 0
 
     if args.mode == "rules":
         # The deterministic half: no model, no API key. Clients are the direct

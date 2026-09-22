@@ -141,3 +141,64 @@ def test_correction_is_within_a_rule_not_across_the_population():
     harsher question, and belongs to whoever decides how many they will read."""
     single = benjamini_hochberg([0.01])
     assert single == [pytest.approx(0.01)]
+
+
+# --- the enrichment gold set -----------------------------------------------
+
+
+def test_every_gold_set_states_an_expectation_and_a_reason():
+    from kegg_string_mcp.rules.gold import load_sets
+
+    axis, note, entries = load_sets()
+    assert axis and note
+    assert len(entries) >= 5
+    for entry in entries:
+        assert entry.loci, f"{entry.id} names no loci"
+        assert entry.why, f"{entry.id} has no rationale"
+        assert (entry.expect_term or entry.expect_no_term_below_q), f"{entry.id} asserts nothing"
+
+
+def test_the_set_holds_a_base_rate_negative_control():
+    """A term present at exactly its expected count must not be called enriched.
+    That entry fails if the universe, the expected value or the correction is
+    wrong, and no positive control would notice."""
+    from kegg_string_mcp.rules.gold import load_sets
+
+    negatives = [e for e in load_sets()[2] if e.kind == "negative"]
+    assert negatives
+    assert all(e.expect_no_term_below_q for e in negatives)
+
+
+def test_an_annotation_without_the_axis_skips_rather_than_fails(tmp_path):
+    """These are properties of the supplied annotation, not of this code. An
+    NCBI GFF carries no functional categories, so nothing was tested and nothing
+    failed."""
+    from kegg_string_mcp.rules.gold import score_sets
+
+    path = tmp_path / "plain.gff"
+    path.write_text("NC_000962.3\tRefSeq\tgene\t1\t99\t.\t+\t.\tlocus_tag=Rv0001\n")
+    scores = score_sets(parse_annotation(path))
+    assert scores and all(s.skipped for s in scores)
+    assert not any(s.failures for s in scores)
+
+
+def test_a_wrong_expectation_is_reported(annotation, tmp_path):
+    """A check that cannot fail is not a check."""
+    import json
+
+    from kegg_string_mcp.rules.gold import score_sets
+
+    path = tmp_path / "wrong.json"
+    path.write_text(json.dumps({"axis": "category", "sets": [
+        {"id": "deliberately-wrong", "kind": "positive", "loci": ["Rv0000", "Rv0001"],
+         "expect_term": "information pathways", "expect_q_below": 1.0,
+         "why": "these two are lipid metabolism"}]}))
+    score = score_sets(annotation, path)[0]
+    assert not score.passed
+    assert "expected 'information pathways'" in score.failures[0]
+
+
+def test_the_gold_sets_file_ships_with_the_wheel():
+    pyproject = (Path(__file__).resolve().parents[1] / "pyproject.toml").read_text()
+    assert '"src/kegg_string_mcp/rules/gold_sets.json"' in pyproject
+    assert '"kegg_string_mcp/rules/gold_sets.json"' in pyproject

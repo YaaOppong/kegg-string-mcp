@@ -158,3 +158,109 @@ def summary(scores: list[Score]) -> dict[str, Any]:
             "passed": sum(1 for s in scored if s.passed),
             "failed": sum(1 for s in scored if s.failures),
             "skipped": len(scores) - len(scored)}
+
+
+# --- the enrichment gold set -----------------------------------------------
+#
+# The rule gold set scores the classifier. This one scores the enrichment, and
+# it is a different kind of check: these are properties of the supplied
+# annotation, not of this code, so an annotation without the axis skips rather
+# than fails, and a changed annotation may legitimately change an expected term.
+
+GOLD_SETS = Path(__file__).with_name("gold_sets.json")
+
+
+@dataclass
+class GoldLocusSet:
+    id: str
+    kind: str
+    loci: list[str]
+    why: str = ""
+    expect_term: str = ""
+    expect_q_below: float = 1.0
+    expect_no_term_below_q: float = 0.0
+
+
+@dataclass
+class SetScore:
+    gold: GoldLocusSet
+    top: Any = None
+    failures: list[str] = field(default_factory=list)
+    skipped: str = ""
+
+    @property
+    def passed(self) -> bool:
+        return not self.failures and not self.skipped
+
+
+def load_sets(path: str | Path | None = None) -> tuple[str, str, list[GoldLocusSet]]:
+    data = json.loads(Path(path or GOLD_SETS).read_text(encoding="utf-8"))
+    return (data.get("axis", "category"), data.get("note", ""),
+            [GoldLocusSet(**entry) for entry in data["sets"]])
+
+
+def score_sets(annotation: Any, path: str | Path | None = None) -> list[SetScore]:
+    from kegg_string_mcp.rules.enrichment import enrich, universe_for
+
+    axis, _, entries = load_sets(path)
+    universe = universe_for(annotation, axis)
+    out: list[SetScore] = []
+    for entry in entries:
+        score = SetScore(gold=entry)
+        if not universe.size:
+            # The annotation carries no terms on this axis -- an NCBI GFF, say.
+            # Nothing was tested, so nothing failed.
+            score.skipped = f"the supplied annotation carries no {axis} terms"
+            out.append(score)
+            continue
+
+        result = enrich(entry.loci, universe)
+        missing = [locus for locus in entry.loci if universe.members and locus in entry.loci
+                   and locus not in universe.annotated]
+        score.top = result.terms[0] if result.terms else None
+
+        if entry.kind == "negative":
+            called = result.significant(entry.expect_no_term_below_q)
+            if called:
+                score.failures.append(
+                    "called " + ", ".join(f"{t.term} (q={t.q:.3g})" for t in called)
+                    + f" at q<={entry.expect_no_term_below_q}")
+        else:
+            if score.top is None:
+                score.failures.append("no term reached two members")
+            else:
+                if score.top.term != entry.expect_term:
+                    score.failures.append(
+                        f"top term {score.top.term!r}, expected {entry.expect_term!r}")
+                if score.top.q > entry.expect_q_below:
+                    score.failures.append(
+                        f"q={score.top.q:.3g}, expected below {entry.expect_q_below:g}")
+        if missing and not score.failures:
+            score.failures.append(f"{len(missing)} locus/loci absent from the annotation")
+        out.append(score)
+    return out
+
+
+def render_sets(scores: list[SetScore], note: str = "") -> str:
+    lines = [f"{'set':22} {'expected term':42} {'got':42} "]
+    for score in scores:
+        if score.skipped:
+            state, got = f"SKIPPED {score.skipped}", "-"
+        elif score.passed:
+            state = f"ok  q={score.top.q:.2g}" if score.top else "ok"
+            got = score.top.term if score.top else "-"
+        else:
+            state, got = "FAIL " + "; ".join(score.failures), (
+                score.top.term if score.top else "-")
+        expected = score.gold.expect_term or f"nothing below q={score.gold.expect_no_term_below_q}"
+        lines.append(f"{score.gold.id:22} {expected:42} {got:42} {state}")
+    scored = [s for s in scores if not s.skipped]
+    lines += ["", f"passed {sum(1 for s in scored if s.passed)}/{len(scored)} scored"
+                  + (f", {len(scores) - len(scored)} skipped" if len(scored) != len(scores) else "")]
+    failures = [s for s in scores if s.failures]
+    if failures:
+        lines += ["", "why each expectation exists:"]
+        lines += [f"  {s.gold.id}: {s.gold.why}" for s in failures]
+        if note:
+            lines += ["", note]
+    return "\n".join(lines)
