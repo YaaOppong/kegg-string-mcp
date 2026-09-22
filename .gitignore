@@ -27,5 +27,6 @@ htmlcov/
 .env.*
 !.env.example
 
-# Presentation decks — local only, never published
+# Presentation material — local only, never published
 *.pptx
+/presentation/
