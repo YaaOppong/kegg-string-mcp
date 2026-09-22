@@ -651,16 +651,15 @@ def test_the_classification_imports_without_httpx_or_pydantic():
                       "sets", "nesting", "signature", "evidence")
 
     class _Block:
-        def find_module(self, name, path=None):      # noqa: D102
+        def find_module(self, name, path=None):
             return self if name.split(".")[0] in blocked else None
 
-        def load_module(self, name):                 # noqa: D102
+        def load_module(self, name):
             raise ImportError(f"{name} is blocked by this test")
 
-        def find_spec(self, name, path=None, target=None):   # noqa: D102
+        def find_spec(self, name, path=None, target=None):
             if name.split(".")[0] in blocked:
                 raise ImportError(f"{name} is blocked by this test")
-            return None
 
     saved = {name: sys.modules.pop(name)
              for name in list(sys.modules)
