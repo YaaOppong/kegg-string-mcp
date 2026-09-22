@@ -60,6 +60,10 @@ SIG_MULTIDRUG = "confounded:multidrug"
 # no relationship at all, the same observation entered twice, which reads as
 # epistasis because the rule names two features.
 SIG_ALIASED = "confounded:feature_overlap"
+# A rule requiring one locus to be both variant and reference matches no isolate.
+# Not a confound and not a finding -- a rule that cannot fire, which must be said
+# rather than classified as though it described something.
+SIG_CONTRADICTORY = "contradictory"
 SIG_DISCORDANT = "discordant"
 SIG_SUSCEPTIBLE = "known:susceptible_consistent"
 SIG_UNKNOWN = "unknown"
@@ -69,7 +73,7 @@ SIG_UNKNOWN = "unknown"
 # carry both alleles by descent and the pattern needs no mechanism at all.
 # Aliasing leads everything. A lineage confound says the co-occurrence has a
 # non-biological cause; aliasing says there may be no co-occurrence to explain.
-PRECEDENCE = (SIG_ALIASED, SIG_CONFOUNDED, SIG_COMPENSATION, SIG_ALT_ROUTE, SIG_DISCORDANT,
+PRECEDENCE = (SIG_CONTRADICTORY, SIG_ALIASED, SIG_CONFOUNDED, SIG_COMPENSATION, SIG_ALT_ROUTE, SIG_DISCORDANT,
               SIG_UNKNOWN, SIG_MULTIDRUG, SIG_CO_SELECTION, SIG_RESISTANCE,
               SIG_SUSCEPTIBLE)
 
@@ -164,6 +168,9 @@ class RuleSignature:
     cross_resistant: list[tuple[str, list[str]]] = field(default_factory=list)
     # (a, b, kind, detail) for condition pairs one variant could satisfy.
     aliased: list[tuple[str, str, str, str]] = field(default_factory=list)
+    # Conditions naming one locus twice at the same state, and at opposite ones.
+    duplicated: list[str] = field(default_factory=list)
+    contradictory: list[str] = field(default_factory=list)
     # What is true of the loci as a set. None when not computed.
     sets: Any = None
     verdict: str = ""
@@ -187,11 +194,12 @@ class RuleSignature:
             "shared_drugs": "|".join(self.shared_drugs) or "NA",
             **(self.sets.to_dict() if self.sets is not None else {}),
             "aliased": "|".join(f"{a}~{b}:{kind}" for a, b, kind, _ in self.aliased) or "NA",
+            "duplicated": "|".join(self.duplicated) or "NA",
+            "contradictory": "|".join(self.contradictory) or "NA",
             "verdict": self.verdict,
         }
 
 
-SAME_FEATURE = "same_feature"
 OVERLAPPING = "overlapping_spans"
 ADJACENT = "adjacent_undetermined"
 INSIDE = "region_inside_gene"
@@ -236,10 +244,6 @@ def aliasing(conditions: list[ConditionEvidence]) -> list[tuple[str, str, str, s
                 continue
             if not (a.resolved and b.resolved):
                 continue
-            if a.locus == b.locus:
-                out.append((first.label, second.label, SAME_FEATURE,
-                            f"both name {a.locus}"))
-                continue
             left, right = a.span, b.span
             if left and right and left[0] <= right[1] and right[0] <= left[1]:
                 width = min(left[1], right[1]) - max(left[0], right[0]) + 1
@@ -276,7 +280,29 @@ def classify(rule: Rule, conditions: list[ConditionEvidence],
     links = links or {}
     for evidence in conditions:
         evidence.role = assign_role(evidence)
+
+    # Two conditions naming one locus are not two conditions. At the same state
+    # the second is redundant and inflates k; at opposite states the rule cannot
+    # match any isolate. Neither is aliasing, which is about DIFFERENT conditions
+    # one variant could satisfy.
+    by_locus: dict[str, ConditionEvidence] = {}
+    kept: list[ConditionEvidence] = []
+    duplicated: list[str] = []
+    contradictory: list[str] = []
+    for evidence in conditions:
+        seen = by_locus.get(evidence.locus)
+        if seen is None:
+            by_locus[evidence.locus] = evidence
+            kept.append(evidence)
+        elif seen.condition.state == evidence.condition.state:
+            duplicated.append(evidence.locus)
+        else:
+            contradictory.append(evidence.locus)
+    conditions = kept
+
     result = RuleSignature(rule=rule, conditions=conditions, sets=sets)
+    result.duplicated = sorted(dict.fromkeys(duplicated))
+    result.contradictory = sorted(dict.fromkeys(contradictory))
 
     present = [c for c in conditions if c.condition.state == 1]
     anchors = result.of_role(ROLE_ANCHOR)
@@ -327,6 +353,8 @@ def classify(rule: Rule, conditions: list[ConditionEvidence],
     signatures: list[str] = []
     kind = phenotype(rule.predicted_class)
 
+    if result.contradictory:
+        signatures.append(SIG_CONTRADICTORY)
     if result.aliased:
         signatures.append(SIG_ALIASED)
     if result.shared_lineages and len(present) > 1:
@@ -395,7 +423,12 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"({', '.join(c.label for c in unresolved)}), so this rule is classified on the "
             f"rest and the classification may be incomplete.")
 
-    if result.primary == SIG_ALIASED:
+    if result.primary == SIG_CONTRADICTORY:
+        parts.append(
+            f"CONTRADICTORY: {', '.join(result.contradictory)} is required to be both variant "
+            f"and reference, so this rule matches no isolate. Nothing downstream can be read "
+            f"from it, and its statistics describe a rule that never fired.")
+    elif result.primary == SIG_ALIASED:
         certain = [x for x in result.aliased if x[2] != ADJACENT]
         possible = [x for x in result.aliased if x[2] == ADJACENT]
         if certain:
@@ -522,6 +555,10 @@ def _verdict(result: RuleSignature, kind: str) -> str:
                         result.cross_resistant)
             + " -- one mechanism covering several drugs, so resistance to all of them can "
               "follow from this locus alone.")
+    if result.duplicated:
+        parts.append(
+            f"{', '.join(result.duplicated)} is named more than once at the same state; the "
+            f"repeats are counted once, so k here is smaller than the condition count.")
     if result.drug_mismatched:
         parts.append(
             "Not counted as compensation: "

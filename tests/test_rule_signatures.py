@@ -604,16 +604,34 @@ def test_the_same_gap_raised_by_many_rules_is_asked_once(sources, tmp_path):
 # --- one variant, two conditions -------------------------------------------
 
 
-def test_two_conditions_on_the_same_locus_are_aliased(sources, tmp_path):
-    """`Rv0667=1 AND rpoB=1` names one gene twice. A rule reads as two pieces of
-    evidence when it is one."""
-    from kegg_string_mcp.rules.signature import SAME_FEATURE, SIG_ALIASED
-
+def test_two_conditions_on_the_same_locus_at_one_state_are_deduplicated(sources, tmp_path):
+    """`Rv0667=1 AND rpoB=1` names one gene twice at the same state. That is a
+    redundant condition, not aliasing -- aliasing is about DIFFERENT conditions
+    one variant could satisfy. Counting it twice inflates k."""
     rule = _rule("Rv0667=1 AND rpoB=1", "R", tmp_path)
     result = classify(rule, evidence_for(rule, sources))
-    assert result.primary == SIG_ALIASED
-    assert result.aliased[0][2] == SAME_FEATURE
-    assert "one observation entered twice" in result.verdict
+
+    assert result.duplicated == ["Rv0667"]
+    assert len(result.conditions) == 1
+    assert result.aliased == []
+    assert "named more than once at the same state" in result.verdict
+
+
+def test_one_locus_at_both_states_is_a_rule_that_cannot_fire(sources, tmp_path):
+    """`katG=1 AND katG=0` matches no isolate. Its numerosity and precision
+    describe a rule that never fired, so nothing downstream can be read from it
+    -- which is worth saying rather than classifying it as though it described
+    something."""
+    from kegg_string_mcp.rules.signature import SIG_CONTRADICTORY
+
+    rule = _rule("Rv0667=1 AND rpoB=0", "R", tmp_path)
+    result = classify(rule, evidence_for(rule, sources))
+
+    assert result.primary == SIG_CONTRADICTORY
+    assert result.contradictory == ["Rv0667"]
+    assert "matches no isolate" in result.verdict
+    # It leads everything: no other reading of the rule is worth having.
+    assert result.signatures[0] == SIG_CONTRADICTORY
 
 
 def test_overlapping_gene_spans_are_aliased(sources, tmp_path):
@@ -671,8 +689,9 @@ def test_aliasing_leads_whatever_else_the_rule_looks_like(sources, tmp_path):
     Aliasing says there may be no co-occurrence to explain."""
     from kegg_string_mcp.rules.signature import SIG_ALIASED, SIG_RESISTANCE
 
-    rule = _rule("Rv0667=1 AND rpoB=1", "R", tmp_path)
-    result = classify(rule, evidence_for(rule, sources))
+    local = _overlapping(tmp_path)
+    rule = _rule("upstream_Rv1909c=1 AND Rv1908c=1", "R", tmp_path, name="lead.tsv")
+    result = classify(rule, evidence_for(rule, local))
     assert result.signatures[0] == SIG_ALIASED
     assert SIG_RESISTANCE in result.signatures
 

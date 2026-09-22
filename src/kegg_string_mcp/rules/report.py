@@ -85,7 +85,7 @@ RULE_COLUMNS = [
     "rule_id", "row", "k", "predicted_class", "conditions", "roles",
     "primary_signature", "signatures", "anchors", "compensator_candidates",
     "unknown_loci", "negated_anchors", "unresolved", "links",
-    "shared_lineages", "shared_drugs", "aliased",
+    "shared_lineages", "shared_drugs", "aliased", "duplicated", "contradictory",
     "set_k", "enriched_term", "enriched_m_of_k", "enriched_expected", "enriched_q",
     "terms_tested", "shared_by_all", "common_partners", "subgraph_shape",
     "subgraph_edges", "subgraph_hub", "contiguous_runs", "n_drugs", "drugs",
