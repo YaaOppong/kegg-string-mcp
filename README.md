@@ -394,6 +394,20 @@ the one nothing else in the suite guards.
 | `rules.tsv` | rule | conditions, roles, signatures, the learner's own statistics, and the verdict |
 | `questions.tsv` | gap the sources could not close | what to ask the literature, and which rules raised it |
 
+The three join on stable keys, which is what makes them usable as supplementary
+tables rather than three separate reports. `loci.tsv` is keyed by `locus`.
+`rules.tsv` is keyed by `rule_id`, a hash of the rule's conditions after alias
+resolution and of its predicted class — so the same rule written two ways, or
+under two spellings of a locus, is one row, and `contained_in` and
+`contradicted_by` point at other rows by that key. `questions.tsv` names the
+rules that raised each question in `raised_by`, again by `rule_id`.
+
+A rule whose condition text could not be read is classified on the conditions
+that survived, is counted as its own rule rather than as the smaller rule it
+would otherwise look identical to, and says what was unreadable in `problems`.
+A run reports how many such rules it saw, because their `k`, their nesting and
+their set-level claims all understate what the learner emitted.
+
 `rules.tsv` also carries the set layer and the population layer. The median rule
 in a real population has seven conditions and 96.6% have three or more, so a
 pairwise reading does not survive: a k=14 rule decomposes to 91 pairs. Alongside
