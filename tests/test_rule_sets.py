@@ -169,3 +169,35 @@ def test_a_missing_partner_list_is_undetermined_not_empty(annotation):
     whole = partial | {"Rv0003": {"hubA", "z"}}
     evidence = set_evidence(conditions, annotation, partners=whole)
     assert evidence.partners_unknown == [] and evidence.common_partners == ["hubA"]
+
+
+# --- the demo path ---------------------------------------------------------
+
+
+def test_a_partial_membership_map_over_a_real_background_gives_the_real_q():
+    """Enrichment is a statement about a background. A page holding twenty loci
+    cannot recompute a 4,173-locus universe, and a universe built from the twenty
+    gives a different q under the same name -- which would be worse than showing
+    nothing. The counts are the statistic, so they travel and the membership map
+    covers only what is tested."""
+    from kegg_string_mcp.rules.enrichment import Universe, enrich
+
+    full = Universe(axis="category",
+                    members={"lipid metabolism": frozenset(f"g{i}" for i in range(274))},
+                    annotated=frozenset(f"g{i}" for i in range(4173)))
+    # The same background, but holding only the three loci under test.
+    partial = Universe(axis="category",
+                       members={"lipid metabolism": frozenset({"g0", "g1", "g2"})},
+                       annotated=frozenset({"g0", "g1", "g2"}),
+                       sizes={"lipid metabolism": 274}, total=4173)
+
+    a = enrich(["g0", "g1", "g2"], full).terms[0]
+    b = enrich(["g0", "g1", "g2"], partial).terms[0]
+    assert (b.s, b.n) == (a.s, a.n) == (274, 4173)
+    assert b.p == a.p and b.expected == a.expected
+
+    # Without the counts it silently answers a different question.
+    naive = Universe(axis="category",
+                     members={"lipid metabolism": frozenset({"g0", "g1", "g2"})},
+                     annotated=frozenset({"g0", "g1", "g2"}))
+    assert enrich(["g0", "g1", "g2"], naive).terms[0].p != a.p

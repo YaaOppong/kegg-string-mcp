@@ -52,14 +52,23 @@ class Universe:
     axis: str
     members: dict[str, frozenset[str]] = field(default_factory=dict)
     annotated: frozenset[str] = frozenset()
+    # The counts ARE the statistic; the membership map only has to cover the loci
+    # being tested. Supplying them lets a caller hold a partial map over a real
+    # background -- a page shipping twenty loci can still report the q the full
+    # annotation gives, instead of a different number under the same name.
+    sizes: dict[str, int] = field(default_factory=dict)
+    total: int = 0
 
     @property
     def size(self) -> int:
-        return len(self.annotated)
+        return self.total or len(self.annotated)
 
     @property
     def terms(self) -> int:
-        return len(self.members)
+        return len(self.sizes or self.members)
+
+    def carriers(self, term: str) -> int:
+        return self.sizes.get(term, len(self.members.get(term, ())))
 
 
 def universe_for(annotation: Annotation, axis: str = DEFAULT_AXIS) -> Universe:
@@ -69,9 +78,9 @@ def universe_for(annotation: Annotation, axis: str = DEFAULT_AXIS) -> Universe:
         for term in gene.terms.get(axis, ()):
             by_term[term].add(gene.locus)
             annotated.add(gene.locus)
-    return Universe(axis=axis,
-                    members={t: frozenset(v) for t, v in by_term.items()},
-                    annotated=frozenset(annotated))
+    members = {t: frozenset(v) for t, v in by_term.items()}
+    return Universe(axis=axis, members=members, annotated=frozenset(annotated),
+                    sizes={t: len(v) for t, v in members.items()}, total=len(annotated))
 
 
 def p_at_least(m: int, k: int, s: int, n: int) -> float:
@@ -170,15 +179,16 @@ def enrich(loci: list[str], universe: Universe, min_members: int = MIN_MEMBERS) 
 
     members = set(present)
     found: list[Enriched] = []
-    for term, carriers in universe.members.items():
-        hit = members & carriers
+    for term in (universe.sizes or universe.members):
+        hit = members & universe.members.get(term, frozenset())
         if len(hit) < min_members:
             continue
+        size = universe.carriers(term)
         found.append(Enriched(
             term=term, members=tuple(sorted(hit)), m=len(hit), k=len(present),
-            s=len(carriers), n=universe.size,
-            expected=len(present) * len(carriers) / universe.size,
-            p=p_at_least(len(hit), len(present), len(carriers), universe.size)))
+            s=size, n=universe.size,
+            expected=len(present) * size / universe.size,
+            p=p_at_least(len(hit), len(present), size, universe.size)))
 
     result.tested = len(found)
     for item, q in zip(found, benjamini_hochberg([f.p for f in found])):
