@@ -676,3 +676,39 @@ def test_the_classification_imports_without_httpx_or_pydantic():
             if name.startswith("kegg_string_mcp"):
                 del sys.modules[name]
         sys.modules.update(saved)
+
+
+def test_a_rule_with_an_unreadable_condition_does_not_borrow_the_smaller_rules_id(tmp_path):
+    """`A=1 AND B=2` keeps only `A=1`. It must not then BE the rule `A=1`.
+
+    parse_conditions' own docstring says a condition that does not parse is
+    reported rather than dropped, but the identity is where that promise is kept
+    or broken: sharing an id means the truncated rule nests as the smaller one,
+    collides with it in any join on rule_id, and collapses with it in the
+    population counts -- with nothing but a problems column to say so.
+    """
+    path = tmp_path / "truncated.tsv"
+    path.write_text(
+        "conditions\tpredicted_class\n"
+        "Rv0001=1\tR\n"                     # genuinely one condition
+        "Rv0001=1 AND Rv0002=2\tR\n"        # two, one unreadable
+        "Rv0001=1 AND Rv0002>1\tR\n")       # two, a different unreadable one
+    whole, truncated, other = parse_rules(path)
+
+    assert truncated.k == 1 and truncated.unreadable
+    assert truncated.rule_id() != whole.rule_id()
+    # Two different unreadable conditions are two different rules, not one.
+    assert truncated.rule_id() != other.rule_id()
+    assert not whole.unreadable
+
+
+def test_identical_rows_still_share_one_identity(tmp_path):
+    """The fix above must not cost the property it protects: the same rule
+    written twice, unreadable text included, is still one rule."""
+    path = tmp_path / "twice.tsv"
+    path.write_text(
+        "conditions\tpredicted_class\n"
+        "Rv0001=1 AND Rv0002=2\tR\n"
+        "Rv0002=2 AND Rv0001=1\tR\n")
+    left, right = parse_rules(path)
+    assert left.rule_id() == right.rule_id()

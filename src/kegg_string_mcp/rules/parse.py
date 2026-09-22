@@ -38,6 +38,10 @@ _CONDITION = re.compile(r"^\s*(?P<label>[^=<>!\s]+)\s*=+\s*(?P<state>[01])\s*$")
 
 PASSTHROUGH_PREFIX = "scan_"
 
+# Marks a condition that could not be read. Written once and matched once, so
+# the identity below and the message a reader sees cannot drift apart.
+UNPARSED_PREFIX = "unparsed condition: "
+
 
 @dataclass(frozen=True)
 class Condition:
@@ -66,6 +70,11 @@ class Rule:
     def labels(self) -> tuple[str, ...]:
         return tuple(c.label for c in self.conditions)
 
+    @property
+    def unreadable(self) -> tuple[str, ...]:
+        """The condition text that did not parse, in file order."""
+        return tuple(p for p in self.problems if p.startswith(UNPARSED_PREFIX))
+
     def canonical(self, rename: dict[str, str] | None = None) -> str:
         """Order-independent signature of the rule.
 
@@ -76,7 +85,15 @@ class Rule:
         """
         rename = rename or {}
         parts = sorted(f"{rename.get(c.label, c.label)}={c.state}" for c in self.conditions)
-        return f"{self.predicted_class}|" + "&".join(parts)
+        key = f"{self.predicted_class}|" + "&".join(parts)
+        if self.unreadable:
+            # A rule that lost a condition to a parse failure is NOT the smaller
+            # rule, and must not borrow its identity: it would then nest as that
+            # rule, share its row in any join, and collide with it outright. The
+            # unreadable text is part of what distinguishes it, so it is part of
+            # the key.
+            key += "|?" + "&".join(sorted(self.unreadable))
+        return key
 
     def rule_id(self, rename: dict[str, str] | None = None) -> str:
         return hashlib.sha256(self.canonical(rename).encode()).hexdigest()[:12]
@@ -110,7 +127,7 @@ def parse_conditions(text: str) -> tuple[tuple[Condition, ...], tuple[str, ...]]
             continue
         match = _CONDITION.match(chunk)
         if match is None:
-            problems.append(f"unparsed condition: {chunk.strip()!r}")
+            problems.append(f"{UNPARSED_PREFIX}{chunk.strip()!r}")
             continue
         conditions.append(Condition(match.group("label"), int(match.group("state"))))
     seen: dict[str, int] = {}

@@ -95,3 +95,22 @@ def test_a_rule_with_no_conditions_is_skipped_not_crashed(tmp_path):
     rules = _rules(tmp_path, [("", "R"), ("A=1", "R")])
     nesting = nest(rules)
     assert len(nesting) == 2
+
+
+def test_the_population_count_is_distinct_rules_not_input_rows(tmp_path):
+    """Two rows spelling one rule are one rule, and every figure reported beside
+    `minimal` has to use that same denominator. `N of M minimal` with M counting
+    rows and N counting identities is a ratio of two different things."""
+    path = tmp_path / "dupes.tsv"
+    path.write_text(
+        "conditions\tpredicted_class\n"
+        "Rv0001=1\tR\n"
+        "Rv0001=1\tR\n"                       # the same rule again
+        "Rv0001=1 AND Rv0002=1\tR\n")
+    rules = parse_rules(path)
+    nesting = nest(rules)
+
+    assert len(rules) == 3
+    assert len({r.rule_id() for r in rules}) == 2
+    assert summarise(nesting)["rules"] == 2
+    assert summarise(nesting)["minimal"] <= summarise(nesting)["rules"]

@@ -214,7 +214,10 @@ def main(argv: list[str] | None = None) -> int:
 
         for note in result.notes:
             print(f"note: {note}")
-        print(f"\n{len(result.annotations):,} loci, {len(result.rules):,} rules "
+        # `minimal` and `contradicted` are counts over distinct rules, so the
+        # rules figure beside them has to be too, not the input row count.
+        print(f"\n{len(result.annotations):,} loci, "
+              f"{result.summary.get('rules', len(result.rules)):,} rules "
               f"({result.summary.get('minimal', 0):,} minimal, "
               f"{result.summary.get('contradicted_by_a_superset', 0):,} contradicted by a "
               f"superset)")

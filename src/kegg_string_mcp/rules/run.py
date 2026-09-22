@@ -144,9 +144,19 @@ def run(rules_path: str | Path, annotation_path: str | Path, out_dir: str | Path
 
     # Containment across the population. One pass, no lookups.
     nesting = nest(rules, rename)
+    # Denominator is distinct rules, not input rows: two rows spelling the same
+    # rule share one identity, and counting them twice would make "N of M
+    # minimal" a ratio of two different things.
     notes.append(
-        f"{summarise_nesting(nesting)['minimal']:,} of {len(rules):,} rules are minimal; "
-        f"the rest contain a smaller rule in the population")
+        f"{summarise_nesting(nesting)['minimal']:,} of {summarise_nesting(nesting)['rules']:,} "
+        f"distinct rules are minimal; the rest contain a smaller rule in the population")
+    incomplete = [rule for rule in rules if rule.unreadable]
+    if incomplete:
+        notes.append(
+            f"{len(incomplete):,} rule(s) carry a condition that could not be read and are "
+            f"classified on the conditions that survived; see the problems column. Their "
+            f"conditions are fewer than the learner emitted, so their k, their nesting and "
+            f"their set-level claims all understate the rule")
 
     signatures = []
     for rule in rules:
