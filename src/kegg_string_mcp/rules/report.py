@@ -89,6 +89,8 @@ RULE_COLUMNS = [
     "set_k", "enriched_term", "enriched_m_of_k", "enriched_expected", "enriched_q",
     "terms_tested", "shared_by_all", "common_partners", "subgraph_shape",
     "subgraph_edges", "subgraph_hub", "contiguous_runs", "n_drugs", "drugs",
+    "n_supersets", "n_subsets", "is_minimal", "is_maximal", "contained_in",
+    "contradicted_by",
     "verdict", "problems",
 ]
 
@@ -149,7 +151,8 @@ def write_loci(path: Path, annotations, links_by_locus) -> Path:
     return _write(path, LOCUS_COLUMNS, rows)
 
 
-def write_rules(path: Path, signatures, rename: dict[str, str] | None = None) -> Path:
+def write_rules(path: Path, signatures, rename: dict[str, str] | None = None,
+                nesting: dict | None = None) -> Path:
     """Rules, with the learner's own columns kept and prefixed.
 
     The `roles` column is what stops a rule row needing a third table: it says
@@ -160,6 +163,10 @@ def write_rules(path: Path, signatures, rename: dict[str, str] | None = None) ->
     for signature in signatures:
         row = signature.to_dict(rename)
         row["roles"] = _join(f"{c.locus}:{c.role}" for c in signature.conditions)
+        if nesting is not None:
+            found = nesting.get(signature.rule.rule_id(rename))
+            if found is not None:
+                row |= found.to_dict()
         rows.append(row)
         for key in row:
             if key.startswith("scan_") and key not in extra_columns:

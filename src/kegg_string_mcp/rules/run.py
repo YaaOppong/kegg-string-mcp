@@ -30,6 +30,8 @@ from kegg_string_mcp.rules.annotation import parse as parse_annotation
 from kegg_string_mcp.rules.catalogue import ANCHOR
 from kegg_string_mcp.rules.enrichment import universe_for
 from kegg_string_mcp.rules.evidence import evidence_for, load_sources, rename_map, summarise
+from kegg_string_mcp.rules.nesting import nest
+from kegg_string_mcp.rules.nesting import summarise as summarise_nesting
 from kegg_string_mcp.rules.parse import parse as parse_rules
 from kegg_string_mcp.rules.questions import generate as generate_questions
 from kegg_string_mcp.rules.questions import summarise as summarise_questions
@@ -140,6 +142,12 @@ def run(rules_path: str | Path, annotation_path: str | Path, out_dir: str | Path
     linked_pairs = {pair for pair, found in links.items()
                     if any(link.kind.startswith("string") for link in found)}
 
+    # Containment across the population. One pass, no lookups.
+    nesting = nest(rules, rename)
+    notes.append(
+        f"{summarise_nesting(nesting)['minimal']:,} of {len(rules):,} rules are minimal; "
+        f"the rest contain a smaller rule in the population")
+
     signatures = []
     for rule in rules:
         conditions = evidence_for(rule, sources)
@@ -152,8 +160,8 @@ def run(rules_path: str | Path, annotation_path: str | Path, out_dir: str | Path
 
     out_dir = Path(out_dir)
     written = {"loci": write_loci(out_dir / "loci.tsv", list(annotations.values()), by_locus),
-               "rules": write_rules(out_dir / "rules.tsv", signatures, rename),
+               "rules": write_rules(out_dir / "rules.tsv", signatures, rename, nesting),
                "questions": write_questions(out_dir / "questions.tsv", questions)}
-    summary = summarise(signatures) | summarise_questions(questions)
+    summary = summarise(signatures) | summarise_questions(questions) | summarise_nesting(nesting)
     return RunResult(rules=rules, signatures=signatures, annotations=annotations,
                      written=written, summary=summary, questions=questions, notes=notes)

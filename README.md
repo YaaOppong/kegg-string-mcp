@@ -383,6 +383,28 @@ the one nothing else in the suite guards.
 | `rules.tsv` | rule | conditions, roles, signatures, the learner's own statistics, and the verdict |
 | `questions.tsv` | gap the sources could not close | what to ask the literature, and which rules raised it |
 
+`rules.tsv` also carries the set layer and the population layer. The median rule
+in a real population has seven conditions and 96.6% have three or more, so a
+pairwise reading does not survive: a k=14 rule decomposes to 91 pairs. Alongside
+the pairwise claims — compensation, aliasing — each rule reports what is true of
+its loci *as a set*: over-representation of a functional category (Fisher's
+exact, Benjamini–Hochberg, universe taken from the supplied annotation), a term
+every member carries, a partner every member shares, the shape of the
+interaction graph, contiguous runs, and the drugs spanned.
+
+And because a learning classifier nests its rules, each row says whether it is
+minimal, what contains it, and — separately — whether a superset predicts the
+*opposite* class. That last one is an interaction rather than an elaboration: if
+`A=1` predicts resistance and `A=1 AND B=1` predicts susceptibility, B reverses
+the outcome in A's presence, and no per-rule reading can see it.
+
+`gar retrieve questions.tsv --annotation h37rv.gff` is stage B of the literature
+layer: it fetches candidate papers per question, corpus first and PubMed on
+empty, and records the text where a quote can later be checked against it.
+Queries are gene-centric and name every spelling of a locus — never the
+conclusion, since a query containing "compensatory" retrieves only papers using
+the word and makes a supporting quote near-certain.
+
 Relationships live in a structured string (`ahpC:string_textmining_only:0.968|furA:adjacent:6bp`)
 rather than a third file, because `loci.tsv` is meant to be read as a
 supplementary table. A STRING edge supported only by textmining is co-mention in

@@ -214,7 +214,10 @@ def main(argv: list[str] | None = None) -> int:
 
         for note in result.notes:
             print(f"note: {note}")
-        print(f"\n{len(result.annotations):,} loci, {len(result.rules):,} rules")
+        print(f"\n{len(result.annotations):,} loci, {len(result.rules):,} rules "
+              f"({result.summary.get('minimal', 0):,} minimal, "
+              f"{result.summary.get('contradicted_by_a_superset', 0):,} contradicted by a "
+              f"superset)")
         for name, count in result.summary["by_primary_signature"].items():
             print(f"  {name:28} {count:5,}")
         if result.questions:
