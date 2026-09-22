@@ -279,6 +279,35 @@ gar rules RULES.tsv     --annotation h37rv.bed    # annotate loci, classify rule
 gar gold                --annotation h37rv.bed    # score the classifier on known rules
 ```
 
+### Input
+
+Two files, and nothing is fetched to stand in for either.
+
+**The rule table** is whatever your learner emitted, read as TSV by default with
+the delimiter sniffed (tab, comma or semicolon). One row per rule. Only the
+conditions column is required; the header is matched case-insensitively and the
+first name found wins:
+
+| Meaning | Accepted column names |
+|---|---|
+| The conjunction | `conditions`, `condition`, `rule`, `antecedent`, `if` |
+| The predicted class | `predicted_class`, `class`, `consequent`, `prediction`, `then` |
+| How many conditions the learner wrote | `n_conditions`, `n_cond`, `length`, `specificity` |
+
+```
+n_conditions	conditions	predicted_class	numerosity	accuracy	coverage	precision
+2	Rv1908c=1 AND Rv2428=1	R	11	0.9524	31.08	0.9524
+```
+
+Conditions split on ` AND ` (any case) and each must read as `LABEL=0` or
+`LABEL=1`. Every column but the conditions and the class passes through untouched under a
+`scan_` prefix (the count column included),
+so the learner's own statistics land in `rules.tsv` beside the classification
+without anything here being able to masquerade as them. If a count column is
+present and disagrees with how many conditions were read, that disagreement is
+recorded rather than resolved — it usually means the conjunction was split
+wrongly, and the rule must not be scored as though it had been read correctly.
+
 **The reference annotation is an input, never fetched.** Feature names come from
 whichever annotation the variant caller used — `snpEff genes2bed
 Mycobacterium_tuberculosis_h37rv`, or NCBI's H37Rv GFF3 where SnpEff is not
