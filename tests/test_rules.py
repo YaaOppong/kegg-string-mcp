@@ -600,3 +600,32 @@ def test_repetitive_categories_are_flagged_for_variant_calling(tmp_path):
     assert annotation.gene("Rv0002").repetitive == ""
     assert annotation.gene("Rv0002").category == "lipid metabolism"
     assert any("are repetitive" in n for n in annotation.notes)
+
+
+def test_the_rules_package_never_reaches_a_model():
+    """The boundary this branch is for.
+
+    Everything in `rules/` is a lookup, a count or a comparison, so a run needs
+    no API key, costs nothing, and gives the same answer twice. That is what lets
+    it run on a cluster with no credentials and lets a reader check any
+    classification against the locus row it rests on.
+
+    Hypothesis generation and quote extraction need a model and belong elsewhere.
+    Stated as a test because a single convenient import would end the property
+    silently, and nothing else would fail.
+    """
+    import ast
+
+    package = Path(__file__).resolve().parents[1] / "src" / "kegg_string_mcp" / "rules"
+    forbidden = ("anthropic", "kegg_string_mcp.agent.loop", "kegg_string_mcp.agent.pipeline",
+                 "kegg_string_mcp.agent.modes")
+    offenders = []
+    for source in sorted(package.glob("*.py")):
+        tree = ast.parse(source.read_text(encoding="utf-8"))
+        for node in ast.walk(tree):
+            names = ([a.name for a in node.names] if isinstance(node, ast.Import)
+                     else [node.module or ""] if isinstance(node, ast.ImportFrom) else [])
+            for name in names:
+                if any(name == f or name.startswith(f + ".") for f in forbidden):
+                    offenders.append(f"{source.name} imports {name}")
+    assert not offenders, "; ".join(offenders)
