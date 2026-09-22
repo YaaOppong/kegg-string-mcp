@@ -91,6 +91,17 @@ capture; every run re-captured after the pipeline gained identity resolution and
 `corpus_search` passes, furA included, so the re-run sits beside the original as
 `furA-rerun`.
 
+A second tab, **rule classification**, does something the first one cannot: it
+*computes* rather than replays. There is no model in a rule classification — given the
+same annotation, the same catalogue rows and the same rules, the verdicts are
+arithmetic — so the page ships the inputs and runs the real classifier over them. Pick a
+rule and it resolves the loci, reads the WHO catalogue and the lineage barcode, and
+derives the signature in front of you; every field it shows is one the library produced,
+not one that was stored. The inputs are trimmed to fit a page (the annotation to the
+loci the rules name and their neighbours, the catalogue to four fields per row), but the
+enrichment background travels at full size, so a q on the page is the q the pipeline
+reports rather than a different number under the same name.
+
 The page runs entirely in the browser on **bare Pyodide, with no packages installed** —
 there is no server and nothing to resolve at load. That is only possible because the
 replay layer is standard-library only, which a test enforces. (An earlier attempt used
@@ -552,8 +563,9 @@ commands are installed by `pip install -e .`; the rest are run with `python`.
 | **Arm comparison** | `python scripts/run_comparison.py data/corpus_tb41.json --tag tb41` | Measures lexical, dense and hybrid retrieval over all gene pairs, then again over the pairs STRING has no edge for, which removes the circularity in scoring relevance by gene names. Writes `comparison_<tag>.json`. |
 | **Unexplained residue** | `python scripts/residue.py --tag tb41` | Reads what the earlier steps wrote, adds KEGG pathway membership, and reports which pairs no source accounts for — the input to hypothesis generation. |
 | **Demo capture** | `python demo/build.py NAME=path/to/run.jsonl` | Turns a raw run store into the compact record the demo replays. Deliberately drops the validation verdict, so the demo recomputes it. |
+| **Rule fixture capture** | `python demo/build_rule_fixture.py RULES.tsv --annotation h37rv.gff` | Captures what the rule tab needs to classify in the browser: trimmed annotation, catalogue and barcode, plus the STRING partners and links that cannot be derived from a file. Captures inputs, never a verdict. |
 | **Demo page build** | `python demo/build_pages.py` | Generates the serverless `docs/index.html` for GitHub Pages: bare Pyodide, module bodies copied verbatim so the page cannot show a verdict the library does not produce. Run by the Pages workflow, never committed. |
-| **Demo, locally** | `python -m app.app` | The same replay through gradio, for running on your own machine or a Hugging Face Space. |
+| **Demo, locally** | `python -m app.app` | The gene-annotation replay through gradio, for running on your own machine or a Hugging Face Space. The rule-classification tab is Pages-only; locally it is `app/rule_replay.py`, importable and callable directly. |
 | **Container handshake** | `python .github/scripts/mcp_smoke.py <image>` | Drives a real MCP stdio handshake against the built image and asserts the tool list. Runs in CI on every push. |
 
 ## Install
@@ -693,9 +705,11 @@ remain the caller's responsibility:
 
 ## Status
 
-MCP server, annotation pipeline, evaluation, the run tables and the retrieval arm are
-all on `main`. Rule annotation is on `rule-annotation`: the deterministic half is
-complete and scored; the literature layer is stage A only.
+MCP server, annotation pipeline, evaluation, the run tables, the retrieval arm and rule
+annotation are all on `main`. The deterministic half of rule annotation is complete and
+scored. Its literature layer stops after stage B: the questions are generated and the
+candidate papers fetched, but nothing yet extracts a quote (stage C) or checks one
+against the retrieved text (stage D), and hypothesis generation is not built.
 
 - The rules an external client should follow: [skills/gene-annotation/SKILL.md](skills/gene-annotation/SKILL.md)
 - Design rationale: [docs/DESIGN.md](docs/DESIGN.md)
