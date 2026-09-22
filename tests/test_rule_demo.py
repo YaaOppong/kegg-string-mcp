@@ -100,3 +100,49 @@ def test_the_browser_path_runs_with_httpx_and_pydantic_blocked(tmp_path):
             if name.startswith(("kegg_string_mcp", "app.rule_replay")):
                 del sys.modules[name]
         sys.modules.update(saved)
+
+
+def test_the_pages_payload_runs_the_classification(tmp_path, monkeypatch):
+    """Simulate the page's bootstrap: write the payload files where Pyodide would
+    and run the same Python the page runs.
+
+    The page cannot be opened here, so this is the closest check there is -- and
+    it covers the failure that would otherwise only appear in a browser: a module
+    left out of the payload, or one that imports something Pyodide has not got.
+    """
+    import importlib
+
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+    from demo.build_pages import payload
+
+    files = payload()
+    assert "rule_fixture.json" in files, "the rule tab was not included"
+
+    for name, body in files.items():
+        target = tmp_path / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(body, encoding="utf-8")
+
+    blocked = ("httpx", "pydantic", "pydantic_core")
+
+    class _Block:
+        def find_spec(self, name, path=None, target=None):
+            if name.split(".")[0] in blocked:
+                raise ImportError(f"{name} is blocked by this test")
+
+    saved = {name: sys.modules.pop(name) for name in list(sys.modules)
+             if name.startswith(("kegg_string_mcp", "rule_replay", *blocked))}
+    monkeypatch.syspath_prepend(str(tmp_path))
+    sys.meta_path.insert(0, _Block())
+    try:
+        replay = importlib.import_module("rule_replay")
+        out = replay.classified(replay.load(tmp_path / "rule_fixture.json"),
+                                workdir=tmp_path)
+        assert out["rules"] and out["by_signature"]
+        assert all(row["verdict"] for row in out["rules"])
+    finally:
+        sys.meta_path.pop(0)
+        for name in list(sys.modules):
+            if name.startswith(("kegg_string_mcp", "rule_replay")):
+                del sys.modules[name]
+        sys.modules.update(saved)
