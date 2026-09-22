@@ -131,6 +131,17 @@ class ResistanceClient:
             self._traces = [_trace(response)]
         return self._catalogue, self._traces
 
+    def catalogue(self) -> tuple[dict[str, list[Variant]], list[RequestTrace]]:
+        """The whole parsed catalogue, gene -> variants, with its provenance.
+
+        `variants()` answers about one gene, which is the tool's job. Placing the
+        catalogue's promoter variants onto genome coordinates needs all of it at
+        once -- a `c.-N` position is attributed to the gene by convention but can
+        physically sit in a neighbour or in intergenic space, so it cannot be
+        found by asking about the gene it is named for.
+        """
+        return self._load()
+
     def variants(self, gene: str, drug: str | None = None) -> ToolResult:
         query: dict[str, Any] = {"gene": gene, "drug": drug}
         gene = gene.strip()

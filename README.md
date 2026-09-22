@@ -91,6 +91,17 @@ capture; every run re-captured after the pipeline gained identity resolution and
 `corpus_search` passes, furA included, so the re-run sits beside the original as
 `furA-rerun`.
 
+A second tab, **rule classification**, does something the first one cannot: it
+*computes* rather than replays. There is no model in a rule classification — given the
+same annotation, the same catalogue rows and the same rules, the verdicts are
+arithmetic — so the page ships the inputs and runs the real classifier over them. Pick a
+rule and it resolves the loci, reads the WHO catalogue and the lineage barcode, and
+derives the signature in front of you; every field it shows is one the library produced,
+not one that was stored. The inputs are trimmed to fit a page (the annotation to the
+loci the rules name and their neighbours, the catalogue to four fields per row), but the
+enrichment background travels at full size, so a q on the page is the q the pipeline
+reports rather than a different number under the same name.
+
 The page runs entirely in the browser on **bare Pyodide, with no packages installed** —
 there is no server and nothing to resolve at load. That is only possible because the
 replay layer is standard-library only, which a test enforces. (An earlier attempt used
@@ -248,6 +259,172 @@ Annotating `furA` and looking up `katG` for context is legitimate; letting katG'
 pathways land in furA's row is the cross-target error in tabular form, and unlike the
 citation flag nothing downstream would show it.
 
+## Rule annotation
+
+An upstream rule learner classifies isolates as resistant or susceptible from
+per-locus variant states, and emits rules:
+
+```
+Rv1908c=1 AND Rv2428=1  ->  R     numerosity 11   precision 0.9524
+```
+
+This layer says what the structured sources already account for, before any model
+is involved. `=1` means the locus carries a qualifying variant; `=0` asserts it
+matches the reference, which is a claim about every isolate the rule covers
+rather than silence about the gene.
+
+```bash
+gar features LABELS.txt --annotation h37rv.bed    # do the feature labels resolve?
+gar rules RULES.tsv     --annotation h37rv.bed    # annotate loci, classify rules
+gar gold                --annotation h37rv.bed    # score the classifier on known rules
+```
+
+**The reference annotation is an input, never fetched.** Feature names come from
+whichever annotation the variant caller used — `snpEff genes2bed
+Mycobacterium_tuberculosis_h37rv`, or NCBI's H37Rv GFF3 where SnpEff is not
+installed — so resolving them against a different gene list is how a locus
+silently becomes the wrong locus. BED and GFF/GTF are both read, the format from
+the shape of a row rather than the extension, and a GFF3's child rows (`CDS`,
+`rRNA`, `exon`) are folded into their parent locus rather than counted as
+separate genes.
+
+Which annotation matters. On one real 2,903-label vocabulary:
+
+| Annotation | Loci | Labels resolved |
+|---|---|---|
+| Mycobrowser H37Rv v5 | 4,173 | 2,900 (99.9%) |
+| NCBI RefSeq `GCF_000195955.2` | 4,008 | 2,827 (97.4%) |
+| KEGG `mtu` gene list | 4,008 | 2,827 (97.4%) |
+
+Mycobrowser is read too, and it is shaped differently: no `gene` rows at all, the
+locus tag in a `Locus` attribute and the gene symbol in `Name`. Reading `Name`
+first would make every locus its own symbol — `dnaA` rather than `Rv0001` — and
+no locus tag would resolve. A file with no gene-level rows falls back to
+transcript-level ones (`CDS`, `ncRNA`, `tRNA`, `rRNA`), because CDS alone drops
+141 real loci including `rrs` and `rrl`; regulatory rows (`promoter`,
+`-35_signal`) carry a locus value but name part of a gene and are excluded.
+
+Where the annotation carries curated fields, they are read from it — no second
+file and no extra lookup. Mycobrowser's `Functional_Category` is the TubercuList
+scheme, has no equivalent in KEGG or UniProt, and does two things here. It names
+1,042 loci "conserved hypotheticals", which is a better answer than "absent from
+the catalogue" for an unexplained locus. And it identifies the 315 loci that are
+**repetitive** — 168 PE/PPE, 147 insertion sequences and phages — where short
+reads misplace, so a condition on one may be a mapping artefact rather than a
+variant. Rules touching them carry a caution.
+
+Mycobrowser is frozen: release 5 (June 2024) is the last, and the site states it
+is no longer maintained. That makes it a stable target rather than a moving one,
+but nothing here fetches it — you supply the file.
+
+Non-coding features are named differently by different producers. A pipeline
+collapsing SnpEff `ANN` fields emits `upstream_<gene>`, `downstream_<gene>` and
+`intergenic_<a>-<b>`, with a transcript version on the gene part
+(`upstream_Rv1482c.1`); another names the flanking pair directly. A trailing
+`.N` is tried as part of the name before it is tried as a version, because H37Rv
+has ten symbols — `TB7.3`, `TB15.3`, `TB31.7` and the rest of that family —
+where the number *is* the gene. Both resolve,
+the prefix set is the caller's to override — a
+refusal names the prefixes it tried, so a new vocabulary is a configuration
+change rather than a silent loss.
+
+Two conditions in one rule can be driven by the same variant, and a rule saying
+so twice reads as epistasis. Three cases are reported, and they differ in
+certainty: both conditions naming one locus, resolved spans that intersect
+(H37Rv has 917 overlapping consecutive gene pairs — mostly 4 bp start/stop
+junctions, but 56 of at least 50 bp), and a region feature paired with the gene
+that bounds it. The last is **undetermined** rather than either answer: a caller
+reporting upstream variants within a window annotates a variant inside the
+flanking gene to both features, and whether any did is in the caller's distance
+field. The check keys on adjacency *in the rule*, so it fires on the pairing that
+can alias rather than on every gene with a near neighbour.
+
+`upstream_X` resolves to the intergenic interval 5' of X *on X's own strand*,
+and says in its note that the producer's window is usually wider: SnpEff's
+default upstream window is 5,000 bp, and 3,048 of H37Rv's 3,049 intergenic
+intervals are narrower than that (median 81 bp). Where X abuts or overlaps its
+5' neighbour — 830 of 4,008 genes — there is no interval to resolve to, and the
+answer says so rather than reading as a failed lookup. Measured against one real
+2,903-label vocabulary, KEGG's curated list was missing 76 of them and disagreed
+with 1,346 more on the strand suffix. KEGG stays authoritative for pathways; the
+caller's annotation is authoritative for what a locus is and where it sits. Its
+`sha256` is recorded, so a reference update cannot change the results invisibly.
+
+### What a rule is classified as
+
+Each condition gets a role from its state and what the WHO catalogue holds:
+
+| | catalogue anchor | assessed, none associated | absent |
+|---|---|---|---|
+| **state 1** | `anchor` | `compensator_candidate` | `unknown` |
+| **state 0** | `negated_anchor` | `negated` | `negated` |
+
+That middle cell is what the layer is for. `rpoC` (1,401 catalogued variants, 0
+graded associated), `rpoA` (507, 0) and `ahpC` (250, 0) — the canonical
+compensatory loci — all carry it: in the catalogue because they recur in
+resistant isolates, graded as not conferring resistance themselves. 50 of the
+catalogue's 74 genes look like that.
+
+Rules then carry every signature that applies, with precedence deciding which
+leads:
+
+| Signature | Means |
+|---|---|
+| `confounded:feature_overlap` | two conditions one variant could satisfy — the same observation entered twice, which reads as epistasis |
+| `confounded:lineage` | every present locus marks one lineage — carried together by descent |
+| `known:compensation` | anchor + a candidate assessed against the **same drug**, ideally functionally linked |
+| `known:alt_route` | resistance while a canonical locus is at reference |
+| `discordant` | a known resistance locus varying in isolates predicted susceptible |
+| `unknown` | a locus the catalogue never assessed |
+| `confounded:multidrug` | loci for **different** drugs — MDR is defined that way, so this is the diagnosis, not a relationship |
+| `confounded:co_selection` | loci for the **same** drug — one drug selecting both |
+| `known:resistance` | recovers known pharmacology |
+
+Drug concordance is load-bearing. `rpoA` has the compensatory shape and STRING
+supplies a co-mention edge for it, but it was only ever assessed against
+rifampicin — so pairing it with `katG` is not compensation, and the verdict says
+why. `gar gold` scores twelve rules of known answer, and that negative control is
+the one nothing else in the suite guards.
+
+### Output
+
+| File | One row per | Carries |
+|---|---|---|
+| `loci.tsv` | distinct locus | product, pathways, partners, lineage markers, catalogue status, how many rules it appears in, and `linked_loci` |
+| `rules.tsv` | rule | conditions, roles, signatures, the learner's own statistics, and the verdict |
+| `questions.tsv` | gap the sources could not close | what to ask the literature, and which rules raised it |
+
+`rules.tsv` also carries the set layer and the population layer. The median rule
+in a real population has seven conditions and 96.6% have three or more, so a
+pairwise reading does not survive: a k=14 rule decomposes to 91 pairs. Alongside
+the pairwise claims — compensation, aliasing — each rule reports what is true of
+its loci *as a set*: over-representation of a functional category (Fisher's
+exact, Benjamini–Hochberg, universe taken from the supplied annotation), a term
+every member carries, a partner every member shares, the shape of the
+interaction graph, contiguous runs, and the drugs spanned.
+
+And because a learning classifier nests its rules, each row says whether it is
+minimal, what contains it, and — separately — whether a superset predicts the
+*opposite* class. That last one is an interaction rather than an elaboration: if
+`A=1` predicts resistance and `A=1 AND B=1` predicts susceptibility, B reverses
+the outcome in A's presence, and no per-rule reading can see it.
+
+`gar retrieve questions.tsv --annotation h37rv.gff` is stage B of the literature
+layer: it fetches candidate papers per question, corpus first and PubMed on
+empty, and records the text where a quote can later be checked against it.
+Queries are gene-centric and name every spelling of a locus — never the
+conclusion, since a query containing "compensatory" retrieves only papers using
+the word and makes a supporting quote near-certain.
+
+Relationships live in a structured string (`ahpC:string_textmining_only:0.968|furA:adjacent:6bp`)
+rather than a third file, because `loci.tsv` is meant to be read as a
+supplementary table. A STRING edge supported only by textmining is co-mention in
+papers, so the channel is carried rather than flattened into one score.
+
+`questions.tsv` is stage A of the literature layer and costs nothing: the
+questions fall out of the classification, so a run can be counted before any
+retrieval happens. Each asks for a verbatim passage rather than for a verdict.
+
 ## Evaluation
 
 **The reference is incomplete, and that is the point.** KEGG assigns a pathway to just
@@ -378,13 +555,17 @@ commands are installed by `pip install -e .`; the rest are run with `python`.
 |---|---|---|
 | **MCP server** | `kegg-string-mcp` | Serves the seven tools over stdio. `src/kegg_string_mcp/server.py`. |
 | **Annotation pipeline** | `gar single \| epistasis \| eval` | Runs the agent loop against the server and validates the result. Installed by `pip install -e .`. `src/kegg_string_mcp/cli.py`. |
+| **Rule annotation** | `gar rules RULES.tsv --annotation h37rv.bed` | Resolves the rule set's feature labels against the supplied annotation, annotates each distinct locus once, and classifies every rule against the WHO catalogue. Writes `loci.tsv`, `rules.tsv`, `questions.tsv`. No model. `src/kegg_string_mcp/rules/`. |
+| **Feature pre-flight** | `gar features LABELS.txt --annotation h37rv.bed` | Reports how much of a feature vocabulary resolves, and why the rest does not. Free, offline. |
+| **Classifier gold set** | `gar gold --annotation h37rv.bed` | Scores the rule classifier against twelve rules of known answer, including a negative control. |
 | **Run tables** | `gar table --runs runs --out tables` | Turns finished run stores into `genes.tsv`, `pairs.tsv`, `resistance_variants.tsv` and `lineage_markers.tsv`. No model, no network, re-runnable. `src/kegg_string_mcp/agent/tables.py`. |
 | **Corpus build** | `python scripts/build_corpus.py --extended --all-genes --tag tb41` | Routes genes by annotation coverage, resolves every alias, fetches abstracts, dedupes by PMID, chunks to 180 words, records which genes each passage names. Writes `data/corpus_<tag>.json` and `coverage_<tag>.json`. |
 | **Arm comparison** | `python scripts/run_comparison.py data/corpus_tb41.json --tag tb41` | Measures lexical, dense and hybrid retrieval over all gene pairs, then again over the pairs STRING has no edge for, which removes the circularity in scoring relevance by gene names. Writes `comparison_<tag>.json`. |
 | **Unexplained residue** | `python scripts/residue.py --tag tb41` | Reads what the earlier steps wrote, adds KEGG pathway membership, and reports which pairs no source accounts for — the input to hypothesis generation. |
 | **Demo capture** | `python demo/build.py NAME=path/to/run.jsonl` | Turns a raw run store into the compact record the demo replays. Deliberately drops the validation verdict, so the demo recomputes it. |
+| **Rule fixture capture** | `python demo/build_rule_fixture.py RULES.tsv --annotation h37rv.gff` | Captures what the rule tab needs to classify in the browser: trimmed annotation, catalogue and barcode, plus the STRING partners and links that cannot be derived from a file. Captures inputs, never a verdict. |
 | **Demo page build** | `python demo/build_pages.py` | Generates the serverless `docs/index.html` for GitHub Pages: bare Pyodide, module bodies copied verbatim so the page cannot show a verdict the library does not produce. Run by the Pages workflow, never committed. |
-| **Demo, locally** | `python -m app.app` | The same replay through gradio, for running on your own machine or a Hugging Face Space. |
+| **Demo, locally** | `python -m app.app` | The gene-annotation replay through gradio, for running on your own machine or a Hugging Face Space. The rule-classification tab is Pages-only; locally it is `app/rule_replay.py`, importable and callable directly. |
 | **Container handshake** | `python .github/scripts/mcp_smoke.py <image>` | Drives a real MCP stdio handshake against the built image and asserts the tool list. Runs in CI on every push. |
 
 ## Install
@@ -524,8 +705,11 @@ remain the caller's responsibility:
 
 ## Status
 
-MCP server, annotation pipeline, evaluation, the run tables and the retrieval arm are
-all on `main`.
+MCP server, annotation pipeline, evaluation, the run tables, the retrieval arm and rule
+annotation are all on `main`. The deterministic half of rule annotation is complete and
+scored. Its literature layer stops after stage B: the questions are generated and the
+candidate papers fetched, but nothing yet extracts a quote (stage C) or checks one
+against the retrieved text (stage D), and hypothesis generation is not built.
 
 - The rules an external client should follow: [skills/gene-annotation/SKILL.md](skills/gene-annotation/SKILL.md)
 - Design rationale: [docs/DESIGN.md](docs/DESIGN.md)

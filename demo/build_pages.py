@@ -32,6 +32,17 @@ PYODIDE = "https://cdn.jsdelivr.net/pyodide/v0.27.3/full/"
 
 DROP_DETAIL = ("abstract", "abstract_sections")
 
+# The rule classification goes in as a package tree rather than flattened. Its
+# modules import each other by their real names, and both `__init__.py` files are
+# import-safe -- the fetching modules are not in the tree, so nothing reaches for
+# httpx. That means no import rewriting at all: every file is the file.
+RULE_PACKAGE = (
+    "__init__.py", "rules/__init__.py", "rules/parse.py", "rules/annotation.py",
+    "rules/features.py", "rules/catalogue.py", "rules/enrichment.py", "rules/sets.py",
+    "rules/nesting.py", "rules/signature.py", "rules/evidence.py", "rules/questions.py",
+)
+RULE_FIXTURE = ROOT / "demo" / "rule_fixture.json"
+
 MODULES = {
     "store.py": ROOT / "src/kegg_string_mcp/agent/store.py",
     "validate.py": ROOT / "src/kegg_string_mcp/agent/validate.py",
@@ -69,6 +80,15 @@ def payload() -> dict[str, str]:
              for name, path in MODULES.items()}
     for run in sorted(RUNS.glob("*.json")):
         files[f"runs/{run.name}"] = json.dumps(trimmed_run(run), separators=(",", ":"))
+
+    # The rule tab, when a fixture has been built. Absent, the page still works
+    # and the tab is hidden rather than showing an error.
+    if RULE_FIXTURE.exists():
+        for name in RULE_PACKAGE:
+            source = ROOT / "src" / "kegg_string_mcp" / name
+            files[f"kegg_string_mcp/{name}"] = source.read_text(encoding="utf-8")
+        files["rule_replay.py"] = (ROOT / "app" / "rule_replay.py").read_text(encoding="utf-8")
+        files["rule_fixture.json"] = RULE_FIXTURE.read_text(encoding="utf-8")
     return files
 
 
@@ -96,6 +116,13 @@ TEMPLATE = r"""<!doctype html>
  h2 { font-size: 1.15rem; margin-top: 2.4rem; border-top:1px solid var(--line); padding-top:1.4rem; }
  a { color:#0b57d0; }
  .lede { font-size:1.03rem; }
+ nav#tabs { margin:1.5rem 0 .5rem; border-bottom:1px solid var(--line); }
+ .tab { font:inherit; background:none; border:0; border-bottom:3px solid transparent;
+        padding:.6rem .9rem; cursor:pointer; color:#4a5158; }
+ .tab.on { border-bottom-color:#0b57d0; color:#1b1f24; font-weight:600; }
+ tr.pick { cursor:pointer; }
+ tr.pick:hover td { background:#f3f6fb; }
+ tr.chosen td { background:#e8f0fe; }
  .banner { border-left:5px solid var(--ok); background:var(--ok-bg); padding:1rem 1.25rem;
            border-radius:6px; margin:1.4rem 0; }
  .banner.fail { border-left-color:var(--fail); background:var(--fail-bg); }
@@ -138,6 +165,11 @@ the reasoning behind every design decision</a>.</p>
 
 <p id="boot">Starting Python in your browser&hellip; (a few seconds, first time only)</p>
 
+<nav id="tabs" hidden>
+  <button id="tab-genes" class="tab on" type="button">Gene annotation</button>
+  <button id="tab-rules" class="tab" type="button" hidden>Rule classification</button>
+</nav>
+
 <div id="app" hidden>
   <label for="gene"><strong>Gene</strong></label>
   <select id="gene"></select>
@@ -170,6 +202,40 @@ the reasoning behind every design decision</a>.</p>
   no single target and so are not checked this way.
   <br/><br/>Research use only. Not for clinical decisions.
   <a href="https://github.com/YaaOppong/kegg-string-mcp">Repository</a>.</p>
+</div>
+
+<div id="rules-app" hidden>
+  <p class="lede">An upstream classifier emits rules over per-locus variant states.
+  This page reads each one against the WHO catalogue, the annotation and the
+  interaction data, and says what is already accounted for.</p>
+
+  <div class="banner" id="rules-banner"></div>
+
+  <p class="note"><strong>Nothing here was stored.</strong> The gene tab above replays a
+  model&rsquo;s summary, because a summary cannot be regenerated without an API key. A
+  rule classification has no model in it &mdash; given the catalogue rows, the annotation
+  and the rules, every verdict is arithmetic. So the page ships those inputs and runs the
+  same classifier the library does. What you see is computed here, now, and cannot drift
+  from the code.</p>
+
+  <h2>Rules</h2>
+  <p class="note">Pick one to see the reasoning. <em>minimal</em> means no smaller rule in
+  the set is contained in it.</p>
+  <table id="rule-list"></table>
+
+  <div id="rule-detail" hidden>
+    <h2>Why</h2>
+    <div id="rule-verdict"></div>
+    <table id="rule-roles"></table>
+  </div>
+
+  <p class="note" style="margin-top:2rem">A locus being catalogued means the
+  <em>gene</em> is known to resistance, never that the variant driving the rule is one of
+  the graded ones &mdash; katG holds 1,771 catalogued variants of which 139 are graded
+  associated. Enrichment is measured against the full annotation, not the subset shipped
+  here, and a p measures surprise against a uniform draw rather than evidence that the
+  loci are related.
+  <br/><br/>Research use only. Not for clinical decisions.</p>
 </div>
 </main>
 
@@ -230,6 +296,7 @@ async function main() {
   step("writing files into the virtual filesystem");
   const encoder = new TextEncoder();
   pyodide.FS.mkdirTree("/demo/runs");
+  pyodide.FS.mkdirTree("/demo/kegg_string_mcp/rules");
   for (const [name, body] of Object.entries(FILES)) {
     pyodide.FS.writeFile("/demo/" + name, encoder.encode(body));
   }
@@ -239,8 +306,18 @@ async function main() {
   // runPython only, deliberately: it is the most basic entry point in the JS API,
   // so the page depends on as little of Pyodide's surface as possible.
   pyodide.runPython("import sys; sys.path.insert(0, '/demo')\nimport browser_api");
+  // The rule tab computes rather than replays: same classifier, same inputs, no
+  // stored verdict anywhere on the page.
+  const hasRules = "rule_fixture.json" in FILES;
+  if (hasRules) {
+    pyodide.runPython(
+      "import json, rule_replay\n"
+      + "_RULES = json.dumps(rule_replay.classified("
+      + "rule_replay.load('/demo/rule_fixture.json'), workdir='/demo'))");
+  }
   const api = {
     index: () => pyodide.runPython("import browser_api; browser_api.index()"),
+    rules: () => hasRules ? JSON.parse(pyodide.runPython("_RULES")) : null,
     run: name => pyodide.runPython(
       `import browser_api; browser_api.run(${JSON.stringify(name)})`),
   };
@@ -289,9 +366,70 @@ async function main() {
   step("rendering the first run");
   picker.addEventListener("change", () => show(picker.value));
   show(picker.value);
+
+  step("classifying the rules");
+  const rules = api.rules();
+  if (rules) renderRules(rules);
+
   document.getElementById("boot").hidden = true;
+  document.getElementById("tabs").hidden = false;
   document.getElementById("app").hidden = false;
 }
+
+// --- the rule tab ---------------------------------------------------------
+// Rendering only. Every verdict, role and q value on this tab was computed by
+// the library a moment ago; nothing here recomputes or reinterprets any of it.
+
+function renderRules(data) {
+  document.getElementById("tab-rules").hidden = false;
+  const counts = Object.entries(data.by_signature)
+    .map(([k, n]) => `${esc(k)} &times;${n}`).join(" &middot; ");
+  document.getElementById("rules-banner").innerHTML =
+    `<strong>${data.rules.length} rules</strong> over ${data.loci} loci, `
+    + `${data.nesting.minimal} minimal. ${counts}`;
+
+  const list = document.getElementById("rule-list");
+  list.innerHTML = "<tr><th>Rule</th><th>Predicts</th><th>Classification</th>"
+    + "<th>Minimal</th></tr>"
+    + data.rules.map((r, i) =>
+        `<tr class="pick" data-i="${i}"><td class="mono">${esc(r.conditions)}</td>`
+        + `<td>${esc(r.predicted_class)}</td><td>${esc(r.primary_signature)}</td>`
+        + `<td>${r.is_minimal === "True" ? "yes" : ""}</td></tr>`).join("");
+
+  const detail = document.getElementById("rule-detail");
+  list.querySelectorAll("tr.pick").forEach(row => row.addEventListener("click", () => {
+    list.querySelectorAll("tr").forEach(r => r.classList.remove("chosen"));
+    row.classList.add("chosen");
+    const r = data.rules[Number(row.dataset.i)];
+    document.getElementById("rule-verdict").innerHTML = `<p>${esc(r.verdict)}</p>`;
+    const rows = [["role of each condition", r.roles],
+                  ["signatures", r.signatures],
+                  ["enriched category", r.enriched_term === "NA" ? "NA"
+                     : `${r.enriched_term} (${r.enriched_m_of_k}, expected `
+                       + `${r.enriched_expected}, q=${r.enriched_q}, `
+                       + `${r.terms_tested} term(s) tested)`],
+                  ["drugs spanned", r.drugs],
+                  ["links", r.links],
+                  ["contained in", r.contained_in],
+                  ["contradicted by", r.contradicted_by]];
+    document.getElementById("rule-roles").innerHTML =
+      rows.filter(([, v]) => v && v !== "NA")
+          .map(([k, v]) => `<tr><th>${esc(k)}</th><td class="mono">${esc(v)}</td></tr>`)
+          .join("");
+    detail.hidden = false;
+  }));
+}
+
+function showTab(which) {
+  for (const [name, pane] of [["genes", "app"], ["rules", "rules-app"]]) {
+    document.getElementById(pane).hidden = name !== which;
+    document.getElementById("tab-" + name).classList.toggle("on", name === which);
+  }
+}
+document.addEventListener("click", event => {
+  if (event.target.id === "tab-genes") showTab("genes");
+  if (event.target.id === "tab-rules") showTab("rules");
+});
 
 main().catch(err => {
   // esc(err) on an Error prints "[object Object]", which says nothing. Report the

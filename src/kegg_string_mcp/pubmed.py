@@ -299,6 +299,32 @@ class PubMedClient:
         term = f'"{gene}"'
         if organism:
             term = f'{term} AND "{organism}"'
+        return self._for_term(query, term, limit, match_terms=gene)
+
+    def search_abstracts(self, term: str, limit: int = DEFAULT_LIMIT) -> ToolResult:
+        """Run a PubMed term built by this package, not by a model.
+
+        `abstracts()` refuses query syntax in its `gene` argument and phrase-quotes
+        what it is given, because a model must not be able to change the meaning
+        of a search -- an OR or a field tag smuggled into a gene name searches for
+        something other than the gene. Pipeline code composing a deliberate
+        boolean query is a different caller with a different risk, so it gets a
+        different door. The guard on the model-facing tool is unchanged.
+
+        `resolved.query_translation` still records what PubMed actually ran, so
+        the audit is the same either way.
+        """
+        query: dict[str, Any] = {"term": term, "limit": limit}
+        term = term.strip()
+        if not term:
+            return ToolResult.build(query, [], resolved={"matched_by": "none"},
+                                    notes=["no search term was supplied"])
+        return self._for_term(query, term, limit,
+                              match_terms=re.sub(r'["()\[\]]|\bAND\b|\bOR\b', " ", term))
+
+    def _for_term(self, query: dict[str, Any], term: str, limit: int,
+                  match_terms: str) -> ToolResult:
+        """Search, fetch, and build the result. Shared by both entry points."""
         resolved: dict[str, Any] = {"term": term, "matched_by": "pubmed_search"}
         traces: list[RequestTrace] = []
 
@@ -361,7 +387,7 @@ class PubMedClient:
         # thioredoxin review whose abstract contains neither symbol. Its PMID is
         # still citable, so without this note a model could cite it for a claim
         # about the gene with nothing to quote. Name them.
-        terms = [t for t in re.split(r"\s+", gene) if len(t) > 2]
+        terms = [t for t in re.split(r"\s+", match_terms) if len(t) > 2]
         # Which query terms are actually present in the retrieved text. Recorded
         # per record so a downstream corpus can be filtered to papers that really
         # discuss a gene, rather than ones that merely matched its metadata.

@@ -198,7 +198,24 @@ def test_the_static_build_installs_no_packages():
     # Parse rather than grep: a docstring explaining why micropip is avoided is
     # not an install, and a substring check cannot tell the difference.
     stdlib = set(sys.stdlib_module_names)
-    local = {name[:-3] for name in files if name.endswith(".py")}
+    # The payload is no longer flat: the rule classification ships as a package
+    # tree so its modules can import each other by their real names. A local
+    # module is therefore whatever an import inside the page could resolve --
+    # `kegg_string_mcp/rules/annotation.py` answers to
+    # `kegg_string_mcp.rules.annotation`, and to `kegg_string_mcp` through the
+    # `__init__.py` shipped beside it.
+    local = set()
+    for name in files:
+        if not name.endswith(".py"):
+            continue
+        dotted = name[:-3].replace("/", ".")
+        local.add(dotted)
+        if dotted.endswith(".__init__"):
+            local.add(dotted[: -len(".__init__")])
+        for depth in range(1, dotted.count(".") + 1):
+            parent = dotted.rsplit(".", depth)[0]
+            if f"{parent.replace('.', '/')}/__init__.py" in files:
+                local.add(parent)
     for name, body in files.items():
         if not name.endswith(".py"):
             continue
