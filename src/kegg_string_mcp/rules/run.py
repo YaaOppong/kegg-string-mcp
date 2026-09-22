@@ -28,11 +28,14 @@ from kegg_string_mcp.rules.annotate import (
 )
 from kegg_string_mcp.rules.annotation import parse as parse_annotation
 from kegg_string_mcp.rules.catalogue import ANCHOR
-from kegg_string_mcp.rules.evidence import classify_all, load_sources, rename_map, summarise
+from kegg_string_mcp.rules.enrichment import universe_for
+from kegg_string_mcp.rules.evidence import evidence_for, load_sources, rename_map, summarise
 from kegg_string_mcp.rules.parse import parse as parse_rules
 from kegg_string_mcp.rules.questions import generate as generate_questions
 from kegg_string_mcp.rules.questions import summarise as summarise_questions
 from kegg_string_mcp.rules.report import write_loci, write_questions, write_rules
+from kegg_string_mcp.rules.sets import set_evidence
+from kegg_string_mcp.rules.signature import classify
 
 
 @dataclass
@@ -120,7 +123,30 @@ def run(rules_path: str | Path, annotation_path: str | Path, out_dir: str | Path
             by_locus.setdefault(right, []).append(LinkedLocus(left, link.kind, link.detail).render())
 
     best = {pair: found[0] for pair, found in links.items() if found}
-    signatures = classify_all(rules, sources, best)
+
+    # Built once for the population rather than per rule: the enrichment universe
+    # is the whole annotation, and the partner lists are already fetched.
+    universe = universe_for(annotation)
+    if not universe.size:
+        notes.append("the supplied annotation carries no functional categories, so no "
+                     "enrichment was computed. Not a negative result.")
+    else:
+        notes.append(f"enrichment universe: {universe.size:,} annotated loci, "
+                     f"{universe.terms} category terms")
+    partner_sets = {locus: {name or pid for pid, name, _ in a.partners}
+                    for locus, a in annotations.items()}
+    # Pairs STRING links, for the subgraph shape. Co-mention only still counts as
+    # an edge here -- the shape is a description, not a claim about support.
+    linked_pairs = {pair for pair, found in links.items()
+                    if any(link.kind.startswith("string") for link in found)}
+
+    signatures = []
+    for rule in rules:
+        conditions = evidence_for(rule, sources)
+        signatures.append(classify(
+            rule, conditions, best,
+            sets=set_evidence(conditions, annotation, universe=universe,
+                              partners=partner_sets, linked_pairs=linked_pairs)))
 
     questions = generate_questions(signatures)
 

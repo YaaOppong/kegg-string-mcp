@@ -164,6 +164,8 @@ class RuleSignature:
     cross_resistant: list[tuple[str, list[str]]] = field(default_factory=list)
     # (a, b, kind, detail) for condition pairs one variant could satisfy.
     aliased: list[tuple[str, str, str, str]] = field(default_factory=list)
+    # What is true of the loci as a set. None when not computed.
+    sets: Any = None
     verdict: str = ""
 
     def of_role(self, role: str) -> list[ConditionEvidence]:
@@ -183,6 +185,7 @@ class RuleSignature:
             "links": "|".join(f"{a}~{b}:{link.kind}" for a, b, link in self.links) or "NA",
             "shared_lineages": "|".join(self.shared_lineages) or "NA",
             "shared_drugs": "|".join(self.shared_drugs) or "NA",
+            **(self.sets.to_dict() if self.sets is not None else {}),
             "aliased": "|".join(f"{a}~{b}:{kind}" for a, b, kind, _ in self.aliased) or "NA",
             "verdict": self.verdict,
         }
@@ -262,12 +265,18 @@ def _shared(values: list[tuple[str, ...]]) -> list[str]:
 
 
 def classify(rule: Rule, conditions: list[ConditionEvidence],
-             links: dict[tuple[str, str], Link] | None = None) -> RuleSignature:
-    """Roles, signatures and a verdict for one rule."""
+             links: dict[tuple[str, str], Link] | None = None,
+             sets: Any = None) -> RuleSignature:
+    """Roles, signatures and a verdict for one rule.
+
+    `sets` is a pre-computed `SetEvidence`; passing it rather than computing it
+    here keeps this a pure function of its arguments, and lets the caller build
+    the enrichment universe once for a whole population rather than per rule.
+    """
     links = links or {}
     for evidence in conditions:
         evidence.role = assign_role(evidence)
-    result = RuleSignature(rule=rule, conditions=conditions)
+    result = RuleSignature(rule=rule, conditions=conditions, sets=sets)
 
     present = [c for c in conditions if c.condition.state == 1]
     anchors = result.of_role(ROLE_ANCHOR)
@@ -443,7 +452,13 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"predicts susceptibility. The variant driving the condition may not be one of the "
             f"graded ones, may be suppressed, or may be a calling artefact.")
     elif result.primary == SIG_MULTIDRUG:
-        pairs = "; ".join(f"{a} + {b} ({', '.join(drugs)})" for a, b, drugs in result.multidrug)
+        # A k=7 rule produces 19 of these clauses and a k=14 rule 91. Listing
+        # them is not a summary, so past a handful they become a count and the
+        # set description below carries the content.
+        pairs = ("; ".join(f"{a} + {b} ({', '.join(drugs)})" for a, b, drugs in result.multidrug)
+                 if len(result.multidrug) <= 3
+                 else f"{len(result.multidrug)} anchor pairs conferring resistance to "
+                      f"different drugs")
         parts.append(
             f"Multi-drug: {pairs}. These loci confer resistance to different drugs, so an "
             f"isolate carrying both is one that acquired resistance to each under combination "
@@ -451,7 +466,9 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             f"and rifampicin, so their co-occurrence is the diagnosis rather than a "
             f"relationship between the loci.")
     elif result.primary == SIG_CO_SELECTION:
-        pairs = "; ".join(f"{a} + {b} ({', '.join(drugs)})" for a, b, drugs in result.co_selected)
+        pairs = ("; ".join(f"{a} + {b} ({', '.join(drugs)})" for a, b, drugs in result.co_selected)
+                 if len(result.co_selected) <= 3
+                 else f"{len(result.co_selected)} anchor pairs sharing a drug")
         parts.append(
             f"Co-selection: {pairs}. Treating with that drug selects every locus conferring "
             f"resistance to it at once, so these co-occur across isolates under treatment "
@@ -492,6 +509,12 @@ def _verdict(result: RuleSignature, kind: str) -> str:
             + ". Reads misplace in such sequence, so a condition on one of these may reflect "
               "a mapping artefact rather than a variant. Confirm the calls before "
               "interpreting the rule.")
+    if result.sets is not None:
+        from kegg_string_mcp.rules.sets import describe
+
+        described = describe(result.sets)
+        if described:
+            parts.append(described)
     if result.cross_resistant:
         parts.append(
             "Cross-resistance: "
