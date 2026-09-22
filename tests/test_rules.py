@@ -629,3 +629,51 @@ def test_the_rules_package_never_reaches_a_model():
                 if any(name == f or name.startswith(f + ".") for f in forbidden):
                     offenders.append(f"{source.name} imports {name}")
     assert not offenders, "; ".join(offenders)
+
+
+def test_the_classification_imports_without_httpx_or_pydantic():
+    """Pure computation should need nothing installed to run.
+
+    The existing demo runs on bare Pyodide with no packages, which is only
+    possible because its replay layer is standard-library only. The rule
+    classification is a better fit still -- it recomputes rather than replays --
+    so the same constraint applies to it, and to keep it true the check blocks
+    the packages and imports for real rather than reading the import lines.
+
+    The fetching modules (`annotate`, `retrieve`, `run`) are deliberately not in
+    this set: they exist to make network calls.
+    """
+    import importlib
+    import sys
+
+    blocked = ("httpx", "pydantic", "pydantic_core")
+    classification = ("parse", "annotation", "features", "catalogue", "enrichment",
+                      "sets", "nesting", "signature", "evidence")
+
+    class _Block:
+        def find_module(self, name, path=None):      # noqa: D102
+            return self if name.split(".")[0] in blocked else None
+
+        def load_module(self, name):                 # noqa: D102
+            raise ImportError(f"{name} is blocked by this test")
+
+        def find_spec(self, name, path=None, target=None):   # noqa: D102
+            if name.split(".")[0] in blocked:
+                raise ImportError(f"{name} is blocked by this test")
+            return None
+
+    saved = {name: sys.modules.pop(name)
+             for name in list(sys.modules)
+             if name.startswith(("kegg_string_mcp", *blocked))}
+    sys.meta_path.insert(0, _Block())
+    try:
+        for module in classification:
+            importlib.import_module(f"kegg_string_mcp.rules.{module}")
+        for name in blocked:
+            assert name not in sys.modules, f"{name} was imported anyway"
+    finally:
+        sys.meta_path.pop(0)
+        for name in list(sys.modules):
+            if name.startswith("kegg_string_mcp"):
+                del sys.modules[name]
+        sys.modules.update(saved)

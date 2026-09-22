@@ -139,3 +139,33 @@ def test_a_single_locus_rule_gets_no_set_description(annotation):
     what the condition already says."""
     conditions = _conditions(annotation, [("Rv0001", 1)])
     assert describe(set_evidence(conditions, annotation)) == ""
+
+
+def test_a_branching_tree_is_not_a_chain(annotation):
+    """Five nodes and four edges is a tree, but a T-shape is not a chain: no
+    vertex has degree n-1 so it is not a star either, and calling it a chain
+    describes a line that is not there."""
+    from kegg_string_mcp.rules.sets import CHAIN, SPARSE, _shape
+
+    t_shape = _shape(list("abcde"), {("a", "b"), ("b", "c"), ("c", "d"), ("c", "e")})
+    assert t_shape.shape == SPARSE
+    path = _shape(list("abcd"), {("a", "b"), ("b", "c"), ("c", "d")})
+    assert path.shape == CHAIN
+
+
+def test_a_missing_partner_list_is_undetermined_not_empty(annotation):
+    """A failed STRING lookup for one locus silenced the whole set, and the empty
+    result read as 'these loci share no partner' rather than 'the question was
+    not answered for one of them'."""
+    conditions = _conditions(annotation, [("Rv0001", 1), ("Rv0002", 1), ("Rv0003", 1)])
+    partial = {"Rv0001": {"hubA"}, "Rv0002": {"hubA"}}       # Rv0003 not fetched
+
+    evidence = set_evidence(conditions, annotation, partners=partial)
+    assert evidence.partners_unknown == ["Rv0003"]
+    assert evidence.common_partners == []
+    assert "undetermined rather than answered" in describe(evidence)
+
+    # With every list present, the answer is an answer.
+    whole = partial | {"Rv0003": {"hubA", "z"}}
+    evidence = set_evidence(conditions, annotation, partners=whole)
+    assert evidence.partners_unknown == [] and evidence.common_partners == ["hubA"]

@@ -87,7 +87,7 @@ RULE_COLUMNS = [
     "unknown_loci", "negated_anchors", "unresolved", "links",
     "shared_lineages", "shared_drugs", "aliased", "duplicated", "contradictory",
     "set_k", "enriched_term", "enriched_m_of_k", "enriched_expected", "enriched_q",
-    "terms_tested", "shared_by_all", "common_partners", "subgraph_shape",
+    "terms_tested", "shared_by_all", "common_partners", "partners_unknown", "subgraph_shape",
     "subgraph_edges", "subgraph_hub", "contiguous_runs", "n_drugs", "drugs",
     "n_supersets", "n_subsets", "is_minimal", "is_maximal", "contained_in",
     "contradicted_by",

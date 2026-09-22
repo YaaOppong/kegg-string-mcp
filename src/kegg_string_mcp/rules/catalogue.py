@@ -29,10 +29,16 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from kegg_string_mcp.resistance import Variant
 from kegg_string_mcp.rules.annotation import Annotation, Intergenic, normalise_locus
+
+if TYPE_CHECKING:  # pragma: no cover
+    # Only ever annotated, never constructed here: a catalogue row is read for
+    # its `associated`, `mutation`, `drug` and `gene`, which any object carrying
+    # them satisfies. Importing it at runtime would pull pydantic in behind it
+    # and cost the classification its standard-library-only property.
+    from kegg_string_mcp.resistance import Variant
 
 ANCHOR = "anchor"                       # >=1 graded-associated variant
 ASSESSED_NEGATIVE = "assessed_negative"  # in the catalogue, none associated

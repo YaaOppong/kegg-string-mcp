@@ -15,10 +15,14 @@ rule covers both kinds and needs no special case.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from kegg_string_mcp.lineage import LineageSnp
 from kegg_string_mcp.rules.annotation import Annotation
+
+if TYPE_CHECKING:  # pragma: no cover
+    # Annotated only. `load_sources` imports the parser it needs at call time,
+    # where the network client is already in hand.
+    from kegg_string_mcp.lineage import LineageSnp
 from kegg_string_mcp.rules.catalogue import Catalogue, CatalogueStatus
 from kegg_string_mcp.rules.features import CODING, INTERGENIC, Feature, Resolver
 from kegg_string_mcp.rules.parse import Rule

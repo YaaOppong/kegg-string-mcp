@@ -95,7 +95,10 @@ def _shape(loci: list[str], pairs: set[tuple[str, str]]) -> Subgraph:
         # A star: one locus touches everything and the edges are only its own.
         if degree[top] == n - 1 and out.edges == n - 1:
             out.shape, out.hub = STAR, top
-        elif out.components == 1 and out.edges == n - 1:
+        elif (out.components == 1 and out.edges == n - 1
+              and max(degree.values()) <= 2):
+            # A tree with n-1 edges is only a chain if no vertex branches. A
+            # T-shape has the same edge count and is not one.
             out.shape = CHAIN
         else:
             out.shape = SPARSE
@@ -108,6 +111,9 @@ class SetEvidence:
     enrichment: Result | None = None
     shared_by_all: list[str] = field(default_factory=list)
     common_partners: list[str] = field(default_factory=list)
+    # Loci with no partner list at all. A failed STRING lookup must not read as
+    # "these loci share no partner"; it means the question was not answered.
+    partners_unknown: list[str] = field(default_factory=list)
     subgraph: Subgraph = field(default_factory=Subgraph)
     runs: list[list[str]] = field(default_factory=list)
     drugs: list[str] = field(default_factory=list)
@@ -127,6 +133,7 @@ class SetEvidence:
             "terms_tested": self.enrichment.tested if self.enrichment else 0,
             "shared_by_all": "|".join(self.shared_by_all) or "NA",
             "common_partners": "|".join(self.common_partners[:10]) or "NA",
+            "partners_unknown": "|".join(self.partners_unknown) or "NA",
             "subgraph_shape": self.subgraph.shape,
             "subgraph_edges": f"{self.subgraph.edges}/{self.subgraph.possible}",
             "subgraph_hub": self.subgraph.hub or "NA",
@@ -183,9 +190,10 @@ def set_evidence(conditions: list[Any], annotation: Annotation,
             out.shared_by_all = sorted(set.intersection(*terms))
 
     if partners:
-        lists = [partners.get(locus, set()) for locus in out.loci]
-        if all(lists):
-            out.common_partners = sorted(set.intersection(*lists))
+        out.partners_unknown = [locus for locus in out.loci if not partners.get(locus)]
+        if not out.partners_unknown:
+            out.common_partners = sorted(
+                set.intersection(*(partners[locus] for locus in out.loci)))
 
     pairs = {tuple(sorted(p)) for p in (linked_pairs or set())
              if set(p) <= set(out.loci)}
@@ -228,6 +236,10 @@ def describe(evidence: SetEvidence) -> str:
                if len(evidence.common_partners) > 3 else "")
             + " -- a shared neighbour of every member is the shape a complex or a regulon has, "
               "though a partner list capped at 20 cannot distinguish that from a hub.")
+    if evidence.partners_unknown:
+        extra.append(
+            f"No partner list was retrieved for {', '.join(evidence.partners_unknown)}, so "
+            f"whether the set shares a neighbour is undetermined rather than answered.")
     if evidence.subgraph.shape == STAR:
         extra.append(f"Their interaction graph is a star around {evidence.subgraph.hub}: the "
                      f"others touch it and not each other.")
