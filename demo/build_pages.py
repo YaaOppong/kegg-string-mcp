@@ -32,7 +32,7 @@ PYODIDE = "https://cdn.jsdelivr.net/pyodide/v0.27.3/full/"
 
 DROP_DETAIL = ("abstract", "abstract_sections")
 
-# The rule classification goes in as a package tree rather than flattened. Its
+# The rule annotation goes in as a package tree rather than flattened. Its
 # modules import each other by their real names, and both `__init__.py` files are
 # import-safe -- the fetching modules are not in the tree, so nothing reaches for
 # httpx. That means no import rewriting at all: every file is the file.
@@ -167,7 +167,7 @@ the reasoning behind every design decision</a>.</p>
 
 <nav id="tabs" hidden>
   <button id="tab-genes" class="tab on" type="button">Gene annotation</button>
-  <button id="tab-rules" class="tab" type="button" hidden>Rule classification</button>
+  <button id="tab-rules" class="tab" type="button" hidden>Rule annotation</button>
 </nav>
 
 <div id="app" hidden>
@@ -213,7 +213,7 @@ the reasoning behind every design decision</a>.</p>
 
   <p class="note"><strong>Nothing here was stored.</strong> The gene tab above replays a
   model&rsquo;s summary, because a summary cannot be regenerated without an API key. A
-  rule classification has no model in it &mdash; given the catalogue rows, the annotation
+  rule annotation has no model in it &mdash; given the catalogue rows, the annotation
   and the rules, every verdict is arithmetic. So the page ships those inputs and runs the
   same classifier the library does. What you see is computed here, now, and cannot drift
   from the code.</p>
@@ -389,7 +389,7 @@ function renderRules(data) {
     + `${data.nesting.minimal} minimal. ${counts}`;
 
   const list = document.getElementById("rule-list");
-  list.innerHTML = "<tr><th>Rule</th><th>Predicts</th><th>Classification</th>"
+  list.innerHTML = "<tr><th>Rule</th><th>Predicts</th><th>Signature</th>"
     + "<th>Minimal</th></tr>"
     + data.rules.map((r, i) =>
         `<tr class="pick" data-i="${i}"><td class="mono">${esc(r.conditions)}</td>`

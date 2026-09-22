@@ -1,4 +1,4 @@
-"""Capture what the rule classification needs, so a browser can recompute it.
+"""Capture what the rule annotation needs, so a browser can recompute it.
 
     python demo/build_rule_fixture.py RULES.tsv --annotation h37rv.gff
 

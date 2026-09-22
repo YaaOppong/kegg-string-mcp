@@ -1,11 +1,11 @@
-"""Recompute a rule classification from a captured fixture. No network, no model.
+"""Recompute a rule annotation from a captured fixture. No network, no model.
 
 Standard-library only, like `replay.py`, so it runs on bare Pyodide with nothing
 installed -- which is what lets the page compute rather than replay.
 
 That difference is the point. The gene demo replays a model's summary and
 re-validates it, because the summary cannot be regenerated without an API key.
-A rule classification has no model in it: given the same catalogue rows, the same
+A rule annotation has no model in it: given the same catalogue rows, the same
 annotation and the same rules, the verdicts are arithmetic. So the page ships the
 inputs and runs the real classifier over them, and a verdict it shows is one the
 library produces rather than one that was stored.

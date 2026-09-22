@@ -91,8 +91,8 @@ capture; every run re-captured after the pipeline gained identity resolution and
 `corpus_search` passes, furA included, so the re-run sits beside the original as
 `furA-rerun`.
 
-A second tab, **rule classification**, does something the first one cannot: it
-*computes* rather than replays. There is no model in a rule classification — given the
+A second tab, **rule annotation**, does something the first one cannot: it
+*computes* rather than replays. There is no model in a rule annotation — given the
 same annotation, the same catalogue rows and the same rules, the verdicts are
 arithmetic — so the page ships the inputs and runs the real classifier over them. Pick a
 rule and it resolves the loci, reads the WHO catalogue and the lineage barcode, and
@@ -119,7 +119,7 @@ python -m app.app                       # local
 
 Space deployment: [`app/README_SPACE.md`](app/README_SPACE.md).
 
-## Annotation pipeline
+## Gene annotation pipeline
 
 `gar` is the pipeline's command. `pip install -e .` puts it on your PATH alongside
 `kegg-string-mcp` (the server); it runs `main()` in
@@ -302,7 +302,7 @@ n_conditions	conditions	predicted_class	numerosity	accuracy	coverage	precision
 Conditions split on ` AND ` (any case) and each must read as `LABEL=0` or
 `LABEL=1`. Every column but the conditions and the class passes through untouched under a
 `scan_` prefix (the count column included),
-so the learner's own statistics land in `rules.tsv` beside the classification
+so the learner's own statistics land in `rules.tsv` beside the rule annotation
 without anything here being able to masquerade as them. If a count column is
 present and disagrees with how many conditions were read, that disagreement is
 recorded rather than resolved — it usually means the conjunction was split
@@ -465,7 +465,7 @@ supplementary table. A STRING edge supported only by textmining is co-mention in
 papers, so the channel is carried rather than flattened into one score.
 
 `questions.tsv` is stage A of the literature layer and costs nothing: the
-questions fall out of the classification, so a run can be counted before any
+questions fall out of the rule annotation, so a run can be counted before any
 retrieval happens. Each asks for a verbatim passage rather than for a verdict.
 
 ## Evaluation
@@ -608,7 +608,7 @@ commands are installed by `pip install -e .`; the rest are run with `python`.
 | **Demo capture** | `python demo/build.py NAME=path/to/run.jsonl` | Turns a raw run store into the compact record the demo replays. Deliberately drops the validation verdict, so the demo recomputes it. |
 | **Rule fixture capture** | `python demo/build_rule_fixture.py RULES.tsv --annotation h37rv.gff` | Captures what the rule tab needs to classify in the browser: trimmed annotation, catalogue and barcode, plus the STRING partners and links that cannot be derived from a file. Captures inputs, never a verdict. |
 | **Demo page build** | `python demo/build_pages.py` | Generates the serverless `docs/index.html` for GitHub Pages: bare Pyodide, module bodies copied verbatim so the page cannot show a verdict the library does not produce. Run by the Pages workflow, never committed. |
-| **Demo, locally** | `python -m app.app` | The gene-annotation replay through gradio, for running on your own machine or a Hugging Face Space. The rule-classification tab is Pages-only; locally it is `app/rule_replay.py`, importable and callable directly. |
+| **Demo, locally** | `python -m app.app` | The gene-annotation replay through gradio, for running on your own machine or a Hugging Face Space. The rule-annotation tab is Pages-only; locally it is `app/rule_replay.py`, importable and callable directly. |
 | **Container handshake** | `python .github/scripts/mcp_smoke.py <image>` | Drives a real MCP stdio handshake against the built image and asserts the tool list. Runs in CI on every push. |
 
 ## Install
@@ -620,9 +620,9 @@ pytest
 ```
 
 That puts two commands on your PATH: `kegg-string-mcp`, the MCP server, and `gar`, the
-annotation pipeline.
+gene annotation pipeline.
 
-The server and the annotation pipeline need nothing beyond the base install. The
+The server and the gene annotation pipeline need nothing beyond the base install. The
 retrieval arm is a separate extra, kept out of the default so the MCP server does not
 carry a vector store it never uses:
 
@@ -748,7 +748,7 @@ remain the caller's responsibility:
 
 ## Status
 
-MCP server, annotation pipeline, evaluation, the run tables, the retrieval arm and rule
+MCP server, gene annotation pipeline, evaluation, the run tables, the retrieval arm and rule
 annotation are all on `main`. The deterministic half of rule annotation is complete and
 scored. Its literature layer stops after stage B: the questions are generated and the
 candidate papers fetched, but nothing yet extracts a quote (stage C) or checks one
