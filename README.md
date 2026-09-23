@@ -482,20 +482,32 @@ in TB, has none. So the gold set has two classes:
 
 ```
 gene       kind expected  reported  hits  missed  cites     quotes
-katG       pos  5         5         5     0       26/26     0/0
-inhA       pos  3         3         3     0       27/27     3/3
-rpoB       pos  1         1         1     0       25/25     3/3
-gyrA       neg  0         0         0     0       25/25     7/7
+katG       pos  5         5         5     0       42/42     5/5
+inhA       pos  3         3         3     0       28/28     1/1
+rpoB       pos  1         1         1     0       31/31     0/0
+embB       pos  1         1         1     0       38/38     5/5
+pncA       pos  3         3         3     0       36/36     3/3
+fabG1      pos  3         3         3     0       27/34     5/5
+sodA       pos  1         1         1     0       24/24     2/2
+gyrA       neg  0         0         0     0       25/25     0/0
+gyrB       neg  0         0         0     0       33/33     3/3
+ahpC       neg  0         0         0     0       27/27     7/7
+furA       neg  0         0         0     0       12/12     10/10
+pknB       neg  0         0         0     0       27/27     6/6
 
-Retrieval fidelity   recall 1.0   precision 1.0        n=6 positives
-Abstention           1.0                                 n=2 negatives
-Citation integrity   citation precision 1.0   quote precision 1.0
+Retrieval fidelity   recall 1.0   precision 1.0        n=7 positives
+Abstention           1.0                                 n=5 negatives
+Citation integrity   citation precision 0.98   quote precision 1.0
 ```
 
-*These figures are from a partial run: 8 of the 12 gold-set genes completed before
-the run hit an API quota. The four that failed are recorded as errors and excluded
-from the metrics rather than scored as misses. Run `gar eval` to reproduce over the
-full set.*
+*All 12 gold-set genes, one run, no errors (2026-09-23). Run `gar eval` to reproduce;
+the report is written to `runs/eval/report.json`.*
+
+The seven citations that miss are all on `fabG1`, and all seven are `cross_target`:
+`inhA` promoter variants from TBDB, real records retrieved in the same run, but
+retrieved for `inhA`, not `fabG1`. The two genes share an operon, so citing them is
+biologically reasonable, and the validator is still right that the run never
+retrieved them under the gene being annotated. Nothing cited was fabricated.
 
 Scoring reuses the validator's own `cross_target` judgement rather than re-deriving
 intent from prose: a model annotating `furA` may legitimately look up its neighbour
